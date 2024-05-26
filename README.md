@@ -109,7 +109,7 @@ goals.
 
 <br/>
 <div align="center" style="text-align: center">
-    <img alt="Simple Finance Logo" style="width: 100px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4D0BAQFJijR2_7e1jA/company-logo_100_100/0/1630485888357/simple_finance_nigeria_logo?e=1724889600&v=beta&t=QnQi_HmQyCy7G-acScj4KSTtrcQ03_DCWC4ROxK9w18" />
+    <img alt="Simple Finance Logo" style="width: 80px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4D0BAQFJijR2_7e1jA/company-logo_100_100/0/1630485888357/simple_finance_nigeria_logo?e=1724889600&v=beta&t=QnQi_HmQyCy7G-acScj4KSTtrcQ03_DCWC4ROxK9w18" />
 </div>
 
 ### Chief Technology Officer at Simple Finance Nigeria _(Jan 2024 - Present)_
@@ -132,7 +132,7 @@ Managed technology projects and ensured they were completed on time and within b
 
 <br/>
 <div align="center" style="text-align: center">
-    <img alt="ETeam Technology Logo" style="width: 100px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4D0BAQGKS2VW8h1DfQ/company-logo_100_100/0/1673497776264?e=1724889600&v=beta&t=81XL9HEbzU35-ijkZwCx22zyFNlv3Gs1KYbLN-dSFBo" />
+    <img alt="ETeam Technology Logo" style="width: 80px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4D0BAQGKS2VW8h1DfQ/company-logo_100_100/0/1673497776264?e=1724889600&v=beta&t=81XL9HEbzU35-ijkZwCx22zyFNlv3Gs1KYbLN-dSFBo" />
 </div>
 
 ### CTO & Co-Founder at ETeam Technology _(May 2017 - Present)_
@@ -155,7 +155,7 @@ Lead a team of technology professionals and manage technology projects from conc
 
 <br/>
 <div align="center" style="text-align: center">
-    <img alt="Mazadat Logo" style="width: 100px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4D0BAQHDLSTb91xLmA/company-logo_100_100/0/1630580352004?e=1724889600&v=beta&t=LB4lWTmr91LBNWYAcARRhc0LJPLMrg6_er9Kx9r4xvE" />
+    <img alt="Mazadat Logo" style="width: 80px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4D0BAQHDLSTb91xLmA/company-logo_100_100/0/1630580352004?e=1724889600&v=beta&t=LB4lWTmr91LBNWYAcARRhc0LJPLMrg6_er9Kx9r4xvE" />
 </div>
 
 ### Frontend Lead Engineer at Mazadat _(Oct 2023 – Mar 2024)_
@@ -178,7 +178,7 @@ project efficiency.
 
 <br/>
 <div align="center" style="text-align: center">
-    <img alt="Mazadat Logo" style="width: 100px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4D0BAQHDLSTb91xLmA/company-logo_100_100/0/1630580352004?e=1724889600&v=beta&t=LB4lWTmr91LBNWYAcARRhc0LJPLMrg6_er9Kx9r4xvE" />
+    <img alt="Mazadat Logo" style="width: 80px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4D0BAQHDLSTb91xLmA/company-logo_100_100/0/1630580352004?e=1724889600&v=beta&t=LB4lWTmr91LBNWYAcARRhc0LJPLMrg6_er9Kx9r4xvE" />
 </div>
 
 ### Senior Frontend Engineer at Mazadat _(Apr 2023 – Oct 2023)_
@@ -202,7 +202,7 @@ Work with modern technology like ReactJS, Vanilla ES6, Elasticsearch, MS Azure, 
 
 <br/>
 <div align="center" style="text-align: center">
-    <img alt="Simple Finance Logo" style="width: 100px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4D0BAQFJijR2_7e1jA/company-logo_100_100/0/1630485888357/simple_finance_nigeria_logo?e=1724889600&v=beta&t=QnQi_HmQyCy7G-acScj4KSTtrcQ03_DCWC4ROxK9w18" />
+    <img alt="Simple Finance Logo" style="width: 80px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4D0BAQFJijR2_7e1jA/company-logo_100_100/0/1630485888357/simple_finance_nigeria_logo?e=1724889600&v=beta&t=QnQi_HmQyCy7G-acScj4KSTtrcQ03_DCWC4ROxK9w18" />
 </div>
 
 ### Chief Technology Officer at Simple Finance Nigeria _(Dec 2021 – Jan 2023)_
@@ -225,7 +225,7 @@ Managed technology projects and ensured they were completed on time and within b
 
 <br/>
 <div align="center" style="text-align: center">
-    <img alt="Travoofy Logo" style="width: 100px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4D0BAQEh_39gigiEPg/company-logo_100_100/0/1640781415852?e=1724889600&v=beta&t=tSf7fjUsRvrgZypr906F4-JT4jmDNbZ5y_vHhCNAadY" />
+    <img alt="Travoofy Logo" style="width: 80px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4D0BAQEh_39gigiEPg/company-logo_100_100/0/1640781415852?e=1724889600&v=beta&t=tSf7fjUsRvrgZypr906F4-JT4jmDNbZ5y_vHhCNAadY" />
 </div>
 
 ### Chief Technology Officer at Travoofy _(Dec 2021 – Aug 2022)_
@@ -247,7 +247,7 @@ Collaborated with senior leadership to develop and execute technology projects t
 
 <br/>
 <div align="center" style="text-align: center">
-    <img alt="Investa.ng Logo" style="width: 100px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C560BAQGx8iOyYcasYA/company-logo_100_100/0/1630652614216?e=1724889600&v=beta&t=eYJI49YNZ6YkJnvWxwIqgCk2sns0OWcwg2inGPKm1Ew" />
+    <img alt="Investa.ng Logo" style="width: 80px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C560BAQGx8iOyYcasYA/company-logo_100_100/0/1630652614216?e=1724889600&v=beta&t=eYJI49YNZ6YkJnvWxwIqgCk2sns0OWcwg2inGPKm1Ew" />
 </div>
 
 ### Engineering Manager at Investa.ng _(Jan 2021 – Jan 2022)_
@@ -269,7 +269,7 @@ their functions.
 
 <br/>
 <div align="center" style="text-align: center">
-    <img alt="386konsult Logo" style="width: 100px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4D0BAQEUzekPO1J1bg/company-logo_100_100/0/1679513812593/386konsult_logo?e=1724889600&v=beta&t=-vHJ8smgk8pdgCM6x_i1e5WtDXxcQ78Veh05-IHJCns" />
+    <img alt="386konsult Logo" style="width: 80px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4D0BAQEUzekPO1J1bg/company-logo_100_100/0/1679513812593/386konsult_logo?e=1724889600&v=beta&t=-vHJ8smgk8pdgCM6x_i1e5WtDXxcQ78Veh05-IHJCns" />
 </div>
 
 ### Chief Technology Officer at 386konsult _(Jan 2021 – Mar 2021)_
@@ -291,7 +291,7 @@ Collaborated with senior leadership to define technology initiatives that suppor
 
 <br/>
 <div align="center" style="text-align: center">
-    <img alt="Afe Babalola University Logo" style="width: 100px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4E0BAQEVYUWdtUdqfg/company-logo_100_100/0/1631338214394?e=1724889600&v=beta&t=lir_mn79SkWWi84E0W4KJ_zpZBNW3W11Ufk0899go9o" />
+    <img alt="Afe Babalola University Logo" style="width: 80px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C4E0BAQEVYUWdtUdqfg/company-logo_100_100/0/1631338214394?e=1724889600&v=beta&t=lir_mn79SkWWi84E0W4KJ_zpZBNW3W11Ufk0899go9o" />
 </div>
 
 ### Information Technology Support Specialist at Afe Babalola University _(2018 – Oct 2020)_
@@ -315,7 +315,7 @@ their functions.
 
 <br/>
 <div align="center" style="text-align: center">
-    <img alt="Peace Mass Transit Logo" style="width: 100px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C510BAQG8CU3SNaft_A/company-logo_100_100/0/1631386828577?e=1724889600&v=beta&t=F0YaY6C9o8yeIenR4I-gUH_eC7dWAsBo5DI-oUl5cTU" />
+    <img alt="Peace Mass Transit Logo" style="width: 80px; border-radius: 50%; margin: auto" src="https://media.licdn.com/dms/image/C510BAQG8CU3SNaft_A/company-logo_100_100/0/1631386828577?e=1724889600&v=beta&t=F0YaY6C9o8yeIenR4I-gUH_eC7dWAsBo5DI-oUl5cTU" />
 </div>
 
 ### Information Technology Consultant at Peace Mass Transit _(Jul 2020 – Aug 2020)_
@@ -335,7 +335,7 @@ effectively.
 
 <br/>
 <div align="center" style="text-align: center">
-    <img alt="Logo" style="width: 100px; border-radius: 50%; margin: auto" src="https://via.placeholder.com/50x50/CCCCCC/000000?text=NBL" />
+    <img alt="Logo" style="width: 80px; border-radius: 50%; margin: auto" src="https://via.placeholder.com/80x80/CCCCCC/000000?text=NBL" />
 </div>
 
 ### Senior Full Stack Developer at NANO BLOCKCHAIN LTD _(Jun 2018 – Nov 2018)_
@@ -354,7 +354,7 @@ I also worked on back-end development using technologies such as Node.js and PHP
 
 <br/>
 <div align="center" style="text-align: center">
-    <img alt="Logo" style="width: 100px; border-radius: 50%; margin: auto" src="https://via.placeholder.com/50x50/CCCCCC/000000?text=JIT" />
+    <img alt="Logo" style="width: 80px; border-radius: 50%; margin: auto" src="https://via.placeholder.com/80x80/CCCCCC/000000?text=JIT" />
 </div>
 
 ### Web developer and designer at JIT Solutions _(Jan 2013 – Dec 2017)_
