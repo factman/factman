@@ -103,6 +103,10 @@ goals.
 
 ## 💼 Experience
 
+<details>
+
+<summary>Chief Technology Officer at Simple Finance Nigeria (Jan 2024 - Present)</summary>
+
 <img alt="Simple Finance Logo" style="width: 50px; border-radius: 50%; float: left; margin-right: 20px" src="https://media.licdn.com/dms/image/C4D0BAQFJijR2_7e1jA/company-logo_100_100/0/1630485888357/simple_finance_nigeria_logo?e=1724889600&v=beta&t=QnQi_HmQyCy7G-acScj4KSTtrcQ03_DCWC4ROxK9w18" />
 
 ### Chief Technology Officer at Simple Finance Nigeria _(Jan 2024 - Present)_
@@ -115,7 +119,13 @@ infrastructure.<br/>
 Collaborated with senior leadership to define technology initiatives that support business growth and success.<br/>
 Managed technology projects and ensured they were completed on time and within budget.
 
+</details>
+
 ---
+
+<details>
+
+<summary>CTO & Co-Founder at ETeam Technology (May 2017 - Present)</summary>
 
 <img alt="ETeam Technology Logo" style="width: 50px; border-radius: 50%; float: left; margin-right: 20px" src="https://media.licdn.com/dms/image/C4D0BAQGKS2VW8h1DfQ/company-logo_100_100/0/1673497776264?e=1724889600&v=beta&t=81XL9HEbzU35-ijkZwCx22zyFNlv3Gs1KYbLN-dSFBo" />
 
@@ -129,7 +139,13 @@ information security management.<br/>
 Collaborate with senior leadership to develop and execute technology initiatives that drive business growth.<br/>
 Lead a team of technology professionals and manage technology projects from concept to completion.
 
+</details>
+
 ---
+
+<details>
+
+<summary>Frontend Lead Engineer at Mazadat (Oct 2023 – Mar 2024)</summary>
 
 <img alt="Mazadat Logo" style="width: 50px; border-radius: 50%; float: left; margin-right: 20px" src="https://media.licdn.com/dms/image/C4D0BAQHDLSTb91xLmA/company-logo_100_100/0/1630580352004?e=1724889600&v=beta&t=LB4lWTmr91LBNWYAcARRhc0LJPLMrg6_er9Kx9r4xvE" />
 
@@ -143,7 +159,13 @@ they meet and exceed quality standards and deadlines.<br/>
 I Collaborate with cross-functional teams to streamline development processes, resulting in a significant increase in
 project efficiency.
 
+</details>
+
 ---
+
+<details>
+
+<summary>Senior Frontend Engineer at Mazadat (Apr 2023 – Oct 2023)</summary>
 
 <img alt="Mazadat Logo" style="width: 50px; border-radius: 50%; float: left; margin-right: 20px" src="https://media.licdn.com/dms/image/C4D0BAQHDLSTb91xLmA/company-logo_100_100/0/1630580352004?e=1724889600&v=beta&t=LB4lWTmr91LBNWYAcARRhc0LJPLMrg6_er9Kx9r4xvE" />
 
@@ -158,7 +180,13 @@ Enhance SEO ratings, Implement high-quality Software following appropriate moder
 fast websites.<br/>
 Work with modern technology like ReactJS, Vanilla ES6, Elasticsearch, MS Azure, MongoDB, Docker, Jenkins...
 
+</details>
+
 ---
+
+<details>
+
+<summary>Chief Technology Officer at Simple Finance Nigeria (Dec 2021 – Jan 2023)</summary>
 
 <img alt="Simple Finance Logo" style="width: 50px; border-radius: 50%; float: left; margin-right: 20px" src="https://media.licdn.com/dms/image/C4D0BAQFJijR2_7e1jA/company-logo_100_100/0/1630485888357/simple_finance_nigeria_logo?e=1724889600&v=beta&t=QnQi_HmQyCy7G-acScj4KSTtrcQ03_DCWC4ROxK9w18" />
 
@@ -172,7 +200,13 @@ infrastructure.<br/>
 Collaborated with senior leadership to define technology initiatives that support business growth and success.<br/>
 Managed technology projects and ensured they were completed on time and within budget.
 
+</details>
+
 ---
+
+<details>
+
+<summary>Chief Technology Officer at Travoofy (Dec 2021 – Aug 2022)</summary>
 
 <img alt="Travoofy Logo" style="width: 50px; border-radius: 50%; float: left; margin-right: 20px" src="https://media.licdn.com/dms/image/C4D0BAQEh_39gigiEPg/company-logo_100_100/0/1640781415852?e=1724889600&v=beta&t=tSf7fjUsRvrgZypr906F4-JT4jmDNbZ5y_vHhCNAadY" />
 
@@ -185,7 +219,13 @@ Evaluated and deployed new systems and infrastructure to improve the overall eff
 company.<br/>
 Collaborated with senior leadership to develop and execute technology projects that drive business growth.
 
+</details>
+
 ---
+
+<details>
+
+<summary>Engineering Manager at Investa.ng (Jan 2021 – Jan 2022)</summary>
 
 <img alt="Investa.ng Logo" style="width: 50px; border-radius: 50%; float: left; margin-right: 20px" src="https://media.licdn.com/dms/image/C560BAQGx8iOyYcasYA/company-logo_100_100/0/1630652614216?e=1724889600&v=beta&t=eYJI49YNZ6YkJnvWxwIqgCk2sns0OWcwg2inGPKm1Ew" />
 
@@ -198,7 +238,13 @@ Managed technology projects and ensured they were completed on time and within b
 Provided technical expertise to other departments and ensured they had the necessary technology resources to perform
 their functions.
 
+</details>
+
 ---
+
+<details>
+
+<summary>Chief Technology Officer at 386konsult (Jan 2021 – Mar 2021)</summary>
 
 <img alt="386konsult Logo" style="width: 50px; border-radius: 50%; float: left; margin-right: 20px" src="https://media.licdn.com/dms/image/C4D0BAQEUzekPO1J1bg/company-logo_100_100/0/1679513812593/386konsult_logo?e=1724889600&v=beta&t=-vHJ8smgk8pdgCM6x_i1e5WtDXxcQ78Veh05-IHJCns" />
 
@@ -211,7 +257,13 @@ company.<br/>
 Managed technology projects and ensured they were completed on time and within budget.<br/>
 Collaborated with senior leadership to define technology initiatives that support business growth.
 
+</details>
+
 ---
+
+<details>
+
+<summary>Information Technology Support Specialist at Afe Babalola University (2018 – Oct 2020)</summary>
 
 <img alt="Afe Babalola University Logo" style="width: 50px; border-radius: 50%; float: left; margin-right: 20px" src="https://media.licdn.com/dms/image/C4E0BAQEVYUWdtUdqfg/company-logo_100_100/0/1631338214394?e=1724889600&v=beta&t=lir_mn79SkWWi84E0W4KJ_zpZBNW3W11Ufk0899go9o" />
 
@@ -226,7 +278,13 @@ Ensured technology resources were used efficiently, profitably, and securely.<br
 Provided technical expertise to other departments and ensured they had the necessary technology resources to perform
 their functions.
 
+</details>
+
 ---
+
+<details>
+
+<summary>Information Technology Consultant at Peace Mass Transit (Jul 2020 – Aug 2020)</summary>
 
 <img alt="Peace Mass Transit Logo" style="width: 50px; border-radius: 50%; float: left; margin-right: 20px" src="https://media.licdn.com/dms/image/C510BAQG8CU3SNaft_A/company-logo_100_100/0/1631386828577?e=1724889600&v=beta&t=F0YaY6C9o8yeIenR4I-gUH_eC7dWAsBo5DI-oUl5cTU" />
 
@@ -237,7 +295,13 @@ implementation of new technology systems.<br/>
 I also resolve technical issues and ensured that the company's technology resources were being used efficiently and
 effectively.
 
+</details>
+
 ---
+
+<details>
+
+<summary>Senior Full Stack Developer at NANO BLOCKCHAIN LTD (Jun 2018 – Nov 2018)</summary>
 
 <img alt="Logo" style="width: 50px; border-radius: 50%; float: left; margin-right: 20px" src="https://via.placeholder.com/50x50/CCCCCC/000000?text=NBL" />
 
@@ -247,16 +311,24 @@ At NANO BLOCKCHAIN LTD, I worked as a Senior Full Stack Developer, responsible f
 technologies such as Angular, Material-UI, and React.js.<br/>
 I also worked on back-end development using technologies such as Node.js and PHP.
 
+</details>
+
 ---
+
+<details>
+
+<summary>Web developer and designer at JIT Solutions (Jan 2013 – Dec 2017)</summary>
 
 <img alt="Logo" style="width: 50px; border-radius: 50%; float: left; margin-right: 20px" src="https://via.placeholder.com/50x50/CCCCCC/000000?text=JIT" />
 
-### web developer and designer at JIT Solutions _(Jan 2013 – Dec 2017)_
+### Web developer and designer at JIT Solutions _(Jan 2013 – Dec 2017)_
 
 At JIT Solutions, I worked as a Web Developer and Designer, responsible for designing and developing websites for
 clients.<br/>
 I used technologies such as HTML, CSS, and JavaScript to create dynamic, interactive websites that met the needs of the
 clients.
+
+</details>
 
 ## 💬 Quotes I Love
 
