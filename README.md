@@ -368,14 +368,79 @@ clients.
 
 ## 💬 Quotes I Love
 
-> “You can only write a logic you can see. Picture it first.” - Factman
+> [!TIP]
+> “You can only write a `logic` you can see. Picture it first”<br/>- Factman
 
 ## 🔖 Projects & Contributions
 
-[![IOPaint](https://github-readme-stats.vercel.app/api/pin/?username=Sanster&repo=IOPaint&theme=transparent&show_owner=true)](https://github.com/factman/ToDo-App)
-[![GraphUI](https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=GraphUI&theme=transparent&show_owner=true)](https://github.com/factman/GraphUI)
-[![Ubuntu-Server-Setup](https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=Ubuntu-Server-Setup&theme=transparent&show_owner=true)](https://github.com/factman/Ubuntu-Server-Setup)
-[![NeoClock](https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=NeoClock&theme=transparent&show_owner=true)](https://github.com/factman/NeoClock)
-[![ToDo-App](https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=ToDo-App&theme=transparent&show_owner=true)](https://github.com/factman/ToDo-App)
+<a href="https://github.com/factman/ToDo-App">
+<picture>
+  <source
+    srcset="https://github-readme-stats.vercel.app/api/pin/?username=Sanster&repo=IOPaint&theme=react&show_owner=true"
+    media="(prefers-color-scheme: dark)"
+  />
+  <source
+    srcset="https://github-readme-stats.vercel.app/api/pin/?username=Sanster&repo=IOPaint&theme=default&show_owner=true"
+    media="(prefers-color-scheme: light)"
+  />
+  <img alt="IOPaint" src="https://github-readme-stats.vercel.app/api/pin/?username=Sanster&repo=IOPaint&theme=transparent&show_owner=true" />
+</picture>
+</a>
+
+<a href="https://github.com/factman/GraphUI">
+<picture>
+  <source
+    srcset="https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=GraphUI&theme=react&show_owner=true"
+    media="(prefers-color-scheme: dark)"
+  />
+  <source
+    srcset="https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=GraphUI&theme=default&show_owner=true"
+    media="(prefers-color-scheme: light)"
+  />
+  <img alt="GraphUI" src="https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=GraphUI&theme=transparent&show_owner=true" />
+</picture>
+</a>
+
+<a href="https://github.com/factman/Ubuntu-Server-Setup">
+<picture>
+  <source
+    srcset="https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=Ubuntu-Server-Setup&theme=react&show_owner=true"
+    media="(prefers-color-scheme: dark)"
+  />
+  <source
+    srcset="https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=Ubuntu-Server-Setup&theme=default&show_owner=true"
+    media="(prefers-color-scheme: light)"
+  />
+  <img alt="Ubuntu-Server-Setup" src="https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=Ubuntu-Server-Setup&theme=transparent&show_owner=true" />
+</picture>
+</a>
+
+<a href="https://github.com/factman/NeoClock">
+<picture>
+  <source
+    srcset="https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=NeoClock&theme=react&show_owner=true"
+    media="(prefers-color-scheme: dark)"
+  />
+  <source
+    srcset="https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=NeoClock&theme=default&show_owner=true"
+    media="(prefers-color-scheme: light)"
+  />
+  <img alt="NeoClock" src="https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=NeoClock&theme=transparent&show_owner=true" />
+</picture>
+</a>
+
+<a href="https://github.com/factman/ToDo-App">
+<picture>
+  <source
+    srcset="https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=ToDo-App&theme=react&show_owner=true"
+    media="(prefers-color-scheme: dark)"
+  />
+  <source
+    srcset="https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=ToDo-App&theme=default&show_owner=true"
+    media="(prefers-color-scheme: light)"
+  />
+  <img alt="ToDo-App" src="https://github-readme-stats.vercel.app/api/pin/?username=factman&repo=ToDo-App&theme=transparent&show_owner=true" />
+</picture>
+</a>
 
 ---
