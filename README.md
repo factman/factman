@@ -477,3 +477,7 @@ This repository also holds the source of the Factman website (Angular, prerender
 | `pnpm storybook` | Storybook on http://localhost:6006                       |
 | `pnpm test:storybook` | Story tests in Vitest browser mode, with axe accessibility checks |
 | `pnpm e2e`   | Playwright against the prerendered build (run `pnpm build` and `pnpm e2e:install` first) |
+
+### Continuous integration
+
+GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and on every push to `main`: format check, lint, typecheck, unit and Storybook (axe) tests, the prerendered build, then Playwright E2E against the built files. Deployment to Vercel is added with ETE-21.
