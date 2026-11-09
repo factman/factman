@@ -22,7 +22,7 @@ The site's content, one JSON file per data type (PRD section 7, ADR-001). Each f
 3. Images and files referenced in the data (`logo`, `cover`, `gallery`, `src`, `image`, `ogImage`) are paths relative to `src/assets`, and must exist.
 4. Run `pnpm data:validate`. It reports each problem as `file /json/path: reason`.
 
-`pnpm data:types` writes the TypeScript models to `src/app/shared/models/generated/` (git-ignored). Build, test and typecheck regenerate them first.
+`pnpm data:types` writes the TypeScript models to `src/app/shared/models/generated/` (git-ignored). Nx regenerates them before `build`, `test`, `typecheck`, `start` and Storybook, and replays them from its cache when the schemas have not changed.
 
 ## Rules beyond the schemas
 

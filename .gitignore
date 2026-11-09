@@ -188,3 +188,12 @@ yarn.lock
 
 # Generated data models (pnpm data:types)
 /src/app/shared/models/generated
+
+# Nx (cache, daemon and workspace data)
+.nx/cache
+.nx/workspace-data
+.nx/polygraph
+
+# Claude Code (local only)
+.claude/worktrees
+.claude/settings.local.json

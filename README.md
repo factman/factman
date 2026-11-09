@@ -469,7 +469,7 @@ This repository also holds the source of my portfolio website (Angular, prerende
 | ------------ | ------------------------------------------------------------ |
 | `pnpm install` | Install dependencies from `pnpm-lock.yaml`                 |
 | `pnpm start` | Dev server on http://localhost:4200                          |
-| `pnpm build` | Validates data, then the production build; every static route is prerendered to `dist/factman/browser` |
+| `pnpm build` | Validates data and generates the models, then the production build; every static route is prerendered to `dist/factman/browser` |
 | `pnpm data:validate` | Checks `src/data/*.json` against their JSON Schemas and the cross-reference rules |
 | `pnpm data:types` | Generates TypeScript models from the schemas into `src/app/shared/models/generated` |
 | `pnpm test:scripts` | Tests for the build scripts (data validator, design tokens) |
@@ -477,18 +477,27 @@ This repository also holds the source of my portfolio website (Angular, prerende
 | `pnpm ds:fonts` | Self-hosts the fonts: copies the woff2 files, writes `fonts.css` and the preload link |
 | `pnpm ds:split` | Splits the design system's `bundle.css` into `global.css` and one file per component |
 | `pnpm lint:styles` | Stylelint: component styles must use design tokens, never raw colours or sizes |
-| `pnpm test`  | Unit tests (Vitest + Angular TestBed)                        |
-| `pnpm lint`  | ESLint (incl. Atomic Design boundaries) and the lint-rule fixture test |
-| `pnpm typecheck` | TypeScript check for app and specs                       |
+| `pnpm test`  | Validates data and generates the models, then unit tests (Vitest + Angular TestBed) |
+| `pnpm lint`  | ESLint (incl. Atomic Design boundaries), Stylelint and the lint-rule fixture test |
+| `pnpm typecheck` | Generates the models, then the TypeScript check for app, specs and scripts |
 | `pnpm format` / `pnpm format:check` | Prettier write / verify                 |
 | `pnpm storybook` | Storybook on http://localhost:6006                       |
 | `pnpm test:storybook` | Story tests in Vitest browser mode, with axe accessibility checks |
 | `pnpm test:headers` | Checks `vercel.json` security and cache headers |
-| `pnpm e2e`   | Playwright against the prerendered build (run `pnpm build` and `pnpm e2e:install` first) |
+| `pnpm e2e`   | Builds (or restores the build from cache), then Playwright against the prerendered files. Run `pnpm e2e:install` once first |
+
+### Task runner (Nx)
+
+Every script above runs through [Nx](https://nx.dev) (pinned in `package.json`), with the Nx Cloud remote cache. The targets live in `project.json` and the shared settings in `nx.json`; each `package.json` script is a one-line `nx run factman:<target>`, so nothing is chained with `&&`.
+
+- **Order.** Nx runs a target's dependencies first: `data:validate` and `data:types` before `build` and `test`, `data:types` before `typecheck`, `start` and Storybook, and `build` before `e2e`. `lint` runs ESLint, Stylelint and the lint-rule test. `lint` and `test` do not depend on each other.
+- **Cache.** Builds, lint, tests and checks are cached in `.nx/cache` (git-ignored). A repeat run with unchanged inputs is replayed from the cache, and `dist/` is restored if it was deleted. Docs, workflow files and Markdown changes do not invalidate the build. Use `--skip-nx-cache` to force a run, `--skip-remote-cache` to ignore Nx Cloud, or `pnpm nx reset` to clear the local cache. Set `NX_NO_CLOUD=true` to work without Nx Cloud.
+- **Arguments** pass through to the underlying tool: `pnpm test --watch=false`, `pnpm e2e --args="--project=chromium"`.
+- **Graph.** `pnpm nx graph` shows the task graph; `pnpm nx show project factman` lists every target.
 
 ### Continuous integration
 
-GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and on every push to `dev` or `main`: format check, lint, typecheck, unit and Storybook (axe) tests, the prerendered build, then Playwright E2E against the built files. Deployment to Vercel is added with ETE-21.
+GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and on every push to `dev` or `main`: format check, lint, typecheck, unit and Storybook (axe) tests, the prerendered build, then Playwright E2E against the built files. Each job runs its checks through Nx (`nx run-many` in the static job) and shares results through the [Nx Cloud](https://cloud.nx.app) remote cache (`nxCloudId` in `nx.json`, free Hobby plan). A task that already ran with the same inputs, in another job, another run or on a developer machine, is replayed from the remote cache, and the E2E job takes the build from it instead of rebuilding. The workspace is a single Nx project, so CI runs every target rather than `nx affected`; switch to `nx affected` if the repository grows more projects. Vercel deploys every push (ETE-21).
 
 ### Hosting (Vercel)
 

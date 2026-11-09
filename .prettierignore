@@ -12,3 +12,5 @@ src/app/shared/models/generated
 # Vendored design system and generated tokens
 src/styles/factman
 src/styles/generated
+# Nx cache and workspace data
+.nx

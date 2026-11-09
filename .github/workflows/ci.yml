@@ -16,6 +16,9 @@ permissions:
 
 env:
   CI: true
+  # Nx Cloud remote cache (nxCloudId in nx.json). The token is optional when the
+  # workspace's GitHub integration grants CI access.
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
   STORYBOOK_DISABLE_TELEMETRY: 1
 
 jobs:
@@ -34,11 +37,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Validate data (gate)
         run: pnpm data:validate
-      - run: pnpm format:check
-      - run: pnpm lint
-      - run: pnpm typecheck
-      - name: Header check (vercel.json)
-        run: pnpm test:headers
+      - name: Format, lint, typecheck and header check (vercel.json)
+        run: pnpm nx run-many -t format:check lint typecheck test:headers
 
   # Stage 3: unit and Storybook (axe) tests
   test:
@@ -101,10 +101,6 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/factman/browser
       - name: Cache Playwright browsers
         id: pw-cache
         uses: actions/cache@v4
@@ -115,6 +111,7 @@ jobs:
         if: steps.pw-cache.outputs.cache-hit != 'true'
       - run: pnpm exec playwright install-deps
         if: steps.pw-cache.outputs.cache-hit == 'true'
+      # Nx restores the build job's output from the Nx Cloud remote cache.
       - run: pnpm e2e
       - uses: actions/upload-artifact@v4
         if: failure()
