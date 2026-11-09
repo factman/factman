@@ -59,7 +59,7 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
       - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm test:data
+      - run: pnpm test:scripts
       - run: pnpm test --watch=false
       - run: pnpm test:storybook
 

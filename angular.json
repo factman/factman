@@ -34,7 +34,11 @@
                 "output": "assets"
               }
             ],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles/factman/tokens.css",
+              "src/styles/factman/components.css",
+              "src/styles.scss"
+            ],
             "server": "src/main.server.ts",
             "outputMode": "static",
             "security": {

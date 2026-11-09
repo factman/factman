@@ -9,3 +9,5 @@ storybook-static
 # GitHub profile README is hand-formatted
 README.md
 src/app/shared/models/generated
+# Vendored design system and generated tokens
+src/styles/factman
