@@ -10,7 +10,11 @@
     "serve:ssr:factman": "node dist/factman/server/server.mjs",
     "prepare": "husky",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "lint": "eslint . && pnpm test:lint-rules",
+    "lint:fix": "eslint . --fix",
+    "test:lint-rules": "node --test --test-reporter=spec tools/eslint/boundaries.test.mjs",
+    "typecheck": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.spec.json --noEmit"
   },
   "private": true,
   "packageManager": "pnpm@10.34.9",
@@ -33,13 +37,19 @@
     "@angular/compiler-cli": "^22.2.0",
     "@commitlint/cli": "^21.2.4",
     "@commitlint/config-conventional": "^21.2.4",
+    "@eslint/js": "^10.0.1",
     "@types/express": "^5.0.1",
     "@types/node": "^22.12.0",
+    "angular-eslint": "^22.6.0",
+    "eslint": "^10.14.0",
+    "eslint-import-resolver-typescript": "^4.4.5",
+    "eslint-plugin-boundaries": "^7.4.2",
     "husky": "^9.1.7",
     "jsdom": "^30.0.0",
     "lint-staged": "^17.6.0",
     "prettier": "^3.8.1",
     "typescript": "~6.0.2",
+    "typescript-eslint": "^8.72.1",
     "vitest": "^5.0.0"
   },
   "engines": {
