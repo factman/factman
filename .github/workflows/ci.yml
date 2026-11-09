@@ -1,10 +1,10 @@
 name: CI
 
-# Trunk-based: every pull request (including stacked ones) and every push to main.
+# Every pull request, and every push to dev (integration) or main.
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, dev]
   workflow_dispatch:
 
 concurrency:
@@ -74,7 +74,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - name: Check the home route was prerendered
-        run: grep -q '<h1>Factman</h1>' dist/factman/browser/index.html
+        run: grep -q '<h1>Odunayo Mohammed</h1>' dist/factman/browser/index.html
       - uses: actions/upload-artifact@v4
         with:
           name: dist

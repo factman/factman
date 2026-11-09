@@ -480,4 +480,4 @@ This repository also holds the source of my portfolio website (Angular, prerende
 
 ### Continuous integration
 
-GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and on every push to `main`: format check, lint, typecheck, unit and Storybook (axe) tests, the prerendered build, then Playwright E2E against the built files. Deployment to Vercel is added with ETE-21.
+GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and on every push to `dev` or `main`: format check, lint, typecheck, unit and Storybook (axe) tests, the prerendered build, then Playwright E2E against the built files. Deployment to Vercel is added with ETE-21.
