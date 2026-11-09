@@ -1,7 +1,8 @@
 /**
  * `pnpm ds:tokens`: turns the Factman Design System's tokens.json into tokens.css.
  * Light values go on :root, Dark overrides on [data-theme="dark"] (only tokens whose
- * Dark value differs). `{name}` references become var(--name).
+ * Dark value differs). `{name}` references become var(--name). The `legacy-*` palette
+ * (kept in the design system for old Figma frames, never used by components) is left out.
  * Source: src/styles/factman/tokens.json (copied from the design system artifact).
  */
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -38,12 +39,16 @@ const GROUPS = [
   'easing',
 ];
 
+/** Tokens the design system keeps only for old frames; nothing on the site may use them. */
+export const EXCLUDE = /^legacy-/;
+
 const ref = (v: string) => v.replace(/\{([a-z0-9-]+)\}/g, 'var(--$1)');
 
 export function buildTokensCss(tokens: Tokens): string {
   const root: string[] = [];
   const dark: string[] = [];
   const add = (t: Token) => {
+    if (EXCLUDE.test(t.name)) return;
     if (typeof t.value === 'string') {
       root.push(`  --${t.name}: ${ref(t.value)};`);
     } else {

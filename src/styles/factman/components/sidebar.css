@@ -1,0 +1,40 @@
+/* Factman "sidebar" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Sidebar ---------- */
+.fm-side { display: flex; flex-direction: column; gap: var(--gap-xs); width: 272px; box-sizing: border-box; min-height: 560px; padding: var(--padding-sm); font-family: var(--font-sans); transition: width 200ms ease-out; }
+.fm-side--glass { margin: var(--padding-sm); border-radius: var(--radius-xl); background: var(--glass-panel); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-panel); -webkit-backdrop-filter: blur(var(--blur-glass-panel)); backdrop-filter: blur(var(--blur-glass-panel)); }
+.fm-side--bar { background: var(--glass-fill-strong); border-right: var(--border-width-sm) solid var(--border-subtle); }
+.fm-side.is-collapsed { width: 72px; align-items: center; }
+.fm-side__head { display: flex; align-items: center; justify-content: space-between; gap: var(--gap-xs); min-height: 40px; padding: 0 4px var(--padding-xs); }
+.fm-side.is-collapsed .fm-side__head { padding: 0 0 var(--padding-xs); }
+.fm-side__ws { display: flex; align-items: center; gap: var(--gap-xs); flex: 1; min-width: 0; padding: 4px; border: 0; border-radius: var(--radius-md); background: transparent; text-align: left; cursor: pointer; color: var(--icon-secondary); font: inherit; }
+.fm-side__ws:hover { background: var(--glass-fill); }
+.fm-side__wstext { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.fm-side__wstext strong { font-size: 14px; color: var(--text-primary); }
+.fm-side__wstext span { font-size: 12px; color: var(--text-tertiary); }
+.fm-side__search { max-width: none; margin-bottom: var(--gap-xs); }
+.fm-side__nav { display: flex; flex-direction: column; gap: var(--gap-sm); flex: 1; align-self: stretch; }
+.fm-side__section { display: flex; flex-direction: column; gap: 2px; }
+.fm-side__stitle { display: flex; align-items: center; height: 32px; padding: 0 var(--padding-sm); font: 500 12px/1 var(--font-sans); color: var(--text-tertiary); }
+.fm-side__rule { display: block; width: 24px; height: 1px; margin: 12px auto; background: var(--border-default); }
+.fm-side__item { position: relative; display: flex; align-items: center; gap: 10px; width: 100%; height: 40px; box-sizing: border-box; padding: 0 var(--padding-sm); border: var(--border-width-sm) solid transparent; border-radius: var(--radius-md); background: transparent; color: var(--text-secondary); font: 500 14px/18px var(--font-sans); text-align: left; text-decoration: none; cursor: pointer; }
+.fm-side__item .fm-icon { color: var(--icon-secondary); flex: none; }
+.fm-side__item--sm { height: 32px; font-size: 12px; border-radius: var(--radius-sm); }
+.fm-side__item:hover { background: var(--glass-fill); color: var(--text-primary); }
+.fm-side__item:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: -2px; }
+.fm-side__item.is-active { background: var(--glass-fill-elevated); border-color: var(--glass-stroke); box-shadow: var(--shadow-glass-chip); color: var(--text-primary); font-weight: 600; }
+.fm-side__item.is-active .fm-icon { color: var(--icon-primary); }
+.fm-side__item.is-active::before { content: ""; position: absolute; left: -8px; top: 10px; bottom: 10px; width: 3px; border-radius: 0 3px 3px 0; background: var(--accent-default); }
+.fm-side__item.is-disabled { color: var(--text-disabled); cursor: not-allowed; }
+.fm-side.is-collapsed .fm-side__item { width: 40px; padding: 0; justify-content: center; }
+.fm-side__label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fm-side__chev { color: var(--icon-tertiary); }
+.fm-side__dot { position: absolute; top: 8px; right: 8px; }
+.fm-side__subs { display: flex; flex-direction: column; gap: 2px; padding-left: 21px; }
+.fm-side__item--sub { font-weight: 400; height: 36px; padding-left: var(--padding-sm); }
+.fm-side__item--sub.is-active { font-weight: 500; }
+.fm-side__item--sub.is-active::before { display: none; }
+.fm-side__tree { position: absolute; left: -12px; top: -2px; bottom: -2px; width: 1px; background: var(--border-default); }
+.fm-side__foot { align-self: stretch; }
+.fm-side__user { display: flex; align-items: center; justify-content: space-between; gap: var(--gap-xs); padding: var(--padding-xs) 4px 0; border-top: var(--border-width-sm) solid var(--border-subtle); }
+.fm-side.is-collapsed .fm-side__user { justify-content: center; border-top: 0; }
+.fm-side__expand { margin-bottom: var(--gap-xs); }

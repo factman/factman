@@ -1,0 +1,39 @@
+/* Factman "file-upload" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- File upload ---------- */
+.fm-drop { display: flex; flex-direction: column; align-items: center; gap: var(--gap-sm); box-sizing: border-box; padding: var(--padding-3xl) var(--padding-xl); border-radius: var(--radius-lg); border: var(--border-width-md) dashed var(--border-default); background: var(--glass-fill); text-align: center; font-family: var(--font-sans); transition: background-color 150ms ease-out, border-color 150ms ease-out; }
+.fm-drop--compact { flex-direction: row; text-align: left; padding: var(--padding-md); gap: var(--gap-md); }
+.fm-drop--compact .fm-drop__text { flex: 1; }
+.fm-drop--compact .fm-drop__hint { display: none; }
+.fm-drop__icon { width: 56px; height: 56px; }
+.fm-drop--compact .fm-drop__icon { width: 44px; height: 44px; }
+.fm-drop__text { display: flex; flex-direction: column; gap: 4px; }
+.fm-drop__title { font-size: 16px; line-height: 20px; font-weight: 600; color: var(--text-primary); }
+.fm-drop__desc { font-size: 13px; line-height: 16px; color: var(--text-secondary); }
+.fm-drop__hint { font-size: 12px; color: var(--text-tertiary); }
+.fm-drop.is-drag { border-style: solid; border-color: var(--accent-default); background: var(--glass-fill-elevated); box-shadow: 0 0 0 4px var(--accent-ring); }
+.fm-drop.is-error { border-color: var(--border-danger); border-style: solid; border-width: var(--border-width-sm); }
+.fm-drop.is-error .fm-drop__desc { color: var(--text-danger); }
+.fm-drop.is-error .fm-drop__icon { background: var(--bg-danger-subtle); color: var(--icon-danger); }
+.fm-drop.is-disabled { opacity: .5; }
+.fm-file { display: flex; align-items: center; gap: var(--gap-sm); max-width: 520px; padding: var(--padding-sm); border-radius: var(--radius-lg); background: var(--glass-fill-strong); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-regular); font-family: var(--font-sans); }
+.fm-file.is-error { border-color: var(--border-danger); }
+.fm-file__thumb { width: 48px; height: 48px; min-height: 48px; border-radius: var(--radius-md); flex: none; }
+.fm-file__thumb .fm-icon { width: 20px; height: 20px; }
+.fm-file__doc { width: 48px; height: 48px; }
+.fm-file__info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.fm-file__top { display: flex; justify-content: space-between; gap: var(--gap-xs); }
+.fm-file__name { font-size: 14px; font-weight: 500; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fm-file__size { font-size: 12px; color: var(--text-tertiary); flex: none; }
+.fm-file__err, .fm-file__ok { display: flex; align-items: center; gap: 4px; font-size: 12px; }
+.fm-file__err { color: var(--text-danger); }
+.fm-file__ok { color: var(--text-success); }
+.fm-utile { position: relative; width: 120px; height: 120px; box-sizing: border-box; border-radius: var(--radius-lg); overflow: hidden; font-family: var(--font-sans); }
+.fm-utile--add { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: var(--border-width-md) dashed var(--border-default); background: var(--glass-fill); color: var(--icon-secondary); font-size: 12px; cursor: pointer; }
+.fm-utile--add:hover { background: var(--glass-fill-hover); border-color: var(--border-hover); }
+.fm-utile__img { position: absolute; inset: 0; min-height: 0; border-radius: 0; }
+.fm-utile__veil { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: var(--glass-fill); -webkit-backdrop-filter: blur(var(--blur-glass-chip)); backdrop-filter: blur(var(--blur-glass-chip)); font-size: 12px; }
+.fm-utile__veil--err { background: var(--bg-danger-subtle); color: var(--text-danger); }
+.fm-utile__x { position: absolute; top: 6px; right: 6px; }
+.fm-avup { position: relative; display: inline-flex; width: 96px; height: 96px; }
+.fm-avup__empty { display: flex; align-items: center; justify-content: center; width: 96px; height: 96px; border-radius: var(--radius-full); border: var(--border-width-md) dashed var(--border-default); background: var(--glass-fill); color: var(--icon-secondary); }
+.fm-avup__btn { position: absolute; right: -2px; bottom: -2px; border-radius: var(--radius-full); }

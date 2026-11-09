@@ -36,7 +36,7 @@
             ],
             "styles": [
               "src/styles/factman/tokens.css",
-              "src/styles/factman/components.css",
+              "src/styles/factman/global.css",
               "src/styles.scss"
             ],
             "server": "src/main.server.ts",
@@ -46,6 +46,9 @@
             },
             "ssr": {
               "entry": "src/server.ts"
+            },
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
             }
           },
           "configurations": {

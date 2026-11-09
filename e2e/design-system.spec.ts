@@ -31,15 +31,22 @@ test.describe('design system', () => {
     expect(dark.colorScheme).toBe('dark');
   });
 
-  test('fm-* component classes are available globally', async ({ page }) => {
+  test('only global design-system CSS loads up front; component CSS waits for its component', async ({
+    page,
+  }) => {
     await page.goto('/');
-    const hasRule = await page.evaluate(() =>
-      [...document.styleSheets].some((sheet) =>
-        [...sheet.cssRules].some(
-          (rule) => rule instanceof CSSStyleRule && rule.selectorText.includes('.fm-btn'),
-        ),
+    const selectors = await page.evaluate(() =>
+      [...document.styleSheets].flatMap((sheet) =>
+        [...sheet.cssRules]
+          .filter((r) => r instanceof CSSStyleRule)
+          .map((r) => (r as CSSStyleRule).selectorText),
       ),
     );
-    expect(hasRule).toBe(true);
+    // global.css: backdrop, icons and shared tones and glass
+    expect(selectors.some((s) => s.includes('.fm-backdrop'))).toBe(true);
+    expect(selectors.some((s) => s.includes('.fm-glass'))).toBe(true);
+    // per-component sections are not shipped to a page that doesn't render them
+    expect(selectors.some((s) => s.includes('.fm-btn'))).toBe(false);
+    expect(selectors.some((s) => s.includes('.fm-cal'))).toBe(false);
   });
 });

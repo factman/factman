@@ -38,8 +38,8 @@ Allowed without tokens: `0`, `auto`, `inherit`, `initial`, `unset`, `none`, `tra
 
 ## Updating from the design system
 
-1. Copy the design system's `project/tokens.json` over `src/styles/factman/tokens.json`, and `project/components/bundle.css` over `src/styles/factman/components.css`.
-2. Run `pnpm ds:tokens` to regenerate `tokens.css`.
-3. `pnpm test:scripts` fails if `tokens.css` and `tokens.json` drift apart.
+1. Copy the design system's `project/tokens.json` over `src/styles/factman/tokens.json`, and `project/components/bundle.css` over `src/styles/factman/bundle.css`.
+2. Run `pnpm ds:tokens` and `pnpm ds:split`.
+3. `pnpm test:scripts` fails if the generated files drift from their sources, or if the split loses a line.
 
 Fonts (Plus Jakarta Sans, Jost, JetBrains Mono) are self-hosted under ETE-23; until then the font stacks fall back to system fonts, and nothing is loaded from Google.

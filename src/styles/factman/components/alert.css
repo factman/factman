@@ -1,0 +1,11 @@
+/* Factman "alert" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Alert ---------- */
+.fm-alert { display: flex; align-items: center; gap: var(--gap-sm); padding: var(--padding-xs) var(--padding-xs) var(--padding-xs) var(--padding-md); border: var(--border-width-sm) solid var(--tone-bd); border-radius: var(--radius-md); background: var(--tone-bg); font-family: var(--font-sans); color: var(--text-primary); max-width: 560px; box-sizing: border-box; }
+.fm-alert--glass { background: var(--glass-fill-strong); border-color: var(--glass-stroke); box-shadow: var(--shadow-glass-regular); -webkit-backdrop-filter: blur(var(--blur-glass-regular)); backdrop-filter: blur(var(--blur-glass-regular)); }
+.fm-alert--expanded { align-items: flex-start; padding: var(--padding-md); }
+.fm-alert__icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: var(--radius-sm); color: var(--tone-ic); flex: none; }
+.fm-alert--glass .fm-alert__icon { background: var(--tone-bg); }
+.fm-alert__content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--gap-3xs); padding: 5px 0; }
+.fm-alert__title { font-size: 14px; line-height: 22px; font-weight: 500; }
+.fm-alert__desc { font-size: 13px; line-height: 20px; color: var(--text-secondary); }
+.fm-alert__actions { display: flex; gap: var(--gap-xs); margin-top: var(--gap-xs); }

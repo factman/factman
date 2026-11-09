@@ -1,0 +1,20 @@
+/* Factman "empty-state" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Empty state ---------- */
+.fm-empty { display: flex; flex-direction: column; align-items: center; gap: var(--gap-sm); text-align: center; font-family: var(--font-sans); color: var(--text-primary); max-width: 360px; }
+.fm-empty--lg { max-width: 440px; gap: var(--gap-md); }
+.fm-empty--h { flex-direction: row; text-align: left; align-items: center; max-width: 520px; gap: var(--gap-lg); }
+.fm-empty--card { padding: var(--padding-xl); border-radius: var(--radius-xl); background: var(--glass-fill-strong); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-regular); }
+.fm-empty__visual { position: relative; display: inline-flex; align-items: center; justify-content: center; flex: none; border-radius: var(--radius-full); background: var(--bg-sunken); border: var(--border-width-sm) solid var(--glass-stroke-subtle); }
+.fm-empty__circle { display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-full); background: var(--bg-sunken); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-chip); color: var(--icon-secondary); }
+.fm-empty__visual--success { background: var(--bg-success-subtle); } .fm-empty__visual--success .fm-empty__circle { color: var(--icon-success); background: var(--bg-success-subtle); }
+.fm-empty__visual--warning { background: var(--bg-warning-subtle); } .fm-empty__visual--warning .fm-empty__circle { color: var(--icon-warning); background: var(--bg-warning-subtle); }
+.fm-empty__visual--danger { background: var(--bg-danger-subtle); } .fm-empty__visual--danger .fm-empty__circle { color: var(--icon-danger); background: var(--bg-danger-subtle); }
+.fm-empty__content { display: flex; flex-direction: column; align-items: inherit; gap: 6px; }
+.fm-empty--h .fm-empty__content { align-items: flex-start; }
+.fm-empty__title { font-size: 14px; line-height: 20px; font-weight: 600; }
+.fm-empty--md .fm-empty__title { font-size: 16px; line-height: 24px; }
+.fm-empty--lg .fm-empty__title { font-size: 20px; line-height: 28px; }
+.fm-empty__desc { font-size: 12px; line-height: 18px; color: var(--text-secondary); }
+.fm-empty--md .fm-empty__desc, .fm-empty--lg .fm-empty__desc { font-size: 14px; line-height: 22px; }
+.fm-empty__actions { display: flex; gap: var(--gap-xs); padding: 10px 0 0; }
+.fm-empty__help { font-size: 12px; color: var(--text-tertiary); }

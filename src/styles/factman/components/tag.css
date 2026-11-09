@@ -1,0 +1,10 @@
+/* Factman "tag" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Tag ---------- */
+.fm-tag { display: inline-flex; align-items: center; gap: var(--gap-2xs); height: 24px; padding: 0 var(--padding-xs); box-sizing: border-box; border-radius: var(--radius-full); background: var(--tone-bg); color: var(--tone-fg); font: 500 12px/16px var(--font-sans); white-space: nowrap; }
+.fm-tag--sm { height: 20px; border-radius: var(--radius-full); font-size: 10px; line-height: 14px; }
+.fm-tag--lg { height: 28px; font-size: 13px; }
+.fm-tag--xl { height: 32px; font-size: 14px; line-height: 20px; }
+.fm-tag--outline { background: var(--tone-fill, var(--glass-fill-strong)); border: var(--border-width-sm) solid var(--tone-bd); box-shadow: var(--shadow-glass-chip); }
+.fm-tag.fm-tone--neutral.fm-tag--outline { border-color: var(--border-default); }
+.fm-tag__dot { width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--tone-ic); }
+.fm-tag__x { display: inline-flex; padding: 0; border: 0; background: transparent; color: inherit; cursor: pointer; border-radius: var(--radius-full); }

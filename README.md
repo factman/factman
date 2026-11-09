@@ -474,6 +474,7 @@ This repository also holds the source of my portfolio website (Angular, prerende
 | `pnpm data:types` | Generates TypeScript models from the schemas into `src/app/shared/models/generated` |
 | `pnpm test:scripts` | Tests for the build scripts (data validator, design tokens) |
 | `pnpm ds:tokens` | Regenerates `src/styles/factman/tokens.css` from the design system's `tokens.json` |
+| `pnpm ds:split` | Splits the design system's `bundle.css` into `global.css` and one file per component |
 | `pnpm lint:styles` | Stylelint: component styles must use design tokens, never raw colours or sizes |
 | `pnpm test`  | Unit tests (Vitest + Angular TestBed)                        |
 | `pnpm lint`  | ESLint (incl. Atomic Design boundaries) and the lint-rule fixture test |

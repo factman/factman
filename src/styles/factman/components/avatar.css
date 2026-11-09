@@ -1,0 +1,24 @@
+/* Factman "avatar" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Avatar ---------- */
+.fm-avatar { position: relative; display: inline-flex; flex: none; font-family: var(--font-sans); }
+.fm-avatar__body { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; box-sizing: border-box; overflow: hidden; border-radius: var(--radius-full); border: var(--border-width-sm) solid var(--glass-stroke-subtle); background: linear-gradient(135deg, var(--ice-300), var(--ice-200)); color: var(--blue-900); font-weight: 600; }
+.fm-avatar--square .fm-avatar__body { border-radius: 28%; }
+.fm-avatar__img { width: 100%; height: 100%; object-fit: cover; }
+.fm-avatar__status { position: absolute; right: 0; bottom: 0; box-sizing: border-box; border-radius: var(--radius-full); border: var(--border-width-lg) solid var(--bg-surface); }
+.fm-avatar__status--online { background: var(--icon-success); }
+.fm-avatar__status--busy { background: var(--icon-danger); }
+.fm-avatar__status--away { background: var(--icon-warning); }
+.fm-avatar__status--offline { background: var(--icon-tertiary); }
+.fm-avatar--more .fm-avatar__body { background: var(--bg-sunken); color: var(--text-secondary); font-size: 12px; font-weight: 500; border: 0; }
+.fm-avatar-group { display: inline-flex; align-items: center; }
+.fm-avatar-group__ring { display: inline-flex; padding: 2px; border-radius: var(--radius-full); background: var(--bg-surface); }
+.fm-avatar-group__ring + .fm-avatar-group__ring { margin-left: var(--ov); }
+.fm-avatar-label { display: inline-flex; align-items: center; gap: var(--gap-xs); font-family: var(--font-sans); }
+.fm-avatar-label--md, .fm-avatar-label--lg { gap: var(--gap-sm); }
+.fm-avatar-label__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.fm-avatar-label__title { font-size: 12px; line-height: 15px; font-weight: 500; color: var(--text-primary); }
+.fm-avatar-label__desc { font-size: 10px; line-height: 13px; color: var(--text-secondary); }
+.fm-avatar-label--md .fm-avatar-label__title { font-size: 14px; line-height: 18px; }
+.fm-avatar-label--md .fm-avatar-label__desc { font-size: 12px; line-height: 16px; }
+.fm-avatar-label--lg .fm-avatar-label__title { font-size: 16px; line-height: 20px; }
+.fm-avatar-label--lg .fm-avatar-label__desc { font-size: 13px; line-height: 18px; }

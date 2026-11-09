@@ -26,7 +26,8 @@
     "data:check": "pnpm data:validate && pnpm data:types",
     "ds:tokens": "tsx scripts/design-system/build-tokens.ts",
     "lint:styles": "stylelint \"src/**/*.{css,scss}\"",
-    "test:scripts": "node --import tsx --test --test-reporter=spec \"scripts/**/*.test.ts\""
+    "test:scripts": "node --import tsx --test --test-reporter=spec \"scripts/**/*.test.ts\"",
+    "ds:split": "tsx scripts/design-system/split-components.ts"
   },
   "private": true,
   "packageManager": "pnpm@10.34.9",

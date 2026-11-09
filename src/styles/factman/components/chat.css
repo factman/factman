@@ -1,0 +1,36 @@
+/* Factman "chat" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Chat ---------- */
+.fm-bubble-row { display: flex; justify-content: flex-start; font-family: var(--font-sans); }
+.fm-bubble-row.is-out { justify-content: flex-end; }
+.fm-bubble { display: flex; flex-direction: column; gap: 6px; max-width: 290px; box-sizing: border-box; padding: 10px 14px; font-size: 14px; line-height: 21px; }
+.fm-bubble--in { border-radius: 24px 24px 24px 6px; background: var(--glass-fill-strong); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-regular); color: var(--text-primary); }
+.fm-bubble--out { border-radius: 24px 24px 6px 24px; background: var(--bg-inverse); color: var(--text-inverse); box-shadow: var(--shadow-button-raised-dark); }
+.fm-bubble--image { padding: 4px; }
+.fm-bubble--image .fm-bubble__text, .fm-bubble--image .fm-bubble__meta { padding: 0 10px; }
+.fm-bubble--image .fm-bubble__meta { padding-bottom: 6px; }
+.fm-bubble__img { height: 200px; border-radius: 20px 20px 20px 4px; }
+.fm-bubble--out .fm-bubble__img { border-radius: 20px 20px 4px 20px; }
+.fm-bubble__meta { display: flex; justify-content: flex-end; align-items: center; gap: 4px; font-size: 11px; line-height: 14px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
+.fm-bubble--out .fm-bubble__meta { color: var(--text-inverse); opacity: .75; }
+.fm-bubble__reply { padding: 6px 10px; border-radius: var(--radius-sm); border-left: 3px solid var(--accent-default); background: var(--bg-sunken); font-size: 12px; line-height: 16px; }
+.fm-bubble--out .fm-bubble__reply { background: var(--bg-inverse-subtle); border-left-color: var(--text-inverse); }
+.fm-bubble__rname { font-weight: 600; }
+.fm-bubble__rtext { opacity: .8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fm-bubble__file { display: flex; align-items: center; gap: var(--gap-sm); }
+.fm-bubble__fname { font-weight: 500; }
+.fm-bubble__fsize { font-size: 12px; opacity: .75; }
+.fm-bubble__voice { display: flex; align-items: center; gap: var(--gap-xs); }
+.fm-bubble__play { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: var(--radius-full); border: 0; background: var(--bg-inverse); color: var(--text-inverse); cursor: pointer; flex: none; }
+.fm-bubble--out .fm-bubble__play { background: var(--text-inverse); color: var(--bg-inverse); }
+.fm-bubble__wave { display: inline-flex; align-items: center; gap: 2px; height: 24px; }
+.fm-bubble__wave i { width: 3px; border-radius: 2px; background: currentColor; opacity: .55; }
+.fm-bubble__dur { font-size: 12px; opacity: .75; font-variant-numeric: tabular-nums; }
+.fm-typing { padding: 8px 14px; }
+.fm-chat-head { display: flex; align-items: center; gap: var(--gap-sm); padding: 10px var(--padding-sm); background: var(--glass-fill-strong); border-bottom: var(--border-width-sm) solid var(--border-subtle); font-family: var(--font-sans); }
+.fm-chat-head__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.fm-chat-head__title { font-size: 15px; line-height: 19px; font-weight: 600; color: var(--text-primary); }
+.fm-chat-head__status { font-size: 12px; line-height: 15px; color: var(--text-success); }
+.fm-chat-head__actions { display: flex; gap: 4px; }
+.fm-composer { display: flex; align-items: center; gap: var(--gap-xs); padding: var(--padding-xs); border-radius: var(--radius-lg); background: var(--glass-fill-strong); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-regular); font-family: var(--font-sans); }
+.fm-composer__input { flex: 1; min-width: 0; height: 32px; border: 0; outline: 0; background: transparent; color: var(--text-primary); font: 400 14px/20px var(--font-sans); }
+.fm-composer__input::placeholder { color: var(--text-tertiary); }
