@@ -183,3 +183,5 @@ yarn.lock
 /test-results
 /storybook-static
 .vercel
+
+*storybook.log
