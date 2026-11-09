@@ -19,7 +19,8 @@
     "build-storybook": "ng run factman:build-storybook",
     "test:storybook": "vitest run --project storybook",
     "e2e": "playwright test",
-    "e2e:install": "playwright install --with-deps"
+    "e2e:install": "playwright install --with-deps",
+    "test:headers": "node --test --test-reporter=spec tools/vercel/headers.test.mjs"
   },
   "private": true,
   "packageManager": "pnpm@10.34.9",
