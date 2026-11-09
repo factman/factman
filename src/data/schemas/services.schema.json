@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factman.vercel.app/schemas/services.schema.json",
+  "title": "Services",
+  "description": "The services offered (PRD FR-17 to FR-19). One record per /services/:slug page.",
+  "type": "array",
+  "minItems": 1,
+  "items": { "$ref": "#/$defs/service" },
+  "$defs": {
+    "kebab": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "text": { "type": "string", "minLength": 1 },
+    "service": {
+      "title": "Service",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "title",
+        "summary",
+        "audience",
+        "deliverables",
+        "process",
+        "engagement",
+        "pricing",
+        "faq",
+        "booking",
+        "icon",
+        "order"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/kebab" },
+        "slug": { "$ref": "#/$defs/kebab", "description": "URL segment: /services/<slug>." },
+        "title": { "$ref": "#/$defs/text", "type": "string", "maxLength": 80 },
+        "summary": {
+          "$ref": "#/$defs/text",
+          "type": "string",
+          "maxLength": 200,
+          "description": "Card and meta description line."
+        },
+        "audience": { "$ref": "#/$defs/text", "description": "Who it is for." },
+        "deliverables": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/text" } },
+        "process": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/processStep" }
+        },
+        "engagement": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/engagementModel" }
+        },
+        "pricing": { "$ref": "#/$defs/pricing" },
+        "faq": { "type": "array", "items": { "$ref": "#/$defs/faqItem" } },
+        "booking": { "$ref": "#/$defs/booking" },
+        "icon": {
+          "$ref": "#/$defs/kebab",
+          "description": "Design-system icon name, e.g. lightbulb, code, credit-card."
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Sort position on the grid (ascending)."
+        }
+      }
+    },
+    "processStep": {
+      "title": "ServiceProcessStep",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step", "title", "description"],
+      "properties": {
+        "step": { "type": "integer", "minimum": 1 },
+        "title": { "$ref": "#/$defs/text" },
+        "description": { "$ref": "#/$defs/text" }
+      }
+    },
+    "engagementModel": {
+      "title": "ServiceEngagementModel",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "description"],
+      "properties": {
+        "id": { "$ref": "#/$defs/kebab" },
+        "title": { "$ref": "#/$defs/text" },
+        "description": { "$ref": "#/$defs/text" }
+      }
+    },
+    "pricing": {
+      "title": "ServicePricing",
+      "description": "v1 shows no figures: model \"quote\" with the label \"Get a quote\". \"from\" needs an amount and currency.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model"],
+      "properties": {
+        "model": { "enum": ["quote", "from"] },
+        "label": {
+          "$ref": "#/$defs/text",
+          "description": "Button and price text, e.g. \"Get a quote\"."
+        },
+        "from": { "type": "number", "exclusiveMinimum": 0 },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" }
+      },
+      "if": { "properties": { "model": { "const": "from" } } },
+      "then": {
+        "properties": { "from": true, "currency": true },
+        "required": ["from", "currency"]
+      }
+    },
+    "faqItem": {
+      "title": "ServiceFaqItem",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question", "answer"],
+      "properties": {
+        "question": { "$ref": "#/$defs/text" },
+        "answer": { "$ref": "#/$defs/text" }
+      }
+    },
+    "booking": {
+      "title": "ServiceBooking",
+      "description": "The four booking channels (FR-19), each prefilled with the service name where the channel allows.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schedulerUrl", "email", "whatsapp", "phone"],
+      "properties": {
+        "schedulerUrl": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "email": { "type": "string", "pattern": "^mailto:[^@\\s]+@[^@\\s]+\\.[^@\\s]+" },
+        "whatsapp": { "type": "string", "format": "uri", "pattern": "^https://wa\\.me/\\d+" },
+        "phone": { "type": "string", "pattern": "^tel:\\+\\d{7,15}$" }
+      }
+    }
+  }
+}

@@ -1,0 +1,669 @@
+[
+  {
+    "id": "consultancy",
+    "slug": "consultancy",
+    "title": "Consultancy",
+    "summary": "Independent advice on architecture, product and technology choices before you commit budget.",
+    "audience": "Founders, product owners and business leaders weighing a build, a rebuild or a technology choice who want a senior, vendor-neutral opinion first.",
+    "deliverables": [
+      "Technical discovery and current-state review",
+      "Architecture and technology recommendations with trade-offs",
+      "Build, buy or partner assessment",
+      "Written report with a prioritised roadmap and risk list",
+      "Read-out session with your team"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Discovery call",
+        "description": "30 minutes on your goals, constraints, budget and timeline."
+      },
+      {
+        "step": 2,
+        "title": "Written quote",
+        "description": "Scope, questions to answer and the deliverables you'll receive."
+      },
+      {
+        "step": 3,
+        "title": "Review and workshops",
+        "description": "Access to code, docs and people; focused working sessions."
+      },
+      {
+        "step": 4,
+        "title": "Recommendations",
+        "description": "A written report and a read-out with clear next steps."
+      }
+    ],
+    "engagement": [
+      {
+        "id": "one-off-review",
+        "title": "One-off review",
+        "description": "A fixed-scope assessment of a product, codebase or plan."
+      },
+      {
+        "id": "advisory-retainer",
+        "title": "Advisory retainer",
+        "description": "A few hours a month for ongoing questions and decisions."
+      },
+      {
+        "id": "workshop",
+        "title": "Workshop",
+        "description": "One or two focused sessions on a single decision."
+      }
+    ],
+    "pricing": {
+      "model": "quote",
+      "label": "Get a quote"
+    },
+    "faq": [
+      {
+        "question": "Do you need access to our code?",
+        "answer": "For architecture or codebase reviews, yes, read-only access is enough. Strategy work can be done from documents and conversations."
+      },
+      {
+        "question": "Will you recommend specific vendors or tools?",
+        "answer": "Only on merit. I'm not paid by any vendor, and every recommendation comes with its trade-offs."
+      },
+      {
+        "question": "Can you implement the recommendations too?",
+        "answer": "Yes. Consultancy often leads into Software Engineering as a Service or Technical leadership, but there's no obligation."
+      }
+    ],
+    "booking": {
+      "schedulerUrl": "https://calendar.app.google/jZrEhMzbDbASVE9m7",
+      "email": "mailto:factman60@gmail.com?subject=Quote%20request%3A%20Consultancy&body=Hi%20Odunayo%2C%0A%0AI%27d%20like%20a%20quote%20for%20Consultancy.%0A%0AAbout%20my%20project%3A%0A-%20What%20I%27m%20building%3A%0A-%20Timeline%3A%0A-%20Budget%20range%20%28optional%29%3A%0A%0AThanks%2C%0A",
+      "whatsapp": "https://wa.me/2347066780373?text=Hi%20Odunayo%2C%20I%20found%20you%20through%20your%20portfolio%20and%20I%27d%20like%20a%20quote%20for%20Consultancy.%20Can%20we%20talk%3F",
+      "phone": "tel:+2347066780373"
+    },
+    "icon": "lightbulb",
+    "order": 1
+  },
+  {
+    "id": "software-engineering-as-a-service",
+    "slug": "software-engineering-as-a-service",
+    "title": "Software Engineering as a Service",
+    "summary": "A senior engineer embedded in your team for features, fixes and delivery.",
+    "audience": "Startups and product teams that need senior fullstack capacity now, without a long hiring process, to ship features, clear a backlog or stabilise a product.",
+    "deliverables": [
+      "Production-ready features across frontend and backend",
+      "Code reviews and pull requests that follow your standards",
+      "Tests and documentation for the work delivered",
+      "Weekly progress notes and demos",
+      "A clean handover at the end of the engagement"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Discovery call",
+        "description": "Your product, stack, team and what needs to ship."
+      },
+      {
+        "step": 2,
+        "title": "Written quote",
+        "description": "Scope, availability and the engagement model."
+      },
+      {
+        "step": 3,
+        "title": "Onboarding",
+        "description": "Access, environments and a first small task to get moving fast."
+      },
+      {
+        "step": 4,
+        "title": "Build in sprints",
+        "description": "Working in your tools and rituals, with weekly demos."
+      },
+      {
+        "step": 5,
+        "title": "Handover",
+        "description": "Docs, knowledge transfer and a support window."
+      }
+    ],
+    "engagement": [
+      {
+        "id": "part-time",
+        "title": "Part-time",
+        "description": "A set number of days per week inside your team."
+      },
+      {
+        "id": "full-time",
+        "title": "Full-time",
+        "description": "Dedicated capacity for a defined period."
+      },
+      {
+        "id": "project-based",
+        "title": "Project-based",
+        "description": "A fixed scope, such as one feature or module."
+      }
+    ],
+    "pricing": {
+      "model": "quote",
+      "label": "Get a quote"
+    },
+    "faq": [
+      {
+        "question": "Which stacks do you work with?",
+        "answer": "Mainly TypeScript and JavaScript: Angular, React, Next.js and Node.js, with PHP, MySQL, PostgreSQL and MongoDB on the backend."
+      },
+      {
+        "question": "Will you work in our tools and processes?",
+        "answer": "Yes. I join your repo, tracker, chat and ceremonies rather than asking you to change how you work."
+      },
+      {
+        "question": "Who owns the code?",
+        "answer": "You do. All code, accounts and documentation are yours and handed over in full."
+      }
+    ],
+    "booking": {
+      "schedulerUrl": "https://calendar.app.google/jZrEhMzbDbASVE9m7",
+      "email": "mailto:factman60@gmail.com?subject=Quote%20request%3A%20Software%20Engineering%20as%20a%20Service&body=Hi%20Odunayo%2C%0A%0AI%27d%20like%20a%20quote%20for%20Software%20Engineering%20as%20a%20Service.%0A%0AAbout%20my%20project%3A%0A-%20What%20I%27m%20building%3A%0A-%20Timeline%3A%0A-%20Budget%20range%20%28optional%29%3A%0A%0AThanks%2C%0A",
+      "whatsapp": "https://wa.me/2347066780373?text=Hi%20Odunayo%2C%20I%20found%20you%20through%20your%20portfolio%20and%20I%27d%20like%20a%20quote%20for%20Software%20Engineering%20as%20a%20Service.%20Can%20we%20talk%3F",
+      "phone": "tel:+2347066780373"
+    },
+    "icon": "code",
+    "order": 2
+  },
+  {
+    "id": "fintech-and-payment-solutions",
+    "slug": "fintech-and-payment-solutions",
+    "title": "Fintech and payment solutions",
+    "summary": "Payment flows, wallets and ledgers that are secure and reconcile.",
+    "audience": "Fintech startups and businesses adding payments, wallets, payouts or lending features who need them built correctly the first time.",
+    "deliverables": [
+      "Payment gateway and provider integrations",
+      "Wallet, ledger and transaction design",
+      "Payouts, refunds and reconciliation flows",
+      "Security, audit trail and access-control reviews",
+      "API documentation for your team and partners"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Discovery call",
+        "description": "Your product, providers, markets and compliance context."
+      },
+      {
+        "step": 2,
+        "title": "Written quote",
+        "description": "Scope, integrations and the engagement model."
+      },
+      {
+        "step": 3,
+        "title": "Design",
+        "description": "Money flows, ledger model and failure cases agreed before code."
+      },
+      {
+        "step": 4,
+        "title": "Build and test",
+        "description": "Integrations built against sandboxes with reconciliation checks."
+      },
+      {
+        "step": 5,
+        "title": "Launch and handover",
+        "description": "Go-live support, monitoring and documentation."
+      }
+    ],
+    "engagement": [
+      {
+        "id": "project-based",
+        "title": "Project-based",
+        "description": "A fixed scope, such as a wallet or a provider integration."
+      },
+      {
+        "id": "embedded",
+        "title": "Embedded engineer",
+        "description": "Senior capacity inside your fintech team."
+      },
+      {
+        "id": "review",
+        "title": "Architecture review",
+        "description": "An audit of an existing payments system."
+      }
+    ],
+    "pricing": {
+      "model": "quote",
+      "label": "Get a quote"
+    },
+    "faq": [
+      {
+        "question": "Have you built fintech products before?",
+        "answer": "Yes. I lead technology as CTO at Simple Finance and have built payment, wallet and ledger features for fintech clients."
+      },
+      {
+        "question": "Can you integrate our payment provider?",
+        "answer": "Usually, yes. Share the provider and its API docs on the discovery call and I'll confirm."
+      },
+      {
+        "question": "Do you handle regulatory compliance?",
+        "answer": "I build to the security and audit requirements you have to meet and work alongside your compliance advisers. I don't provide legal or regulatory sign-off."
+      }
+    ],
+    "booking": {
+      "schedulerUrl": "https://calendar.app.google/jZrEhMzbDbASVE9m7",
+      "email": "mailto:factman60@gmail.com?subject=Quote%20request%3A%20Fintech%20and%20payment%20solutions&body=Hi%20Odunayo%2C%0A%0AI%27d%20like%20a%20quote%20for%20Fintech%20and%20payment%20solutions.%0A%0AAbout%20my%20project%3A%0A-%20What%20I%27m%20building%3A%0A-%20Timeline%3A%0A-%20Budget%20range%20%28optional%29%3A%0A%0AThanks%2C%0A",
+      "whatsapp": "https://wa.me/2347066780373?text=Hi%20Odunayo%2C%20I%20found%20you%20through%20your%20portfolio%20and%20I%27d%20like%20a%20quote%20for%20Fintech%20and%20payment%20solutions.%20Can%20we%20talk%3F",
+      "phone": "tel:+2347066780373"
+    },
+    "icon": "credit-card",
+    "order": 3
+  },
+  {
+    "id": "technical-leadership",
+    "slug": "technical-leadership",
+    "title": "Technical leadership",
+    "summary": "Fractional CTO support for founders who need a senior technical partner.",
+    "audience": "Founders and product leaders building software without, or between, a senior technology lead, who need strategy, architecture and hiring done well.",
+    "deliverables": [
+      "Technology strategy and roadmap tied to your product and budget",
+      "Architecture decisions your team can build on",
+      "Hiring plan, role design and interview loop",
+      "Delivery process, rituals and engineering standards",
+      "Regular reports for founders and investors"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Discovery call",
+        "description": "Goals, team, constraints and timeline."
+      },
+      {
+        "step": 2,
+        "title": "Written quote",
+        "description": "Scope, engagement model and a first-month plan."
+      },
+      {
+        "step": 3,
+        "title": "Audit",
+        "description": "Architecture, delivery and security reviewed in the first weeks."
+      },
+      {
+        "step": 4,
+        "title": "Embed with the team",
+        "description": "Planning, reviews and weekly check-ins."
+      },
+      {
+        "step": 5,
+        "title": "Handover",
+        "description": "Docs, hiring plan and a support window."
+      }
+    ],
+    "engagement": [
+      {
+        "id": "advisory",
+        "title": "Advisory",
+        "description": "A few hours a month: reviews, hiring calls and decisions."
+      },
+      {
+        "id": "fractional-cto",
+        "title": "Fractional CTO",
+        "description": "Two to three days a week inside your team."
+      },
+      {
+        "id": "project-based",
+        "title": "Project-based",
+        "description": "A fixed scope, such as a platform rebuild or technical due diligence."
+      }
+    ],
+    "pricing": {
+      "model": "quote",
+      "label": "Get a quote"
+    },
+    "faq": [
+      {
+        "question": "Can you take over from an outgoing CTO?",
+        "answer": "Yes. A handover audit is usually the first step so nothing is lost."
+      },
+      {
+        "question": "Do you also write code?",
+        "answer": "When it helps the team, yes, but the focus is leadership, architecture and getting the team shipping."
+      },
+      {
+        "question": "Can you help us hire our own CTO or engineers?",
+        "answer": "Yes. I can design the roles, run interviews with you and onboard new hires."
+      }
+    ],
+    "booking": {
+      "schedulerUrl": "https://calendar.app.google/jZrEhMzbDbASVE9m7",
+      "email": "mailto:factman60@gmail.com?subject=Quote%20request%3A%20Technical%20leadership&body=Hi%20Odunayo%2C%0A%0AI%27d%20like%20a%20quote%20for%20Technical%20leadership.%0A%0AAbout%20my%20project%3A%0A-%20What%20I%27m%20building%3A%0A-%20Timeline%3A%0A-%20Budget%20range%20%28optional%29%3A%0A%0AThanks%2C%0A",
+      "whatsapp": "https://wa.me/2347066780373?text=Hi%20Odunayo%2C%20I%20found%20you%20through%20your%20portfolio%20and%20I%27d%20like%20a%20quote%20for%20Technical%20leadership.%20Can%20we%20talk%3F",
+      "phone": "tel:+2347066780373"
+    },
+    "icon": "users",
+    "order": 4
+  },
+  {
+    "id": "devops",
+    "slug": "devops",
+    "title": "DevOps",
+    "summary": "CI/CD pipelines and containers so your team ships safely every day.",
+    "audience": "Teams that deploy by hand, have slow or flaky releases, or want automated, repeatable delivery with less downtime.",
+    "deliverables": [
+      "CI/CD pipelines with automated tests and checks",
+      "Docker containers and environment setup",
+      "Infrastructure as code where it fits",
+      "Monitoring, logging and alerting",
+      "Runbooks and documentation for your team"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Discovery call",
+        "description": "Your stack, release process and pain points."
+      },
+      {
+        "step": 2,
+        "title": "Written quote",
+        "description": "Scope, target workflow and the engagement model."
+      },
+      {
+        "step": 3,
+        "title": "Assess",
+        "description": "Current pipelines, environments and deployment risks reviewed."
+      },
+      {
+        "step": 4,
+        "title": "Automate",
+        "description": "Pipelines, containers and infrastructure built step by step."
+      },
+      {
+        "step": 5,
+        "title": "Handover",
+        "description": "Runbooks, training and a support window."
+      }
+    ],
+    "engagement": [
+      {
+        "id": "project-based",
+        "title": "Project-based",
+        "description": "Set up or rebuild your pipelines and environments."
+      },
+      {
+        "id": "retainer",
+        "title": "Retainer",
+        "description": "Ongoing maintenance, upgrades and improvements."
+      },
+      {
+        "id": "review",
+        "title": "Audit",
+        "description": "A review of your current setup with recommendations."
+      }
+    ],
+    "pricing": {
+      "model": "quote",
+      "label": "Get a quote"
+    },
+    "faq": [
+      {
+        "question": "Which CI/CD tools do you use?",
+        "answer": "I work with Azure DevOps, Jenkins and Git-based pipelines, and can adapt to the tools your team already uses."
+      },
+      {
+        "question": "Can you work with our existing setup?",
+        "answer": "Yes. I improve what you have before proposing a replacement."
+      },
+      {
+        "question": "Will our team be able to maintain it?",
+        "answer": "That's the goal. Everything is documented and handed over with a walkthrough."
+      }
+    ],
+    "booking": {
+      "schedulerUrl": "https://calendar.app.google/jZrEhMzbDbASVE9m7",
+      "email": "mailto:factman60@gmail.com?subject=Quote%20request%3A%20DevOps&body=Hi%20Odunayo%2C%0A%0AI%27d%20like%20a%20quote%20for%20DevOps.%0A%0AAbout%20my%20project%3A%0A-%20What%20I%27m%20building%3A%0A-%20Timeline%3A%0A-%20Budget%20range%20%28optional%29%3A%0A%0AThanks%2C%0A",
+      "whatsapp": "https://wa.me/2347066780373?text=Hi%20Odunayo%2C%20I%20found%20you%20through%20your%20portfolio%20and%20I%27d%20like%20a%20quote%20for%20DevOps.%20Can%20we%20talk%3F",
+      "phone": "tel:+2347066780373"
+    },
+    "icon": "workflow",
+    "order": 5
+  },
+  {
+    "id": "cloud-engineering-services",
+    "slug": "cloud-engineering-services",
+    "title": "Cloud engineering services",
+    "summary": "Infrastructure on AWS, Google Cloud or Azure, sized for your traffic.",
+    "audience": "Businesses moving to the cloud, scaling an existing setup, or looking to cut cloud costs without hurting reliability.",
+    "deliverables": [
+      "Cloud architecture design on AWS, Google Cloud or Azure",
+      "Migration of applications and data",
+      "Kubernetes and container hosting setup",
+      "Security, backups and access control",
+      "Cost review and right-sizing recommendations"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Discovery call",
+        "description": "Your workloads, traffic, budget and compliance needs."
+      },
+      {
+        "step": 2,
+        "title": "Written quote",
+        "description": "Scope, target architecture and the engagement model."
+      },
+      {
+        "step": 3,
+        "title": "Design",
+        "description": "Architecture, environments and a migration or build plan."
+      },
+      {
+        "step": 4,
+        "title": "Build or migrate",
+        "description": "Infrastructure set up and workloads moved in safe stages."
+      },
+      {
+        "step": 5,
+        "title": "Handover",
+        "description": "Documentation, dashboards and a support window."
+      }
+    ],
+    "engagement": [
+      {
+        "id": "project-based",
+        "title": "Project-based",
+        "description": "A defined build or migration."
+      },
+      {
+        "id": "retainer",
+        "title": "Retainer",
+        "description": "Ongoing cloud operations and improvements."
+      },
+      {
+        "id": "review",
+        "title": "Cost and architecture review",
+        "description": "A one-off review with recommendations."
+      }
+    ],
+    "pricing": {
+      "model": "quote",
+      "label": "Get a quote"
+    },
+    "faq": [
+      {
+        "question": "Which cloud providers do you support?",
+        "answer": "AWS, Google Cloud and Azure, plus simpler platforms such as DigitalOcean, Heroku and Vercel where they fit better."
+      },
+      {
+        "question": "Can you reduce our cloud bill?",
+        "answer": "Often, yes. A review usually finds over-provisioned or unused resources; I'll show the expected savings before making changes."
+      },
+      {
+        "question": "Will there be downtime during a migration?",
+        "answer": "The plan is designed to avoid it. Any unavoidable switch-over is scheduled with you in advance."
+      }
+    ],
+    "booking": {
+      "schedulerUrl": "https://calendar.app.google/jZrEhMzbDbASVE9m7",
+      "email": "mailto:factman60@gmail.com?subject=Quote%20request%3A%20Cloud%20engineering%20services&body=Hi%20Odunayo%2C%0A%0AI%27d%20like%20a%20quote%20for%20Cloud%20engineering%20services.%0A%0AAbout%20my%20project%3A%0A-%20What%20I%27m%20building%3A%0A-%20Timeline%3A%0A-%20Budget%20range%20%28optional%29%3A%0A%0AThanks%2C%0A",
+      "whatsapp": "https://wa.me/2347066780373?text=Hi%20Odunayo%2C%20I%20found%20you%20through%20your%20portfolio%20and%20I%27d%20like%20a%20quote%20for%20Cloud%20engineering%20services.%20Can%20we%20talk%3F",
+      "phone": "tel:+2347066780373"
+    },
+    "icon": "cloud",
+    "order": 6
+  },
+  {
+    "id": "mobile-development",
+    "slug": "mobile-development",
+    "title": "Mobile development",
+    "summary": "Cross-platform apps for iOS and Android, from prototype to store release.",
+    "audience": "Startups and businesses that need a mobile app for iOS and Android from one codebase, or want to improve an existing one.",
+    "deliverables": [
+      "Cross-platform app for iOS and Android",
+      "Backend and API integration",
+      "Push notifications, analytics and crash reporting",
+      "App Store and Google Play release",
+      "Source code and documentation"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Discovery call",
+        "description": "Your users, features and timeline."
+      },
+      {
+        "step": 2,
+        "title": "Written quote",
+        "description": "Scope, platforms and the engagement model."
+      },
+      {
+        "step": 3,
+        "title": "Prototype",
+        "description": "Key screens and flows to validate before the full build."
+      },
+      {
+        "step": 4,
+        "title": "Build in sprints",
+        "description": "Weekly builds you can install and test."
+      },
+      {
+        "step": 5,
+        "title": "Release and handover",
+        "description": "Store submission, launch support and documentation."
+      }
+    ],
+    "engagement": [
+      {
+        "id": "project-based",
+        "title": "Project-based",
+        "description": "A defined app or feature set, from prototype to release."
+      },
+      {
+        "id": "embedded",
+        "title": "Embedded engineer",
+        "description": "Mobile capacity inside your team."
+      },
+      {
+        "id": "maintenance",
+        "title": "Maintenance",
+        "description": "Updates, fixes and OS upgrades after launch."
+      }
+    ],
+    "pricing": {
+      "model": "quote",
+      "label": "Get a quote"
+    },
+    "faq": [
+      {
+        "question": "Native or cross-platform?",
+        "answer": "Cross-platform with React Native, Flutter or Ionic covers most apps with one codebase. I'll recommend native only if your app truly needs it."
+      },
+      {
+        "question": "Do you publish to the app stores?",
+        "answer": "Yes. I handle the App Store and Google Play submission under your developer accounts."
+      },
+      {
+        "question": "Can you build the backend too?",
+        "answer": "Yes. I build APIs with Node.js and Firebase, or integrate with your existing backend."
+      }
+    ],
+    "booking": {
+      "schedulerUrl": "https://calendar.app.google/jZrEhMzbDbASVE9m7",
+      "email": "mailto:factman60@gmail.com?subject=Quote%20request%3A%20Mobile%20development&body=Hi%20Odunayo%2C%0A%0AI%27d%20like%20a%20quote%20for%20Mobile%20development.%0A%0AAbout%20my%20project%3A%0A-%20What%20I%27m%20building%3A%0A-%20Timeline%3A%0A-%20Budget%20range%20%28optional%29%3A%0A%0AThanks%2C%0A",
+      "whatsapp": "https://wa.me/2347066780373?text=Hi%20Odunayo%2C%20I%20found%20you%20through%20your%20portfolio%20and%20I%27d%20like%20a%20quote%20for%20Mobile%20development.%20Can%20we%20talk%3F",
+      "phone": "tel:+2347066780373"
+    },
+    "icon": "mobile",
+    "order": 7
+  },
+  {
+    "id": "custom-tailored-software-solutions",
+    "slug": "custom-tailored-software-solutions",
+    "title": "Custom tailored software solutions",
+    "summary": "Software built around how your business works, from first sketch to production.",
+    "audience": "Businesses whose processes don't fit off-the-shelf tools and who need a web platform, internal system or integration built for them.",
+    "deliverables": [
+      "Requirements and solution design",
+      "Web application or internal system",
+      "Integrations with your existing tools and APIs",
+      "Testing, deployment and hosting setup",
+      "Training, documentation and post-launch support"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Discovery call",
+        "description": "How your business works today and what needs to change."
+      },
+      {
+        "step": 2,
+        "title": "Written quote",
+        "description": "Scope, milestones and the engagement model."
+      },
+      {
+        "step": 3,
+        "title": "Design",
+        "description": "Workflows, data model and screens agreed with you."
+      },
+      {
+        "step": 4,
+        "title": "Build in sprints",
+        "description": "Weekly demos so you see progress and steer early."
+      },
+      {
+        "step": 5,
+        "title": "Launch and support",
+        "description": "Go-live, training and a support window."
+      }
+    ],
+    "engagement": [
+      {
+        "id": "project-based",
+        "title": "Project-based",
+        "description": "A defined build delivered in milestones."
+      },
+      {
+        "id": "phased",
+        "title": "Phased delivery",
+        "description": "Start with an MVP, then extend in follow-up phases."
+      },
+      {
+        "id": "support",
+        "title": "Support and maintenance",
+        "description": "Ongoing fixes and improvements after launch."
+      }
+    ],
+    "pricing": {
+      "model": "quote",
+      "label": "Get a quote"
+    },
+    "faq": [
+      {
+        "question": "How long does a custom project take?",
+        "answer": "It depends on scope. You'll get milestones and a timeline in the written quote after the discovery call."
+      },
+      {
+        "question": "Can it work with the tools we already use?",
+        "answer": "Usually, yes. Integrations with your existing systems and APIs are part of the design."
+      },
+      {
+        "question": "What happens after launch?",
+        "answer": "You get a support window, documentation and training, with ongoing support available if you need it."
+      }
+    ],
+    "booking": {
+      "schedulerUrl": "https://calendar.app.google/jZrEhMzbDbASVE9m7",
+      "email": "mailto:factman60@gmail.com?subject=Quote%20request%3A%20Custom%20tailored%20software%20solutions&body=Hi%20Odunayo%2C%0A%0AI%27d%20like%20a%20quote%20for%20Custom%20tailored%20software%20solutions.%0A%0AAbout%20my%20project%3A%0A-%20What%20I%27m%20building%3A%0A-%20Timeline%3A%0A-%20Budget%20range%20%28optional%29%3A%0A%0AThanks%2C%0A",
+      "whatsapp": "https://wa.me/2347066780373?text=Hi%20Odunayo%2C%20I%20found%20you%20through%20your%20portfolio%20and%20I%27d%20like%20a%20quote%20for%20Custom%20tailored%20software%20solutions.%20Can%20we%20talk%3F",
+      "phone": "tel:+2347066780373"
+    },
+    "icon": "wrench",
+    "order": 8
+  }
+]
