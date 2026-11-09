@@ -488,16 +488,16 @@ This repository also holds the source of my portfolio website (Angular, prerende
 
 ### Task runner (Nx)
 
-Every script above runs through [Nx](https://nx.dev) (pinned in `package.json`, no Nx Cloud). The targets live in `project.json` and the shared settings in `nx.json`; each `package.json` script is a one-line `nx run factman:<target>`, so nothing is chained with `&&`.
+Every script above runs through [Nx](https://nx.dev) (pinned in `package.json`), with the Nx Cloud remote cache. The targets live in `project.json` and the shared settings in `nx.json`; each `package.json` script is a one-line `nx run factman:<target>`, so nothing is chained with `&&`.
 
 - **Order.** Nx runs a target's dependencies first: `data:validate` and `data:types` before `build` and `test`, `data:types` before `typecheck`, `start` and Storybook, and `build` before `e2e`. `lint` runs ESLint, Stylelint and the lint-rule test. `lint` and `test` do not depend on each other.
-- **Cache.** Builds, lint, tests and checks are cached in `.nx/cache` (git-ignored). A repeat run with unchanged inputs is replayed from the cache, and `dist/` is restored if it was deleted. Docs, workflow files and Markdown changes do not invalidate the build. Use `--skip-nx-cache` to force a run, or `pnpm nx reset` to clear the cache.
+- **Cache.** Builds, lint, tests and checks are cached in `.nx/cache` (git-ignored). A repeat run with unchanged inputs is replayed from the cache, and `dist/` is restored if it was deleted. Docs, workflow files and Markdown changes do not invalidate the build. Use `--skip-nx-cache` to force a run, `--skip-remote-cache` to ignore Nx Cloud, or `pnpm nx reset` to clear the local cache. Set `NX_NO_CLOUD=true` to work without Nx Cloud.
 - **Arguments** pass through to the underlying tool: `pnpm test --watch=false`, `pnpm e2e --args="--project=chromium"`.
 - **Graph.** `pnpm nx graph` shows the task graph; `pnpm nx show project factman` lists every target.
 
 ### Continuous integration
 
-GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and on every push to `dev` or `main`: format check, lint, typecheck, unit and Storybook (axe) tests, the prerendered build, then Playwright E2E against the built files. Each job runs its checks through Nx (`nx run-many` in the static job). The E2E job downloads the build job's `dist` artifact and runs `nx run factman:e2e --excludeTaskDependencies`, so it does not rebuild. The Nx cache is local only: Nx 24 refuses cache artifacts produced on another machine, so restoring `.nx/cache` with `actions/cache` gives no hits on a fresh runner. Sharing the cache across CI runs needs a remote cache (Nx Cloud or a self-hosted Nx cache server). The workspace is a single Nx project, so CI runs every target rather than `nx affected`; switch to `nx affected` if the repository grows more projects. Vercel deploys every push (ETE-21).
+GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and on every push to `dev` or `main`: format check, lint, typecheck, unit and Storybook (axe) tests, the prerendered build, then Playwright E2E against the built files. Each job runs its checks through Nx (`nx run-many` in the static job) and shares results through the [Nx Cloud](https://cloud.nx.app) remote cache (`nxCloudId` in `nx.json`, free Hobby plan). A task that already ran with the same inputs, in another job, another run or on a developer machine, is replayed from the remote cache, and the E2E job takes the build from it instead of rebuilding. The workspace is a single Nx project, so CI runs every target rather than `nx affected`; switch to `nx affected` if the repository grows more projects. Vercel deploys every push (ETE-21).
 
 ### Hosting (Vercel)
 
