@@ -446,7 +446,7 @@ clients.
 ---
 ## 🧑‍💻 Website development
 
-This repository also holds the source of the Factman website (Angular, prerendered to static HTML, hosted on Vercel).
+This repository also holds the source of my portfolio website (Angular, prerendered to static HTML, hosted on Vercel).
 
 ### Requirements
 

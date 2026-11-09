@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'app-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <h1>Factman</h1>
+    <h1>Odunayo Mohammed</h1>
     <p>Site under construction.</p>
   `,
 })
