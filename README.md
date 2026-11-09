@@ -450,7 +450,7 @@ This repository also holds the source of my portfolio website (Angular, prerende
 
 ### Requirements
 
-- **Node 22** via [nvm](https://github.com/nvm-sh/nvm). The version is pinned in `.nvmrc`:
+- **Node 24 (LTS)** via [nvm](https://github.com/nvm-sh/nvm). The version is pinned in `.nvmrc`:
 
   ```bash
   nvm install && nvm use
