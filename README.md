@@ -471,3 +471,9 @@ This repository also holds the source of the Factman website (Angular, prerender
 | `pnpm start` | Dev server on http://localhost:4200                          |
 | `pnpm build` | Production build; every static route is prerendered to `dist/factman/browser` |
 | `pnpm test`  | Unit tests (Vitest + Angular TestBed)                        |
+| `pnpm lint`  | ESLint (incl. Atomic Design boundaries) and the lint-rule fixture test |
+| `pnpm typecheck` | TypeScript check for app and specs                       |
+| `pnpm format` / `pnpm format:check` | Prettier write / verify                 |
+| `pnpm storybook` | Storybook on http://localhost:6006                       |
+| `pnpm test:storybook` | Story tests in Vitest browser mode, with axe accessibility checks |
+| `pnpm e2e`   | Playwright against the prerendered build (run `pnpm build` and `pnpm e2e:install` first) |
