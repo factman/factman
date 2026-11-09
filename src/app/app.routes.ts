@@ -4,7 +4,7 @@ export const routes: Routes = [
   {
     path: '',
     title: 'Odunayo Mohammed',
-    loadComponent: () => import('./features/home/home').then((m) => m.Home),
+    loadComponent: () => import('@features/home').then((m) => m.Home),
   },
   { path: '**', redirectTo: '' },
 ];
