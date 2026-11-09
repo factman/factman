@@ -10,6 +10,7 @@ describe('resolveSite', () => {
     expect(prod.robots).toBe('index');
     expect(prod.analytics.enabled).toBe(true);
     expect(prod.analytics.gtmId).toBe('GTM-MB3JFBJ6');
+    expect(prod.analytics.ga4Id).toBe('G-NZ7SLG4X1Q');
     expect('environments' in prod).toBe(false);
   });
 
