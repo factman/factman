@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factman.vercel.app/schemas/site.schema.json",
+  "title": "Site",
+  "description": "Site-wide settings: SEO, navigation, analytics IDs, consent and feature flags (PRD §7, §10). Anything environment-specific lives here, with per-environment overrides under `environments` (PRD §8: no value is read from window or env vars at run time).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "url",
+    "name",
+    "titleTemplate",
+    "description",
+    "locale",
+    "robots",
+    "nav",
+    "analytics",
+    "consent",
+    "features",
+    "defaultTheme",
+    "environments"
+  ],
+  "properties": {
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://[^/]+$",
+      "description": "Canonical origin, no trailing slash. Placeholder factman.vercel.app until a custom domain is attached."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Site and owner name used in titles and Open Graph."
+    },
+    "titleTemplate": {
+      "type": "string",
+      "pattern": "%s",
+      "description": "Page title template; %s is replaced by the page title."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 50,
+      "maxLength": 160,
+      "description": "Default meta description (50 to 160 characters)."
+    },
+    "ogImage": {
+      "type": "string",
+      "description": "Default Open Graph image, relative to src/assets. Added with the generated OG image (ETE-113)."
+    },
+    "locale": { "type": "string", "pattern": "^[a-z]{2}_[A-Z]{2}$" },
+    "robots": { "$ref": "#/$defs/robots" },
+    "nav": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/navItem" }
+    },
+    "analytics": { "$ref": "#/$defs/analytics" },
+    "consent": { "$ref": "#/$defs/consent" },
+    "features": { "$ref": "#/$defs/features" },
+    "defaultTheme": {
+      "enum": ["system", "light", "dark"],
+      "description": "FR-04: follow the system preference until the visitor chooses."
+    },
+    "environments": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["preview"],
+      "properties": {
+        "preview": { "$ref": "#/$defs/environmentOverride" }
+      },
+      "description": "Overrides applied on top of the base settings per deployment environment. Production uses the base values."
+    }
+  },
+  "$defs": {
+    "robots": { "enum": ["index", "noindex"] },
+    "navItem": {
+      "title": "SiteNavItem",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "anchor"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "label": { "type": "string", "minLength": 1 },
+        "anchor": {
+          "type": "string",
+          "pattern": "^#[a-z0-9-]+$",
+          "description": "Section anchor on the home page."
+        },
+        "route": {
+          "type": "string",
+          "pattern": "^/[a-z0-9/-]*$",
+          "description": "Page to open from any other page; without it, links go to /<anchor>."
+        }
+      }
+    },
+    "analytics": {
+      "title": "SiteAnalytics",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled", "gtmId", "ga4Id"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "gtmId": {
+          "oneOf": [{ "type": "string", "pattern": "^GTM-[A-Z0-9]+$" }, { "type": "null" }],
+          "description": "Google Tag Manager container ID (DS-12)."
+        },
+        "ga4Id": {
+          "oneOf": [{ "type": "string", "pattern": "^G-[A-Z0-9]+$" }, { "type": "null" }],
+          "description": "GA4 measurement ID (G-…, not the numeric property ID); null until known."
+        }
+      }
+    },
+    "consent": {
+      "title": "SiteConsent",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "cookie", "maxAgeDays", "categories"],
+      "properties": {
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Bump to re-prompt every visitor (stored decision carries the version)."
+        },
+        "cookie": { "type": "string", "pattern": "^[a-z_]+$" },
+        "maxAgeDays": { "type": "integer", "minimum": 1, "maximum": 395 },
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/consentCategory" }
+        }
+      }
+    },
+    "consentCategory": {
+      "title": "SiteConsentCategory",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "description", "required", "defaultGranted", "storage"],
+      "properties": {
+        "id": { "enum": ["necessary", "analytics", "advertising"] },
+        "label": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "required": { "type": "boolean", "description": "Always on; cannot be switched off." },
+        "defaultGranted": { "type": "boolean" },
+        "used": {
+          "type": "boolean",
+          "default": true,
+          "description": "False for categories listed only to say they are not used."
+        },
+        "storage": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Cookies or storage keys in this category, with lifetime (shown on /privacy)."
+        }
+      }
+    },
+    "features": {
+      "title": "SiteFeatures",
+      "description": "Flags for the v1.1 (P1) items; all off in v1.0 (PRD §4).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stackFilter",
+        "expandableRoles",
+        "blogTagFilter",
+        "contributionGraph",
+        "terminal",
+        "scrollSpy"
+      ],
+      "properties": {
+        "stackFilter": { "type": "boolean" },
+        "expandableRoles": { "type": "boolean" },
+        "blogTagFilter": { "type": "boolean" },
+        "contributionGraph": { "type": "boolean" },
+        "terminal": { "type": "boolean" },
+        "scrollSpy": { "type": "boolean" }
+      }
+    },
+    "environmentOverride": {
+      "title": "SiteEnvironmentOverride",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "robots": { "$ref": "#/$defs/robots" },
+        "analytics": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": { "enabled": { "type": "boolean" } }
+        }
+      }
+    }
+  }
+}

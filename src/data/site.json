@@ -1,0 +1,68 @@
+{
+  "url": "https://factman.vercel.app",
+  "name": "Odunayo Mohammed",
+  "titleTemplate": "%s · Odunayo Mohammed",
+  "description": "Fullstack Software Engineer and CTO in Lagos, Nigeria. Building web, mobile and payment products since 2013.",
+  "locale": "en_NG",
+  "robots": "index",
+  "nav": [
+    { "id": "about", "label": "About", "anchor": "#about" },
+    { "id": "experience", "label": "Experience", "anchor": "#experience" },
+    { "id": "services", "label": "Services", "anchor": "#services", "route": "/services" },
+    { "id": "projects", "label": "Projects", "anchor": "#projects", "route": "/projects" },
+    { "id": "blog", "label": "Blog", "anchor": "#blog", "route": "/blog" },
+    { "id": "contact", "label": "Contact", "anchor": "#contact" }
+  ],
+  "analytics": {
+    "enabled": true,
+    "gtmId": "GTM-MB3JFBJ6",
+    "ga4Id": null
+  },
+  "consent": {
+    "version": 1,
+    "cookie": "fm_consent",
+    "maxAgeDays": 182,
+    "categories": [
+      {
+        "id": "necessary",
+        "label": "necessary",
+        "description": "theme and consent choice · always on",
+        "required": true,
+        "defaultGranted": true,
+        "storage": ["fm_consent (6 months)", "fm_theme"]
+      },
+      {
+        "id": "analytics",
+        "label": "analytics",
+        "description": "Google Analytics 4 · _ga, _ga_<id> · 14 months",
+        "required": false,
+        "defaultGranted": false,
+        "storage": ["_ga (14 months)", "_ga_<id> (14 months)"]
+      },
+      {
+        "id": "advertising",
+        "label": "advertising",
+        "description": "not used on this site",
+        "required": false,
+        "defaultGranted": false,
+        "used": false,
+        "storage": []
+      }
+    ]
+  },
+  "features": {
+    "stackFilter": false,
+    "expandableRoles": false,
+    "blogTagFilter": false,
+    "contributionGraph": false,
+    "terminal": false,
+    "scrollSpy": false
+  },
+  "defaultTheme": "system",
+  "environments": {
+    "preview": {
+      "robots": "noindex",
+      "analytics": { "enabled": false }
+    }
+  }
+}
