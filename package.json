@@ -7,7 +7,10 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:factman": "node dist/factman/server/server.mjs"
+    "serve:ssr:factman": "node dist/factman/server/server.mjs",
+    "prepare": "husky",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "private": true,
   "packageManager": "pnpm@10.34.9",
@@ -28,9 +31,13 @@
     "@angular/build": "^22.2.6",
     "@angular/cli": "^22.2.6",
     "@angular/compiler-cli": "^22.2.0",
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
     "@types/express": "^5.0.1",
     "@types/node": "^22.12.0",
+    "husky": "^9.1.7",
     "jsdom": "^30.0.0",
+    "lint-staged": "^17.6.0",
     "prettier": "^3.8.1",
     "typescript": "~6.0.2",
     "vitest": "^5.0.0"
