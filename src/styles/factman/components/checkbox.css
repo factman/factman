@@ -1,0 +1,36 @@
+/* Factman "checkbox" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Checkbox ---------- */
+.fm-check { position: relative; display: inline-flex; align-items: flex-start; gap: var(--gap-xs); font-family: var(--font-sans); color: var(--text-primary); cursor: pointer; }
+.fm-check__input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+.fm-check__box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border: var(--border-width-md) solid var(--border-default);
+  border-radius: var(--radius-xs);
+  background: var(--glass-fill-strong);
+  color: var(--icon-primary);
+  transition: background-color 150ms ease-out, border-color 150ms ease-out, box-shadow 150ms ease-out;
+}
+.fm-check--16 .fm-check__box { width: 16px; height: 16px; }
+.fm-check__box.is-on { background: var(--glass-fill-elevated); border-color: var(--border-strong); }
+.fm-check:hover .fm-check__box, .fm-check.is-force-hover .fm-check__box { background: var(--glass-fill-elevated); border-color: var(--border-hover); box-shadow: var(--shadow-glass-chip); }
+.fm-check:hover .fm-check__box.is-on, .fm-check.is-force-hover .fm-check__box.is-on { border-color: var(--border-strong); }
+.fm-check__input:focus-visible + .fm-check__box::after, .fm-check.is-force-focus .fm-check__box::after {
+  content: "";
+  position: absolute;
+  inset: -5.5px;
+  border: var(--border-width-lg) solid var(--border-focus);
+  border-radius: var(--radius-sm);
+}
+.fm-check.is-error .fm-check__box { border-color: var(--border-danger); }
+.fm-check.is-disabled { cursor: not-allowed; }
+.fm-check.is-disabled .fm-check__box { opacity: var(--opacity-disabled-control); background: var(--glass-fill-subtle); border-color: var(--glass-stroke-subtle); box-shadow: none; }
+.fm-check.is-disabled .fm-check__text { color: var(--text-disabled); }
+.fm-check__text { display: flex; flex-direction: column; font-size: 14px; line-height: 20px; }
+.fm-check--16 .fm-check__text { font-size: 12px; line-height: 16px; }
+.fm-check__desc { font-size: 12px; line-height: 18px; color: var(--text-secondary); }

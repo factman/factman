@@ -1,0 +1,19 @@
+/* Factman "switch" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Switch ---------- */
+.fm-switch { position: relative; display: inline-flex; align-items: flex-start; gap: var(--gap-sm); font-family: var(--font-sans); color: var(--text-primary); cursor: pointer; }
+.fm-switch__input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+.fm-switch__track { --w: 40px; --h: 24px; position: relative; display: inline-flex; align-items: center; flex: none; box-sizing: border-box; width: var(--w); height: var(--h); padding: 0 2px; border-radius: var(--radius-full); background: var(--bg-track); transition: background-color 150ms ease-out; }
+.fm-switch--sm .fm-switch__track { --w: 32px; --h: 20px; }
+.fm-switch--lg .fm-switch__track { --w: 48px; --h: 28px; }
+.fm-switch__knob { width: calc(var(--h) - 4px); height: calc(var(--h) - 4px); border-radius: var(--radius-full); background: var(--bg-surface); box-shadow: var(--shadow-switch-knob); transition: transform 150ms ease-out; }
+.fm-switch:hover .fm-switch__track, .fm-switch.is-force-hover .fm-switch__track { background: var(--bg-track-hover); }
+.fm-switch.is-on .fm-switch__track { background: var(--bg-inverse); box-shadow: var(--shadow-button-pressed-dark); }
+.fm-switch.is-on:hover .fm-switch__track { background: var(--bg-inverse-hover); }
+.fm-switch.is-on .fm-switch__knob { transform: translateX(calc(var(--w) - var(--h))); }
+.fm-switch__input:focus-visible + .fm-switch__track, .fm-switch.is-force-focus .fm-switch__track { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: 2px; }
+.fm-switch.is-error .fm-switch__track { box-shadow: inset 0 0 0 1.5px var(--border-danger); }
+.fm-switch.is-disabled { cursor: not-allowed; }
+.fm-switch.is-disabled .fm-switch__track { opacity: var(--opacity-disabled-control); }
+.fm-switch.is-disabled .fm-check__text { color: var(--text-disabled); }
+.fm-field-title { font-weight: 500; }
+.fm-switch .fm-check__text, .fm-radio .fm-check__text { gap: 2px; }

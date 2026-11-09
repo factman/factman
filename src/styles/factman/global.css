@@ -1,0 +1,39 @@
+/* Factman global styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* Factman — component styles. Every value comes from tokens.css. */
+
+.fm-backdrop {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--bg-canvas);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+.fm-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--backdrop-glow);
+  background:
+    radial-gradient(60% 70% at 12% 0%, var(--ice-200), transparent 70%),
+    radial-gradient(50% 60% at 100% 100%, var(--blue-200), transparent 70%);
+}
+[data-theme="dark"] .fm-backdrop::before { opacity: 0.3; }
+
+.fm-icon { display: inline-block; flex: none; vertical-align: middle; }
+@keyframes fm-spin { to { transform: rotate(360deg); } }
+
+/* ---------- Shared: tones, glass, arrows ---------- */
+.fm-tone--info { --tone-fill: var(--tag-fill-info); --tone-bg: var(--bg-info-subtle); --tone-bd: var(--border-info); --tone-fg: var(--text-info); --tone-ic: var(--icon-info); }
+.fm-tone--success { --tone-fill: var(--tag-fill-success); --tone-bg: var(--bg-success-subtle); --tone-bd: var(--border-success); --tone-fg: var(--text-success); --tone-ic: var(--icon-success); }
+.fm-tone--warning { --tone-fill: var(--tag-fill-warning); --tone-bg: var(--bg-warning-subtle); --tone-bd: var(--border-warning); --tone-fg: var(--text-warning); --tone-ic: var(--icon-warning); }
+.fm-tone--danger { --tone-fill: var(--tag-fill-danger); --tone-bg: var(--bg-danger-subtle); --tone-bd: var(--border-danger); --tone-fg: var(--text-danger); --tone-ic: var(--icon-danger); }
+.fm-tone--neutral, .fm-tone--loading { --tone-fill: var(--tag-fill-neutral); --tone-bg: var(--bg-sunken); --tone-bd: var(--border-default); --tone-fg: var(--text-secondary); --tone-ic: var(--icon-secondary); }
+.fm-tone--inverse { --tone-fill: var(--bg-inverse); --tone-bg: var(--bg-inverse); --tone-bd: var(--bg-inverse); --tone-fg: var(--text-inverse); --tone-ic: var(--icon-inverse); }
+.fm-glass { background: var(--glass-fill-strong); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-regular); -webkit-backdrop-filter: blur(var(--blur-glass-regular)); backdrop-filter: blur(var(--blur-glass-regular)); }
+.fm-arrow { position: absolute; width: 10px; height: 10px; transform: rotate(45deg); background: inherit; border: inherit; z-index: 1; }
+.fm-place--top > .fm-arrow { bottom: -5px; left: calc(50% - 5px); border-top: 0; border-left: 0; }
+.fm-place--bottom > .fm-arrow { top: -5px; left: calc(50% - 5px); border-bottom: 0; border-right: 0; }
+.fm-place--left > .fm-arrow { right: -5px; top: calc(50% - 5px); border-bottom: 0; border-left: 0; }
+.fm-place--right > .fm-arrow { left: -5px; top: calc(50% - 5px); border-top: 0; border-right: 0; }

@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+/*
+ * Global styles. The Factman Design System loads before this file (angular.json):
+ *   1. src/styles/factman/tokens.css      design tokens (Light on :root, Dark on [data-theme="dark"])
+ *   2. src/styles/factman/components.css  fm-* component classes (the design system's bundle.css)
+ * Use tokens only: stylelint rejects raw colours, sizes and spacing (see docs/design-tokens.md).
+ */
+html {
+  background: var(--bg-canvas);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--bg-canvas);
+}

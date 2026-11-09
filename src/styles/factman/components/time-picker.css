@@ -1,0 +1,17 @@
+/* Factman "time-picker" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Time picker ---------- */
+.fm-tp { display: inline-flex; flex-direction: column; gap: 6px; box-sizing: border-box; padding: var(--padding-xs); border-radius: var(--radius-lg); background: var(--glass-fill-strong); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-panel); -webkit-backdrop-filter: blur(var(--blur-glass-panel)); backdrop-filter: blur(var(--blur-glass-panel)); font-family: var(--font-sans); color: var(--text-primary); }
+.fm-tp__head { display: flex; align-items: center; gap: var(--gap-xs); padding: 4px var(--padding-xs); font-size: 14px; font-weight: 600; }
+.fm-tp__head .fm-icon { color: var(--icon-secondary); }
+.fm-tp__cols { display: flex; gap: var(--gap-xs); align-items: flex-start; padding: 0 var(--padding-2xs); }
+.fm-tp__col { display: flex; flex-direction: column; gap: 2px; height: 168px; overflow-y: auto; scrollbar-width: thin; padding-right: 2px; }
+.fm-tp__sep { align-self: center; color: var(--text-tertiary); font-weight: 600; }
+.fm-tp__cell { flex: none; min-width: 56px; height: 32px; padding: 0 var(--padding-sm); border: var(--border-width-sm) solid transparent; border-radius: var(--radius-sm); background: transparent; color: var(--text-primary); font: 400 12px/1 var(--font-sans); font-variant-numeric: tabular-nums; cursor: pointer; }
+.fm-tp__cell:hover { background: var(--glass-fill); }
+.fm-tp__cell.is-current { border-color: var(--border-strong); }
+.fm-tp__cell.is-selected { background: var(--bg-inverse); color: var(--text-inverse); }
+.fm-tp__cell:disabled { color: var(--text-disabled); text-decoration: line-through; cursor: not-allowed; background: transparent; }
+.fm-tp__slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 0 var(--padding-2xs) var(--padding-2xs); }
+.fm-tp__slots .fm-tp__cell { border-color: var(--glass-stroke); background: var(--glass-fill); }
+.fm-tp__slots .fm-tp__cell.is-selected { background: var(--bg-inverse); border-color: transparent; }
+.fm-tp .fm-dp__foot { padding: var(--padding-xs) var(--padding-2xs) 0; }

@@ -1,0 +1,13 @@
+/* Factman "tree" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Tree ---------- */
+.fm-tree { display: flex; flex-direction: column; gap: 2px; box-sizing: border-box; max-width: 300px; padding: var(--padding-xs); border-radius: var(--radius-xl); background: var(--glass-panel); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-panel); -webkit-backdrop-filter: blur(var(--blur-glass-panel)); backdrop-filter: blur(var(--blur-glass-panel)); font-family: var(--font-sans); }
+.fm-tree [role="group"] { display: flex; flex-direction: column; gap: 2px; }
+.fm-tree__item { position: relative; display: flex; align-items: center; gap: var(--gap-xs); height: 36px; padding-right: var(--padding-xs); border-radius: var(--radius-md); color: var(--text-primary); font-size: 13px; cursor: pointer; outline: 0; }
+.fm-tree__item:hover { background: var(--glass-fill); }
+.fm-tree__item:focus-visible { box-shadow: inset 0 0 0 2px var(--border-focus); }
+.fm-tree__item.is-selected { background: var(--glass-fill-elevated); box-shadow: var(--shadow-glass-chip); font-weight: 500; }
+.fm-tree__item.is-disabled { color: var(--text-disabled); cursor: not-allowed; }
+.fm-tree__chev, .fm-tree__icon { color: var(--icon-secondary); flex: none; }
+.fm-tree__sp { width: 16px; flex: none; }
+.fm-tree__label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fm-tree--guides .fm-tree__item.has-guide::before { content: ""; position: absolute; left: calc(var(--fm-indent, 0px) + 15px); top: 0; bottom: 0; width: 1px; background: var(--border-subtle); }

@@ -1,0 +1,15 @@
+/* Factman "pagination" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Pagination ---------- */
+.fm-pager { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-sans); }
+.fm-pager__pages { display: inline-flex; gap: 4px; }
+.fm-pager__item { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; height: 32px; box-sizing: border-box; padding: 0 var(--padding-xs); border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--text-secondary); font: 500 12px/1 var(--font-sans); font-variant-numeric: tabular-nums; cursor: pointer; }
+.fm-pager--md .fm-pager__item { min-width: 40px; height: 40px; border-radius: var(--radius-md); font-size: 14px; }
+.fm-pager__item:hover { background: var(--glass-fill); color: var(--text-primary); }
+.fm-pager__item:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); }
+.fm-pager__item.is-selected { background: var(--bg-inverse); color: var(--text-inverse); box-shadow: var(--shadow-button-raised-dark); }
+.fm-pager__ell { cursor: default; color: var(--icon-tertiary); }
+.fm-pager__ell:hover { background: transparent; }
+.fm-pager__info { padding: 0 var(--padding-xs); font-size: 13px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.fm-chat { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--radius-xl); background: var(--glass-panel); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-panel); -webkit-backdrop-filter: blur(var(--blur-glass-panel)); backdrop-filter: blur(var(--blur-glass-panel)); }
+.fm-chat__thread { display: flex; flex-direction: column; gap: var(--gap-xs); padding: var(--padding-md); overflow: auto; }
+.fm-chat__composer { padding: 0 var(--padding-sm) var(--padding-sm); }

@@ -1,0 +1,23 @@
+/* Factman "charts" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Charts ---------- */
+.fm-chart { position: relative; display: flex; flex-direction: column; gap: var(--gap-md); margin: 0; box-sizing: border-box; padding: var(--padding-lg); border-radius: var(--radius-xl); background: var(--glass-fill-strong); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-regular); font-family: var(--font-sans); }
+.fm-chart__head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--gap-sm); }
+.fm-chart__title { font-size: 16px; line-height: 22px; font-weight: 600; color: var(--text-primary); }
+.fm-chart__sub { font-size: 12px; line-height: 18px; color: var(--text-tertiary); }
+.fm-chart__plot { position: relative; }
+.fm-chart__grid { stroke: var(--border-subtle); stroke-width: 1; }
+.fm-chart__axis { fill: var(--text-tertiary); font: 400 10px var(--font-sans); font-variant-numeric: tabular-nums; }
+.fm-chart__total { fill: var(--text-primary); font: 700 22px var(--font-sans); font-variant-numeric: tabular-nums; }
+.fm-chart__band { fill: var(--table-row-hover); }
+.fm-chart__tip { position: absolute; top: 0; transform: translateX(-50%); pointer-events: none; z-index: 2; }
+.fm-chart__donut { display: flex; align-items: center; gap: var(--gap-xl); }
+.fm-legend { display: flex; flex-wrap: wrap; gap: var(--gap-md); font-size: 12px; color: var(--text-secondary); }
+.fm-legend--col { flex-direction: column; gap: var(--gap-xs); }
+.fm-legend__item { display: inline-flex; align-items: center; gap: 6px; }
+.fm-legend__item i { width: 10px; height: 10px; border-radius: 3px; }
+.fm-legend__item b { margin-left: auto; padding-left: var(--gap-sm); color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
+.fm-ctip { min-width: 140px; padding: var(--padding-xs) var(--padding-sm); border-radius: var(--radius-sm); background: var(--bg-inverse); color: var(--text-inverse); box-shadow: var(--shadow-tooltip-dark); font: 400 12px/18px var(--font-sans); }
+.fm-ctip__title { font-weight: 600; margin-bottom: 2px; }
+.fm-ctip__row { display: flex; align-items: center; gap: 6px; }
+.fm-ctip__row i { width: 8px; height: 8px; border-radius: 2px; box-shadow: 0 0 0 1px var(--alpha-white-55); }
+.fm-ctip__row b { margin-left: auto; padding-left: var(--gap-sm); font-variant-numeric: tabular-nums; }

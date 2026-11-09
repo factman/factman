@@ -1,0 +1,12 @@
+/* Factman "social-button" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Social button ---------- */
+.fm-social { display: inline-flex; align-items: center; justify-content: center; gap: var(--gap-sm); width: 100%; max-width: 320px; height: 48px; padding: 0 var(--padding-lg); box-sizing: border-box; border-radius: var(--radius-md); border: var(--border-width-sm) solid var(--glass-stroke); background: var(--glass-fill-strong); box-shadow: var(--shadow-glass-regular); color: var(--text-primary); font: 500 15px/1 var(--font-sans); cursor: pointer; transition: background-color 150ms ease-out; }
+.fm-social:hover { background: var(--glass-fill-elevated); border-color: var(--glass-stroke-strong); }
+.fm-social:active { background: var(--glass-fill); box-shadow: var(--shadow-button-pressed-light); }
+.fm-social:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: 2px; }
+.fm-social--dark { background: var(--bg-inverse); border-color: transparent; color: var(--text-inverse); box-shadow: var(--shadow-button-raised-dark); }
+.fm-social--dark:hover { background: var(--bg-inverse-hover); }
+.fm-social--icon { width: 48px; padding: 0; }
+.fm-social:disabled { background: var(--glass-fill-subtle); border-color: var(--glass-stroke-subtle); color: var(--text-disabled); box-shadow: none; cursor: not-allowed; }
+.fm-social__logo { display: inline-flex; width: 20px; height: 20px; align-items: center; justify-content: center; }
+.fm-social__logo img, .fm-social__logo svg { width: 20px; height: 20px; }

@@ -1,0 +1,9 @@
+/* Factman "popover" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Popover ---------- */
+.fm-popover { position: relative; display: inline-block; width: 300px; border-radius: var(--radius-lg); background: var(--glass-fill-strong); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-panel); -webkit-backdrop-filter: blur(var(--blur-glass-panel)); backdrop-filter: blur(var(--blur-glass-panel)); font-family: var(--font-sans); color: var(--text-primary); }
+.fm-popover__panel { position: relative; z-index: 2; display: flex; flex-direction: column; gap: var(--gap-sm); padding: var(--padding-md); }
+.fm-popover__head { display: flex; gap: var(--gap-xs); justify-content: space-between; align-items: flex-start; }
+.fm-popover__text { display: flex; flex-direction: column; gap: var(--gap-2xs); }
+.fm-popover__title { font-size: 14px; line-height: 20px; font-weight: 600; }
+.fm-popover__desc { font-size: 13px; line-height: 20px; color: var(--text-secondary); }
+.fm-popover__actions { display: flex; justify-content: flex-end; gap: var(--gap-xs); }
