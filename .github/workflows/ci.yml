@@ -33,14 +33,6 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - name: Restore Nx cache
-        uses: actions/cache@v4
-        with:
-          path: .nx/cache
-          key: nx-${{ runner.os }}-static-${{ github.sha }}
-          restore-keys: |
-            nx-${{ runner.os }}-static-
-            nx-${{ runner.os }}-
       - name: Validate data (gate)
         run: pnpm data:validate
       - name: Format, lint, typecheck and header check (vercel.json)
@@ -59,14 +51,6 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - name: Restore Nx cache
-        uses: actions/cache@v4
-        with:
-          path: .nx/cache
-          key: nx-${{ runner.os }}-test-${{ github.sha }}
-          restore-keys: |
-            nx-${{ runner.os }}-test-
-            nx-${{ runner.os }}-
       - name: Cache Playwright browsers
         uses: actions/cache@v4
         with:
@@ -91,14 +75,6 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - name: Restore Nx cache
-        uses: actions/cache@v4
-        with:
-          path: .nx/cache
-          key: nx-${{ runner.os }}-build-${{ github.sha }}
-          restore-keys: |
-            nx-${{ runner.os }}-build-
-            nx-${{ runner.os }}-
       - run: pnpm build
       - name: Check the home route was prerendered
         run: grep -q '<h1>Odunayo Mohammed</h1>' dist/factman/browser/index.html
@@ -109,7 +85,6 @@ jobs:
           retention-days: 7
 
   # Stage 5 (local half): E2E against the built static files.
-  # Nx restores the build job's output from the shared cache, so e2e does not rebuild.
   # Preview deploy + E2E against the Vercel preview waits on ETE-21.
   e2e:
     name: E2E (Playwright)
@@ -124,15 +99,10 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - name: Restore Nx cache
-        uses: actions/cache@v4
+      - uses: actions/download-artifact@v4
         with:
-          path: .nx/cache
-          key: nx-${{ runner.os }}-e2e-${{ github.sha }}
-          restore-keys: |
-            nx-${{ runner.os }}-build-${{ github.sha }}
-            nx-${{ runner.os }}-e2e-
-            nx-${{ runner.os }}-
+          name: dist
+          path: dist/factman/browser
       - name: Cache Playwright browsers
         id: pw-cache
         uses: actions/cache@v4
@@ -143,7 +113,8 @@ jobs:
         if: steps.pw-cache.outputs.cache-hit != 'true'
       - run: pnpm exec playwright install-deps
         if: steps.pw-cache.outputs.cache-hit == 'true'
-      - run: pnpm e2e
+      # The build job's output is downloaded above, so skip Nx's build dependency.
+      - run: pnpm nx run factman:e2e --excludeTaskDependencies
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

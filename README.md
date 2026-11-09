@@ -497,7 +497,7 @@ Every script above runs through [Nx](https://nx.dev) (pinned in `package.json`, 
 
 ### Continuous integration
 
-GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and on every push to `dev` or `main`: format check, lint, typecheck, unit and Storybook (axe) tests, the prerendered build, then Playwright E2E against the built files. Every job restores and saves the Nx cache (`actions/cache`, keyed by job and commit), so unchanged tasks are replayed instead of rerun, and the E2E job takes the build from the build job's cache. The workspace is a single Nx project, so CI runs every target rather than `nx affected`; switch to `nx affected` if the repository grows more projects. Vercel deploys every push (ETE-21).
+GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and on every push to `dev` or `main`: format check, lint, typecheck, unit and Storybook (axe) tests, the prerendered build, then Playwright E2E against the built files. Each job runs its checks through Nx (`nx run-many` in the static job). The E2E job downloads the build job's `dist` artifact and runs `nx run factman:e2e --excludeTaskDependencies`, so it does not rebuild. The Nx cache is local only: Nx 24 refuses cache artifacts produced on another machine, so restoring `.nx/cache` with `actions/cache` gives no hits on a fresh runner. Sharing the cache across CI runs needs a remote cache (Nx Cloud or a self-hosted Nx cache server). The workspace is a single Nx project, so CI runs every target rather than `nx affected`; switch to `nx affected` if the repository grows more projects. Vercel deploys every push (ETE-21).
 
 ### Hosting (Vercel)
 
