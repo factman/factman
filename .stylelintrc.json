@@ -1,0 +1,61 @@
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "plugins": ["stylelint-declaration-strict-value"],
+  "ignoreFiles": [
+    "src/styles/factman/**",
+    "src/styles/generated/**",
+    "dist/**",
+    "coverage/**",
+    "storybook-static/**"
+  ],
+  "rules": {
+    "no-empty-source": null,
+    "color-no-hex": true,
+    "color-named": "never",
+    "function-disallowed-list": [
+      "rgb",
+      "rgba",
+      "hsl",
+      "hsla",
+      "hwb",
+      "lab",
+      "lch",
+      "oklab",
+      "oklch"
+    ],
+    "scale-unlimited/declaration-strict-value": [
+      [
+        "/color$/",
+        "background",
+        "fill",
+        "stroke",
+        "font-size",
+        "font-family",
+        "border-radius",
+        "box-shadow",
+        "/^gap$/",
+        "row-gap",
+        "column-gap",
+        "/^padding/",
+        "/^margin/",
+        "transition-duration",
+        "animation-duration"
+      ],
+      {
+        "ignoreValues": [
+          "0",
+          "auto",
+          "inherit",
+          "initial",
+          "unset",
+          "none",
+          "transparent",
+          "currentcolor",
+          "currentColor"
+        ],
+        "disableFix": true,
+        "message": "Use a design token (var(--\u2026)) for \"${property}\", not \"${value}\". See docs/design-tokens.md."
+      }
+    ]
+  }
+}

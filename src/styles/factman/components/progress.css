@@ -1,0 +1,22 @@
+/* Factman "progress" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Progress ---------- */
+.fm-progress { display: flex; flex-direction: column; gap: var(--gap-xs); width: 100%; max-width: 280px; font-family: var(--font-sans); --fill: var(--icon-primary); }
+.fm-progress--success { --fill: var(--icon-success); }
+.fm-progress--warning { --fill: var(--icon-warning); }
+.fm-progress--danger { --fill: var(--icon-danger); }
+.fm-progress__row { display: flex; justify-content: space-between; align-items: center; gap: var(--gap-xs); font-size: 12px; line-height: 18px; }
+.fm-progress__label { color: var(--text-primary); }
+.fm-progress__value { color: var(--text-secondary); font-weight: 500; font-variant-numeric: tabular-nums; }
+.fm-progress__track { position: relative; height: 8px; border-radius: var(--radius-full); background: var(--bg-track); box-shadow: var(--shadow-elevation-sunken); overflow: hidden; }
+.fm-progress--sm .fm-progress__track { height: 4px; }
+.fm-progress--lg .fm-progress__track { height: 12px; }
+.fm-progress__fill { display: block; height: 100%; border-radius: var(--radius-full); background: var(--fill); transition: width 300ms ease-out; }
+.fm-cprogress { position: relative; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-sans); --fill: var(--icon-primary); }
+.fm-cprogress.fm-progress--success { --fill: var(--icon-success); }
+.fm-cprogress.fm-progress--warning { --fill: var(--icon-warning); }
+.fm-cprogress.fm-progress--danger { --fill: var(--icon-danger); }
+.fm-cprogress svg { position: absolute; inset: 0; }
+.fm-cprogress__track { stroke: var(--bg-track); }
+.fm-cprogress__fill { stroke: var(--fill); transition: stroke-dashoffset 300ms ease-out; }
+.fm-cprogress__value { position: relative; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.fm-cprogress[style*="64px"] .fm-cprogress__value { font-size: 14px; line-height: 20px; }

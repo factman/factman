@@ -1,0 +1,28 @@
+/* Factman "timeline" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Timeline ---------- */
+.fm-tl { margin: 0; padding: 0; list-style: none; font-family: var(--font-sans); }
+.fm-tl__item { display: flex; gap: var(--gap-sm); }
+.fm-tl__rail { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 32px; flex: none; }
+.fm-tl__line { flex: 1; width: 2px; min-height: 12px; background: var(--border-default); border-radius: 1px; }
+.fm-tl__dot { width: 12px; height: 12px; margin: 4px 0; border-radius: var(--radius-full); background: var(--border-strong); }
+.fm-tl__dot--active { background: var(--accent-default); box-shadow: 0 0 0 4px var(--accent-ring); }
+.fm-tl__dot--success { background: var(--icon-success); } .fm-tl__dot--warning { background: var(--icon-warning); } .fm-tl__dot--danger { background: var(--icon-danger); }
+.fm-tl__mark { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; flex: none; border-radius: var(--radius-full); background: var(--glass-fill); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-regular); color: var(--icon-secondary); }
+.fm-tl__mark--active { background: var(--bg-inverse); color: var(--icon-inverse); border-color: transparent; }
+.fm-tl__mark--success { background: var(--bg-success-subtle); color: var(--icon-success); }
+.fm-tl__mark--warning { background: var(--bg-warning-subtle); color: var(--icon-warning); }
+.fm-tl__mark--danger { background: var(--bg-danger-subtle); color: var(--icon-danger); }
+.fm-tl__content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; align-items: flex-start; padding: 6px 0 var(--padding-lg); }
+.fm-tl__item:last-child .fm-tl__content { padding-bottom: 0; }
+.fm-tl__head { display: flex; justify-content: space-between; gap: var(--gap-xs); align-self: stretch; }
+.fm-tl__title { font-size: 14px; line-height: 18px; font-weight: 600; color: var(--text-primary); }
+.fm-tl__time { font-size: 12px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fm-tl__desc { font-size: 13px; line-height: 20px; color: var(--text-secondary); }
+.fm-tl__item--card .fm-tl__content { margin-bottom: var(--padding-sm); padding: var(--padding-sm) var(--padding-md); border-radius: var(--radius-lg); background: var(--glass-fill-strong); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-regular); }
+.fm-tl__item--compact .fm-tl__content { padding-bottom: var(--padding-sm); }
+.fm-tl__item--compact .fm-tl__desc { display: none; }
+.fm-feed { display: flex; flex-direction: column; gap: var(--gap-sm); box-sizing: border-box; max-width: 460px; padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--glass-fill-strong); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-panel); font-family: var(--font-sans); }
+.fm-feed__head { display: flex; justify-content: space-between; align-items: center; }
+.fm-feed__title { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+.fm-feed__group { display: flex; flex-direction: column; gap: var(--gap-xs); }
+.fm-feed__label { font: 500 12px/15px var(--font-sans); color: var(--text-tertiary); }

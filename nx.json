@@ -1,0 +1,70 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "defaultBase": "dev",
+  "analytics": false,
+  "cacheDirectory": ".nx/cache",
+  "namedInputs": {
+    "sharedGlobals": [
+      "{workspaceRoot}/.nvmrc",
+      "{workspaceRoot}/pnpm-lock.yaml",
+      "{workspaceRoot}/nx.json",
+      {
+        "runtime": "node --version"
+      }
+    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "source": [
+      "default",
+      "!{projectRoot}/**/*.md",
+      "!{projectRoot}/docs/**/*",
+      "!{projectRoot}/.github/**/*",
+      "!{projectRoot}/.claude/**/*",
+      "!{projectRoot}/.husky/**/*",
+      "!{projectRoot}/LICENSE",
+      "!{projectRoot}/.vscode/**/*",
+      "!{projectRoot}/resume-banner.png"
+    ],
+    "data": [
+      "{projectRoot}/src/data/**/*.json",
+      "{projectRoot}/scripts/data/**/*.ts",
+      "!{projectRoot}/scripts/data/**/*.test.ts",
+      "{projectRoot}/tsconfig.scripts.json",
+      "sharedGlobals"
+    ],
+    "production": [
+      "source",
+      "!{projectRoot}/**/*.spec.ts",
+      "!{projectRoot}/**/*.stories.ts",
+      "!{projectRoot}/.storybook/**/*",
+      "!{projectRoot}/e2e/**/*",
+      "!{projectRoot}/playwright.config.ts",
+      "!{projectRoot}/tools/**/*",
+      "!{projectRoot}/scripts/**/*.test.ts",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/vitest.config.*",
+      "!{projectRoot}/eslint.config.*",
+      "!{projectRoot}/.stylelintrc*",
+      "!{projectRoot}/.prettier*",
+      "!{projectRoot}/commitlint.config.*",
+      "!{projectRoot}/vercel.json",
+      "!{projectRoot}/lint-staged.config.mjs",
+      "!{projectRoot}/vitest.shims.d.ts",
+      "!{projectRoot}/.editorconfig"
+    ]
+  },
+  "targetDefaults": {
+    "build": {
+      "cache": true
+    },
+    "lint": {
+      "cache": true
+    },
+    "test": {
+      "cache": true
+    },
+    "typecheck": {
+      "cache": true
+    }
+  },
+  "nxCloudId": "6af2494a63e938f53ba22f07"
+}

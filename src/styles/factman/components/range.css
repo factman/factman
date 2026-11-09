@@ -1,0 +1,24 @@
+/* Factman "range" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Range ---------- */
+.fm-range { display: flex; flex-direction: column; gap: var(--gap-xs); width: 100%; max-width: 320px; font-family: var(--font-sans); --thumb: 16px; }
+.fm-range--md { --thumb: 20px; }
+.fm-range__label { color: var(--text-secondary); }
+.fm-range__value { color: var(--text-primary); }
+.fm-range__slider { position: relative; height: var(--thumb); }
+.fm-range__track, .fm-range__fill { position: absolute; top: 50%; height: 4px; margin-top: -2px; border-radius: var(--radius-full); }
+.fm-range--md .fm-range__track, .fm-range--md .fm-range__fill { height: 6px; margin-top: -3px; }
+.fm-range__track { left: 0; right: 0; background: var(--bg-track); }
+.fm-range__fill { background: var(--icon-primary); }
+.fm-range__input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; background: transparent; -webkit-appearance: none; appearance: none; pointer-events: none; }
+.fm-range__input::-webkit-slider-thumb { -webkit-appearance: none; pointer-events: auto; width: var(--thumb); height: var(--thumb); border-radius: var(--radius-full); background: var(--bg-surface); border: var(--border-width-md) solid var(--border-strong); box-shadow: var(--shadow-switch-knob); cursor: grab; }
+.fm-range__input::-moz-range-thumb { pointer-events: auto; width: var(--thumb); height: var(--thumb); box-sizing: border-box; border-radius: var(--radius-full); background: var(--bg-surface); border: var(--border-width-md) solid var(--border-strong); box-shadow: var(--shadow-switch-knob); cursor: grab; }
+.fm-range__input:focus-visible::-webkit-slider-thumb { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: 2px; }
+.fm-range__input::-webkit-slider-runnable-track { background: transparent; }
+.fm-range__minmax { display: flex; justify-content: space-between; font-size: 12px; line-height: 18px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
+.fm-range.is-disabled { opacity: .5; }
+.fm-range.is-disabled .fm-range__input::-webkit-slider-thumb { cursor: not-allowed; }
+
+
+.fm-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.fm-icon-tile { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 36px; height: 36px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--ice-300), var(--ice-200)); color: var(--blue-900); }
+.fm-icon-tile--lg { width: 44px; height: 44px; }

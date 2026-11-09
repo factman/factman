@@ -1,0 +1,42 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "paths": {
+      "@ui/tokens": ["./src/app/ui/tokens/index.ts"],
+      "@ui/atoms": ["./src/app/ui/atoms/index.ts"],
+      "@ui/molecules": ["./src/app/ui/molecules/index.ts"],
+      "@ui/organisms": ["./src/app/ui/organisms/index.ts"],
+      "@ui/templates": ["./src/app/ui/templates/index.ts"],
+      "@features/*": ["./src/app/features/*/index.ts"],
+      "@core/*": ["./src/app/core/*/index.ts"],
+      "@shared": ["./src/app/shared/index.ts"],
+      "@data": ["./src/app/data/index.ts"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}

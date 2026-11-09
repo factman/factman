@@ -1,0 +1,18 @@
+/* Factman "radio" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Radio ---------- */
+.fm-radio { position: relative; display: inline-flex; align-items: flex-start; gap: var(--gap-sm); font-family: var(--font-sans); color: var(--text-primary); cursor: pointer; }
+.fm-radio__input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+.fm-radio__box { position: relative; flex: none; box-sizing: border-box; width: 20px; height: 20px; border-radius: var(--radius-full); border: var(--border-width-md) solid var(--border-default); background: var(--glass-fill-strong); transition: border-color 150ms ease-out, background-color 150ms ease-out; }
+.fm-radio--16 .fm-radio__box { width: 16px; height: 16px; }
+.fm-radio__input:checked + .fm-radio__box { border-color: var(--border-strong); background: var(--glass-fill-elevated); }
+.fm-radio__input:checked + .fm-radio__box::before { content: ""; position: absolute; inset: 3.5px; border-radius: var(--radius-full); background: var(--icon-primary); }
+.fm-radio--16 .fm-radio__input:checked + .fm-radio__box::before { inset: 2.5px; }
+.fm-radio:hover .fm-radio__box, .fm-radio.is-force-hover .fm-radio__box { background: var(--glass-fill-elevated); border-color: var(--border-hover); box-shadow: var(--shadow-glass-chip); }
+.fm-radio:hover .fm-radio__input:checked + .fm-radio__box { border-color: var(--border-strong); }
+.fm-radio__input:focus-visible + .fm-radio__box::after, .fm-radio.is-force-focus .fm-radio__box::after { content: ""; position: absolute; inset: -5.5px; border-radius: var(--radius-full); border: var(--border-width-lg) solid var(--border-focus); }
+.fm-radio.is-error .fm-radio__box { border-color: var(--border-danger); }
+.fm-radio.is-disabled { cursor: not-allowed; }
+.fm-radio.is-disabled .fm-radio__box { opacity: var(--opacity-disabled-control); background: var(--glass-fill-subtle); border-color: var(--glass-stroke-subtle); }
+.fm-radio.is-disabled .fm-check__text { color: var(--text-disabled); }
+.fm-radio-group { display: flex; flex-direction: column; gap: var(--gap-md); }
+.fm-radio-group--row { flex-direction: row; flex-wrap: wrap; gap: var(--gap-xl); }

@@ -1,0 +1,9 @@
+/* Factman "divider" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Divider ---------- */
+.fm-divider--h { height: 0; border-top: var(--border-width-sm) solid var(--border-subtle); width: 100%; }
+.fm-divider--v { width: 0; align-self: stretch; min-height: 20px; border-left: var(--border-width-sm) solid var(--border-subtle); }
+.fm-divider--strong.fm-divider--h, .fm-divider--strong.fm-divider--v { border-color: var(--border-default); }
+.fm-divider--label { display: flex; align-items: center; gap: var(--gap-sm); width: 100%; font: 400 12px/15px var(--font-sans); color: var(--text-tertiary); }
+.fm-divider__line { flex: 1; border-top: var(--border-width-sm) solid var(--border-subtle); }
+.fm-divider--strong .fm-divider__line { border-color: var(--border-default); }
+.fm-divider--start .fm-divider__line:first-child { display: none; }
