@@ -8,3 +8,4 @@ test-results
 storybook-static
 # GitHub profile README is hand-formatted
 README.md
+src/app/shared/models/generated
