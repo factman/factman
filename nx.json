@@ -2,6 +2,7 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "defaultBase": "dev",
   "analytics": false,
+  "cacheDirectory": ".nx/cache",
   "namedInputs": {
     "sharedGlobals": [
       "{workspaceRoot}/.nvmrc",
