@@ -4,7 +4,7 @@ import { services } from '../../data';
 import { PageShell } from '../../ui/templates/page-shell/page-shell';
 
 /** @level page */
-@Component({ selector: 'app-home', imports: [PageShell], template: '<app-page-shell />' })
+@Component({ selector: 'fm-home', imports: [PageShell], template: '<fm-page-shell />' })
 export class Home {
   services = services;
 }
