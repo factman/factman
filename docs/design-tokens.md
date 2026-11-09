@@ -72,4 +72,17 @@ Allowed without tokens: `0`, `auto`, `inherit`, `initial`, `unset`, `none`, `tra
 2. Run `pnpm ds:tokens` and `pnpm ds:split`.
 3. `pnpm test:scripts` fails if the generated files drift from their sources, or if the split loses a line.
 
-Fonts (Plus Jakarta Sans, Jost, JetBrains Mono) are self-hosted under ETE-23; until then the font stacks fall back to system fonts, and nothing is loaded from Google.
+## Fonts
+
+Plus Jakarta Sans (body), JetBrains Mono (code, terminal, eyebrows) and Jost (logo wordmarks only) are **self-hosted**. Nothing is loaded from Google, so no request leaves the site before consent (SEC-02).
+
+- `pnpm ds:fonts` copies the Latin and Latin-Extended `woff2` files from the pinned `@fontsource` packages (OFL-1.1) into `src/assets/fonts/`, with the package version in the file name. Vercel caches them as immutable.
+- It writes `src/styles/generated/fonts.css`, loaded right after `tokens.css`:
+  - `@font-face` rules with `font-display: swap` and a `unicode-range` per subset, so a page downloads only the subsets its text needs
+  - size-adjusted local fallbacks (`Plus Jakarta Sans Fallback` on Arial, `JetBrains Mono Fallback` on Courier New, `Jost Fallback` on Arial), computed from Capsize metrics to limit layout shift while fonts load
+  - the `--font-sans`, `--font-mono` and `--font-logo` tokens with those fallbacks inserted
+- Only the critical file is preloaded: Plus Jakarta Sans Latin, via a `<link rel="preload">` that the script maintains in `src/index.html`.
+- Fonts load on use: Jost is fetched only on pages that render a logo wordmark, and JetBrains Mono only where code or mono text appears.
+- `pnpm test:scripts` and `pnpm ds:fonts --check` fail if the files, CSS or preload drift from the packages. `e2e/fonts.spec.ts` checks that no request goes to `fonts.googleapis.com` or `fonts.gstatic.com`, and that fonts come from `/assets/fonts/`.
+
+To update the fonts: bump the `@fontsource` package versions, then run `pnpm ds:fonts`.

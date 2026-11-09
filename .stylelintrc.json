@@ -1,7 +1,13 @@
 {
   "extends": ["stylelint-config-standard-scss"],
   "plugins": ["stylelint-declaration-strict-value"],
-  "ignoreFiles": ["src/styles/factman/**", "dist/**", "coverage/**", "storybook-static/**"],
+  "ignoreFiles": [
+    "src/styles/factman/**",
+    "src/styles/generated/**",
+    "dist/**",
+    "coverage/**",
+    "storybook-static/**"
+  ],
   "rules": {
     "no-empty-source": null,
     "color-no-hex": true,
