@@ -36,6 +36,7 @@
             ],
             "styles": [
               "src/styles/factman/tokens.css",
+              "src/styles/generated/fonts.css",
               "src/styles/factman/global.css",
               "src/styles.scss"
             ],

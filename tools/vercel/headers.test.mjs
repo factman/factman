@@ -35,6 +35,10 @@ test('HSTS lasts at least a year', () => {
   assert.ok(maxAge >= 31536000);
 });
 
+test('self-hosted fonts (versioned file names) are immutable', () => {
+  assert.match(value('/assets/fonts/(.*)', 'Cache-Control'), /max-age=31536000, immutable/);
+});
+
 test('hashed JS/CSS are immutable and HTML revalidates', () => {
   assert.match(value('/(.*)\\.(js|css)', 'Cache-Control'), /immutable/);
   assert.match(value('/((?!.*\\.).*)', 'Cache-Control'), /max-age=0, must-revalidate/);
