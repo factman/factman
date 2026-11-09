@@ -19,7 +19,7 @@ env:
   STORYBOOK_DISABLE_TELEMETRY: 1
 
 jobs:
-  # Stage 1: lint, typecheck, format
+  # Stage 1: validate data, then lint, typecheck, format
   static:
     name: Lint and typecheck
     runs-on: ubuntu-latest
@@ -32,6 +32,8 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - name: Validate data (gate)
+        run: pnpm data:validate
       - run: pnpm format:check
       - run: pnpm lint
       - run: pnpm typecheck
@@ -57,6 +59,7 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
       - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:data
       - run: pnpm test --watch=false
       - run: pnpm test:storybook
 

@@ -185,3 +185,6 @@ yarn.lock
 .vercel
 
 *storybook.log
+
+# Generated data models (pnpm data:types)
+/src/app/shared/models/generated

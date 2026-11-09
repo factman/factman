@@ -18,6 +18,7 @@ export default defineConfig([
       'playwright-report/',
       'test-results/',
       'tools/eslint/fixtures/',
+      'src/app/shared/models/generated/',
     ],
   },
   {
