@@ -5,10 +5,10 @@
  */
 export const elements = [
   { type: 'tokens', pattern: '**/src/app/ui/tokens' },
-  { type: 'atoms', pattern: '**/src/app/ui/atoms/*', capture: ['name'] },
-  { type: 'molecules', pattern: '**/src/app/ui/molecules/*', capture: ['name'] },
-  { type: 'organisms', pattern: '**/src/app/ui/organisms/*', capture: ['name'] },
-  { type: 'templates', pattern: '**/src/app/ui/templates/*', capture: ['name'] },
+  { type: 'atoms', pattern: '**/src/app/ui/atoms' },
+  { type: 'molecules', pattern: '**/src/app/ui/molecules' },
+  { type: 'organisms', pattern: '**/src/app/ui/organisms' },
+  { type: 'templates', pattern: '**/src/app/ui/templates' },
   { type: 'pages', pattern: '**/src/app/features/*', capture: ['name'] },
   { type: 'data', pattern: '**/src/app/data' },
   { type: 'core', pattern: '**/src/app/core/*', capture: ['name'] },
