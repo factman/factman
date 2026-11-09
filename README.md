@@ -444,3 +444,30 @@ clients.
 </a>
 
 ---
+## 🧑‍💻 Website development
+
+This repository also holds the source of the Factman website (Angular, prerendered to static HTML, hosted on Vercel).
+
+### Requirements
+
+- **Node 22** via [nvm](https://github.com/nvm-sh/nvm). The version is pinned in `.nvmrc`:
+
+  ```bash
+  nvm install && nvm use
+  ```
+
+- **pnpm 10** via Corepack. The exact version is pinned in `package.json` (`packageManager`). Use pnpm only; npm and yarn lock files are ignored.
+
+  ```bash
+  corepack enable
+  pnpm -v
+  ```
+
+### Scripts
+
+| Command      | What it does                                                 |
+| ------------ | ------------------------------------------------------------ |
+| `pnpm install` | Install dependencies from `pnpm-lock.yaml`                 |
+| `pnpm start` | Dev server on http://localhost:4200                          |
+| `pnpm build` | Production build; every static route is prerendered to `dist/factman/browser` |
+| `pnpm test`  | Unit tests (Vitest + Angular TestBed)                        |
