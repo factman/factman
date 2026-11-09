@@ -35,6 +35,8 @@ jobs:
       - run: pnpm format:check
       - run: pnpm lint
       - run: pnpm typecheck
+      - name: Header check (vercel.json)
+        run: pnpm test:headers
 
   # Stage 3: unit and Storybook (axe) tests
   test:

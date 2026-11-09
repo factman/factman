@@ -476,8 +476,21 @@ This repository also holds the source of the Factman website (Angular, prerender
 | `pnpm format` / `pnpm format:check` | Prettier write / verify                 |
 | `pnpm storybook` | Storybook on http://localhost:6006                       |
 | `pnpm test:storybook` | Story tests in Vitest browser mode, with axe accessibility checks |
+| `pnpm test:headers` | Checks `vercel.json` security and cache headers |
 | `pnpm e2e`   | Playwright against the prerendered build (run `pnpm build` and `pnpm e2e:install` first) |
 
 ### Continuous integration
 
 GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and on every push to `main`: format check, lint, typecheck, unit and Storybook (axe) tests, the prerendered build, then Playwright E2E against the built files. Deployment to Vercel is added with ETE-21.
+
+### Hosting (Vercel)
+
+`vercel.json` holds the build settings (`pnpm build` → `dist/factman/browser`), security headers (CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy), long-lived caching for hashed JS/CSS, revalidation for HTML, and the static `404.html` fallback. The production URL is the placeholder `https://factman.vercel.app` until a custom domain is attached.
+
+Environment variables (set in the Vercel project and in GitHub Actions secrets):
+
+| Variable       | Used by        | Notes                                                        |
+| -------------- | -------------- | ------------------------------------------------------------ |
+| `GITHUB_TOKEN` | `sync:github`  | Read-only token for public repo data. Script lands with the data layer. |
+
+When analytics (GA4/GTM) is added, its hosts must be added to the CSP in `vercel.json`.
