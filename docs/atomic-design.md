@@ -76,7 +76,7 @@ Every component in `ui/<level>` or `features/` carries a JSDoc tag that matches 
  * Primary call-to-action button.
  * @level atom
  */
-@Component({ selector: 'app-button' /* … */ })
+@Component({ selector: 'fm-button' /* … */ })
 export class Button {}
 ```
 

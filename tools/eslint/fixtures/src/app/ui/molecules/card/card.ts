@@ -4,7 +4,7 @@ import { Badge } from '../../atoms/badge';
 import { space } from '../../tokens';
 
 /** @level molecule */
-@Component({ selector: 'app-card', imports: [Badge], template: '<app-badge />{{ gap }}' })
+@Component({ selector: 'fm-card', imports: [Badge], template: '<fm-badge />{{ gap }}' })
 export class Card {
   gap = space;
 }

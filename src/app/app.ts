@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
+  selector: 'fm-root',
   imports: [RouterOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './app.scss',

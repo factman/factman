@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
  * @level page
  */
 @Component({
-  selector: 'app-home',
+  selector: 'fm-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h1>Odunayo Mohammed</h1>
