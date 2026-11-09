@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factman.vercel.app/schemas/clients.schema.json",
+  "title": "Clients",
+  "description": "Clients and companies for the \"Worked with\" strip (PRD FR-51, FR-52). An empty list is valid: the strip is then omitted.",
+  "type": "array",
+  "items": { "$ref": "#/$defs/client" },
+  "$defs": {
+    "client": {
+      "title": "Client",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "order", "slug", "name", "type", "logo", "plate", "ratio"],
+      "properties": {
+        "id": { "type": "integer", "minimum": 1 },
+        "order": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Position in the strip (ascending)."
+        },
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Display name; also the logo's alt text."
+        },
+        "type": { "enum": ["client", "company"] },
+        "website": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://",
+          "description": "Optional; without it the logo is not a link."
+        },
+        "logo": {
+          "type": "string",
+          "pattern": "^clients/[a-z0-9]+(?:-[a-z0-9]+)*\\.(?:png|svg|webp|avif|jpg)$",
+          "description": "Logo file relative to src/assets, e.g. clients/simple-finance.png."
+        },
+        "plate": {
+          "enum": ["light", "dark"],
+          "description": "Plate the logo sits on so it stays visible in both themes (dark for white artwork)."
+        },
+        "ratio": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Logo width ÷ height, to reserve space without layout shift."
+        },
+        "source": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://",
+          "description": "Where the logo was originally taken from (provenance)."
+        }
+      }
+    }
+  }
+}
