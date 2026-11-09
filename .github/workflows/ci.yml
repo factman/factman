@@ -12,6 +12,8 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
+  # actions: read lets Nx Cloud Self-Healing CI read the job logs.
+  actions: read
   contents: read
 
 env:
@@ -39,6 +41,10 @@ jobs:
         run: pnpm data:validate
       - name: Format, lint, typecheck and header check (vercel.json)
         run: pnpm nx run-many -t format:check lint typecheck test:headers
+      # Nx Cloud Self-Healing CI: when an Nx task above fails, Nx Cloud analyses it and proposes a fix on the PR.
+      - name: Nx Cloud Self-Healing CI
+        if: always()
+        run: pnpm nx fix-ci
 
   # Stage 3: unit and Storybook (axe) tests
   test:
@@ -62,6 +68,10 @@ jobs:
       - run: pnpm test:scripts
       - run: pnpm test --watch=false
       - run: pnpm test:storybook
+      # Nx Cloud Self-Healing CI: when an Nx task above fails, Nx Cloud analyses it and proposes a fix on the PR.
+      - name: Nx Cloud Self-Healing CI
+        if: always()
+        run: pnpm nx fix-ci
 
   # Stage 4: prerendered build
   build:
@@ -85,6 +95,10 @@ jobs:
           name: dist
           path: dist/factman/browser
           retention-days: 7
+      # Nx Cloud Self-Healing CI: when an Nx task above fails, Nx Cloud analyses it and proposes a fix on the PR.
+      - name: Nx Cloud Self-Healing CI
+        if: always()
+        run: pnpm nx fix-ci
 
   # Stage 5 (local half): E2E against the built static files.
   # Preview deploy + E2E against the Vercel preview waits on ETE-21.
@@ -119,3 +133,7 @@ jobs:
           name: playwright-report
           path: playwright-report
           retention-days: 7
+      # Nx Cloud Self-Healing CI: when an Nx task above fails, Nx Cloud analyses it and proposes a fix on the PR.
+      - name: Nx Cloud Self-Healing CI
+        if: always()
+        run: pnpm nx fix-ci
