@@ -4,6 +4,6 @@ One file per decision: `NNN-short-title.md`, using [template.md](template.md). S
 
 | ADR     | Title                                         | Status  | Owner issue |
 | ------- | --------------------------------------------- | ------- | ----------- |
-| ADR-001 | JSON over SQLite for content                  | To write | ETE-18     |
+| [ADR-001](001-json-over-sqlite.md) | JSON over SQLite for content | Accepted | ETE-217 |
 | ADR-002 | Standalone components + NgModules for services | To write | ETE-40     |
-| ADR-003 | Image-based résumé preview                    | To write | ETE-18     |
+| [ADR-003](003-image-based-resume-preview.md) | Image-based résumé preview | Accepted | ETE-217 |
