@@ -1,15 +1,27 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { ProjectsRepository } from '@core/data';
 
 /**
- * Projects gallery (/projects). Shell until projects.json (ETE-31) and the page design land.
+ * Projects gallery (/projects), newest first. Shell until the projects page design is built.
  * @level page
  */
 @Component({
   selector: 'fm-projects-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RouterLink],
   template: `
     <h1>Projects</h1>
-    <p>Case studies are on the way.</p>
+    <ul>
+      @for (project of projects; track project.slug) {
+        <li>
+          <a [routerLink]="['/projects', project.slug]">{{ project.title }}</a>
+          <p>{{ project.summary }}</p>
+        </li>
+      }
+    </ul>
   `,
 })
-export class ProjectsPage {}
+export class ProjectsPage {
+  protected readonly projects = inject(ProjectsRepository).all();
+}

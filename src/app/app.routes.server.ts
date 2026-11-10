@@ -1,10 +1,9 @@
 import { inject } from '@angular/core';
 import { RenderMode, type ServerRoute } from '@angular/ssr';
-import { ServicesRepository } from '@core/data';
+import { ProjectsRepository, ServicesRepository } from '@core/data';
 
 /**
- * Every route is prerendered at build time (FR-01), including each detail slug. Project slugs
- * join the list with projects.json (ETE-31).
+ * Every route is prerendered at build time (FR-01), including each service and project slug.
  */
 export const serverRoutes: ServerRoute[] = [
   { path: '', renderMode: RenderMode.Prerender },
@@ -18,7 +17,14 @@ export const serverRoutes: ServerRoute[] = [
         .map((slug) => ({ slug })),
   },
   { path: 'projects', renderMode: RenderMode.Prerender },
-  { path: 'projects/:slug', renderMode: RenderMode.Client },
+  {
+    path: 'projects/:slug',
+    renderMode: RenderMode.Prerender,
+    getPrerenderParams: async () =>
+      inject(ProjectsRepository)
+        .slugs()
+        .map((slug) => ({ slug })),
+  },
   { path: 'blog', renderMode: RenderMode.Prerender },
   { path: 'privacy', renderMode: RenderMode.Prerender },
   { path: '404', renderMode: RenderMode.Prerender },

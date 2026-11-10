@@ -31,6 +31,7 @@ describe('routes (PRD §4 site map)', () => {
     ['/services', 'Services', 'Services · Odunayo Mohammed'],
     ['/services/devops', 'DevOps', 'DevOps · Odunayo Mohammed'],
     ['/projects', 'Projects', 'Projects · Odunayo Mohammed'],
+    ['/projects/graphui', 'GraphUI', 'GraphUI · Odunayo Mohammed'],
     ['/blog', 'Blog', 'Blog · Odunayo Mohammed'],
     ['/privacy', 'Privacy', 'Privacy · Odunayo Mohammed'],
     ['/404', 'Page not found', 'Page not found · Odunayo Mohammed'],
