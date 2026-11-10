@@ -90,6 +90,8 @@ jobs:
       - run: pnpm build
       - name: Check the home route was prerendered
         run: grep -q '<h1>Odunayo Mohammed</h1>' dist/factman/browser/index.html
+      - name: Check content data stays out of the initial bundle
+        run: pnpm test:bundles
       - uses: actions/upload-artifact@v4
         with:
           name: dist

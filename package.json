@@ -22,6 +22,7 @@
     "e2e": "nx run factman:e2e",
     "e2e:install": "nx run factman:e2e:install",
     "test:headers": "nx run factman:test:headers",
+    "test:bundles": "nx run factman:test:bundles",
     "data:validate": "nx run factman:data:validate",
     "data:types": "nx run factman:data:types",
     "ds:tokens": "nx run factman:ds:tokens",

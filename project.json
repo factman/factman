@@ -78,6 +78,18 @@
       "cache": true,
       "inputs": ["{projectRoot}/tools/vercel/**/*", "{projectRoot}/vercel.json", "sharedGlobals"]
     },
+    "test:bundles": {
+      "command": "node --test --test-reporter=spec tools/build/bundles.test.mjs",
+      "dependsOn": ["build"],
+      "cache": true,
+      "inputs": [
+        "{projectRoot}/tools/build/**/*",
+        "{projectRoot}/src/data/**/*.json",
+        {
+          "dependentTasksOutputFiles": "**/*.{js,html}"
+        }
+      ]
+    },
     "lint": {
       "executor": "nx:noop",
       "dependsOn": ["lint:eslint", "lint:styles", "test:lint-rules"]
