@@ -393,7 +393,7 @@ export function textLengths(data: DataSet): Issue[] {
   return issues;
 }
 
-/** DS-11: contact.json email is an address, phone is E.164 (`+234…`), WhatsApp is digits only. */
+/** DS-11: contact.json email is an address, phone is E.164 (`+234…`), WhatsApp (or `whatsapp.number`) is digits only. */
 const CONTACT_FORMATS: Record<string, { pattern: RegExp; strip: RegExp; expected: string }> = {
   email: {
     pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -412,7 +412,9 @@ export function contactFormats(data: DataSet): Issue[] {
   if (contact === undefined) return [];
   const issues: Issue[] = [];
   for (const [path, v] of walk(contact)) {
-    const format = CONTACT_FORMATS[(path.split('/').pop() ?? '').toLowerCase()];
+    // whatsapp is a number string, or { number, message } as in contact.json (ETE-33).
+    const key = path.endsWith('/whatsapp/number') ? 'whatsapp' : (path.split('/').pop() ?? '');
+    const format = CONTACT_FORMATS[key.toLowerCase()];
     if (!format || typeof v !== 'string') continue;
     if (!format.pattern.test(v.replace(format.strip, ''))) {
       issues.push({
