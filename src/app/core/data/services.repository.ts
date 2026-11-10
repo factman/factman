@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { relatedServices, serviceBySlug, services, servicesByOrder } from '@data';
+import { relatedServices, serviceBySlug, servicesByOrder } from '@data';
+import { services } from '@data/services';
 import type { Service } from '@shared';
 
 /**

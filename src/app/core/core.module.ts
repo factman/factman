@@ -1,6 +1,6 @@
 import { type ModuleWithProviders, NgModule, inject } from '@angular/core';
 import { resolveSite, type SiteEnvironment } from '@shared';
-import { site } from '@data';
+import { site } from '@data/site';
 
 import { AnalyticsModule } from './analytics/analytics.module';
 import { SITE } from './config/site';

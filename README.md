@@ -486,7 +486,8 @@ This repository also holds the source of my portfolio website (Angular, prerende
 | `pnpm storybook` | Storybook on http://localhost:6006                       |
 | `pnpm test:storybook` | Story tests in Vitest browser mode, with axe accessibility checks |
 | `pnpm test:headers` | Checks `vercel.json` security and cache headers |
-| `pnpm test:bundles` | Builds, then checks that content data (services, clients …) is not in the JavaScript every page loads |
+| `pnpm test:build` | Builds, then checks the output: content data (services, clients …) stays out of the JavaScript every page loads, and the CSP allows every inline script by its hash |
+| `pnpm csp:hashes` | Builds, then writes the hash of each inline script into the CSP in `vercel.json` (run it when `test:build` asks) |
 | `pnpm e2e`   | Builds (or restores the build from cache), then Playwright against the prerendered files. Run `pnpm e2e:install` once first |
 
 ### Task runner (Nx)

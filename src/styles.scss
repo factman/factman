@@ -14,3 +14,36 @@ body {
   color: var(--text-primary);
   background: var(--bg-canvas);
 }
+
+/* Skip link (ETE-43): hidden until it receives keyboard focus, then pinned top-left. */
+.skip-link:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.skip-link:focus {
+  position: fixed;
+  top: var(--gap-md);
+  left: var(--gap-md);
+  z-index: 1000;
+  padding: var(--padding-sm) var(--padding-md);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-glass-regular);
+  outline: var(--border-width-md) solid var(--border-focus);
+}
+
+/* <main> takes focus after navigation; the content is the cue, not a ring around the page. */
+main:focus {
+  outline: none;
+}
+
+/* Anchor targets clear the sticky navbar. */
+section[id] {
+  scroll-margin-top: var(--navbar-height);
+}

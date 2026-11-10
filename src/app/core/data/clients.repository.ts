@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { clients, clientsByOrder } from '@data';
+import { clientsByOrder } from '@data';
+import { clients } from '@data/clients';
 import type { Client } from '@shared';
 
 /** Companies and clients ("Worked with"). Loaded only with the pages that inject it. */

@@ -47,18 +47,19 @@ The source of truth is `tools/eslint/atomic-levels.mjs`. Change this table and t
 
 Every level and every feature has an `index.ts` that is its public API. Import through the alias, never through a deep path:
 
-| Alias              | Points to                              |
-| ------------------ | -------------------------------------- |
-| `@ui/tokens`       | `src/app/ui/tokens/index.ts`           |
-| `@ui/atoms`        | `src/app/ui/atoms/index.ts`            |
-| `@ui/molecules`    | `src/app/ui/molecules/index.ts`        |
-| `@ui/organisms`    | `src/app/ui/organisms/index.ts`        |
-| `@ui/templates`    | `src/app/ui/templates/index.ts`        |
-| `@features/<name>` | `src/app/features/<name>/index.ts`     |
-| `@core`            | `src/app/core/index.ts` (`CoreModule`) |
-| `@core/<concern>`  | `src/app/core/<concern>/index.ts`      |
-| `@shared`          | `src/app/shared/index.ts`              |
-| `@data`            | `src/app/data/index.ts`                |
+| Alias              | Points to                                                                                                            |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `@ui/tokens`       | `src/app/ui/tokens/index.ts`                                                                                         |
+| `@ui/atoms`        | `src/app/ui/atoms/index.ts`                                                                                          |
+| `@ui/molecules`    | `src/app/ui/molecules/index.ts`                                                                                      |
+| `@ui/organisms`    | `src/app/ui/organisms/index.ts`                                                                                      |
+| `@ui/templates`    | `src/app/ui/templates/index.ts`                                                                                      |
+| `@features/<name>` | `src/app/features/<name>/index.ts`                                                                                   |
+| `@core`            | `src/app/core/index.ts` (`CoreModule`)                                                                               |
+| `@core/<concern>`  | `src/app/core/<concern>/index.ts`                                                                                    |
+| `@shared`          | `src/app/shared/index.ts`                                                                                            |
+| `@data`            | `src/app/data/index.ts`                                                                                              |
+| `@data/<set>`      | `src/app/data/<set>.ts` (one data set: `site`, `services`, `clients` …), so each chunk carries only the JSON it uses |
 
 ```ts
 // Good

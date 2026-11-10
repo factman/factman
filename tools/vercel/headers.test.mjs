@@ -29,7 +29,9 @@ for (const key of [
 
 test('CSP blocks inline and third-party scripts and framing', () => {
   const csp = value('/(.*)', 'Content-Security-Policy');
-  assert.match(csp, /script-src 'self';/);
+  // Own scripts, plus inline scripts allowed one by one by hash (pnpm csp:hashes); never unsafe-inline.
+  assert.match(csp, /script-src 'self'( 'sha256-[A-Za-z0-9+/]+=*')*;/);
+  assert.doesNotMatch(csp, /script-src[^;]*unsafe-(inline|eval)/);
   assert.match(csp, /frame-ancestors 'none'/);
   assert.match(csp, /object-src 'none'/);
 });

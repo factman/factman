@@ -18,3 +18,7 @@ export const serviceResolver: ResolveFn<Service> = (route) => {
   const router = inject(Router);
   return new RedirectCommand(router.parseUrl(NOT_FOUND_PATH), { skipLocationChange: true });
 };
+
+/** Page title for /services/:slug: the service's title (an unknown slug is redirected anyway). */
+export const serviceTitleResolver: ResolveFn<string> = (route) =>
+  inject(ServicesRepository).bySlug(route.paramMap.get('slug') ?? '')?.title ?? 'Page not found';

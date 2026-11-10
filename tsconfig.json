@@ -22,7 +22,8 @@
       "@core": ["./src/app/core/index.ts"],
       "@core/*": ["./src/app/core/*/index.ts"],
       "@shared": ["./src/app/shared/index.ts"],
-      "@data": ["./src/app/data/index.ts"]
+      "@data": ["./src/app/data/index.ts"],
+      "@data/*": ["./src/app/data/*.ts"]
     }
   },
   "angularCompilerOptions": {

@@ -78,17 +78,22 @@
       "cache": true,
       "inputs": ["{projectRoot}/tools/vercel/**/*", "{projectRoot}/vercel.json", "sharedGlobals"]
     },
-    "test:bundles": {
-      "command": "node --test --test-reporter=spec tools/build/bundles.test.mjs",
+    "test:build": {
+      "command": "node --test --test-reporter=spec \"tools/build/*.test.mjs\"",
       "dependsOn": ["build"],
       "cache": true,
       "inputs": [
         "{projectRoot}/tools/build/**/*",
         "{projectRoot}/src/data/**/*.json",
+        "{projectRoot}/vercel.json",
         {
           "dependentTasksOutputFiles": "**/*.{js,html}"
         }
       ]
+    },
+    "csp:hashes": {
+      "command": "node tools/build/csp-hashes.mjs",
+      "dependsOn": ["build"]
     },
     "lint": {
       "executor": "nx:noop",

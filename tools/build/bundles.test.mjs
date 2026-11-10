@@ -1,6 +1,6 @@
 // Bundle check (ETE-41): only the data a page needs reaches its bundle.
 // Every page downloads main-*.js and the chunks index.html preloads; content data must not be in
-// them. Run after a build: pnpm test:bundles
+// them. Run with: pnpm test:build
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -34,3 +34,8 @@ for (const [file, marker] of Object.entries(markers)) {
     for (const f of initial) assert.ok(!read(f).includes(marker), `${file} content found in ${f}`);
   });
 }
+
+test('services.json ships in the lazy services chunks, where the services pages read it', () => {
+  const lazy = js.filter((f) => !initial.has(f) && read(f).includes(markers['services.json']));
+  assert.ok(lazy.length > 0, 'no lazy chunk contains services.json');
+});
