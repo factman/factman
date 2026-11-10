@@ -501,7 +501,7 @@ GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and on ev
 
 ### Hosting (Vercel)
 
-`vercel.json` holds the build settings (`pnpm build` → `dist/factman/browser`), security headers (CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy), long-lived caching for hashed JS/CSS, revalidation for HTML, and the static `404.html` fallback. The production URL is the placeholder `https://factman.vercel.app` until a custom domain is attached.
+`vercel.json` holds the build settings (`pnpm build` → `dist/factman/browser`), security headers (CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy). The CSP allows exactly one frame source, `https://calendar.google.com`, for the "Schedule a call" modal (ETE-214); every other frame is blocked, long-lived caching for hashed JS/CSS, revalidation for HTML, and the static `404.html` fallback. The production URL is the placeholder `https://factman.vercel.app` until a custom domain is attached.
 
 Environment variables (set in the Vercel project and in GitHub Actions secrets):
 
