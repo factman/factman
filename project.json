@@ -140,6 +140,9 @@
     },
     "ds:fonts": {
       "command": "tsx scripts/design-system/build-fonts.ts"
+    },
+    "ds:brand": {
+      "command": "tsx scripts/design-system/build-brand.ts"
     }
   }
 }

@@ -15,6 +15,8 @@ export default defineConfig([
       'coverage/',
       '.angular/',
       'storybook-static/',
+      // Nx task cache (cached outputs such as storybook-static)
+      '.nx/',
       'playwright-report/',
       'test-results/',
       'tools/eslint/fixtures/',

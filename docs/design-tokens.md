@@ -86,3 +86,28 @@ Plus Jakarta Sans (body), JetBrains Mono (code, terminal, eyebrows) and Jost (lo
 - `pnpm test:scripts` and `pnpm ds:fonts --check` fail if the files, CSS or preload drift from the packages. `e2e/fonts.spec.ts` checks that no request goes to `fonts.googleapis.com` or `fonts.gstatic.com`, and that fonts come from `/assets/fonts/`.
 
 To update the fonts: bump the `@fontsource` package versions, then run `pnpm ds:fonts`.
+
+## Brand assets (logo, favicons)
+
+The AY mark and the ODUNAYO lockup come from the design system's `assets/Logos` artwork. **The mark is never redrawn, recoloured or cropped:** everything the site serves is a resize of those files.
+
+- `src/styles/factman/logos/` holds the originals, copied as is: `factman-mark-light.png` and `factman-mark-dark.png` (1024 × 1024) and `odunayo-lockup-light.png` and `odunayo-lockup-dark.png` (2512 × 768). They are not deployed.
+- `pnpm ds:brand` resizes them with `sharp`:
+  - `src/assets/brand/`: `ay-mark-{light,dark}-{128,256}.webp` and `odunayo-lockup-{light,dark}-{96,192}.webp` (1x and 2x)
+  - `public/`: `favicon.ico` (16, 32, 48), `apple-touch-icon.png` (180, on the light canvas colour because iOS fills transparent corners with black), `icon-192.png`, `icon-512.png` and `site.webmanifest`
+- `src/index.html` links the icons, the manifest and `theme-color` (`--blue-900`).
+- `pnpm test:scripts` fails if an original no longer matches the design system file (sha256) or an output is missing or the wrong size.
+
+Use the `fm-logo` atom (`@ui/atoms`), never an `<img>` of the artwork:
+
+```html
+<fm-logo />
+<!-- ODUNAYO lockup, light, 48px mark -->
+<fm-logo type="mark" theme="dark" [size]="36" />
+<fm-logo [artwork]="true" />
+<!-- lockup from its artwork (no Jost needed) -->
+```
+
+`theme="light"` artwork (navy bezel and wordmark) goes on light grounds and `theme="dark"` (silver bezel, near-white wordmark) on dark grounds. The live wordmark uses `--font-logo` (Jost), so Jost loads only on pages that render a lockup.
+
+To update: copy the new design system PNGs over the originals, update the hashes in `scripts/design-system/build-brand.ts`, then run `pnpm ds:brand`.
