@@ -23,6 +23,8 @@ const file = (name: string) => `${DATA_DIR}/${name}.json`;
 const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 /** `2021-08` or `2021-08-15`: the date format for roles and projects (DS-06). */
 const DATE = /^\d{4}-(0[1-9]|1[0-2])(?:-(0[1-9]|[12]\d|3[01]))?$/;
+/** Projects may give only a year (`2020`) when the month isn't known. */
+const PROJECT_DATE = /^\d{4}(?:-(0[1-9]|1[0-2])(?:-(0[1-9]|[12]\d|3[01]))?)?$/;
 const OPEN_END = '9999-12';
 const isObject = (v: Json | undefined): v is JsonObject =>
   typeof v === 'object' && v !== null && !Array.isArray(v);
@@ -276,6 +278,7 @@ function* periods(data: DataSet): Generator<{
   name: string;
   path: string;
   fields: [string, string];
+  format: RegExp;
   start: Json | undefined;
   end: Json | undefined;
 }> {
@@ -287,6 +290,7 @@ function* periods(data: DataSet): Generator<{
           name: 'experience',
           path: `/${i}/roles/${r}`,
           fields: ['start', 'end'],
+          format: DATE,
           start: role['start'],
           end: role['end'],
         };
@@ -298,22 +302,23 @@ function* periods(data: DataSet): Generator<{
         name: 'projects',
         path: `/${i}`,
         fields: ['startedAt', 'completedAt'],
+        format: PROJECT_DATE,
         start: p['startedAt'],
         end: p['completedAt'],
       };
   }
 }
 
-/** DS-06: role and project dates are `YYYY-MM` or `YYYY-MM-DD`. */
+/** DS-06: role dates are `YYYY-MM` or `YYYY-MM-DD`; project dates may also be a bare `YYYY`. */
 export function dateFormat(data: DataSet): Issue[] {
   const issues: Issue[] = [];
-  for (const { name, path, fields, start, end } of periods(data)) {
+  for (const { name, path, fields, format, start, end } of periods(data)) {
     [start, end].forEach((v, k) => {
-      if (typeof v === 'string' && !DATE.test(v)) {
+      if (typeof v === 'string' && !format.test(v)) {
         issues.push({
           file: file(name),
           path: `${path}/${fields[k]}`,
-          message: `date "${v}" must be YYYY-MM or YYYY-MM-DD`,
+          message: `date "${v}" must be ${format === DATE ? 'YYYY-MM or YYYY-MM-DD' : 'YYYY, YYYY-MM or YYYY-MM-DD'}`,
           rule: 'DS-06',
         });
       }
@@ -325,9 +330,9 @@ export function dateFormat(data: DataSet): Issue[] {
 /** DS-06: date ranges are ordered: a role or project never ends before it starts. */
 export function dateOrder(data: DataSet): Issue[] {
   const issues: Issue[] = [];
-  for (const { name, path, start, end } of periods(data)) {
+  for (const { name, path, format, start, end } of periods(data)) {
     if (typeof start !== 'string' || typeof end !== 'string') continue;
-    if (!DATE.test(start) || !DATE.test(end)) continue;
+    if (!format.test(start) || !format.test(end)) continue;
     if (end < start) {
       issues.push({
         file: file(name),
