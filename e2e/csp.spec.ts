@@ -10,9 +10,10 @@ interface VercelConfig {
 }
 
 const vercel = JSON.parse(readFileSync('vercel.json', 'utf8')) as VercelConfig;
+// The app's rule: every path but /storybook (which has its own, see storybook.spec.ts).
 const csp = vercel.headers
-  .flatMap((h) => h.headers)
-  .find((h) => h.key === 'Content-Security-Policy')?.value;
+  .find((h) => h.source === '/((?!storybook(?:/|$)).*)')
+  ?.headers.find((h) => h.key === 'Content-Security-Policy')?.value;
 
 // Serves pages with the production CSP from vercel.json and checks nothing is blocked: inline
 // scripts (event replay, theme) must be allowed by their hashes (pnpm csp:hashes).
@@ -39,6 +40,7 @@ for (const [path, h1] of [
     });
     await page.goto(path);
     await expect(page.getByRole('heading', { level: 1, name: h1 })).toBeVisible();
+    await page.unrouteAll({ behavior: 'ignoreErrors' });
     expect(violations).toEqual([]);
   });
 }
