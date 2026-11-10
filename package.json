@@ -28,6 +28,7 @@
     "test:scripts": "nx run factman:test:scripts",
     "ds:split": "nx run factman:ds:split",
     "ds:fonts": "nx run factman:ds:fonts",
+    "ds:brand": "nx run factman:ds:brand",
     "lint:eslint": "nx run factman:lint:eslint"
   },
   "private": true,
@@ -87,6 +88,7 @@
     "playwright": "1.65.0",
     "prettier": "^3.8.1",
     "serve": "14.2.7",
+    "sharp": "0.35.5",
     "storybook": "^10.6.6",
     "stylelint": "^17.16.0",
     "stylelint-config-standard-scss": "^17.0.0",
