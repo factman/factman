@@ -40,6 +40,7 @@ for (const [path, h1] of [
     });
     await page.goto(path);
     await expect(page.getByRole('heading', { level: 1, name: h1 })).toBeVisible();
+    await page.unrouteAll({ behavior: 'ignoreErrors' });
     expect(violations).toEqual([]);
   });
 }

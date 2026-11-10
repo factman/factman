@@ -47,6 +47,9 @@ test('/storybook loads a story under its production Content-Security-Policy', as
   ).toBeVisible();
   const preview = page.frameLocator('#storybook-preview-iframe');
   await expect(preview.locator('#storybook-root > *').first()).toBeVisible();
+  // Storybook keeps lazy-loading (addons, fonts) after the story renders; stop intercepting
+  // before the test ends so an in-flight route.fetch isn't reported as an error.
+  await page.unrouteAll({ behavior: 'ignoreErrors' });
   expect(violations).toEqual([]);
   expect(missing).toEqual([]);
 });
