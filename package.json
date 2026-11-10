@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "nx run factman:start",
     "build": "nx run factman:build",
+    "build:preview": "nx run factman:build:preview",
     "watch": "nx run factman:watch",
     "test": "nx run factman:test",
     "serve:ssr:factman": "nx run factman:serve:ssr:factman",

@@ -470,6 +470,7 @@ This repository also holds the source of my portfolio website (Angular, prerende
 | `pnpm install` | Install dependencies from `pnpm-lock.yaml`                 |
 | `pnpm start` | Dev server on http://localhost:4200                          |
 | `pnpm build` | Validates data and generates the models, then the production build; every static route is prerendered to `dist/factman/browser` |
+| `pnpm build:preview` | The same build with preview settings (noindex, analytics off); Vercel uses it for preview deployments |
 | `pnpm data:validate` | Checks `src/data/*.json` against their JSON Schemas and the cross-reference rules |
 | `pnpm data:types` | Generates TypeScript models from the schemas into `src/app/shared/models/generated` |
 | `pnpm test:scripts` | Tests for the build scripts (data validator, design tokens) |

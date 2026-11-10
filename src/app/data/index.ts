@@ -1,2 +1,2 @@
-// Public API of the data layer (built in ETE-27 to ETE-39). Only pages may import `@data`.
-export {};
+// Public API of the data layer: typed content from src/data/*.json. Only pages and core may import `@data`.
+export { site } from './site';

@@ -9,7 +9,11 @@ const forPath = (source) => config.headers.find((h) => h.source === source)?.hea
 const value = (source, key) => forPath(source).find((h) => h.key === key)?.value;
 
 test('build settings point at the prerendered output', () => {
-  assert.equal(config.buildCommand, 'pnpm build');
+  // Production deployments build the production site; previews build the preview one (ETE-40).
+  assert.match(
+    config.buildCommand,
+    /\$VERCEL_ENV" = production \]; then pnpm build; else pnpm build:preview;/,
+  );
   assert.equal(config.outputDirectory, 'dist/factman/browser');
 });
 

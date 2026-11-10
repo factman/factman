@@ -20,10 +20,18 @@
       "outputs": ["{projectRoot}/src/app/shared/models/generated"]
     },
     "build": {
-      "command": "ng build",
+      "executor": "nx:run-commands",
       "dependsOn": ["data:validate", "data:types"],
       "inputs": ["production"],
-      "outputs": ["{projectRoot}/dist/factman"]
+      "outputs": ["{projectRoot}/dist/factman"],
+      "options": {
+        "command": "ng build"
+      },
+      "configurations": {
+        "preview": {
+          "command": "ng build --configuration production,preview"
+        }
+      }
     },
     "watch": {
       "command": "ng build --watch --configuration development",

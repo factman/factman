@@ -19,6 +19,7 @@
       "@ui/organisms": ["./src/app/ui/organisms/index.ts"],
       "@ui/templates": ["./src/app/ui/templates/index.ts"],
       "@features/*": ["./src/app/features/*/index.ts"],
+      "@core": ["./src/app/core/index.ts"],
       "@core/*": ["./src/app/core/*/index.ts"],
       "@shared": ["./src/app/shared/index.ts"],
       "@data": ["./src/app/data/index.ts"]
