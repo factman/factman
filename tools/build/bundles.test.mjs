@@ -19,6 +19,11 @@ const json = (f) => JSON.parse(readFileSync(join('src/data', f), 'utf8'));
 const markers = {
   'services.json': json('services.json')[0].audience,
   'clients.json': json('clients.json')[0].website,
+  'projects.json': json('projects.json')[0].summary,
+  'skills.json': '"jetbrains-ides"',
+  'experience.json': json('experience.json')[0].roles[0].summary,
+  'profile.json': json('profile.json').about[2],
+  'contact.json': json('contact.json').whatsapp.message,
 };
 
 test('the initial bundle is the entry script plus its preloaded chunks', () => {
@@ -35,7 +40,12 @@ for (const [file, marker] of Object.entries(markers)) {
   });
 }
 
-test('services.json ships in the lazy services chunks, where the services pages read it', () => {
-  const lazy = js.filter((f) => !initial.has(f) && read(f).includes(markers['services.json']));
-  assert.ok(lazy.length > 0, 'no lazy chunk contains services.json');
-});
+for (const [file, pages] of [
+  ['services.json', 'services'],
+  ['projects.json', 'projects'],
+]) {
+  test(`${file} ships in the lazy ${pages} chunks, where the ${pages} pages read it`, () => {
+    const lazy = js.filter((f) => !initial.has(f) && read(f).includes(markers[file]));
+    assert.ok(lazy.length > 0, `no lazy chunk contains ${file}`);
+  });
+}

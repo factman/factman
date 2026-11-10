@@ -7,6 +7,7 @@ const pages = [
   ['/services/consultancy', 'Consultancy', 'Consultancy · Odunayo Mohammed'],
   ['/services/devops', 'DevOps', 'DevOps · Odunayo Mohammed'],
   ['/projects', 'Projects', 'Projects · Odunayo Mohammed'],
+  ['/projects/graphui', 'GraphUI', 'GraphUI · Odunayo Mohammed'],
   ['/blog', 'Blog', 'Blog · Odunayo Mohammed'],
   ['/privacy', 'Privacy', 'Privacy · Odunayo Mohammed'],
   ['/404', 'Page not found', 'Page not found · Odunayo Mohammed'],
@@ -30,6 +31,13 @@ test('every service in services.json has a prerendered page', async ({ request }
   const res = await request.get('/services');
   const links = [...(await res.text()).matchAll(/href="(\/services\/[^"]+)"/g)].map((m) => m[1]);
   expect(links).toHaveLength(8);
+  for (const link of links) expect((await request.get(link)).status(), link).toBe(200);
+});
+
+test('every project in projects.json has a prerendered page', async ({ request }) => {
+  const res = await request.get('/projects');
+  const links = [...(await res.text()).matchAll(/href="(\/projects\/[^"]+)"/g)].map((m) => m[1]);
+  expect(links).toHaveLength(6);
   for (const link of links) expect((await request.get(link)).status(), link).toBe(200);
 });
 
