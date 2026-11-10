@@ -71,9 +71,13 @@ test('in-app navigation moves focus to the new page', async ({ page }) => {
   await expect(page.locator('main')).toBeFocused();
 });
 
-test('the skip link is the first tab stop and jumps to the content', async ({ page }) => {
+test('the skip link is the first tab stop and jumps to the content', async ({
+  page,
+  browserName,
+}) => {
   await page.goto('/services');
-  await page.keyboard.press('Tab');
+  // Safari's Tab skips links unless full keyboard access is on; Option+Tab reaches them.
+  await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');
   const skip = page.getByRole('link', { name: 'Skip to content' });
   await expect(skip).toBeFocused();
   await expect(skip).toBeVisible();

@@ -47,3 +47,21 @@ main:focus {
 section[id] {
   scroll-margin-top: var(--navbar-height);
 }
+
+/*
+ * Reduced motion (ETE-26): when the visitor asks for less motion, every animation and transition
+ * finishes at once (reveals appear, hovers snap) and smooth scrolling is off. Components also check
+ * prefersReducedMotion() to skip work: counters show their final value, typing shows the full text.
+ */
+@media (prefers-reduced-motion: reduce) {
+  /* stylelint-disable scale-unlimited/declaration-strict-value -- near-zero, not a design duration */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* stylelint-enable scale-unlimited/declaration-strict-value */
+}

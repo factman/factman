@@ -13,6 +13,13 @@ const sample = [
   '.fm-glass { opacity: 1; }',
   '/* ===== Portfolio: code & terminal UI ===== */',
   '.fm-window { display: flex; }',
+  '/* ===== Portfolio: sections ===== */',
+  '.fm-reveal { opacity: 0; }',
+  '.fm-reveal.is-in { opacity: 1; }',
+  '.fm-eyebrow { color: var(--accent-default); }',
+  '@media (prefers-reduced-motion: reduce) {',
+  '  .fm-reveal { opacity: 1; }',
+  '}',
 ].join('\n');
 
 test('slugifies section titles', () => {
@@ -25,8 +32,21 @@ test('preamble and shared helpers go global; each component gets its own file', 
   assert.match(global, /\.fm-backdrop/);
   assert.match(global, /\.fm-glass/);
   assert.doesNotMatch(global, /\.fm-btn/);
-  assert.deepEqual([...sections.keys()], ['button', 'portfolio-code-terminal-ui']);
+  assert.deepEqual(
+    [...sections.keys()],
+    ['button', 'portfolio-code-terminal-ui', 'portfolio-sections'],
+  );
   assert.match(sections.get('button') ?? '', /\.fm-btn/);
+});
+
+test('lifts the top-level .fm-reveal rules into global.css for the fmReveal directive', () => {
+  const { global, sections } = splitBundle(sample);
+  assert.match(global, /^\.fm-reveal \{ opacity: 0; \}$/m);
+  assert.match(global, /^\.fm-reveal\.is-in \{ opacity: 1; \}$/m);
+  const rest = sections.get('portfolio-sections') ?? '';
+  assert.doesNotMatch(rest, /^\.fm-reveal/m);
+  assert.match(rest, /^ {2}\.fm-reveal \{ opacity: 1; \}$/m); // nested media rule stays
+  assert.match(rest, /\.fm-eyebrow/);
 });
 
 test('rejects duplicate sections', () => {

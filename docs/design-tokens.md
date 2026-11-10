@@ -64,6 +64,13 @@ Dark mode is `data-theme="dark"` on `<html>`. Wrap pages in `.fm-backdrop` for t
 - **`ThemeService`** (`ThemeModule`) keeps `data-theme` in step after hydration: `set('light' | 'dark' | 'system')`, `toggle()`, and `command(arg)` for the terminal's `theme` command. Storage failures (private mode, blocked cookies) are caught; the theme still switches for the visit.
 - **Storybook:** the Theme toolbar renders any story in Light or Dark.
 
+## Motion (ETE-26)
+
+- **Tokens:** `--duration-reveal` (600ms, scroll reveals), `--duration-typing` (35ms per character), `--duration-count` (1400ms, counters), `--duration-blink` (caret), `--duration-instant` … `--duration-slow` for UI, and the `--ease-*` curves. Durations always come from tokens.
+- **Only `transform` and `opacity` animate.** stylelint rejects any other `transition` or `transition-property` (and `transition: all`); keep `@keyframes` to those two properties as well.
+- **Reveal on scroll:** add `fmReveal` (from `SharedModule`, optional `[fmRevealDelay]` stagger in ms) to an element. It uses the design system's `.fm-reveal` / `.is-in` classes, which `pnpm ds:split` lifts into `global.css`. Prerendered HTML is never hidden: an element only starts hidden in the browser, and only when it begins below the fold.
+- **Reduced motion:** a global rule in `src/styles.scss` makes every animation and transition finish at once and turns off smooth scrolling. `fmReveal` hides nothing. Components check `prefersReducedMotion()` (`@shared`): counters show their final value, typing shows the full text.
+
 ## Rules for component styles
 
 `pnpm lint:styles` (stylelint, also part of `pnpm lint` and the pre-commit hook) rejects:

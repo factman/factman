@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { SharedModule } from '@shared';
 
 import { HOME_SECTIONS } from './home-sections';
 
@@ -10,12 +11,17 @@ import { HOME_SECTIONS } from './home-sections';
 @Component({
   selector: 'fm-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
+  imports: [RouterLink, SharedModule],
   template: `
     <h1>Odunayo Mohammed</h1>
     <p>Site under construction.</p>
     @for (section of sections; track section.id) {
-      <section [id]="section.id" [attr.aria-labelledby]="section.id + '-title'" tabindex="-1">
+      <section
+        fmReveal
+        [id]="section.id"
+        [attr.aria-labelledby]="section.id + '-title'"
+        tabindex="-1"
+      >
         <h2 [id]="section.id + '-title'">{{ section.label }}</h2>
         @if ('route' in section) {
           <p>

@@ -37,3 +37,6 @@
 .fm-place--bottom > .fm-arrow { top: -5px; left: calc(50% - 5px); border-bottom: 0; border-right: 0; }
 .fm-place--left > .fm-arrow { right: -5px; top: calc(50% - 5px); border-bottom: 0; border-left: 0; }
 .fm-place--right > .fm-arrow { left: -5px; top: calc(50% - 5px); border-top: 0; border-right: 0; }
+
+.fm-reveal { opacity: 0; transform: translateY(16px); transition: opacity var(--duration-reveal) var(--ease-out), transform var(--duration-reveal) var(--ease-out); }
+.fm-reveal.is-in { opacity: 1; transform: none; }
