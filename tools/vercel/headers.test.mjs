@@ -30,6 +30,15 @@ test('CSP blocks inline and third-party scripts and framing', () => {
   assert.match(csp, /object-src 'none'/);
 });
 
+test('CSP lets only the Google Calendar scheduler load in a frame (ETE-214)', () => {
+  const csp = value('/(.*)', 'Content-Security-Policy');
+  const frameSrc = csp
+    .split(';')
+    .map((d) => d.trim())
+    .find((d) => d.startsWith('frame-src '));
+  assert.equal(frameSrc, 'frame-src https://calendar.google.com');
+});
+
 test('HSTS lasts at least a year', () => {
   const maxAge = Number(value('/(.*)', 'Strict-Transport-Security').match(/max-age=(\d+)/)[1]);
   assert.ok(maxAge >= 31536000);
