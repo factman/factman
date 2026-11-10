@@ -55,7 +55,14 @@ Angular compiles a component's styles into that component, inside the JS chunk o
    - tables and loading: `table-*`, `skeleton-*`
 4. **Scales:** spacing (`gap-*`, `padding-*` on a 4px rhythm), `radius-*`, `border-width-*`, `shadow-*` (Light and Dark), `blur-*`, `opacity-*`, layout (`breakpoint-*`, `content-max`, `navbar-height`), motion (`duration-*`, `ease-*`) and fonts (`font-sans`, `font-logo`, `font-mono`).
 
-Dark mode: set `data-theme="dark"` on `<html>` (theme handling is ETE-24). Wrap pages in `.fm-backdrop` for the canvas glow that makes glass read.
+Dark mode is `data-theme="dark"` on `<html>`. Wrap pages in `.fm-backdrop` for the canvas glow that makes glass read.
+
+### Theme (FR-04)
+
+- **Order:** the visitor's stored choice (`localStorage` key `fm_theme`), then the system preference (`prefers-color-scheme`), then `site.defaultTheme` (`system`, so Light when nothing else is known). `resolveTheme()` in `@core/theme` is the one implementation.
+- **No flash:** an inline script at the top of `src/index.html` sets `data-theme` before first paint, in the same order. `pnpm test:scripts` checks the two agree. Its CSP hash is in `vercel.json`: after editing the script, run `pnpm csp:hashes` (`pnpm test:build` fails until you do).
+- **`ThemeService`** (`ThemeModule`) keeps `data-theme` in step after hydration: `set('light' | 'dark' | 'system')`, `toggle()`, and `command(arg)` for the terminal's `theme` command. Storage failures (private mode, blocked cookies) are caught; the theme still switches for the visit.
+- **Storybook:** the Theme toolbar renders any story in Light or Dark.
 
 ## Rules for component styles
 

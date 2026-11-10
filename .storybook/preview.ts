@@ -8,6 +8,29 @@ import '../src/styles/factman/global.css';
 import '../src/styles.scss';
 
 const preview: Preview = {
+  // Theme toolbar (FR-04): renders every story in Light or Dark by setting data-theme on <html>,
+  // as ThemeService does in the app. A story can pin one with `globals: { theme: 'dark' }`.
+  globalTypes: {
+    theme: {
+      description: 'Light or Dark theme',
+      toolbar: {
+        title: 'Theme',
+        icon: 'mirror',
+        items: [
+          { value: 'light', title: 'Light', icon: 'sun' },
+          { value: 'dark', title: 'Dark', icon: 'moon' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+  initialGlobals: { theme: 'light' },
+  decorators: [
+    (story, context) => {
+      document.documentElement.setAttribute('data-theme', String(context.globals['theme']));
+      return story();
+    },
+  ],
   parameters: {
     controls: {
       matchers: {
