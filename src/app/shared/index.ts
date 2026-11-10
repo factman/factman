@@ -5,3 +5,8 @@ export { prefersReducedMotion, REDUCED_MOTION_QUERY } from './motion/reduced-mot
 export { Reveal } from './motion/reveal.directive';
 export { SharedModule } from './shared.module';
 export * from './site/resolve-site';
+export * from './time/clock';
+export * from './time/year-month';
+export * from './experience/experience';
+export * from './experience/years';
+export * from './experience/counters';
