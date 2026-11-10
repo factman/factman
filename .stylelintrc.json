@@ -54,8 +54,12 @@
           "currentColor"
         ],
         "disableFix": true,
-        "message": "Use a design token (var(--\u2026)) for \"${property}\", not \"${value}\". See docs/design-tokens.md."
+        "message": "Use a design token (var(--…)) for \"${property}\", not \"${value}\". See docs/design-tokens.md."
       }
-    ]
+    ],
+    "declaration-property-value-allowed-list": {
+      "transition-property": ["/^(none|(opacity|transform)(\\s*,\\s*(opacity|transform))*)$/"],
+      "transition": ["/^(none|(opacity|transform)\\s[^,]+(,\\s*(opacity|transform)\\s[^,]+)*)$/"]
+    }
   }
 }

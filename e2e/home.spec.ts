@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-// Smoke test: covers the home route only. The full route list arrives with ETE-43.
+// Smoke test for the home route; e2e/routes.spec.ts covers the whole site map.
 test.describe('home', () => {
   test('is prerendered: the raw HTML already contains the heading', async ({ request }) => {
     const res = await request.get('/');

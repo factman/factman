@@ -5,6 +5,23 @@
     <title>Odunayo Mohammed</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Theme pre-paint (FR-04): same order as resolveTheme(): stored choice, system, light.
+         Its CSP hash is in vercel.json (pnpm csp:hashes). -->
+    <script>
+      (function () {
+        var t;
+        try {
+          t = localStorage.getItem('fm_theme');
+        } catch (e) {}
+        if (t !== 'light' && t !== 'dark') {
+          t =
+            window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
     <meta name="theme-color" content="#07203f" />
     <!-- Brand icons from the design system's AY mark (pnpm ds:brand) -->
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />

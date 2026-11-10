@@ -9,7 +9,11 @@ const forPath = (source) => config.headers.find((h) => h.source === source)?.hea
 const value = (source, key) => forPath(source).find((h) => h.key === key)?.value;
 
 test('build settings point at the prerendered output', () => {
-  assert.equal(config.buildCommand, 'pnpm build');
+  // Production deployments build the production site; previews build the preview one (ETE-40).
+  assert.match(
+    config.buildCommand,
+    /\$VERCEL_ENV" = production \]; then pnpm build; else pnpm build:preview;/,
+  );
   assert.equal(config.outputDirectory, 'dist/factman/browser');
 });
 
@@ -25,7 +29,9 @@ for (const key of [
 
 test('CSP blocks inline and third-party scripts and framing', () => {
   const csp = value('/(.*)', 'Content-Security-Policy');
-  assert.match(csp, /script-src 'self';/);
+  // Own scripts, plus inline scripts allowed one by one by hash (pnpm csp:hashes); never unsafe-inline.
+  assert.match(csp, /script-src 'self'( 'sha256-[A-Za-z0-9+/]+=*')*;/);
+  assert.doesNotMatch(csp, /script-src[^;]*unsafe-(inline|eval)/);
   assert.match(csp, /frame-ancestors 'none'/);
   assert.match(csp, /object-src 'none'/);
 });

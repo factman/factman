@@ -1,2 +1,3 @@
-// Public API of the projects feature (page). Import via `@features/projects`.
-export {};
+// Public API of the projects feature (pages). Import via `@features/projects`.
+export { ProjectsPage } from './projects';
+export { PROJECTS_ROUTES } from './projects.routes';

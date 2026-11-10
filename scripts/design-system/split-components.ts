@@ -1,7 +1,8 @@
 /**
  * `pnpm ds:split`: splits the design system's bundle.css into
  *   - src/styles/factman/global.css: what every page needs (.fm-backdrop, .fm-icon,
- *     shared tones, glass and arrows), loaded globally in angular.json
+ *     shared tones, glass and arrows, and the .fm-reveal rules the fmReveal directive uses on any
+ *     element), loaded globally in angular.json
  *   - src/styles/factman/components/<section>.css: one file per component section,
  *     NOT loaded globally. Each Angular component adds its section to its own styles,
  *     so a page only loads CSS for the components it renders (see docs/design-tokens.md).
@@ -16,6 +17,11 @@ export const GLOBAL = 'src/styles/factman/global.css';
 export const COMPONENTS_DIR = 'src/styles/factman/components';
 /** Sections that every page needs, merged into global.css after the preamble. */
 const GLOBAL_SECTIONS = new Set(['shared-tones-glass-arrows']);
+/**
+ * Top-level rules lifted out of their section into global.css: helpers that are not tied to one
+ * component. `.fm-reveal` is used by the fmReveal directive (ETE-26) on any element.
+ */
+const GLOBAL_RULES = [/^\.fm-reveal[\s.:{,]/];
 const HEADER = /^\/\* (?:-{3,}|={3,}) (.+?) (?:-{3,}|={3,})?\s*\*\/\s*$/;
 const BANNER = (what: string) =>
   `/* Factman ${what}, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */\n`;
@@ -49,11 +55,21 @@ export function splitBundle(css: string): SplitResult {
   }
   const trim = (lines: string[]) => lines.join('\n').trim() + '\n';
   const globalParts = [trim(preamble)];
+  const lifted: string[] = [];
   const out = new Map<string, string>();
   for (const [name, lines] of sections) {
-    if (GLOBAL_SECTIONS.has(name)) globalParts.push(trim(lines));
-    else out.set(name, trim(lines));
+    if (GLOBAL_SECTIONS.has(name)) {
+      globalParts.push(trim(lines));
+      continue;
+    }
+    const kept = lines.filter((line) => {
+      const lift = GLOBAL_RULES.some((re) => re.test(line));
+      if (lift) lifted.push(line);
+      return !lift;
+    });
+    out.set(name, trim(kept));
   }
+  if (lifted.length) globalParts.push(trim(lifted));
   return { global: globalParts.join('\n'), sections: out };
 }
 

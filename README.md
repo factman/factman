@@ -470,6 +470,7 @@ This repository also holds the source of my portfolio website (Angular, prerende
 | `pnpm install` | Install dependencies from `pnpm-lock.yaml`                 |
 | `pnpm start` | Dev server on http://localhost:4200                          |
 | `pnpm build` | Validates data and generates the models, then the production build; every static route is prerendered to `dist/factman/browser` |
+| `pnpm build:preview` | The same build with preview settings (noindex, analytics off); Vercel uses it for preview deployments |
 | `pnpm data:validate` | Checks `src/data/*.json` against their JSON Schemas and the cross-reference rules |
 | `pnpm data:types` | Generates TypeScript models from the schemas into `src/app/shared/models/generated` |
 | `pnpm test:scripts` | Tests for the build scripts (data validator, design tokens) |
@@ -485,6 +486,8 @@ This repository also holds the source of my portfolio website (Angular, prerende
 | `pnpm storybook` | Storybook on http://localhost:6006                       |
 | `pnpm test:storybook` | Story tests in Vitest browser mode, with axe accessibility checks |
 | `pnpm test:headers` | Checks `vercel.json` security and cache headers |
+| `pnpm test:build` | Builds, then checks the output: content data (services, clients …) stays out of the JavaScript every page loads, and the CSP allows every inline script by its hash |
+| `pnpm csp:hashes` | Builds, then writes the hash of each inline script into the CSP in `vercel.json` (run it when `test:build` asks) |
 | `pnpm e2e`   | Builds (or restores the build from cache), then Playwright against the prerendered files. Run `pnpm e2e:install` once first |
 
 ### Task runner (Nx)

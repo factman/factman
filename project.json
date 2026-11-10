@@ -20,10 +20,18 @@
       "outputs": ["{projectRoot}/src/app/shared/models/generated"]
     },
     "build": {
-      "command": "ng build",
+      "executor": "nx:run-commands",
       "dependsOn": ["data:validate", "data:types"],
       "inputs": ["production"],
-      "outputs": ["{projectRoot}/dist/factman"]
+      "outputs": ["{projectRoot}/dist/factman"],
+      "options": {
+        "command": "ng build"
+      },
+      "configurations": {
+        "preview": {
+          "command": "ng build --configuration production,preview"
+        }
+      }
     },
     "watch": {
       "command": "ng build --watch --configuration development",
@@ -69,6 +77,23 @@
       "command": "node --test --test-reporter=spec tools/vercel/headers.test.mjs",
       "cache": true,
       "inputs": ["{projectRoot}/tools/vercel/**/*", "{projectRoot}/vercel.json", "sharedGlobals"]
+    },
+    "test:build": {
+      "command": "node --test --test-reporter=spec \"tools/build/*.test.mjs\"",
+      "dependsOn": ["build"],
+      "cache": true,
+      "inputs": [
+        "{projectRoot}/tools/build/**/*",
+        "{projectRoot}/src/data/**/*.json",
+        "{projectRoot}/vercel.json",
+        {
+          "dependentTasksOutputFiles": "**/*.{js,html}"
+        }
+      ]
+    },
+    "csp:hashes": {
+      "command": "node tools/build/csp-hashes.mjs",
+      "dependsOn": ["build"]
     },
     "lint": {
       "executor": "nx:noop",
