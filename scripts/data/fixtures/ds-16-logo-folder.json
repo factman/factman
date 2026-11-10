@@ -1,0 +1,12 @@
+{
+  "rule": "DS-16",
+  "case": "a client logo outside src/assets/clients",
+  "file": "clients",
+  "patch": [
+    {
+      "op": "replace",
+      "path": "/0/logo",
+      "value": "brand/ay-mark-dark-128.webp"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "rule": "DS-13",
+  "case": "a post with an impossible date and an unknown origin",
+  "data": {
+    "blog": {
+      "posts": [
+        {
+          "id": "post",
+          "url": "https://medium.com/@factman60/post",
+          "publishedAt": "2026-13-45",
+          "origin": "scraped"
+        }
+      ]
+    }
+  }
+}

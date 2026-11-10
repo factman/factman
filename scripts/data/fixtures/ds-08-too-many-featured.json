@@ -1,0 +1,36 @@
+{
+  "rule": "DS-08",
+  "case": "seven featured projects",
+  "data": {
+    "projects": [
+      {
+        "id": "p1",
+        "featured": true
+      },
+      {
+        "id": "p2",
+        "featured": true
+      },
+      {
+        "id": "p3",
+        "featured": true
+      },
+      {
+        "id": "p4",
+        "featured": true
+      },
+      {
+        "id": "p5",
+        "featured": true
+      },
+      {
+        "id": "p6",
+        "featured": true
+      },
+      {
+        "id": "p7",
+        "featured": true
+      }
+    ]
+  }
+}

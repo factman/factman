@@ -1,0 +1,12 @@
+{
+  "rule": "DS-16",
+  "case": "a client whose type is neither client nor company",
+  "file": "clients",
+  "patch": [
+    {
+      "op": "replace",
+      "path": "/0/type",
+      "value": "partner"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "rule": "DS-06",
+  "case": "a role date that is not YYYY-MM",
+  "data": {
+    "experience": [
+      {
+        "id": "acme",
+        "roles": [
+          {
+            "id": "dev",
+            "start": "2020/01"
+          }
+        ]
+      }
+    ]
+  }
+}

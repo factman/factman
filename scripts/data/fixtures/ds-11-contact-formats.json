@@ -1,0 +1,11 @@
+{
+  "rule": "DS-11",
+  "case": "a bad email, a local phone number and a formatted WhatsApp number",
+  "data": {
+    "contact": {
+      "email": "mailto:hi@factman",
+      "phone": "08031234567",
+      "whatsapp": "+234 803 123 4567"
+    }
+  }
+}
