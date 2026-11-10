@@ -475,7 +475,7 @@ This repository also holds the source of my portfolio website (Angular, prerende
 | `pnpm test:scripts` | Tests for the build scripts (data validator, design tokens) |
 | `pnpm ds:tokens` | Regenerates `src/styles/factman/tokens.css` from the design system's `tokens.json` |
 | `pnpm ds:fonts` | Self-hosts the fonts: copies the woff2 files, writes `fonts.css` and the preload link |
-| `pnpm ds:brand` | Resizes the design system's logo artwork into the web logo files, favicon set, apple-touch icon and web manifest |
+| `pnpm ds:brand` | Resizes the design system's logo artwork into the web logo files, favicon set, apple-touch icon, maskable app icons and web manifest |
 | `pnpm ds:split` | Splits the design system's `bundle.css` into `global.css` and one file per component |
 | `pnpm lint:styles` | Stylelint: component styles must use design tokens, never raw colours or sizes |
 | `pnpm test`  | Validates data and generates the models, then unit tests (Vitest + Angular TestBed) |

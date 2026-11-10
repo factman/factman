@@ -41,7 +41,16 @@ export interface Output {
   format: 'webp' | 'png';
   /** Flatten transparent corners onto this colour (iOS fills them with black otherwise). */
   background?: string;
+  /** Share of the canvas the artwork fills, centred (padding for maskable icons). Default 1. */
+  scale?: number;
 }
+
+/**
+ * Maskable icons: Android may crop to any shape inside a centred circle of radius 40% of the icon
+ * (the safe zone). A square fits that circle when its side is at most 0.8 / √2 ≈ 0.566, so the
+ * whole mark, bezel included, stays visible under every mask.
+ */
+export const MASKABLE_SCALE = 0.56;
 
 const LOCKUP_RATIO = 2512 / 768;
 const webAssets = (): Output[] =>
@@ -81,6 +90,15 @@ export const OUTPUTS: Output[] = [
     format: 'png',
     background: CANVAS_LIGHT,
   },
+  ...[192, 512].map((px) => ({
+    path: `${PUBLIC_DIR}/icon-maskable-${px}.png`,
+    source: 'factman-mark-light.png' as Source,
+    width: px,
+    height: px,
+    format: 'png' as const,
+    background: CANVAS_LIGHT,
+    scale: MASKABLE_SCALE,
+  })),
 ];
 
 export const manifest = () =>
@@ -95,6 +113,8 @@ export const manifest = () =>
       icons: [
         { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
         { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+        { src: '/icon-maskable-192.png', sizes: '192x192', type: 'image/png', purpose: 'maskable' },
+        { src: '/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
       ],
     },
     null,
@@ -133,10 +153,30 @@ export function icoSizes(ico: Buffer): number[] {
 }
 
 async function render(root: string, out: Output): Promise<Buffer> {
-  let img = sharp(join(root, SOURCE_DIR, out.source)).resize(out.width, out.height, {
-    fit: 'contain',
-    background: { r: 0, g: 0, b: 0, alpha: 0 },
-  });
+  const transparent = { r: 0, g: 0, b: 0, alpha: 0 };
+  const scale = out.scale ?? 1;
+  const w = Math.round(out.width * scale);
+  const h = Math.round(out.height * scale);
+  // sharp runs flatten before resize and extend within one pipeline, so each step is its own pass.
+  let buf = await sharp(join(root, SOURCE_DIR, out.source))
+    .resize(w, h, { fit: 'contain', background: transparent })
+    .png()
+    .toBuffer();
+  if (scale !== 1) {
+    const left = Math.floor((out.width - w) / 2);
+    const top = Math.floor((out.height - h) / 2);
+    buf = await sharp(buf)
+      .extend({
+        left,
+        right: out.width - w - left,
+        top,
+        bottom: out.height - h - top,
+        background: transparent,
+      })
+      .png()
+      .toBuffer();
+  }
+  let img = sharp(buf);
   if (out.background) img = img.flatten({ background: out.background });
   return out.format === 'webp'
     ? img.webp({ quality: 90, alphaQuality: 100, effort: 6 }).toBuffer()

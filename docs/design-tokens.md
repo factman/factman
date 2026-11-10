@@ -94,7 +94,7 @@ The AY mark and the ODUNAYO lockup come from the design system's `assets/Logos` 
 - `src/styles/factman/logos/` holds the originals, copied as is: `factman-mark-light.png` and `factman-mark-dark.png` (1024 × 1024) and `odunayo-lockup-light.png` and `odunayo-lockup-dark.png` (2512 × 768). They are not deployed.
 - `pnpm ds:brand` resizes them with `sharp`:
   - `src/assets/brand/`: `ay-mark-{light,dark}-{128,256}.webp` and `odunayo-lockup-{light,dark}-{96,192}.webp` (1x and 2x)
-  - `public/`: `favicon.ico` (16, 32, 48), `apple-touch-icon.png` (180, on the light canvas colour because iOS fills transparent corners with black), `icon-192.png`, `icon-512.png` and `site.webmanifest`
+  - `public/`: `favicon.ico` (16, 32, 48), `apple-touch-icon.png` (180, on the light canvas colour because iOS fills transparent corners with black), `icon-192.png`, `icon-512.png`, the maskable `icon-maskable-192.png` and `icon-maskable-512.png` (the mark at 56% of the icon on the light canvas colour, so Android's circle, squircle or rounded-square masks never cut into it; the safe zone is a centred circle of radius 40%) and `site.webmanifest`
 - `src/index.html` links the icons, the manifest and `theme-color` (`--blue-900`).
 - `pnpm test:scripts` fails if an original no longer matches the design system file (sha256) or an output is missing or the wrong size.
 
