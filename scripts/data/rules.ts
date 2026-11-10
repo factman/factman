@@ -252,7 +252,10 @@ export function assetsExist(data: DataSet, ctx: RuleContext): Issue[] {
         file: file(name),
         path,
         message: `missing asset "${v}" (expected src/assets/${rel})`,
-        rule: name === 'profile' && path === '/photo/src' ? 'DS-17' : ruleFor(name, 'DS-09'),
+        rule:
+          name === 'profile' && PROFILE_PHOTOS.some((k) => path === `/${k}/src`)
+            ? 'DS-17'
+            : ruleFor(name, 'DS-09'),
       });
     }
   };
@@ -512,14 +515,23 @@ export function clientEntries(data: DataSet): Issue[] {
   return issues;
 }
 
-/** DS-17: the profile photo has alt text, and its width and height match the image file. */
+/** The profile's photos (hero, About, contact); each one is checked by DS-17. */
+export const PROFILE_PHOTOS = ['photo', 'aboutPhoto', 'contactPhoto'] as const;
+
+/** DS-17: every profile photo has alt text, and its width and height match the image file. */
 export function profilePhoto(data: DataSet, ctx: RuleContext): Issue[] {
   const profile = data['profile'];
-  if (!isObject(profile) || !isObject(profile['photo'])) return [];
-  const photo = profile['photo'];
+  if (!isObject(profile)) return [];
+  return PROFILE_PHOTOS.flatMap((key) => {
+    const photo = profile[key];
+    return isObject(photo) ? checkPhoto(key, photo, ctx) : [];
+  });
+}
+
+function checkPhoto(key: string, photo: JsonObject, ctx: RuleContext): Issue[] {
   const issues: Issue[] = [];
-  const push = (key: string, message: string) =>
-    issues.push({ file: file('profile'), path: `/photo/${key}`, message, rule: 'DS-17' });
+  const push = (field: string, message: string) =>
+    issues.push({ file: file('profile'), path: `/${key}/${field}`, message, rule: 'DS-17' });
   if (typeof photo['alt'] !== 'string' || !photo['alt'].trim())
     push('alt', 'the photo needs alt text');
   const src = str(photo['src']);
@@ -527,9 +539,9 @@ export function profilePhoto(data: DataSet, ctx: RuleContext): Issue[] {
     const size = ctx.imageSize(toAssetPath(src));
     if (!size) push('src', `can't read the size of "${src}" (use PNG, JPEG or WebP)`);
     else {
-      for (const key of ['width', 'height'] as const) {
-        if (photo[key] !== size[key])
-          push(key, `${key} is ${photo[key]} but "${src}" is ${size[key]}px`);
+      for (const dim of ['width', 'height'] as const) {
+        if (photo[dim] !== size[dim])
+          push(dim, `${dim} is ${photo[dim]} but "${src}" is ${size[dim]}px`);
       }
     }
   }
