@@ -469,7 +469,7 @@ This repository also holds the source of my portfolio website (Angular, prerende
 | ------------ | ------------------------------------------------------------ |
 | `pnpm install` | Install dependencies from `pnpm-lock.yaml`                 |
 | `pnpm start` | Dev server on http://localhost:4200                          |
-| `pnpm build` | Validates data and generates the models, then the production build; every static route is prerendered to `dist/factman/browser` |
+| `pnpm build` | Validates data, generates the models and builds Storybook, then the production build; every static route is prerendered to `dist/factman/browser`, with the static Storybook at `/storybook` |
 | `pnpm build:preview` | The same build with preview settings (noindex, analytics off); Vercel uses it for preview deployments |
 | `pnpm data:validate` | Checks `src/data/*.json` against their JSON Schemas and the cross-reference rules |
 | `pnpm data:types` | Generates TypeScript models from the schemas into `src/app/shared/models/generated` |
@@ -484,22 +484,27 @@ This repository also holds the source of my portfolio website (Angular, prerende
 | `pnpm typecheck` | Generates the models, then the TypeScript check for app, specs and scripts |
 | `pnpm format` / `pnpm format:check` | Prettier write / verify                 |
 | `pnpm storybook` | Storybook on http://localhost:6006                       |
+| `pnpm build-storybook` | Static Storybook in `storybook-static`; `build` copies it into the site at `/storybook` (ETE-220) |
 | `pnpm test:storybook` | Story tests in Vitest browser mode, with axe accessibility checks |
-| `pnpm test:headers` | Checks `vercel.json` security and cache headers |
-| `pnpm test:build` | Builds, then checks the output: content data (services, clients …) stays out of the JavaScript every page loads, and the CSP allows every inline script by its hash |
-| `pnpm csp:hashes` | Builds, then writes the hash of each inline script into the CSP in `vercel.json` (run it when `test:build` asks) |
+| `pnpm test:headers` | Checks `vercel.json` security and cache headers, for the app and for `/storybook` |
+| `pnpm test:build` | Builds, then checks the output: content data (services, clients …) stays out of the JavaScript every page loads, the CSP allows every inline script by its hash, and the static Storybook is at `/storybook` |
+| `pnpm csp:hashes` | Builds, then writes the hash of each inline script into the CSPs in `vercel.json`, the app's and Storybook's separately (run it when `test:build` asks, e.g. after a Storybook upgrade) |
 | `pnpm e2e`   | Builds (or restores the build from cache), then Playwright against the prerendered files. Run `pnpm e2e:install` once first |
 
 ### Task runner (Nx)
 
 Every script above runs through [Nx](https://nx.dev) (pinned in `package.json`), with the Nx Cloud remote cache. The targets live in `project.json` and the shared settings in `nx.json`; each `package.json` script is a one-line `nx run factman:<target>`, so nothing is chained with `&&`.
 
-- **Order.** Nx runs a target's dependencies first: `data:validate` and `data:types` before `build` and `test`, `data:types` before `typecheck`, `start` and Storybook, and `build` before `e2e`. `lint` runs ESLint, Stylelint and the lint-rule test. `lint` and `test` do not depend on each other.
+- **Order.** Nx runs a target's dependencies first: `data:validate`, `data:types` and `build-storybook` before `build`, `data:validate` and `data:types` before `test`, `data:types` before `typecheck`, `start` and Storybook, and `build` before `e2e`. `lint` runs ESLint, Stylelint and the lint-rule test. `lint` and `test` do not depend on each other.
 - **Cache.** Builds, lint, tests and checks are cached in `.nx/cache` (git-ignored). A repeat run with unchanged inputs is replayed from the cache, and `dist/` is restored if it was deleted. Docs, workflow files and Markdown changes do not invalidate the build. Use `--skip-nx-cache` to force a run, `--skip-remote-cache` to ignore Nx Cloud, or `pnpm nx reset` to clear the local cache. Set `NX_NO_CLOUD=true` to work without Nx Cloud.
 - **Arguments** pass through to the underlying tool: `pnpm test --watch=false`, `pnpm e2e --args="--project=chromium"`.
 - **Graph.** `pnpm nx graph` shows the task graph; `pnpm nx show project factman` lists every target.
 
 ### Continuous integration
+
+### Storybook on the site
+
+Every deployment, production and previews, serves the static Storybook at `/storybook` (ETE-220). `build` depends on `build-storybook` and `tools/build/add-storybook.mjs` copies `storybook-static` into `dist/factman/browser/storybook`, adding a `<base href="/storybook/">` so the manager works without a trailing slash. `vercel.json` gives it its own headers: a CSP with its own inline-script hashes plus `'unsafe-eval'` (Storybook's Angular renderer compiles stories at run time), a same-origin preview frame (`frame-src 'self'`, `frame-ancestors 'self'`, `X-Frame-Options: SAMEORIGIN`), `X-Robots-Tag: noindex` and no long-term caching (its file names have no hash). Every other path keeps the app's strict CSP, without `'unsafe-eval'`. `e2e/storybook.spec.ts` loads a story under that CSP.
 
 GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and on every push to `dev` or `main`: format check, lint, typecheck, unit and Storybook (axe) tests, the prerendered build, then Playwright E2E against the built files. Each job runs its checks through Nx (`nx run-many` in the static job) and shares results through the [Nx Cloud](https://cloud.nx.app) remote cache (`nxCloudId` in `nx.json`, free Hobby plan). A task that already ran with the same inputs, in another job, another run or on a developer machine, is replayed from the remote cache, and the E2E job takes the build from it instead of rebuilding. Each job ends with `nx fix-ci` ([Self-Healing CI](https://nx.dev/docs/features/ci-features/self-healing-ci)): when an Nx task fails, Nx Cloud analyses the failure and proposes a fix on the pull request for review. The workspace is a single Nx project, so CI runs every target rather than `nx affected`; switch to `nx affected` if the repository grows more projects. Vercel deploys every push (ETE-21).
 

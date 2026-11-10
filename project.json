@@ -21,15 +21,21 @@
     },
     "build": {
       "executor": "nx:run-commands",
-      "dependsOn": ["data:validate", "data:types"],
-      "inputs": ["production"],
+      "dependsOn": ["data:validate", "data:types", "build-storybook"],
+      "inputs": [
+        "production",
+        {
+          "dependentTasksOutputFiles": "**/*"
+        },
+        "{projectRoot}/tools/build/add-storybook.mjs"
+      ],
       "outputs": ["{projectRoot}/dist/factman"],
       "options": {
-        "command": "ng build"
+        "command": "ng build && node tools/build/add-storybook.mjs"
       },
       "configurations": {
         "preview": {
-          "command": "ng build --configuration production,preview"
+          "command": "ng build --configuration production,preview && node tools/build/add-storybook.mjs"
         }
       }
     },
