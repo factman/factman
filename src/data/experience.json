@@ -1,0 +1,271 @@
+[
+  {
+    "id": "simple-finance",
+    "organization": "Simple Finance",
+    "website": "https://simplefinance.ng",
+    "logo": "clients/simple-finance.png",
+    "roles": [
+      {
+        "id": "simple-finance-cto",
+        "title": "Chief Technology Officer",
+        "type": "full-time",
+        "location": "Lagos, Nigeria",
+        "start": "2024-01",
+        "summary": "Lead the technology team and the company's technology strategy.",
+        "highlights": [
+          "Led the team that implemented solutions to improve efficiency and profitability",
+          "Set the technology strategy, including selecting and deploying new systems and infrastructure",
+          "Run technology projects to deadline and budget with senior leadership",
+          {
+            "text": "Own the selection and rollout of the company's systems and infrastructure",
+            "tracks": ["devops"]
+          }
+        ],
+        "skills": ["angular", "nodejs", "typescript"],
+        "tracks": ["fullstack", "devops"]
+      },
+      {
+        "id": "simple-finance-cto-2021",
+        "title": "Chief Technology Officer",
+        "type": "full-time",
+        "location": "Lagos, Nigeria",
+        "start": "2021-12",
+        "end": "2023-01",
+        "summary": "First term as CTO.",
+        "highlights": [
+          "Led the technology team and aligned technology resources with the organization's goals",
+          "Defined technology initiatives with senior leadership to support growth",
+          {
+            "text": "Developed the technology strategy, including the selection and deployment of new systems and infrastructure",
+            "tracks": ["devops"]
+          }
+        ],
+        "skills": ["angular", "nodejs", "typescript"],
+        "tracks": ["fullstack", "devops"]
+      }
+    ]
+  },
+  {
+    "id": "eteam-technology",
+    "organization": "ETeam Technology",
+    "website": "https://eteam.ng",
+    "logo": "clients/eteam-technology.png",
+    "roles": [
+      {
+        "id": "eteam-cto",
+        "title": "CTO & Co-Founder",
+        "type": "full-time",
+        "location": "Lagos, Nigeria",
+        "start": "2017-05",
+        "summary": "Lead technology strategy, budget and delivery as co-founder.",
+        "highlights": [
+          "Lead technology strategy, budget and implementation",
+          "Oversee software development, architecture, QA, operations and security",
+          "Manage projects from concept to completion",
+          {
+            "text": "Oversee production operations, network and systems administration, and information security",
+            "tracks": ["devops"]
+          }
+        ],
+        "skills": ["angular", "react", "nodejs", "php", "react-native"],
+        "tracks": ["fullstack", "mobile", "devops"]
+      }
+    ]
+  },
+  {
+    "id": "mazadat",
+    "organization": "Mazadat",
+    "website": "https://www.mazad.at",
+    "logo": "clients/mazadat.svg",
+    "roles": [
+      {
+        "id": "mazadat-frontend-lead",
+        "title": "Frontend Lead Engineer",
+        "location": "Cairo, Egypt",
+        "start": "2023-10",
+        "end": "2024-03",
+        "summary": "Led frontend strategy, technical direction, mentoring and onboarding.",
+        "highlights": [
+          "Drove frontend strategy, technical leadership, mentoring and onboarding",
+          "Worked with cross-functional teams to streamline development and raise project efficiency"
+        ],
+        "skills": ["react", "javascript", "azure"],
+        "tracks": ["fullstack"]
+      },
+      {
+        "id": "mazadat-senior-frontend",
+        "title": "Senior Frontend Engineer",
+        "location": "Cairo, Egypt",
+        "start": "2023-04",
+        "end": "2023-10",
+        "summary": "Frontend engineer in a cross-functional mission team.",
+        "highlights": [
+          "Designed, launched and iterated on A/B experiments in a mission team",
+          "Improved SEO with lightweight, fast pages",
+          {
+            "text": "Worked with Docker, Jenkins and Microsoft Azure in the team's delivery pipeline",
+            "tracks": ["devops"]
+          }
+        ],
+        "skills": ["react", "javascript", "mongodb", "docker", "azure"],
+        "tracks": ["fullstack", "devops"]
+      }
+    ]
+  },
+  {
+    "id": "travoofy",
+    "organization": "Travoofy",
+    "website": "https://travoofy.com",
+    "logo": "clients/travoofy.png",
+    "roles": [
+      {
+        "id": "travoofy-cto",
+        "title": "Chief Technology Officer",
+        "start": "2021-12",
+        "end": "2022-08",
+        "summary": "Led the company's technology strategy and team.",
+        "highlights": [
+          "Set the technology strategy and led its implementation",
+          "Supervised the technology team and kept IT issues resolved quickly",
+          {
+            "text": "Evaluated and deployed new systems and infrastructure to improve efficiency",
+            "tracks": ["devops"]
+          }
+        ],
+        "skills": [],
+        "tracks": ["fullstack", "devops"]
+      }
+    ]
+  },
+  {
+    "id": "investa-ng",
+    "organization": "Investa.ng",
+    "roles": [
+      {
+        "id": "investa-engineering-manager",
+        "title": "Engineering Manager",
+        "start": "2021-01",
+        "end": "2022-01",
+        "summary": "Managed engineering to match the company's growth targets.",
+        "highlights": [
+          "Managed the technical side of the organization against growth targets",
+          "Led the technology team and ran projects to deadline and budget",
+          "Gave other departments the technology resources they needed"
+        ],
+        "skills": [],
+        "tracks": ["fullstack"]
+      }
+    ]
+  },
+  {
+    "id": "386konsult",
+    "organization": "386konsult",
+    "website": "https://386konsult.com",
+    "logo": "clients/386konsult.png",
+    "roles": [
+      {
+        "id": "386konsult-cto",
+        "title": "Chief Technology Officer",
+        "start": "2021-01",
+        "end": "2021-03",
+        "summary": "Set the technology strategy for a consulting firm.",
+        "highlights": [
+          "Set the strategy for using technology resources efficiently, profitably and securely",
+          {
+            "text": "Evaluated and deployed new systems and infrastructure",
+            "tracks": ["devops"]
+          }
+        ],
+        "skills": [],
+        "tracks": ["fullstack", "devops"]
+      }
+    ]
+  },
+  {
+    "id": "abuad",
+    "organization": "Afe Babalola University",
+    "website": "https://www.abuad.edu.ng",
+    "logo": "clients/abuad.png",
+    "roles": [
+      {
+        "id": "abuad-it-support",
+        "title": "Information Technology Support Specialist",
+        "location": "Ado-Ekiti, Nigeria",
+        "start": "2018-01",
+        "end": "2020-10",
+        "summary": "Technical support and technology rollout across the university.",
+        "highlights": [
+          "Supported faculty, staff and students with hardware and software installation, troubleshooting and maintenance",
+          "Helped plan and roll out technology initiatives across the university",
+          {
+            "text": "Worked with vendors to evaluate and deploy new systems and infrastructure",
+            "tracks": ["devops"]
+          }
+        ],
+        "skills": [],
+        "tracks": ["devops"]
+      }
+    ]
+  },
+  {
+    "id": "peace-mass-transit",
+    "organization": "Peace Mass Transit",
+    "website": "https://pmt.ng",
+    "logo": "clients/peace-mass-transit.png",
+    "roles": [
+      {
+        "id": "pmt-it-consultant",
+        "title": "Information Technology Consultant",
+        "start": "2020-07",
+        "end": "2020-08",
+        "summary": "Advised on new technology systems.",
+        "highlights": [
+          "Advised on the implementation of new technology systems",
+          "Resolved technical issues and made sure technology resources were used efficiently"
+        ],
+        "skills": [],
+        "tracks": ["devops"]
+      }
+    ]
+  },
+  {
+    "id": "nano-blockchain",
+    "organization": "NANO BLOCKCHAIN LTD",
+    "roles": [
+      {
+        "id": "nano-blockchain-senior-fullstack",
+        "title": "Senior Full Stack Developer",
+        "start": "2018-06",
+        "end": "2018-11",
+        "summary": "Fullstack development across the frontend and backend.",
+        "highlights": [
+          "Built frontends with Angular, Material UI and React",
+          "Built backend services with Node.js and PHP"
+        ],
+        "skills": ["angular", "mui", "react", "nodejs", "php"],
+        "tracks": ["fullstack"]
+      }
+    ]
+  },
+  {
+    "id": "jit-solutions",
+    "organization": "JIT Solutions",
+    "website": "https://jitsolutions.org",
+    "logo": "clients/jit-solutions.png",
+    "roles": [
+      {
+        "id": "jit-web-developer",
+        "title": "Web Developer and Designer",
+        "start": "2013-01",
+        "end": "2017-12",
+        "summary": "Designed and built websites for clients.",
+        "highlights": [
+          "Designed and developed websites for clients",
+          "Built dynamic, interactive sites with HTML, CSS and JavaScript"
+        ],
+        "skills": ["html5", "css3", "javascript"],
+        "tracks": ["fullstack"]
+      }
+    ]
+  }
+]
