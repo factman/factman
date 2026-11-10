@@ -1,0 +1,12 @@
+{
+  "rule": "DS-03",
+  "case": "a value outside its enum",
+  "file": "site",
+  "patch": [
+    {
+      "op": "replace",
+      "path": "/defaultTheme",
+      "value": "blue"
+    }
+  ]
+}

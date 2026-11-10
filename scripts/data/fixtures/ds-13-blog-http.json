@@ -1,0 +1,12 @@
+{
+  "rule": "DS-13",
+  "case": "a post linking over http",
+  "data": {
+    "blog": [
+      {
+        "id": "post",
+        "url": "http://medium.com/@factman60/post"
+      }
+    ]
+  }
+}

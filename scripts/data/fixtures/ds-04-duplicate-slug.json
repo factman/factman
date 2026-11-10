@@ -1,0 +1,12 @@
+{
+  "rule": "DS-04",
+  "case": "two services with the same slug",
+  "file": "services",
+  "patch": [
+    {
+      "op": "copy",
+      "from": "/0/slug",
+      "path": "/1/slug"
+    }
+  ]
+}

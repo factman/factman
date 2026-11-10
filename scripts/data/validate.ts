@@ -9,7 +9,8 @@ import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020';
 import addFormats from 'ajv-formats';
 
-import { formatIssue, type Issue } from './issues';
+import { readImageSize } from './image-size';
+import { formatIssue, isError, type DsRule, type Issue } from './issues';
 import { ASSETS_DIR, DATA_DIR, DATA_FILES, SCHEMA_DIR } from './registry';
 import { runRules, type DataSet } from './rules';
 
@@ -17,6 +18,23 @@ export interface ValidationResult {
   issues: Issue[];
   /** Data files that were checked, by name. */
   checked: string[];
+}
+
+/**
+ * The PRD case a schema error breaks: a missing field is DS-02 and a bad enum DS-03, unless the
+ * file or field has its own case (site IDs DS-12, clients DS-16, contact DS-11, blog DS-13,
+ * summary and excerpt length DS-10). Anything else (type, format, extra field) is DS-01.
+ */
+export function schemaRule(file: string, keyword: string, path: string): DsRule {
+  if (keyword === 'required') return 'DS-02';
+  if (file === 'site' && /^\/(analytics\/(gtmId|ga4Id)|consent\/version)$/.test(path))
+    return 'DS-12';
+  if (file === 'clients') return 'DS-16';
+  if (file === 'contact') return 'DS-11';
+  if (file === 'blog') return 'DS-13';
+  if (keyword === 'maxLength' && /\/(summary|excerpt)$/.test(path)) return 'DS-10';
+  if (keyword === 'enum' || keyword === 'const') return 'DS-03';
+  return 'DS-01';
 }
 
 export function validateData(root: string): ValidationResult {
@@ -46,6 +64,7 @@ export function validateData(root: string): ValidationResult {
         file: rel(join(schemaDir, f)),
         path: '',
         message: `schema has no data file (expected ${DATA_DIR}/${name}.json)`,
+        rule: 'DS-01',
       });
     }
   }
@@ -59,6 +78,7 @@ export function validateData(root: string): ValidationResult {
         file: rel(dataPath),
         path: '',
         message: `unknown data file; expected one of ${DATA_FILES.join(', ')}`,
+        rule: 'DS-01',
       });
       continue;
     }
@@ -67,6 +87,7 @@ export function validateData(root: string): ValidationResult {
         file: rel(dataPath),
         path: '',
         message: `no schema (expected ${SCHEMA_DIR}/${name}.schema.json)`,
+        rule: 'DS-01',
       });
       continue;
     }
@@ -80,6 +101,7 @@ export function validateData(root: string): ValidationResult {
         file: rel(dataPath),
         path: '',
         message: `invalid JSON: ${(e as Error).message}`,
+        rule: 'DS-01',
       });
       continue;
     }
@@ -123,6 +145,7 @@ export function validateData(root: string): ValidationResult {
           file: rel(dataPath),
           path: err.instancePath,
           message: `${err.message ?? err.keyword}${extra}`,
+          rule: schemaRule(name, err.keyword, err.instancePath),
         });
       }
     }
@@ -130,16 +153,25 @@ export function validateData(root: string): ValidationResult {
   }
 
   const assetsDir = join(root, ASSETS_DIR);
-  issues.push(...runRules(data, { assetExists: (p) => existsSync(join(assetsDir, p)) }));
+  issues.push(
+    ...runRules(data, {
+      assetExists: (p) => existsSync(join(assetsDir, p)),
+      imageSize: (p) => readImageSize(join(assetsDir, p)),
+    }),
+  );
   return { issues, checked };
 }
 
 const isMain = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (isMain) {
   const { issues, checked } = validateData(process.cwd());
-  if (issues.length) {
-    console.error(`data:validate found ${issues.length} problem${issues.length === 1 ? '' : 's'}:`);
-    for (const issue of issues) console.error(`  ${formatIssue(issue)}`);
+  const line = (issue: Issue) => `  ${issue.rule ? `[${issue.rule}] ` : ''}${formatIssue(issue)}`;
+  const errors = issues.filter(isError);
+  const warnings = issues.filter((i) => !isError(i));
+  for (const warning of warnings) console.warn(`warning:${line(warning)}`);
+  if (errors.length) {
+    console.error(`data:validate found ${errors.length} problem${errors.length === 1 ? '' : 's'}:`);
+    for (const issue of errors) console.error(line(issue));
     process.exit(1);
   }
   console.log(
