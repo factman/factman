@@ -1,0 +1,74 @@
+{
+  "name": "Odunayo Mohammed",
+  "headline": "Fullstack Software Engineer and CTO",
+  "roles": [
+    "Fullstack Software Engineer",
+    "Chief Technology Officer",
+    "Angular & Node.js specialist",
+    "Fintech and payments builder"
+  ],
+  "summary": "I design and build web, mobile and payment products, and lead the teams that ship them. Currently CTO at Simple Finance and co-founder of ETeam Technology.",
+  "about": [
+    "I started writing software professionally in 2013 and have spent the years since building web, mobile and payment products for startups and growing companies in Nigeria and beyond.",
+    "Today I am CTO at Simple Finance, where I lead the technology team and strategy, and co-founder of ETeam Technology, where I have overseen architecture, quality and delivery since 2017. Before that I led frontend engineering at Mazadat in Cairo.",
+    "I care about clean architecture, fast and accessible interfaces, and teams that ship every week without burning out."
+  ],
+  "location": {
+    "city": "Lagos",
+    "country": "Nigeria"
+  },
+  "photo": {
+    "src": "profile/odunayo-hero.webp",
+    "alt": "Odunayo Mohammed, smiling with arms crossed, in a blue and white plaid shirt",
+    "width": 720,
+    "height": 900
+  },
+  "aboutPhoto": {
+    "src": "profile/odunayo-about.webp",
+    "alt": "Odunayo Mohammed in a three-quarter view, smiling, arms crossed",
+    "width": 720,
+    "height": 900
+  },
+  "contactPhoto": {
+    "src": "profile/odunayo-contact.webp",
+    "alt": "Odunayo Mohammed smiling and pointing toward the contact form",
+    "width": 900,
+    "height": 507
+  },
+  "careerStart": "2013-01",
+  "availability": {
+    "status": "available",
+    "message": "Available for new projects"
+  },
+  "languages": [
+    {
+      "name": "English",
+      "proficiency": "Spoken and written"
+    },
+    {
+      "name": "Yoruba",
+      "proficiency": "Spoken and written"
+    }
+  ],
+  "education": [
+    {
+      "title": "Computer Software Engineering",
+      "start": 2013,
+      "end": 2015
+    }
+  ],
+  "publications": [
+    {
+      "title": "COVID-19 Daily Update app and API",
+      "year": 2020,
+      "description": "Mobile app and API with daily COVID-19 case updates, open source."
+    },
+    {
+      "title": "GraphUI",
+      "year": 2019,
+      "description": "Open-source JavaScript extension for plotting graphs on any website.",
+      "url": "https://github.com/factman/GraphUI"
+    }
+  ],
+  "updatedAt": "2026-11-10"
+}

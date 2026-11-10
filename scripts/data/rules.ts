@@ -23,6 +23,8 @@ const file = (name: string) => `${DATA_DIR}/${name}.json`;
 const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 /** `2021-08` or `2021-08-15`: the date format for roles and projects (DS-06). */
 const DATE = /^\d{4}-(0[1-9]|1[0-2])(?:-(0[1-9]|[12]\d|3[01]))?$/;
+/** Projects may give only a year (`2020`) when the month isn't known. */
+const PROJECT_DATE = /^\d{4}(?:-(0[1-9]|1[0-2])(?:-(0[1-9]|[12]\d|3[01]))?)?$/;
 const OPEN_END = '9999-12';
 const isObject = (v: Json | undefined): v is JsonObject =>
   typeof v === 'object' && v !== null && !Array.isArray(v);
@@ -252,7 +254,10 @@ export function assetsExist(data: DataSet, ctx: RuleContext): Issue[] {
         file: file(name),
         path,
         message: `missing asset "${v}" (expected src/assets/${rel})`,
-        rule: name === 'profile' && path === '/photo/src' ? 'DS-17' : ruleFor(name, 'DS-09'),
+        rule:
+          name === 'profile' && PROFILE_PHOTOS.some((k) => path === `/${k}/src`)
+            ? 'DS-17'
+            : ruleFor(name, 'DS-09'),
       });
     }
   };
@@ -273,6 +278,7 @@ function* periods(data: DataSet): Generator<{
   name: string;
   path: string;
   fields: [string, string];
+  format: RegExp;
   start: Json | undefined;
   end: Json | undefined;
 }> {
@@ -284,6 +290,7 @@ function* periods(data: DataSet): Generator<{
           name: 'experience',
           path: `/${i}/roles/${r}`,
           fields: ['start', 'end'],
+          format: DATE,
           start: role['start'],
           end: role['end'],
         };
@@ -295,22 +302,23 @@ function* periods(data: DataSet): Generator<{
         name: 'projects',
         path: `/${i}`,
         fields: ['startedAt', 'completedAt'],
+        format: PROJECT_DATE,
         start: p['startedAt'],
         end: p['completedAt'],
       };
   }
 }
 
-/** DS-06: role and project dates are `YYYY-MM` or `YYYY-MM-DD`. */
+/** DS-06: role dates are `YYYY-MM` or `YYYY-MM-DD`; project dates may also be a bare `YYYY`. */
 export function dateFormat(data: DataSet): Issue[] {
   const issues: Issue[] = [];
-  for (const { name, path, fields, start, end } of periods(data)) {
+  for (const { name, path, fields, format, start, end } of periods(data)) {
     [start, end].forEach((v, k) => {
-      if (typeof v === 'string' && !DATE.test(v)) {
+      if (typeof v === 'string' && !format.test(v)) {
         issues.push({
           file: file(name),
           path: `${path}/${fields[k]}`,
-          message: `date "${v}" must be YYYY-MM or YYYY-MM-DD`,
+          message: `date "${v}" must be ${format === DATE ? 'YYYY-MM or YYYY-MM-DD' : 'YYYY, YYYY-MM or YYYY-MM-DD'}`,
           rule: 'DS-06',
         });
       }
@@ -322,9 +330,9 @@ export function dateFormat(data: DataSet): Issue[] {
 /** DS-06: date ranges are ordered: a role or project never ends before it starts. */
 export function dateOrder(data: DataSet): Issue[] {
   const issues: Issue[] = [];
-  for (const { name, path, start, end } of periods(data)) {
+  for (const { name, path, format, start, end } of periods(data)) {
     if (typeof start !== 'string' || typeof end !== 'string') continue;
-    if (!DATE.test(start) || !DATE.test(end)) continue;
+    if (!format.test(start) || !format.test(end)) continue;
     if (end < start) {
       issues.push({
         file: file(name),
@@ -393,7 +401,7 @@ export function textLengths(data: DataSet): Issue[] {
   return issues;
 }
 
-/** DS-11: contact.json email is an address, phone is E.164 (`+234…`), WhatsApp is digits only. */
+/** DS-11: contact.json email is an address, phone is E.164 (`+234…`), WhatsApp (or `whatsapp.number`) is digits only. */
 const CONTACT_FORMATS: Record<string, { pattern: RegExp; strip: RegExp; expected: string }> = {
   email: {
     pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -412,7 +420,9 @@ export function contactFormats(data: DataSet): Issue[] {
   if (contact === undefined) return [];
   const issues: Issue[] = [];
   for (const [path, v] of walk(contact)) {
-    const format = CONTACT_FORMATS[(path.split('/').pop() ?? '').toLowerCase()];
+    // whatsapp is a number string, or { number, message } as in contact.json (ETE-33).
+    const key = path.endsWith('/whatsapp/number') ? 'whatsapp' : (path.split('/').pop() ?? '');
+    const format = CONTACT_FORMATS[key.toLowerCase()];
     if (!format || typeof v !== 'string') continue;
     if (!format.pattern.test(v.replace(format.strip, ''))) {
       issues.push({
@@ -510,14 +520,23 @@ export function clientEntries(data: DataSet): Issue[] {
   return issues;
 }
 
-/** DS-17: the profile photo has alt text, and its width and height match the image file. */
+/** The profile's photos (hero, About, contact); each one is checked by DS-17. */
+export const PROFILE_PHOTOS = ['photo', 'aboutPhoto', 'contactPhoto'] as const;
+
+/** DS-17: every profile photo has alt text, and its width and height match the image file. */
 export function profilePhoto(data: DataSet, ctx: RuleContext): Issue[] {
   const profile = data['profile'];
-  if (!isObject(profile) || !isObject(profile['photo'])) return [];
-  const photo = profile['photo'];
+  if (!isObject(profile)) return [];
+  return PROFILE_PHOTOS.flatMap((key) => {
+    const photo = profile[key];
+    return isObject(photo) ? checkPhoto(key, photo, ctx) : [];
+  });
+}
+
+function checkPhoto(key: string, photo: JsonObject, ctx: RuleContext): Issue[] {
   const issues: Issue[] = [];
-  const push = (key: string, message: string) =>
-    issues.push({ file: file('profile'), path: `/photo/${key}`, message, rule: 'DS-17' });
+  const push = (field: string, message: string) =>
+    issues.push({ file: file('profile'), path: `/${key}/${field}`, message, rule: 'DS-17' });
   if (typeof photo['alt'] !== 'string' || !photo['alt'].trim())
     push('alt', 'the photo needs alt text');
   const src = str(photo['src']);
@@ -525,9 +544,9 @@ export function profilePhoto(data: DataSet, ctx: RuleContext): Issue[] {
     const size = ctx.imageSize(toAssetPath(src));
     if (!size) push('src', `can't read the size of "${src}" (use PNG, JPEG or WebP)`);
     else {
-      for (const key of ['width', 'height'] as const) {
-        if (photo[key] !== size[key])
-          push(key, `${key} is ${photo[key]} but "${src}" is ${size[key]}px`);
+      for (const dim of ['width', 'height'] as const) {
+        if (photo[dim] !== size[dim])
+          push(dim, `${dim} is ${photo[dim]} but "${src}" is ${size[dim]}px`);
       }
     }
   }

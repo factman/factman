@@ -1,0 +1,109 @@
+[
+  {
+    "id": "covid-daily-update",
+    "slug": "covid-daily-update",
+    "title": "Coronavirus Daily Update",
+    "summary": "Mobile app with daily COVID-19 case updates, covered in the Nigerian tech press at launch.",
+    "category": "Mobile",
+    "status": "completed",
+    "visibility": "public",
+    "featured": true,
+    "stack": ["react-native", "nodejs"],
+    "role": "Creator · fullstack",
+    "startedAt": "2020",
+    "links": {},
+    "engage": {
+      "mode": "contact",
+      "note": "Happy to talk through how the app and its API were built."
+    },
+    "tracks": ["mobile", "fullstack"]
+  },
+  {
+    "id": "covid19-api",
+    "slug": "covid19-api",
+    "title": "Covid-19 Daily Update API",
+    "summary": "The API that serves the daily figures behind the Coronavirus Daily Update app.",
+    "category": "API",
+    "status": "completed",
+    "visibility": "public",
+    "featured": true,
+    "stack": ["nodejs", "expressjs"],
+    "role": "Creator",
+    "startedAt": "2020",
+    "links": {},
+    "engage": {
+      "mode": "contact",
+      "note": "Happy to talk through how the API was built."
+    },
+    "tracks": ["fullstack"]
+  },
+  {
+    "id": "graphui",
+    "slug": "graphui",
+    "title": "GraphUI",
+    "summary": "A JavaScript extension for plotting graphs on any website, drawn as SVG.",
+    "category": "Open source",
+    "status": "maintained",
+    "visibility": "public",
+    "featured": true,
+    "stack": ["javascript", "css3"],
+    "role": "Author",
+    "startedAt": "2019-03",
+    "links": {
+      "source": "https://github.com/factman/GraphUI"
+    },
+    "tracks": ["fullstack"]
+  },
+  {
+    "id": "ubuntu-server-setup",
+    "slug": "ubuntu-server-setup",
+    "title": "Ubuntu Server Setup",
+    "summary": "A script that sets up a fresh Ubuntu server and installs the applications it needs, with no hassle.",
+    "category": "DevOps",
+    "status": "maintained",
+    "visibility": "public",
+    "featured": true,
+    "stack": ["bash", "linux"],
+    "role": "Author",
+    "startedAt": "2022-02",
+    "links": {
+      "source": "https://github.com/factman/Ubuntu-Server-Setup"
+    },
+    "tracks": ["devops"]
+  },
+  {
+    "id": "neoclock",
+    "slug": "neoclock",
+    "title": "NeoClock",
+    "summary": "A neumorphism-style clock for the browser.",
+    "category": "Web",
+    "status": "archived",
+    "visibility": "public",
+    "featured": true,
+    "stack": ["html5", "css3", "javascript"],
+    "role": "Author",
+    "startedAt": "2022-06",
+    "links": {
+      "source": "https://github.com/factman/NeoClock"
+    },
+    "tracks": ["fullstack"]
+  },
+  {
+    "id": "todo-app",
+    "slug": "todo-app",
+    "title": "ToDo App",
+    "summary": "A to-do list app built with HTML, CSS and JavaScript.",
+    "category": "Web",
+    "status": "archived",
+    "visibility": "public",
+    "featured": false,
+    "stack": ["html5", "css3", "javascript"],
+    "role": "Author",
+    "startedAt": "2020-02",
+    "completedAt": "2020-02",
+    "links": {
+      "source": "https://github.com/factman/ToDo-App"
+    },
+    "tracks": ["fullstack"]
+  }
+]

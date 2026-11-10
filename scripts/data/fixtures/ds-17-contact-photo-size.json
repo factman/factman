@@ -1,0 +1,18 @@
+{
+  "rule": "DS-17",
+  "case": "a contact photo whose width does not match the file",
+  "data": {
+    "profile": {
+      "contactPhoto": {
+        "src": "profile/contact.webp",
+        "alt": "Odunayo Mohammed",
+        "width": 800,
+        "height": 507
+      }
+    }
+  },
+  "assets": ["profile/contact.webp"],
+  "images": {
+    "profile/contact.webp": [900, 507]
+  }
+}
