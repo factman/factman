@@ -1,0 +1,18 @@
+// The design system's Button and Spinner styles, loaded only with this component
+// (docs/design-tokens.md). The spinner shows while `loading` is set.
+@use 'factman/components/button';
+@use 'factman/components/spinner-loader';
+
+// Icon-only buttons keep a hit area of at least 44 × 44px (ETE-68) without changing their look:
+// a transparent layer extends past smaller buttons (sm 32px, md 40px).
+.icon-target {
+  --fm-target-min: 44px;
+
+  position: relative;
+}
+
+.icon-target::before {
+  position: absolute;
+  inset: min(0px, calc((var(--fm-h) - var(--fm-target-min)) / 2));
+  content: '';
+}

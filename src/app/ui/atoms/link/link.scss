@@ -1,0 +1,24 @@
+// Text links (ETE-68, docs/interaction-and-motion.md): accent colour, always underlined, primary
+// text colour on hover. The colour change is instant (only opacity and transform animate).
+.fm-link {
+  display: inline;
+  color: var(--accent-default);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  border-radius: var(--radius-sm);
+}
+
+.fm-link:hover {
+  color: var(--text-primary);
+}
+
+.fm-link:focus-visible {
+  outline: var(--border-width-lg) solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.fm-link .fm-icon {
+  margin-left: var(--gap-3xs);
+  vertical-align: -0.15em;
+}
