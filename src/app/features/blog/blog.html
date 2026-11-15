@@ -1,0 +1,31 @@
+<h1>Blog</h1>
+@switch (blog.status()) {
+  @case ('ready') {
+    <ul>
+      @for (post of blog.posts(); track post.id) {
+        <li>
+          @if (post.cover; as cover) {
+            <img [src]="cover" alt="" loading="lazy" decoding="async" width="320" height="180" />
+          }
+          <a [href]="post.url" target="_blank" rel="noopener">{{ post.title }}</a>
+          <p>{{ post.excerpt }}</p>
+          <p>{{ post.readingMinutes }} min read</p>
+        </li>
+      } @empty {
+        <li>No articles yet.</li>
+      }
+    </ul>
+  }
+  @case ('error') {
+    <p>
+      Articles couldn't load right now. Read them on
+      <a [href]="blog.profileUrl" target="_blank" rel="noopener">Medium</a>.
+    </p>
+  }
+  @default {
+    <p aria-live="polite">
+      Loading articles from
+      <a [href]="blog.profileUrl" target="_blank" rel="noopener">Medium</a>…
+    </p>
+  }
+}

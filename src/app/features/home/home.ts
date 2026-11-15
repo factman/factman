@@ -12,25 +12,7 @@ import { HOME_SECTIONS } from './home-sections';
   selector: 'fm-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, SharedModule],
-  template: `
-    <h1>Odunayo Mohammed</h1>
-    <p>Site under construction.</p>
-    @for (section of sections; track section.id) {
-      <section
-        fmReveal
-        [id]="section.id"
-        [attr.aria-labelledby]="section.id + '-title'"
-        tabindex="-1"
-      >
-        <h2 [id]="section.id + '-title'">{{ section.label }}</h2>
-        @if ('route' in section) {
-          <p>
-            <a [routerLink]="section.route">All {{ section.label.toLowerCase() }}</a>
-          </p>
-        }
-      </section>
-    }
-  `,
+  templateUrl: './home.html',
 })
 export class Home {
   protected readonly sections = HOME_SECTIONS;
