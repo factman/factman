@@ -6,13 +6,46 @@
   "locale": "en_NG",
   "robots": "index",
   "nav": [
-    { "id": "about", "label": "About", "anchor": "#about" },
-    { "id": "experience", "label": "Experience", "anchor": "#experience" },
-    { "id": "services", "label": "Services", "anchor": "#services", "route": "/services" },
-    { "id": "projects", "label": "Projects", "anchor": "#projects", "route": "/projects" },
-    { "id": "blog", "label": "Blog", "anchor": "#blog", "route": "/blog" },
-    { "id": "contact", "label": "Contact", "anchor": "#contact" }
+    {
+      "id": "about",
+      "label": "About",
+      "anchor": "#about"
+    },
+    {
+      "id": "experience",
+      "label": "Experience",
+      "anchor": "#experience"
+    },
+    {
+      "id": "services",
+      "label": "Services",
+      "anchor": "#services",
+      "route": "/services"
+    },
+    {
+      "id": "projects",
+      "label": "Projects",
+      "anchor": "#projects",
+      "route": "/projects"
+    },
+    {
+      "id": "blog",
+      "label": "Blog",
+      "anchor": "#blog",
+      "route": "/blog"
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "anchor": "#contact"
+    }
   ],
+  "blog": {
+    "profile": "https://medium.com/@factman60",
+    "feed": "https://medium.com/feed/@factman60",
+    "feedPath": "/feeds/medium",
+    "cacheHours": 12
+  },
   "analytics": {
     "enabled": true,
     "gtmId": "GTM-MB3JFBJ6",
@@ -26,10 +59,10 @@
       {
         "id": "necessary",
         "label": "necessary",
-        "description": "theme and consent choice · always on",
+        "description": "theme, consent choice and the Medium articles cache · always on",
         "required": true,
         "defaultGranted": true,
-        "storage": ["fm_consent (6 months)", "fm_theme"]
+        "storage": ["fm_consent (6 months)", "fm_theme", "fm_blog (Medium articles, 12 hours)"]
       },
       {
         "id": "analytics",
@@ -62,7 +95,9 @@
   "environments": {
     "preview": {
       "robots": "noindex",
-      "analytics": { "enabled": false }
+      "analytics": {
+        "enabled": false
+      }
     }
   }
 }

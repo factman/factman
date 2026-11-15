@@ -40,20 +40,12 @@ const asArray = (v: Json | undefined): Json[] => (Array.isArray(v) ? v : []);
 const str = (v: Json | undefined): string | undefined => (typeof v === 'string' ? v : undefined);
 const toAssetPath = (v: string) => v.replace(/^\/?(assets\/)?/, '');
 
-/** Some files have a more specific case than the generic rule (blog DS-13, clients DS-16). */
+/** Some files have a more specific case than the generic rule (clients DS-16, résumés RS-02). */
 const FILE_RULE: Partial<Record<string, DsRule>> = {
-  blog: 'DS-13',
   clients: 'DS-16',
   resumes: 'RS-02',
 };
 const ruleFor = (name: string, fallback: DsRule): DsRule => FILE_RULE[name] ?? fallback;
-
-/** blog.json may be a list of posts or `{ posts: [...] }`; the schema (ETE-32) decides. */
-const blogPosts = (data: DataSet): Json[] => {
-  const blog = data['blog'];
-  return Array.isArray(blog) ? blog : isObject(blog) ? asArray(blog['posts']) : [];
-};
-const blogBase = (data: DataSet) => (Array.isArray(data['blog']) ? '' : '/posts');
 
 /** The résumé records in resumes.json (`{ placeholders, resumes }`). */
 const resumesOf = (data: DataSet): Json[] => {
@@ -105,7 +97,6 @@ export function uniqueIds(data: DataSet): Issue[] {
   for (const [name, value] of Object.entries(data)) {
     if (Array.isArray(value)) check(name, value, '');
   }
-  if (isObject(data['blog'])) check('blog', blogPosts(data), '/posts');
   if (isObject(data['resumes'])) check('resumes', resumesOf(data), '/resumes');
   const roles: Json[] = [];
   asArray(data['experience']).forEach((org) => {
@@ -483,30 +474,6 @@ export function siteSettings(data: DataSet): Issue[] {
   return issues;
 }
 
-/** DS-13: blog posts link over https, have a real `publishedAt` date and come from `manual` or `rss`. */
-export function blogFields(data: DataSet): Issue[] {
-  const issues: Issue[] = [];
-  const base = blogBase(data);
-  blogPosts(data).forEach((post, i) => {
-    if (!isObject(post)) return;
-    const push = (key: string, message: string) =>
-      issues.push({ file: file('blog'), path: `${base}/${i}/${key}`, message, rule: 'DS-13' });
-    const url = post['url'];
-    if (typeof url === 'string' && !url.startsWith('https://') && !/^http:\/\//i.test(url))
-      push('url', `url "${url}" must start with https://`);
-    const at = post['publishedAt'];
-    if (
-      at !== undefined &&
-      (typeof at !== 'string' || !/^\d{4}-\d{2}-\d{2}/.test(at) || Number.isNaN(Date.parse(at)))
-    )
-      push('publishedAt', `publishedAt "${at}" is not a valid date`);
-    const origin = post['origin'];
-    if (origin !== undefined && origin !== 'manual' && origin !== 'rss')
-      push('origin', `origin "${origin}" must be manual or rss`);
-  });
-  return issues;
-}
-
 /** DS-16: a client's name is not blank, its type is client or company, its website is https and its logo lives under src/assets/clients. */
 export function clientEntries(data: DataSet): Issue[] {
   const issues: Issue[] = [];
@@ -814,7 +781,6 @@ export const RULES = [
   textLengths,
   contactFormats,
   siteSettings,
-  blogFields,
   clientEntries,
   profilePhoto,
   resumeChecks,

@@ -83,6 +83,24 @@ test("Storybook's files have no content hash in their names, so they always reva
   );
 });
 
+test('the blog feed path rewrites to the Medium feed in site.json (ETE-32)', () => {
+  const site = JSON.parse(
+    readFileSync(new URL('../../src/data/site.json', import.meta.url), 'utf8'),
+  );
+  const rewrite = config.rewrites.find((r) => r.source === site.blog.feedPath);
+  assert.ok(rewrite, `no rewrite for ${site.blog.feedPath}`);
+  assert.equal(rewrite.destination, site.blog.feed);
+});
+
+test('the CSP lets blog covers load from Medium, and only images', () => {
+  const csp = value(APP, 'Content-Security-Policy');
+  assert.equal(
+    directive(csp, 'img-src'),
+    "img-src 'self' data: https://cdn-images-1.medium.com https://miro.medium.com",
+  );
+  assert.equal(directive(csp, 'connect-src'), "connect-src 'self'");
+});
+
 test('HSTS lasts at least a year', () => {
   const maxAge = Number(value(ALL, 'Strict-Transport-Security').match(/max-age=(\d+)/)[1]);
   assert.ok(maxAge >= 31536000);

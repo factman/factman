@@ -1,0 +1,29 @@
+// Test data only: imported by specs, never by app code.
+/** A small Medium-shaped feed (synthetic content, real structure). */
+export const SAMPLE_FEED = `<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+  <channel>
+    <item>
+      <title><![CDATA[Typed APIs &amp; You: A Field Guide]]></title>
+      <link>https://medium.com/@sample/typed-apis-you-a-field-guide-0a1b2c3d4e5f?source=rss-0a1b2c3d4e5f------2</link>
+      <category><![CDATA[typescript]]></category>
+      <category><![CDATA[api-design]]></category>
+      <category><![CDATA[TypeScript]]></category>
+      <pubDate>Fri, 03 Apr 2026 12:52:32 GMT</pubDate>
+      <content:encoded><![CDATA[<figure><img alt="" src="https://cdn-images-1.medium.com/max/1024/1*sample-cover.png" /></figure><p>Types at the edge of your API catch mistakes before they ship &amp; save hours of debugging.</p><p>Second paragraph.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title><![CDATA[Short note]]></title>
+      <link>https://medium.com/@sample/short-note-abcdef123456?source=rss</link>
+      <category><![CDATA[notes]]></category>
+      <pubDate>Wed, 12 Mar 2025 01:28:31 GMT</pubDate>
+      <content:encoded><![CDATA[<p></p><p>No cover on this one.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title><![CDATA[Broken date]]></title>
+      <link>https://medium.com/@sample/broken-0123456789ab</link>
+      <pubDate>someday</pubDate>
+      <content:encoded><![CDATA[<p>Skipped.</p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>`;

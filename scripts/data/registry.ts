@@ -9,7 +9,6 @@ export const DATA_FILES = [
   'experience',
   'services',
   'projects',
-  'blog',
   'contact',
   'resumes',
   'site',

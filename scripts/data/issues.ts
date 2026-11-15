@@ -13,7 +13,7 @@ export interface Issue {
 
 /**
  * PRD section 12 cases checked on the data: DS-01 to DS-17 (DS-14 and DS-15 are tests, not data
- * rules) and the résumé data cases RS-01 (schema and references), RS-02 (counts, limits,
+ * rules; DS-13 was the blog.json check, retired with blog.json, ETE-32) and the résumé data cases RS-01 (schema and references), RS-02 (counts, limits,
  * duplicates) and RS-03 (phone).
  */
 export type DsRule =
@@ -32,7 +32,6 @@ export type DsRule =
   | 'DS-10'
   | 'DS-11'
   | 'DS-12'
-  | 'DS-13'
   | 'DS-16'
   | 'DS-17';
 

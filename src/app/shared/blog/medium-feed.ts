@@ -1,19 +1,22 @@
 /**
- * Medium RSS → blog.json posts (ETE-32, ETE-102). Pure functions, unit-tested with a sample feed;
- * the network and file work is in sync-medium.ts.
+ * Medium RSS → blog posts (ETE-32, ETE-102). The site reads the feed live in the browser (no
+ * snapshot at build time); these pure functions turn it into posts. Unit-tested with a sample feed.
  */
 
-/** One post in src/data/blog.json (see src/data/schemas/blog.schema.json). */
+/** One article from the Medium feed. */
 export interface BlogPost {
-  id: string;
-  url: string;
-  title: string;
-  publishedAt: string;
-  tags: string[];
-  excerpt: string;
-  cover?: string;
-  readingMinutes: number;
-  origin: 'manual' | 'rss';
+  readonly id: string;
+  /** Canonical Medium URL, without the tracking query. */
+  readonly url: string;
+  readonly title: string;
+  /** ISO date-time. */
+  readonly publishedAt: string;
+  readonly tags: readonly string[];
+  /** First paragraph, at most 280 characters. */
+  readonly excerpt: string;
+  /** Live Medium image URL (the first image in the article); never copied to the site. */
+  readonly cover?: string;
+  readonly readingMinutes: number;
 }
 
 /** One `<item>` of the feed, before it becomes a post. */
@@ -25,8 +28,7 @@ export interface FeedItem {
   content: string;
 }
 
-export const FEED_URL = 'https://medium.com/feed/@factman60';
-/** The longest excerpt blog.json accepts (DS-10). */
+/** The longest excerpt shown on a post card. */
 export const EXCERPT_MAX = 280;
 /** Typical adult silent reading speed, words per minute; Medium uses about the same. */
 export const WORDS_PER_MINUTE = 238;
@@ -120,11 +122,12 @@ const toTags = (categories: string[]): string[] => [
   ),
 ];
 
-/** A feed item as a blog.json post. `cover` is set later, once the image is stored locally. */
+/** A feed item as a post, with its live Medium cover URL. */
 export function toPost(item: FeedItem): BlogPost {
   const published = new Date(item.pubDate);
   if (Number.isNaN(published.getTime()))
     throw new Error(`Bad pubDate "${item.pubDate}" for ${item.link}`);
+  const cover = coverUrlOf(item.content);
   return {
     id: postId(item.link),
     url: canonicalUrl(item.link),
@@ -133,24 +136,22 @@ export function toPost(item: FeedItem): BlogPost {
     tags: toTags(item.categories),
     excerpt: excerptOf(item.content),
     readingMinutes: readingMinutesOf(item.content),
-    origin: 'rss',
+    ...(cover ? { cover } : {}),
   };
 }
 
 /**
- * Merges synced posts into blog.json: manual posts are kept as they are, a synced post replaces the
- * stored post with the same id (the feed is newer), and older synced posts that dropped out of the
- * feed (it only lists the latest few) are kept. Newest first.
+ * Every valid post in a feed, newest first. An item without a usable date is skipped rather than
+ * failing the whole list, so one odd post never empties the blog.
  */
-export function mergePosts(
-  existing: readonly BlogPost[],
-  incoming: readonly BlogPost[],
-): BlogPost[] {
-  const byId = new Map(existing.map((p) => [p.id, p]));
-  for (const post of incoming) {
-    const old = byId.get(post.id);
-    if (old?.origin === 'manual') continue;
-    byId.set(post.id, { ...post, ...(old?.cover && !post.cover ? { cover: old.cover } : {}) });
-  }
-  return [...byId.values()].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+export function postsFromFeed(xml: string): BlogPost[] {
+  return parseFeed(xml)
+    .flatMap((item) => {
+      try {
+        return [toPost(item)];
+      } catch {
+        return [];
+      }
+    })
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 }
