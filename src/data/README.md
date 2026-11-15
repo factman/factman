@@ -2,6 +2,8 @@
 
 The site's content, one JSON file per data type (PRD section 7, ADR-001). Each file has a JSON Schema (draft 2020-12) in `schemas/`.
 
+**Editing content?** Start with the [data authoring guide](../../docs/data-authoring.md); every field is listed in the [field reference](../../docs/data-reference.md).
+
 | File | Issue |
 | ---- | ----- |
 | `profile.json` | ETE-27 |
