@@ -471,7 +471,8 @@ This repository also holds the source of my portfolio website (Angular, prerende
 | `pnpm start` | Dev server on http://localhost:4200                          |
 | `pnpm build` | Validates data, generates the models and builds Storybook, then the production build; every static route is prerendered to `dist/factman/browser`, with the static Storybook at `/storybook` |
 | `pnpm build:preview` | The same build with preview settings (noindex, analytics off); Vercel uses it for preview deployments |
-| `pnpm data:validate` | Checks `src/data/*.json` against their JSON Schemas and the cross-reference rules |
+| `pnpm data:validate` | Checks `src/data/*.json` against their JSON Schemas and the cross-reference rules. How to edit content: [docs/data-authoring.md](docs/data-authoring.md) |
+| `pnpm data:docs` | Regenerates `docs/data-reference.md`, the field reference, from the schemas (`test:scripts` fails when it's out of date) |
 | `pnpm data:types` | Generates TypeScript models from the schemas into `src/app/shared/models/generated` |
 | `pnpm test:scripts` | Tests for the build scripts (data validator, design tokens) |
 | `pnpm ds:tokens` | Regenerates `src/styles/factman/tokens.css` from the design system's `tokens.json` |

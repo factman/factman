@@ -19,6 +19,12 @@
       ],
       "outputs": ["{projectRoot}/src/app/shared/models/generated"]
     },
+    "data:docs": {
+      "command": "tsx scripts/data/generate-docs.ts",
+      "inputs": ["{projectRoot}/src/data/schemas/**/*", "{projectRoot}/scripts/data/**/*.ts"],
+      "outputs": ["{projectRoot}/docs/data-reference.md"],
+      "cache": true
+    },
     "build": {
       "executor": "nx:run-commands",
       "dependsOn": ["data:validate", "data:types", "build-storybook"],
