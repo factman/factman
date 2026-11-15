@@ -7,6 +7,8 @@ import '../src/styles/generated/fonts.css';
 import '../src/styles/factman/global.css';
 import '../src/styles.scss';
 
+import { FM_VIEWPORTS } from './viewports';
+
 const preview: Preview = {
   // Theme toolbar (FR-04): renders every story in Light or Dark by setting data-theme on <html>,
   // as ThemeService does in the app. A story can pin one with `globals: { theme: 'dark' }`.
@@ -32,6 +34,10 @@ const preview: Preview = {
     },
   ],
   parameters: {
+    // Viewport toolbar (ETE-82): the canvas's three design widths. Stories open at the full
+    // preview width; pick one from the toolbar, or pin one with
+    // `globals: { viewport: { value: 'mobile' } }`.
+    viewport: { options: FM_VIEWPORTS },
     controls: {
       matchers: {
         color: /(background|color)$/i,

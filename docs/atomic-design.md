@@ -94,6 +94,17 @@ export class Button {}
 4. Export it from the level's `index.ts`.
 5. Run `pnpm lint`.
 
+## Stories
+
+Every component has a story next to it (`<name>.stories.ts`). `pnpm storybook` runs Storybook locally; the static build is served with the site at `/storybook`.
+
+- **Title:** the level, then the component: `Atoms/Button`, `Molecules/ProjectCard`, `Organisms/SiteHeader`, `Templates/MainLayout`. Pages under `src/app/features` use `Pages/<Page>`. `pnpm test:scripts` fails when a title doesn't match its folder.
+- **Theme:** the toolbar's Theme switch renders the story in Light or Dark (`data-theme` on `<html>`, like the app). Check both. To pin one, set `globals: { theme: 'dark' }`.
+- **Viewport:** the toolbar offers the three design widths: Mobile 390, Tablet 768 and Desktop 1440. To pin one, set `globals: { viewport: { value: 'mobile' } }`.
+- **Styles:** stories load the same global styles as the app (tokens, fonts, the design system's shared CSS, `styles.scss`). Each component brings its own design-system CSS, as in the app.
+- **Accessibility gate:** every story runs axe in `pnpm test:storybook` (and in CI). Any violation fails the run. Don't switch a rule off to make a story pass; fix the component.
+- **Interaction tests:** put them in the story's `play` function; they run in the same suite.
+
 ## How the rule is tested
 
 `tools/eslint/fixtures` holds files that break each rule on purpose. `pnpm test:lint-rules` (part of `pnpm lint`) proves ESLint reports every one of them and accepts the valid ones.
