@@ -35,6 +35,7 @@
     "ds:brand": "nx run factman:ds:brand",
     "ds:portraits": "nx run factman:ds:portraits",
     "ds:og": "nx run factman:ds:og",
+    "ds:icons": "nx run factman:ds:icons",
     "lint:eslint": "nx run factman:lint:eslint"
   },
   "private": true,
