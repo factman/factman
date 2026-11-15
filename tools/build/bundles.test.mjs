@@ -25,6 +25,7 @@ const markers = {
   'profile.json': json('profile.json').about[2],
   'contact.json': json('contact.json').whatsapp.message,
   'resumes.json': json('resumes.json').resumes[0].summary.slice(0, 80),
+  'blog.json': json('blog.json')[0].excerpt.slice(0, 80),
 };
 
 test('the initial bundle is the entry script plus its preloaded chunks', () => {

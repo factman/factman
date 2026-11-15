@@ -9,7 +9,7 @@ The site's content, one JSON file per data type (PRD section 7, ADR-001). Each f
 | `experience.json` | ETE-29 |
 | `services.json` | ETE-30 |
 | `projects.json` | ETE-31 |
-| `blog.json` | ETE-32 |
+| `blog.json` | ETE-32 (synced from Medium by `pnpm sync:medium`) |
 | `contact.json` | ETE-33 |
 | `resumes.json` | ETE-34 (résumés, canvas page 06) |
 | `site.json` | ETE-35 |
@@ -78,3 +78,7 @@ The three résumés (Fullstack, Mobile, DevOps / Cloud) are built only from thes
 Skill items are `{ "skill": "<id>" }` (shows the skill's name, or "Name (since YYYY)" with `"since": true`) or plain text.
 
 Text can use `{years}` (whole years since `profile.careerStart`, the "13+"), `{since:<skill id>}` (that skill's start year) and `[placeholders]`. Every `[placeholder]` must have an entry in `resumes.json` `placeholders`; put the figure in its `value` and the generator swaps it in. Until then the token stays in the text and previews highlight it.
+
+## Blog posts (`blog.json`)
+
+`pnpm sync:medium` reads https://medium.com/feed/@factman60 and adds or updates the Medium posts (`origin: "rss"`): title, link, date, tags, an excerpt from the first paragraph (at most 280 characters), reading time (238 words a minute) and the cover, stored as WebP in `src/assets/blog` so the site never hotlinks Medium. Posts that drop out of the feed (it lists only the latest few) are kept. Add a post by hand with `origin: "manual"`; the sync never changes those. Run `pnpm data:validate` after a sync.

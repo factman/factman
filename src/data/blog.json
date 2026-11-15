@@ -1,0 +1,35 @@
+[
+  {
+    "id": "next-js-server-actions-vs-trpc-a-2026-architects-guide",
+    "url": "https://medium.com/@factman60/next-js-server-actions-vs-trpc-a-2026-architects-guide-85cc4953bae4",
+    "title": "Next.js Server Actions vs. tRPC: A 2026 Architect’s Guide",
+    "publishedAt": "2026-04-03T12:52:32.000Z",
+    "tags": ["react", "trpc", "mutation", "server-action", "nextjs"],
+    "excerpt": "As seasoned developers, we’ve witnessed the pendulum of web architecture swing from server-rendered pages to thick-client SPAs, and now to a sophisticated hybrid model. In 2026, the conversation around data mutations in the Next.js ecosystem has distilled down to two mature…",
+    "readingMinutes": 6,
+    "origin": "rss",
+    "cover": "blog/next-js-server-actions-vs-trpc-a-2026-architects-guide.webp"
+  },
+  {
+    "id": "end-to-end-type-safety-bridging-nest-js-and-react-with-trpc",
+    "url": "https://medium.com/@factman60/end-to-end-type-safety-bridging-nest-js-and-react-with-trpc-1a807683808f",
+    "title": "End-to-End Type Safety: Bridging Nest.js and React with tRPC",
+    "publishedAt": "2026-04-01T13:04:36.000Z",
+    "tags": ["zod-validation", "nestjs", "react", "typescript", "trpc"],
+    "excerpt": "As a senior developer, you’ve felt the pain. You’ve hunted down bugs that turned out to be a simple mismatch between the frontend’s expectation of an API response and the backend’s reality. You’ve seen REST endpoints and GraphQL schemas go stale, their documentation becoming a…",
+    "readingMinutes": 8,
+    "origin": "rss",
+    "cover": "blog/end-to-end-type-safety-bridging-nest-js-and-react-with-trpc.webp"
+  },
+  {
+    "id": "the-developer-experience-tug-of-war-static-vs-dynamic-typing",
+    "url": "https://medium.com/@factman60/the-developer-experience-tug-of-war-static-vs-dynamic-typing-10194a503e3e",
+    "title": "The Developer Experience Tug-of-War: Static vs. Dynamic Typing",
+    "publishedAt": "2025-03-12T01:28:31.000Z",
+    "tags": ["typescript", "javascript", "developer-experience", "static-typing", "dynamic-typing"],
+    "excerpt": "Picture this: You’re building a house. You can either have an architect carefully plan out every detail (statically typed languages), or you can wing it, add rooms as you go, and hope nothing collapses (dynamically typed languages). Both approaches work — but one of them might…",
+    "readingMinutes": 3,
+    "origin": "rss",
+    "cover": "blog/the-developer-experience-tug-of-war-static-vs-dynamic-typing.webp"
+  }
+]

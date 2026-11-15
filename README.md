@@ -472,6 +472,7 @@ This repository also holds the source of my portfolio website (Angular, prerende
 | `pnpm build` | Validates data, generates the models and builds Storybook, then the production build; every static route is prerendered to `dist/factman/browser`, with the static Storybook at `/storybook` |
 | `pnpm build:preview` | The same build with preview settings (noindex, analytics off); Vercel uses it for preview deployments |
 | `pnpm data:validate` | Checks `src/data/*.json` against their JSON Schemas and the cross-reference rules |
+| `pnpm sync:medium` | Pulls the Medium posts into `src/data/blog.json` and stores their covers in `src/assets/blog`; with nothing new it changes nothing |
 | `pnpm data:types` | Generates TypeScript models from the schemas into `src/app/shared/models/generated` |
 | `pnpm test:scripts` | Tests for the build scripts (data validator, design tokens) |
 | `pnpm ds:tokens` | Regenerates `src/styles/factman/tokens.css` from the design system's `tokens.json` |

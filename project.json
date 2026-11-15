@@ -19,6 +19,10 @@
       ],
       "outputs": ["{projectRoot}/src/app/shared/models/generated"]
     },
+    "sync:medium": {
+      "command": "tsx scripts/blog/sync-medium.ts",
+      "cache": false
+    },
     "build": {
       "executor": "nx:run-commands",
       "dependsOn": ["data:validate", "data:types", "build-storybook"],
