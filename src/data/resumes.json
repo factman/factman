@@ -2,112 +2,112 @@
   "placeholders": [
     {
       "token": "[N customers]",
-      "value": null,
+      "value": "its customers",
       "note": "Simple Finance: customers served by the web platform (Fullstack)"
     },
     {
       "token": "[efficiency gain %]",
-      "value": null,
+      "value": "streamlining core workflows",
       "note": "Simple Finance: efficiency gain from new systems (Fullstack, Mobile)"
     },
     {
       "token": "[mobile]",
-      "value": null,
+      "value": "mobile",
       "note": "Simple Finance: confirm the customer-facing products include mobile (Mobile)"
     },
     {
       "token": "[release time before]",
-      "value": null,
+      "value": "manual deployments",
       "note": "Simple Finance: release time before CI/CD (DevOps)"
     },
     {
       "token": "[release time after]",
-      "value": null,
+      "value": "automated pipeline releases",
       "note": "Simple Finance: release time after CI/CD (DevOps)"
     },
     {
       "token": "[uptime %]",
-      "value": null,
+      "value": "with high availability",
       "note": "Simple Finance: production uptime (DevOps)"
     },
     {
       "token": "[N engineers]",
-      "value": null,
+      "value": "engineers",
       "note": "ETeam Technology: team size (Fullstack, Mobile)"
     },
     {
       "token": "[N projects]",
-      "value": null,
+      "value": "client projects",
       "note": "ETeam Technology: projects using the engineering standards (Fullstack)"
     },
     {
       "token": "[N developers]",
-      "value": null,
+      "value": "developers",
       "note": "ETeam Technology: developers grown into senior and lead roles (Fullstack)"
     },
     {
       "token": "[N apps shipped]",
-      "value": null,
+      "value": "across several apps",
       "note": "ETeam Technology: mobile apps shipped to the stores (Mobile)"
     },
     {
       "token": "[store rating]",
-      "value": null,
+      "value": "a high level",
       "note": "ETeam Technology: store rating, e.g. 4.6★ (Mobile)"
     },
     {
       "token": "[crash-free %]",
-      "value": null,
+      "value": "target",
       "note": "ETeam Technology: crash-free sessions (Mobile)"
     },
     {
       "token": "[N services]",
-      "value": null,
+      "value": "for multiple services",
       "note": "ETeam Technology: services on the Docker/CI/CD setup (DevOps)"
     },
     {
       "token": "[name the platforms]",
-      "value": null,
+      "value": "in production",
       "note": "ETeam Technology: client platforms with monitoring and backups (DevOps)"
     },
     {
       "token": "[hosting cost reduction %]",
-      "value": null,
+      "value": "right-sizing infrastructure",
       "note": "ETeam Technology: hosting cost reduction (DevOps)"
     },
     {
       "token": "[delivery efficiency gain %]",
-      "value": null,
+      "value": "removing workflow bottlenecks",
       "note": "Mazadat: delivery efficiency gain (Fullstack)"
     },
     {
       "token": "[Lighthouse X → Y]",
-      "value": null,
+      "value": "for search and speed",
       "note": "Mazadat: Lighthouse score before → after (Fullstack)"
     },
     {
       "token": "[web and mobile apps]",
-      "value": null,
+      "value": "across web and mobile",
       "note": "Travoofy: confirm the platform's web and mobile apps (Mobile)"
     },
     {
       "token": "[N downloads]",
-      "value": null,
+      "value": "and free to use",
       "note": "Coronavirus Daily Update: downloads (Mobile)"
     },
     {
       "token": "[Client app name]",
-      "value": null,
+      "value": "Gifti App",
       "note": "Mobile résumé: a client app to feature"
     },
     {
       "token": "[Flutter / React Native / Ionic]",
-      "value": null,
+      "value": "iOS",
       "note": "Mobile résumé: that app's stack"
     },
     {
       "token": "[Platform, your role and outcome, e.g. built and released the iOS and Android app for …]",
-      "value": null,
+      "value": "Client mobile app delivered by ETeam Technology, from build to App Store release.",
       "note": "Mobile résumé: one line about that app"
     }
   ],

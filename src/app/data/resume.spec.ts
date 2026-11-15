@@ -117,7 +117,7 @@ describe('résumé view model (canvas page 06)', () => {
       'Cloud',
     ]);
     expect(plainText(eteam.jobs[0].bullets[1])).toBe(
-      'Lead a team of [N engineers] building web, mobile and payment products for clients including SunTrust Bank, Gifti App and AirtimeFlip.',
+      'Lead a team of engineers building web, mobile and payment products for clients including SunTrust Bank, Gifti App and AirtimeFlip.',
     );
     expect(cv.experience[4].jobs[0].title).toBe('Engineering Manager');
     expect(cv.earlier).toEqual([
@@ -175,7 +175,7 @@ describe('résumé view model (canvas page 06)', () => {
       'JIT Solutions',
     ]);
     expect(cv.earlier[0].note).toBeUndefined();
-    expect(plainText(cv.projects[2].name)).toBe('[Client app name]');
+    expect(plainText(cv.projects[2].name)).toBe('Gifti App');
   });
 
   it('DevOps: gives ABUAD a full entry and leaves 386konsult out', () => {
@@ -200,25 +200,30 @@ describe('résumé view model (canvas page 06)', () => {
     ]);
   });
 
-  it('highlights unfilled placeholders and fills those with a value', () => {
-    expect(build('fullstack').unfilled).toContain('[N customers]');
-    const filled: ResumeSources = {
-      ...sources,
-      resumes: {
-        ...resumes,
-        placeholders: resumes.placeholders.map((p) =>
-          p.token === '[N engineers]' ? { ...p, value: '12 engineers' } : p,
-        ),
-      },
-    };
-    const cv = build('fullstack', filled);
-    const bullet = cv.experience[1].jobs[0].bullets[1];
-    expect(plainText(bullet)).toContain('Lead a team of 12 engineers building');
+  it('fills placeholders from resumes.json and marks any without a value as unfilled', () => {
+    // Every placeholder has a stand-in value for now (owner request on PR #40).
+    for (const id of ['fullstack', 'mobile', 'devops']) expect(build(id).unfilled).toEqual([]);
+    const bullet = build('fullstack').experience[1].jobs[0].bullets[1];
+    expect(plainText(bullet)).toContain('Lead a team of engineers building');
     expect(bullet.find((s) => s.placeholder)?.placeholder).toEqual({
       token: '[N engineers]',
       filled: true,
     });
-    expect(cv.unfilled).not.toContain('[N engineers]');
+
+    const cleared: ResumeSources = {
+      ...sources,
+      resumes: {
+        ...resumes,
+        placeholders: resumes.placeholders.map((p) =>
+          p.token === '[N engineers]' ? { ...p, value: null } : p,
+        ),
+      },
+    };
+    const cv = build('fullstack', cleared);
+    expect(plainText(cv.experience[1].jobs[0].bullets[1])).toContain(
+      'Lead a team of [N engineers]',
+    );
+    expect(cv.unfilled).toEqual(['[N engineers]']);
   });
 
   it('never includes a street address (RS-06)', () => {
