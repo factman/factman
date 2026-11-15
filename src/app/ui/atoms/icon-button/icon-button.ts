@@ -13,24 +13,7 @@ import type { IconDef } from '../icon/icon-def';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Button],
   host: { style: 'display: contents' },
-  template: `
-    <fm-button
-      [iconOnly]="true"
-      [leadingIcon]="icon()"
-      [ariaLabel]="label()"
-      [variant]="variant()"
-      [size]="size()"
-      [href]="href()"
-      [newTab]="newTab()"
-      [disabled]="disabled()"
-      [loading]="loading()"
-      [toggled]="toggled()"
-      [ariaHaspopup]="ariaHaspopup()"
-      [ariaExpanded]="ariaExpanded()"
-      [ariaControls]="ariaControls()"
-      (pressed)="pressed.emit($event)"
-    />
-  `,
+  templateUrl: './icon-button.html',
 })
 export class IconButton {
   readonly icon = input.required<IconDef | string>();
