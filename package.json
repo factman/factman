@@ -33,6 +33,8 @@
     "ds:split": "nx run factman:ds:split",
     "ds:fonts": "nx run factman:ds:fonts",
     "ds:brand": "nx run factman:ds:brand",
+    "ds:portraits": "nx run factman:ds:portraits",
+    "ds:og": "nx run factman:ds:og",
     "lint:eslint": "nx run factman:lint:eslint"
   },
   "private": true,

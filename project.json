@@ -180,6 +180,12 @@
     },
     "ds:brand": {
       "command": "tsx scripts/design-system/build-brand.ts"
+    },
+    "ds:portraits": {
+      "command": "tsx scripts/design-system/build-portraits.ts"
+    },
+    "ds:og": {
+      "command": "tsx scripts/design-system/build-og.ts"
     }
   }
 }

@@ -125,3 +125,19 @@ Use the `fm-logo` atom (`@ui/atoms`), never an `<img>` of the artwork:
 `theme="light"` artwork (navy bezel and wordmark) goes on light grounds and `theme="dark"` (silver bezel, near-white wordmark) on dark grounds. The live wordmark uses `--font-logo` (Jost), so Jost loads only on pages that render a lockup.
 
 To update: copy the new design system PNGs over the originals, update the hashes in `scripts/design-system/build-brand.ts`, then run `pnpm ds:brand`.
+
+## Profile photos (responsive exports)
+
+The hero, About and contact photos (`src/assets/profile/`, described in `profile.json`) are the approved canvas images. `pnpm ds:portraits` exports each one at half, three-quarters and full width, as AVIF and WebP, next to the source, and never enlarges past the source:
+
+| Photo   | Source                 | Exports (AVIF and WebP)                     |
+| ------- | ---------------------- | ------------------------------------------- |
+| Hero    | `odunayo-hero.webp`    | `odunayo-hero-{360,540,720}.{avif,webp}`    |
+| About   | `odunayo-about.webp`   | `odunayo-about-{360,540,720}.{avif,webp}`   |
+| Contact | `odunayo-contact.webp` | `odunayo-contact-{450,676,900}.{avif,webp}` |
+
+Use them in a `<picture>` with `srcset` (ETE-91): AVIF first, then WebP, with the source's `width` and `height` set so the layout doesn't shift. The largest export is 720 px wide (900 for contact), which covers a 360 px slot at 2x; a higher-resolution original would sharpen larger slots on high-density screens. After replacing a photo, run `pnpm ds:portraits`; `pnpm test:scripts` fails while an export is missing or the wrong size.
+
+## Open Graph image
+
+`src/assets/og/default.jpg` (1200 × 630) is the image shown when a link to the site is shared. `pnpm ds:og` builds it as HTML in the site's fonts and brand colours, fills it from the data files (name, headline, location, years of experience, site URL, hero portrait) and renders it with Playwright's Chromium, so it updates itself when the data changes: run `pnpm ds:og` after editing those fields. `site.json` → `ogImage` points at it; the page meta tags that use it come with ETE-113, which can also render per-page variants (an `eyebrow` such as "Services") from the same template. `pnpm test:scripts` fails while the image is missing or not 1200 × 630.
