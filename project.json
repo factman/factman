@@ -74,7 +74,11 @@
     "test:scripts": {
       "command": "node --import tsx --test --test-reporter=spec \"scripts/**/*.test.ts\"",
       "cache": true,
-      "inputs": ["source"]
+      "inputs": [
+        "source",
+        "{projectRoot}/docs/component-inventory.md",
+        "{projectRoot}/docs/data-reference.md"
+      ]
     },
     "test:lint-rules": {
       "command": "node --test --test-reporter=spec tools/eslint/boundaries.test.mjs",

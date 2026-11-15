@@ -1,0 +1,178 @@
+# Component inventory
+
+Every piece of the approved [UI design canvas](https://claude.ai/artifact/DsfngJqGZQtNLwAymbRh5F) (version of 10 Nov 2026, ETE-14) mapped to the Angular component that builds it, its [Atomic level](atomic-design.md), its selector and its public API. Build the UI kit and the sections from this table; when a component lands, its selector and level must match its row (`pnpm test:scripts` checks every component under `src/app/ui`).
+
+- **Artboard:** the canvas file (`project/<Artboard>.dc.html`) or, for design-system pieces, `DS:<Name>` (the Factman DS component the canvas imports).
+- **Names:** Angular class names have no suffix (`Button`, not `ButtonComponent`); selectors are `fm-` plus the kebab-case name; folders are `src/app/ui/<level>/<kebab-name>/`.
+- **Inputs and outputs** are signal `input()` and `output()` names. Types come from the data models in `@shared` where one exists (`Project`, `Service`, `BlogPost` …); pages map data to these inputs, since only pages read the data layer.
+- **Issue:** the Linear issue that builds it.
+
+## Atoms (level 1)
+
+All atoms come from the Factman design system. Tokens only; per-component CSS from `src/styles/factman/components/`.
+
+| Artboard         | Angular component | Selector          | Inputs                                                                                                                                                        | Outputs   | Issue           |
+| ---------------- | ----------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | --------------- |
+| DS:Button        | `Button`          | `fm-button`       | `variant` (primary, secondary, tertiary, text, link), `size` (sm, md, lg, xl), `href`, `target`, `leadingIcon`, `trailingIcon`, `loading`, `disabled`, `full` | `pressed` | ETE-68          |
+| DS:IconButton    | `IconButton`      | `fm-icon-button`  | `icon`, `label` (required, the accessible name), `variant`, `size`                                                                                            | `pressed` | ETE-68          |
+| DS:Button (link) | `Link`            | `fm-link`         | `href`, `external`, `trailingIcon`                                                                                                                            |           | ETE-68          |
+| DS:NavLink       | `NavLink`         | `fm-nav-link`     | `href`, `active`, `label`                                                                                                                                     |           | ETE-68          |
+| DS:Icon          | `Icon`            | `fm-icon`         | `name`, `size` (16, 20, 24), `label` (omit for decorative)                                                                                                    |           | ETE-69          |
+| DS:Logo          | `Logo`            | `fm-logo`         | `type` (mark, odunayo), `theme`, `size`, `alt`                                                                                                                |           | ETE-198 (built) |
+| DS:Avatar        | `Avatar`          | `fm-avatar`       | `name`, `src`, `size` (sm, md, lg)                                                                                                                            |           | ETE-69          |
+| DS:Badge         | `Badge`           | `fm-badge`        | `count`                                                                                                                                                       |           | ETE-70          |
+| DS:Tag           | `Tag`             | `fm-tag`          | `variant` (solid, outline), `tone` (neutral, info, success, warning), `size`, `dot`, `leadingIcon`                                                            |           | ETE-70          |
+| DS:Chip          | `Chip`            | `fm-chip`         | `selected`, `value`                                                                                                                                           | `toggled` | ETE-70          |
+| `.fm-skill`      | `SkillChip`       | `fm-skill-chip`   | `label`, `years`                                                                                                                                              |           | ETE-70          |
+| Tag `dot`        | `StatusDot`       | `fm-status-dot`   | `tone`, `pulse`                                                                                                                                               |           | ETE-70          |
+| DS:Divider       | `Divider`         | `fm-divider`      | `label`, `align` (center, start)                                                                                                                              |           | ETE-70          |
+| DS:TextInput     | `TextInput`       | `fm-text-input`   | `type`, `placeholder`, `autocomplete`, `invalid` (+ `ControlValueAccessor`)                                                                                   |           | ETE-71          |
+| DS:TextArea      | `TextArea`        | `fm-text-area`    | `rows`, `placeholder`, `maxLength`, `invalid` (+ `ControlValueAccessor`)                                                                                      |           | ETE-71          |
+| DS:Select        | `Select`          | `fm-select`       | `options`, `placeholder`, `invalid` (+ `ControlValueAccessor`)                                                                                                |           | ETE-71          |
+| DS:SearchInput   | `SearchInput`     | `fm-search-input` | `placeholder`, `label` (+ `ControlValueAccessor`)                                                                                                             |           | ETE-71          |
+| DS:Checkbox      | `Checkbox`        | `fm-checkbox`     | `label` (+ `ControlValueAccessor`)                                                                                                                            |           | ETE-71          |
+| DS:Switch        | `Switch`          | `fm-switch`       | `label` (+ `ControlValueAccessor`)                                                                                                                            |           | ETE-71          |
+| DS:Tooltip       | `Tooltip`         | `[fmTooltip]`     | `fmTooltip` (text), `placement`                                                                                                                               |           | ETE-72          |
+| DS:Skeleton      | `Skeleton`        | `fm-skeleton`     | `shape` (line, circle, rect), `width`, `height`                                                                                                               |           | ETE-72          |
+| DS:Spinner       | `Spinner`         | `fm-spinner`      | `type` (ring, logo), `size`, `label`                                                                                                                          |           | ETE-72          |
+| DS:InlineCode    | `InlineCode`      | `fm-inline-code`  | (content)                                                                                                                                                     |           | ETE-72          |
+| DS:Typewriter    | `Caret`           | `fm-caret`        | `shape` (bar, block)                                                                                                                                          |           | ETE-72          |
+| DS:Typewriter    | `Typewriter`      | `fm-typewriter`   | `words`, `loop`, `prefix`, `caret`                                                                                                                            |           | ETE-72          |
+| DS:Image         | `Image`           | `fm-image`        | `src`, `alt`, `width`, `height`, `sources` (AVIF and WebP `srcset`), `priority`                                                                               |           | ETE-72          |
+
+## Molecules (level 2)
+
+### From the design system
+
+| Artboard             | Angular component   | Selector                | Inputs                                                           | Outputs               | Issue   |
+| -------------------- | ------------------- | ----------------------- | ---------------------------------------------------------------- | --------------------- | ------- |
+| DS:SocialLinks       | `SocialLinks`       | `fm-social-links`       | `links`, `variant` (icon, pill)                                  | `linkClick`           | ETE-73  |
+| ClientProfile token  | `CopyButton`        | `fm-copy-button`        | `value`, `label`                                                 | `copied`              | ETE-73  |
+| ThemeToggle          | `ThemeToggle`       | `fm-theme-toggle`       | `theme` (light, dark), `showLabel`                               | `themeChange`         | ETE-73  |
+| DS:TextInput label   | `FormField`         | `fm-form-field`         | `label`, `hint`, `error`, `required`                             |                       | ETE-74  |
+| ProjectsSection bar  | `FilterBar`         | `fm-filter-bar`         | `options`, `selected`, `searchLabel`, `sortOptions`              | `filterChange`        | ETE-74  |
+| DS:ContactMethod     | `ContactMethod`     | `fm-contact-method`     | `icon`, `label`, `value`, `href`, `copy`, `variant` (row, tile)  | `copied`              | ETE-74  |
+| DS:SectionHeader     | `SectionHeader`     | `fm-section-header`     | `index`, `eyebrow`, `title`, `description`, `level` (h1, h2, h3) |                       | ETE-75  |
+| `.fm-window`         | `WindowFrame`       | `fm-window-frame`       | `variant` (code, terminal), `title`, `tabs`                      | `closed`              | ETE-75  |
+| DS:StatCounter       | `StatCounter`       | `fm-stat-counter`       | `value`, `suffix`, `label`, `framed`                             |                       | ETE-75  |
+| DS:AvailabilityBadge | `AvailabilityBadge` | `fm-availability-badge` | `status` (available, busy)                                       |                       | ETE-75  |
+| DS:AvatarLabel       | `AvatarLabel`       | `fm-avatar-label`       | `title`, `description`, `avatar`                                 |                       | ETE-75  |
+| ProjectCard          | `ProjectCard`       | `fm-project-card`       | `project`, `href`                                                |                       | ETE-76  |
+| DS:ServiceCard       | `ServiceCard`       | `fm-service-card`       | `service`, `href`, `current`                                     |                       | ETE-76  |
+| DS:BlogPostCard      | `BlogPostCard`      | `fm-blog-post-card`     | `post`, `layout` (card, row)                                     |                       | ETE-76  |
+| ResumeCard           | `ResumeCard`        | `fm-resume-card`        | `resume`                                                         | `preview`, `download` | ETE-77  |
+| ClientLogo           | `ClientLogo`        | `fm-client-logo`        | `client`, `showName`                                             |                       | ETE-77  |
+| DS:Breadcrumbs       | `Breadcrumbs`       | `fm-breadcrumbs`        | `crumbs`                                                         |                       | ETE-74  |
+| DS:Accordion         | `Accordion`         | `fm-accordion`          | `items`, `multiple`                                              | `expandedChange`      | ETE-74  |
+| DS:Stepper           | `Stepper`           | `fm-stepper`            | `steps`, `orientation`                                           |                       | ETE-74  |
+| DS:List              | `List`              | `fm-list`               | `items`, `variant` (plain, inset)                                |                       | ETE-74  |
+| DS:Table             | `Table`             | `fm-table`              | `columns`, `rows`, `caption`                                     |                       | ETE-74  |
+| DS:EmptyState        | `EmptyState`        | `fm-empty-state`        | `icon`, `title`, `description`                                   | `action`              | ETE-74  |
+| DS:SelectableCard    | `SelectableCard`    | `fm-selectable-card`    | `title`, `description`, `selected`                               | `selectedChange`      | ETE-74  |
+| DS:Alert             | `Alert`             | `fm-alert`              | `tone`, `title`                                                  | `dismissed`           | ETE-72  |
+| DS:Toast             | `Toast`             | `fm-toast`              | `tone`, `title`, `description`, `variant`                        | `closed`              | ETE-72  |
+| DS:CodeBlock         | `CodeBlock`         | `fm-code-block`         | `code`, `language`, `filename`                                   | `copied`              | ETE-75  |
+| DS:CodeEditor        | `CodeEditor`        | `fm-code-editor`        | `files`, `activeFile`                                            | `activeFileChange`    | ETE-90  |
+| DS:Chart             | `Chart`             | `fm-chart`              | `series`, `type`, `label`                                        |                       | ETE-106 |
+| `.fm-modal`          | `Dialog`            | `fm-dialog`             | `open`, `label`, `size`                                          | `closed`              | ETE-74  |
+
+### Canvas-only molecules
+
+| Artboard           | Angular component    | Selector                  | Inputs                                                                         | Outputs         | Issue  |
+| ------------------ | -------------------- | ------------------------- | ------------------------------------------------------------------------------ | --------------- | ------ |
+| ChannelCard        | `ChannelCard`        | `fm-channel-card`         | `channel` (`{icon, label, meta, href?, schedule?}`)                            | `schedule`      | ETE-78 |
+| EngageCard         | `EngageCard`         | `fm-engage-card`          | `project`, `facts`                                                             | `requestAccess` | ETE-78 |
+| CareerGlance       | `CareerGlance`       | `fm-career-glance`        | `roles` (current roles), `stats` (`{value, label}[]`), `resumeHref`            |                 | ETE-78 |
+| ConsentStatusCard  | `ConsentStatusCard`  | `fm-consent-status-card`  | `analytics` (granted, denied, unset)                                           | `change`        | ETE-78 |
+| PhoneReveal        | `PhoneReveal`        | `fm-phone-reveal`         | `number`                                                                       | `revealed`      | ETE-78 |
+| TerminalSignOff    | `TerminalSignOff`    | `fm-terminal-sign-off`    | `command`, `signature`                                                         |                 | ETE-78 |
+| CareerStrip        | `CareerStrip`        | `fm-career-strip`         | `rows` (`{org, bars[]}`), `ticks`                                              |                 | ETE-78 |
+| PortraitPlate      | `PhotoFrame`         | `fm-photo-frame`          | `image` (`{src, alt, width, height, sources}`), `variant` (plate, note, panel) |                 | ETE-78 |
+| BookingCard        | `BookingCard`        | `fm-booking-card`         | `service`, `price`, `booking`, `person`                                        | `channel`       | ETE-78 |
+| ScheduleCallButton | `ScheduleCallButton` | `fm-schedule-call-button` | `label`, `variant`, `size`, `full`, `leadingIcon`, `trailingIcon`, `service`   | `schedule`      | ETE-78 |
+
+## Organisms (level 3)
+
+Section names follow the canvas titles, which are the PRD names (the artboard file name is in the first column).
+
+| Artboard               | Angular component       | Selector                     | Inputs                                                                                                                        | Outputs                               | Issue   |
+| ---------------------- | ----------------------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- | ------- |
+| SiteHeader             | `SiteHeader`            | `fm-site-header`             | `nav`, `current` (home, services, projects, blog, other), `theme`                                                             | `resume`, `themeChange`               | ETE-85  |
+| SiteFooter             | `SiteFooter`            | `fm-site-footer`             | `nav`, `socials`, `availability`, `year`                                                                                      | `resume`, `cookies`                   | ETE-86  |
+| HeroSection            | `ProfileHero`           | `fm-profile-hero`            | `profile`, `roles`, `stats`, `socials`, `editorFiles`, `availability`                                                         | `resume`                              | ETE-89  |
+| WorkedWith             | `ClientLogoStrip`       | `fm-client-logo-strip`       | `clients`                                                                                                                     |                                       | ETE-93  |
+| AboutSection           | `AboutSection`          | `fm-about-section`           | `story`, `photo`, `facts` (`InfoTile` data)                                                                                   |                                       | ETE-92  |
+| AboutSection `#resume` | `ResumeSection`         | `fm-resume-section`          | `resumes`                                                                                                                     | `preview`, `download`                 | ETE-109 |
+| StackSection           | `TechStack`             | `fm-tech-stack`              | `categories`, `skills`                                                                                                        |                                       | ETE-94  |
+| ExperienceSection      | `ExperienceTimeline`    | `fm-experience-timeline`     | `entries`, `glance`                                                                                                           |                                       | ETE-95  |
+| ServicesSection        | `ServicesGrid`          | `fm-services-grid`           | `services`, `limit`, `hideHeader`, `related`, `current`                                                                       |                                       | ETE-96  |
+| ProjectsSection        | `ProjectGallery`        | `fm-project-gallery`         | `projects`, `featured`, `categories`                                                                                          |                                       | ETE-99  |
+| StatsSection           | `StatsPanel`            | `fm-stats-panel`             | `counters`, `career`, `activity`                                                                                              |                                       | ETE-105 |
+| WritingSection         | `BlogFeed`              | `fm-blog-feed`               | `posts`, `status` (loading, ready, error), `full`, `limit`, `profileUrl`                                                      | `retry`                               | ETE-101 |
+| ContactSection         | `ContactSection`        | `fm-contact-section`         | `contact`, `topics`, `defaultTopic`, `photo`                                                                                  | `send`                                | ETE-103 |
+| CookieConsent          | `CookieConsentTerminal` | `fm-cookie-consent-terminal` | `categories`, `copy`                                                                                                          | `decide`                              | ETE-119 |
+| ResumeModal            | `ResumePreviewModal`    | `fm-resume-preview-modal`    | `resumes`, `variant` (fullstack, mobile, devops), `open`                                                                      | `closed`, `variantChange`, `download` | ETE-109 |
+| SchedulerModal         | `SchedulerModal`        | `fm-scheduler-modal`         | `open`, `service`, `src`, `fallbackUrl`                                                                                       | `closed`                              | ETE-98  |
+| PageHero               | `PageHero`              | `fm-page-hero`               | `crumbs`, `eyebrow`, `icon`, `tags`, `title`, `lead`, `meta`, `note`, `actions`, `actionsAside`, `media`, `flush`, `maxWidth` | `schedule`                            | ETE-97  |
+| CtaBanner              | `CtaBanner`             | `fm-cta-banner`              | `title`, `text`, `actions`                                                                                                    |                                       | ETE-97  |
+| ProcessSection         | `ProcessSection`        | `fm-process-section`         | `steps`                                                                                                                       |                                       | ETE-97  |
+| FaqSection             | `FaqSection`            | `fm-faq-section`             | `items`                                                                                                                       |                                       | ETE-97  |
+| BookingChannelsSection | `BookingChannels`       | `fm-booking-channels`        | `channels`, `photo`                                                                                                           | `schedule`                            | ETE-98  |
+| ServiceDetailBody      | `ServiceDetailBody`     | `fm-service-detail-body`     | `service`, `booking`                                                                                                          | `schedule`, `channel`                 | ETE-98  |
+| ProjectCaseStudy       | `ProjectCaseStudy`      | `fm-project-case-study`      | `project`, `facts`, `next`                                                                                                    |                                       | ETE-100 |
+| PrivacyPolicySection   | `PrivacyPolicy`         | `fm-privacy-policy`          | `policy`, `analytics`                                                                                                         | `consent`                             | ETE-116 |
+| NotFoundSection        | `NotFoundSection`       | `fm-not-found-section`       | `path`, `suggestions`                                                                                                         |                                       | ETE-88  |
+| DS:Terminal            | `Terminal`              | `fm-terminal`                | `commands`, `prompt`                                                                                                          | `run`                                 | ETE-111 |
+
+## Templates (level 4)
+
+| Artboard        | Angular component | Selector            | Inputs                                                                | Outputs | Issue  |
+| --------------- | ----------------- | ------------------- | --------------------------------------------------------------------- | ------- | ------ |
+| TemplateMain    | `MainLayout`      | `fm-main-layout`    | `current` (nav item); slots: header, main, footer, overlays           |         | ETE-79 |
+| (every section) | `SectionLayout`   | `fm-section-layout` | `id`, `index`, `eyebrow`, `title`, `description`, `level`; slot: body |         | ETE-80 |
+| TemplateDetail  | `DetailLayout`    | `fm-detail-layout`  | slots: hero, body, aside, related                                     |         | ETE-81 |
+
+## Pages (level 5, `src/app/features`)
+
+Already scaffolded; each fills a template with data from `@core/data` and owns the overlays (résumé modal, scheduler, cookie banner) that its sections open through outputs.
+
+| Artboard      | Angular component   | Selector                 | Route             | Issue   |
+| ------------- | ------------------- | ------------------------ | ----------------- | ------- |
+| Main          | `Home`              | `fm-home`                | `/`               | ETE-114 |
+| Services      | `ServicesPage`      | `fm-services-page`       | `/services`       | ETE-115 |
+| ServiceDetail | `ServiceDetailPage` | `fm-service-detail-page` | `/services/:slug` | ETE-98  |
+| Projects      | `ProjectsPage`      | `fm-projects-page`       | `/projects`       | ETE-115 |
+| ProjectDetail | `ProjectDetailPage` | `fm-project-detail-page` | `/projects/:slug` | ETE-100 |
+| Blog          | `BlogPage`          | `fm-blog-page`           | `/blog`           | ETE-101 |
+| Privacy       | `PrivacyPage`       | `fm-privacy-page`        | `/privacy`        | ETE-116 |
+| NotFound      | `NotFoundPage`      | `fm-not-found-page`      | `**`              | ETE-88  |
+
+## Not Angular components
+
+| Artboard                                                | What it becomes                                                                                                                       |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Atoms, Molecules                                        | Overview boards; each piece on them has its own row above. Their Storybook equivalents are the level stories (ETE-82).                |
+| DS:Reveal                                               | The existing `[fmReveal]` directive in `@shared` (motion, reduced-motion aware).                                                      |
+| ResumeSpec, ResumeFullstack, ResumeMobile, ResumeDevOps | One print template rendered from `buildResumeViewModel` by the résumé build (ETE-107), not part of the app bundle.                    |
+| ClientsAssets, ClientProfile                            | Asset reference for logo files and plates. Covered by `docs/data-authoring.md` and the `ClientLogo` stories; not shipped on the site. |
+| ChangeLog                                               | Canvas history only.                                                                                                                  |
+
+## Decisions: variant of an existing component, or a new one
+
+| Canvas piece                                              | Decision                                                                                                                                                                | Why                                                                                                                              |
+| --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| ServiceTile                                               | **Variant:** `ServiceCard` with `href` (stretched link) and the deliverables footer.                                                                                    | Same `.fm-service` markup and data; the tile only adds the link and footer.                                                      |
+| CounterCard                                               | **Variant:** `StatCounter` with `framed`.                                                                                                                               | The card is a frame around `StatCounter` and nothing else.                                                                       |
+| InfoTile                                                  | **Variant:** `ContactMethod` with `variant="tile"` (icon, label, title, optional text and meta, stacked).                                                               | Shares the `.fm-cmethod` styles and icon tile; only the layout differs.                                                          |
+| PortraitPlate, ContactPhoto, BookingChannelsSection photo | **One new molecule:** `PhotoFrame` with `variant` `plate` (logo plate, About), `note` (availability note, Contact) and `panel` (Booking). Overlay content is projected. | Three uses of the same `.photo-frame` figure and responsive image; one component keeps the image handling (ETE-91) in one place. |
+| ResumeCard                                                | **New molecule**, sharing the card shell styles with `ServiceCard`.                                                                                                     | Different content and two actions (`preview`, `download`).                                                                       |
+| PhoneReveal                                               | **New molecule** composing `ContactMethod` and `Button`.                                                                                                                | Has its own behaviour (masked until revealed, `revealed` event for analytics).                                                   |
+| ChannelCard                                               | **New molecule.** Emits `schedule` instead of embedding the scheduler.                                                                                                  | A molecule cannot contain an organism (`SchedulerModal`); the page opens it.                                                     |
+| ScheduleCallButton                                        | **New molecule:** a `Button` that emits `schedule`.                                                                                                                     | Same reason: the canvas embeds `SchedulerModal`; Angular keeps one modal per page.                                               |
+| BookingCard, EngageCard, CareerGlance                     | **New molecules.**                                                                                                                                                      | Distinct content and layout; each appears in one section only, but all are reusable side cards.                                  |
+| ConsentStatusCard, TerminalSignOff                        | **New molecules** built on `WindowFrame` (`variant="terminal"`).                                                                                                        | Fixed terminal content with a specific job each.                                                                                 |
+| CareerStrip                                               | **New molecule.** The page computes rows and ticks from `experience.json` with `@shared/experience`.                                                                    | A self-contained figure used inside `StatsPanel`.                                                                                |
+| ClientProfile                                             | **Not built.**                                                                                                                                                          | It documents logo assets on the canvas; the site never shows it.                                                                 |
+| ResumeModal, SchedulerModal                               | **Organisms on a shared `Dialog` molecule** (focus trap, Escape, scroll lock).                                                                                          | Both are modal windows with the same accessibility needs.                                                                        |
+| Résumé A4 boards                                          | **One print template**, not three components.                                                                                                                           | The three résumés differ only in data (`resumes.json`, ETE-34).                                                                  |
+| `on-resume`, `on-cookies`, scheduler on the canvas        | **Outputs that bubble to the page**, which owns one `ResumePreviewModal`, `SchedulerModal` and `CookieConsentTerminal`.                                                 | Organisms cannot read `@core` (consent, analytics); the page wires the services.                                                 |
