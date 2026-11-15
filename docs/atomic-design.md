@@ -84,7 +84,7 @@ export class Button {}
 
 ## Component inventory
 
-[component-inventory.md](component-inventory.md) maps every artboard of the design canvas to its Angular component, level, selector, inputs and outputs, and records which canvas pieces are variants of an existing component. Check it before adding a component.
+[component-inventory.md](component-inventory.md) maps every artboard of the design canvas to its Angular component, level, selector, inputs and outputs, and records which canvas pieces are variants of an existing component. Check it before adding a component. How components move and respond (motion, reduced motion, hover, focus, pressed, breakpoints) is in [interaction-and-motion.md](interaction-and-motion.md).
 
 ## Adding a component
 

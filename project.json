@@ -77,7 +77,8 @@
       "inputs": [
         "source",
         "{projectRoot}/docs/component-inventory.md",
-        "{projectRoot}/docs/data-reference.md"
+        "{projectRoot}/docs/data-reference.md",
+        "{projectRoot}/docs/interaction-and-motion.md"
       ]
     },
     "test:lint-rules": {
