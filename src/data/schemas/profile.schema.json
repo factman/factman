@@ -115,6 +115,11 @@
           "proficiency": {
             "type": "string",
             "minLength": 1
+          },
+          "level": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Résumé proficiency, e.g. Professional working, Native."
           }
         }
       }
@@ -150,11 +155,16 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["title", "year"],
+        "required": ["title", "kind"],
         "properties": {
           "title": {
             "type": "string",
             "minLength": 1
+          },
+          "kind": {
+            "type": "string",
+            "minLength": 1,
+            "description": "e.g. mobile app, open source."
           },
           "year": {
             "type": "integer",
@@ -171,6 +181,31 @@
           }
         }
       }
+    },
+    "press": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["title"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Headline of the article."
+          },
+          "year": {
+            "type": "integer",
+            "minimum": 1950
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://"
+          }
+        }
+      },
+      "description": "Press coverage, shown as \"Featured\" on the résumés."
     },
     "updatedAt": {
       "type": "string",

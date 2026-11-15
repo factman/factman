@@ -2,6 +2,7 @@
   {
     "id": "simple-finance",
     "organization": "Simple Finance",
+    "legalName": "Simple Finance Company Limited",
     "website": "https://simplefinance.ng",
     "logo": "clients/simple-finance.png",
     "roles": [
@@ -17,12 +18,43 @@
           "Set the technology strategy, including selecting and deploying new systems and infrastructure",
           "Run technology projects to deadline and budget with senior leadership",
           {
-            "text": "Own the selection and rollout of the company's systems and infrastructure",
+            "text": "Lead the technology team and strategy, aligning engineering roadmaps with the company’s growth targets.",
+            "tracks": ["fullstack"]
+          },
+          {
+            "text": "Set the technology strategy and lead delivery of the company’s customer-facing web and [mobile] products and APIs.",
+            "tracks": ["mobile"]
+          },
+          {
+            "text": "Own the company’s cloud infrastructure and deployment pipeline, and the selection and roll-out of new systems.",
+            "tracks": ["devops"]
+          },
+          {
+            "text": "Architect and oversee the company’s web platform and APIs in Angular, Node.js and TypeScript, serving [N customers].",
+            "tracks": ["fullstack"]
+          },
+          {
+            "text": "Selected and deployed new systems and infrastructure that improved operational efficiency by [efficiency gain %].",
+            "tracks": ["fullstack", "mobile"]
+          },
+          {
+            "text": "Moved web and API services to containerised deployments with automated CI/CD, cutting release time from [release time before] to [release time after].",
+            "tracks": ["devops"]
+          },
+          {
+            "text": "Keep production platforms reliable and secure for a regulated finance business [uptime %].",
+            "tracks": ["devops"]
+          },
+          {
+            "text": "Deliver technology projects to scope, schedule and budget in partnership with senior leadership.",
+            "tracks": ["fullstack"]
+          },
+          {
+            "text": "Plan and manage the technology budget and projects with senior leadership.",
             "tracks": ["devops"]
           }
         ],
-        "skills": ["angular", "nodejs", "typescript"],
-        "tracks": ["fullstack", "devops"]
+        "skills": ["angular", "nodejs", "typescript"]
       },
       {
         "id": "simple-finance-cto-2021",
@@ -36,12 +68,19 @@
           "Led the technology team and aligned technology resources with the organization's goals",
           "Defined technology initiatives with senior leadership to support growth",
           {
-            "text": "Developed the technology strategy, including the selection and deployment of new systems and infrastructure",
+            "text": "Led the technology team and strategy; chose and rolled out the core systems and infrastructure the business runs on.",
+            "tracks": ["fullstack"]
+          },
+          {
+            "text": "Led the technology team and strategy; chose and rolled out the company’s core systems.",
+            "tracks": ["mobile"]
+          },
+          {
+            "text": "Led the technology team; chose and deployed the core systems and infrastructure.",
             "tracks": ["devops"]
           }
         ],
-        "skills": ["angular", "nodejs", "typescript"],
-        "tracks": ["fullstack", "devops"]
+        "skills": ["angular", "nodejs", "typescript"]
       }
     ]
   },
@@ -63,12 +102,55 @@
           "Oversee software development, architecture, QA, operations and security",
           "Manage projects from concept to completion",
           {
-            "text": "Oversee production operations, network and systems administration, and information security",
+            "text": "Co-founded the company; own the technology vision, budget and delivery across software development, architecture, QA, operations and security.",
+            "tracks": ["fullstack"]
+          },
+          {
+            "text": "Lead mobile delivery for client apps built with React Native, Flutter and Ionic, from prototype to App Store and Google Play release [N apps shipped].",
+            "tracks": ["mobile"]
+          },
+          {
+            "text": "Oversee production operations, network and systems administration, technical support and information security management.",
+            "tracks": ["devops"]
+          },
+          {
+            "text": "Lead a team of [N engineers] building web, mobile and payment products for clients including SunTrust Bank, Gifti App and AirtimeFlip.",
+            "tracks": ["fullstack"]
+          },
+          {
+            "text": "Define mobile architecture: shared TypeScript and Dart codebases, REST and Firebase backends, and automated release pipelines.",
+            "tracks": ["mobile"]
+          },
+          {
+            "text": "Standardised Docker-based environments and CI/CD pipelines across client projects on AWS, Azure and DigitalOcean [N services].",
+            "tracks": ["devops"]
+          },
+          {
+            "text": "Set the engineering standards (code review, testing, CI/CD, releases) used on [N projects] from concept to production.",
+            "tracks": ["fullstack"]
+          },
+          {
+            "text": "Lead a team of [N engineers] delivering mobile, web and payment products for clients including Gifti App, AirtimeFlip and SunTrust Bank.",
+            "tracks": ["mobile"]
+          },
+          {
+            "text": "Set up monitoring, backups and incident response for client platforms [name the platforms].",
+            "tracks": ["devops"]
+          },
+          {
+            "text": "Hire, onboard and mentor engineers, growing [N developers] into senior and lead roles.",
+            "tracks": ["fullstack"]
+          },
+          {
+            "text": "Own QA and release management, keeping store ratings at [store rating] and crash-free sessions above [crash-free %].",
+            "tracks": ["mobile"]
+          },
+          {
+            "text": "Own the technology budget and infrastructure spend, reducing hosting costs by [hosting cost reduction %].",
             "tracks": ["devops"]
           }
         ],
-        "skills": ["angular", "react", "nodejs", "php", "react-native"],
-        "tracks": ["fullstack", "mobile", "devops"]
+        "skills": ["angular", "react", "nodejs", "php", "react-native"]
       }
     ]
   },
@@ -87,10 +169,33 @@
         "summary": "Led frontend strategy, technical direction, mentoring and onboarding.",
         "highlights": [
           "Drove frontend strategy, technical leadership, mentoring and onboarding",
-          "Worked with cross-functional teams to streamline development and raise project efficiency"
+          "Worked with cross-functional teams to streamline development and raise project efficiency",
+          {
+            "text": "Led frontend strategy and technical direction for the marketplace web platform; mentored and onboarded engineers.",
+            "tracks": ["fullstack"]
+          },
+          {
+            "text": "Led frontend strategy for the marketplace platform in React and ES6; mentored and onboarded engineers.",
+            "tracks": ["mobile"]
+          },
+          {
+            "text": "Worked in the delivery pipeline on Microsoft Azure with Docker and Jenkins for the marketplace frontend.",
+            "tracks": ["devops"]
+          },
+          {
+            "text": "Streamlined development with cross-functional teams, raising delivery efficiency by [delivery efficiency gain %].",
+            "tracks": ["fullstack"]
+          },
+          {
+            "text": "Designed, launched and iterated on A/B experiments, and improved SEO and load times with lightweight pages.",
+            "tracks": ["mobile"]
+          },
+          {
+            "text": "Led frontend engineering and streamlined the development process with cross-functional teams.",
+            "tracks": ["devops"]
+          }
         ],
-        "skills": ["react", "javascript", "azure"],
-        "tracks": ["fullstack"]
+        "skills": ["react", "javascript", "azure"]
       },
       {
         "id": "mazadat-senior-frontend",
@@ -103,12 +208,15 @@
           "Designed, launched and iterated on A/B experiments in a mission team",
           "Improved SEO with lightweight, fast pages",
           {
-            "text": "Worked with Docker, Jenkins and Microsoft Azure in the team's delivery pipeline",
-            "tracks": ["devops"]
+            "text": "Built React and ES6 features in a cross-functional mission team; designed, launched and iterated on A/B experiments.",
+            "tracks": ["fullstack"]
+          },
+          {
+            "text": "Improved SEO and load times with lightweight pages built on modern design patterns [Lighthouse X → Y].",
+            "tracks": ["fullstack"]
           }
         ],
-        "skills": ["react", "javascript", "mongodb", "docker", "azure"],
-        "tracks": ["fullstack", "devops"]
+        "skills": ["react", "javascript", "mongodb", "docker", "azure"]
       }
     ]
   },
@@ -128,12 +236,20 @@
           "Set the technology strategy and led its implementation",
           "Supervised the technology team and kept IT issues resolved quickly",
           {
-            "text": "Evaluated and deployed new systems and infrastructure to improve efficiency",
+            "text": "Led technology strategy and the engineering team for the travel platform; evaluated and deployed new systems that improved efficiency.",
+            "tracks": ["fullstack"]
+          },
+          {
+            "text": "Led technology strategy and the engineering team for the travel booking platform [web and mobile apps].",
+            "tracks": ["mobile"]
+          },
+          {
+            "text": "Evaluated and deployed new systems and infrastructure; supervised timely resolution of IT issues.",
             "tracks": ["devops"]
           }
         ],
         "skills": [],
-        "tracks": ["fullstack", "devops"]
+        "location": "Lagos, Nigeria"
       }
     ]
   },
@@ -150,10 +266,22 @@
         "highlights": [
           "Managed the technical side of the organization against growth targets",
           "Led the technology team and ran projects to deadline and budget",
-          "Gave other departments the technology resources they needed"
+          "Gave other departments the technology resources they needed",
+          {
+            "text": "Managed engineering in line with growth targets; delivered projects on time and on budget and supported other departments with technical expertise.",
+            "tracks": ["fullstack"]
+          },
+          {
+            "text": "Managed engineering in line with growth targets and delivered projects on time and on budget.",
+            "tracks": ["mobile"]
+          },
+          {
+            "text": "Managed engineering and technology resources in line with growth targets; delivered projects on time and on budget.",
+            "tracks": ["devops"]
+          }
         ],
         "skills": [],
-        "tracks": ["fullstack"]
+        "location": "Lagos, Nigeria"
       }
     ]
   },
@@ -172,12 +300,12 @@
         "highlights": [
           "Set the strategy for using technology resources efficiently, profitably and securely",
           {
-            "text": "Evaluated and deployed new systems and infrastructure",
-            "tracks": ["devops"]
+            "text": "Defined the strategy for using technology efficiently, profitably and securely; evaluated and deployed new systems.",
+            "tracks": ["fullstack"]
           }
         ],
         "skills": [],
-        "tracks": ["fullstack", "devops"]
+        "location": "Lagos, Nigeria"
       }
     ]
   },
@@ -191,19 +319,23 @@
         "id": "abuad-it-support",
         "title": "Information Technology Support Specialist",
         "location": "Ado-Ekiti, Nigeria",
-        "start": "2018-01",
+        "start": "2018",
         "end": "2020-10",
         "summary": "Technical support and technology rollout across the university.",
+        "brief": "Hardware, software and systems support for faculty, staff and students; evaluated and deployed new systems with vendors.",
         "highlights": [
           "Supported faculty, staff and students with hardware and software installation, troubleshooting and maintenance",
           "Helped plan and roll out technology initiatives across the university",
           {
-            "text": "Worked with vendors to evaluate and deploy new systems and infrastructure",
+            "text": "Supported hardware, software and systems for faculty, staff and students, including installation, troubleshooting and maintenance.",
+            "tracks": ["devops"]
+          },
+          {
+            "text": "Evaluated and deployed new systems and infrastructure with technology vendors.",
             "tracks": ["devops"]
           }
         ],
-        "skills": [],
-        "tracks": ["devops"]
+        "skills": []
       }
     ]
   },
@@ -219,18 +351,19 @@
         "start": "2020-07",
         "end": "2020-08",
         "summary": "Advised on new technology systems.",
+        "brief": "Advised on new technology systems and resolved technical issues.",
         "highlights": [
           "Advised on the implementation of new technology systems",
           "Resolved technical issues and made sure technology resources were used efficiently"
         ],
-        "skills": [],
-        "tracks": ["devops"]
+        "skills": []
       }
     ]
   },
   {
     "id": "nano-blockchain",
     "organization": "NANO BLOCKCHAIN LTD",
+    "legalName": "Nano Blockchain Ltd",
     "roles": [
       {
         "id": "nano-blockchain-senior-fullstack",
@@ -238,12 +371,12 @@
         "start": "2018-06",
         "end": "2018-11",
         "summary": "Fullstack development across the frontend and backend.",
+        "brief": "Angular, Material UI and React frontends; Node.js and PHP backends.",
         "highlights": [
           "Built frontends with Angular, Material UI and React",
           "Built backend services with Node.js and PHP"
         ],
-        "skills": ["angular", "mui", "react", "nodejs", "php"],
-        "tracks": ["fullstack"]
+        "skills": ["angular", "mui", "react", "nodejs", "php"]
       }
     ]
   },
@@ -259,12 +392,13 @@
         "start": "2013-01",
         "end": "2017-12",
         "summary": "Designed and built websites for clients.",
+        "brief": "Designed and built client websites with HTML, CSS and JavaScript.",
         "highlights": [
           "Designed and developed websites for clients",
           "Built dynamic, interactive sites with HTML, CSS and JavaScript"
         ],
         "skills": ["html5", "css3", "javascript"],
-        "tracks": ["fullstack"]
+        "location": "Ado-Ekiti, Nigeria"
       }
     ]
   }

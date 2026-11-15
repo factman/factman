@@ -56,6 +56,9 @@ interface Fixture {
 
 /** Every case that is a data rule. DS-14 and DS-15 are the tests in this file. */
 const DATA_CASES: DsRule[] = [
+  'RS-01',
+  'RS-02',
+  'RS-03',
   'DS-01',
   'DS-02',
   'DS-03',

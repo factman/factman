@@ -27,8 +27,8 @@ describe('data access', () => {
     expect(TestBed.inject(ClientsRepository).all()).toHaveLength(15);
 
     const projects = TestBed.inject(ProjectsRepository);
-    expect(projects.all()).toHaveLength(6);
-    expect(projects.slugs()[0]).toBe('neoclock');
+    expect(projects.all()).toHaveLength(7);
+    expect(projects.slugs()[0]).toBe('factman-portfolio');
     expect(projects.featured().length).toBeLessThanOrEqual(6);
     expect(projects.bySlug('graphui')?.title).toBe('GraphUI');
 

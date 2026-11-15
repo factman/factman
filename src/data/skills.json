@@ -5,8 +5,7 @@
     "category": "Languages",
     "since": 2014,
     "featured": true,
-    "icon": "braces",
-    "tracks": ["fullstack", "mobile"]
+    "icon": "braces"
   },
   {
     "id": "typescript",
@@ -14,8 +13,7 @@
     "category": "Languages",
     "since": 2017,
     "featured": true,
-    "icon": "braces",
-    "tracks": ["fullstack", "mobile"]
+    "icon": "braces"
   },
   {
     "id": "php",
@@ -23,8 +21,7 @@
     "category": "Languages",
     "since": 2014,
     "featured": false,
-    "icon": "file-code",
-    "tracks": ["fullstack"]
+    "icon": "file-code"
   },
   {
     "id": "java",
@@ -32,8 +29,7 @@
     "category": "Languages",
     "since": 2015,
     "featured": false,
-    "icon": "file-code",
-    "tracks": ["fullstack", "mobile"]
+    "icon": "file-code"
   },
   {
     "id": "python",
@@ -41,8 +37,7 @@
     "category": "Languages",
     "since": 2019,
     "featured": false,
-    "icon": "file-code",
-    "tracks": ["fullstack", "devops"]
+    "icon": "file-code"
   },
   {
     "id": "cpp",
@@ -50,16 +45,14 @@
     "category": "Languages",
     "since": 2014,
     "featured": false,
-    "icon": "file-code",
-    "tracks": ["fullstack"]
+    "icon": "file-code"
   },
   {
     "id": "bash",
     "name": "Bash",
     "category": "Languages",
     "featured": false,
-    "icon": "terminal",
-    "tracks": ["devops"]
+    "icon": "terminal"
   },
   {
     "id": "angular",
@@ -67,8 +60,7 @@
     "category": "Frontend",
     "since": 2017,
     "featured": true,
-    "icon": "layout",
-    "tracks": ["fullstack"]
+    "icon": "layout"
   },
   {
     "id": "react",
@@ -76,8 +68,7 @@
     "category": "Frontend",
     "since": 2017,
     "featured": true,
-    "icon": "layout",
-    "tracks": ["fullstack"]
+    "icon": "layout"
   },
   {
     "id": "nextjs",
@@ -85,8 +76,7 @@
     "category": "Frontend",
     "since": 2020,
     "featured": false,
-    "icon": "layout",
-    "tracks": ["fullstack"]
+    "icon": "layout"
   },
   {
     "id": "html5",
@@ -94,8 +84,7 @@
     "category": "Frontend",
     "since": 2014,
     "featured": false,
-    "icon": "code",
-    "tracks": ["fullstack"]
+    "icon": "code"
   },
   {
     "id": "css3",
@@ -103,8 +92,7 @@
     "category": "Frontend",
     "since": 2014,
     "featured": false,
-    "icon": "code",
-    "tracks": ["fullstack"]
+    "icon": "code"
   },
   {
     "id": "mui",
@@ -112,8 +100,7 @@
     "category": "Frontend",
     "since": 2017,
     "featured": false,
-    "icon": "layers",
-    "tracks": ["fullstack"]
+    "icon": "layers"
   },
   {
     "id": "tailwind-css",
@@ -121,8 +108,7 @@
     "category": "Frontend",
     "since": 2020,
     "featured": false,
-    "icon": "layers",
-    "tracks": ["fullstack"]
+    "icon": "layers"
   },
   {
     "id": "nodejs",
@@ -130,8 +116,7 @@
     "category": "Backend",
     "since": 2016,
     "featured": true,
-    "icon": "server",
-    "tracks": ["fullstack"]
+    "icon": "server"
   },
   {
     "id": "expressjs",
@@ -139,8 +124,7 @@
     "category": "Backend",
     "since": 2016,
     "featured": false,
-    "icon": "server",
-    "tracks": ["fullstack"]
+    "icon": "server"
   },
   {
     "id": "react-native",
@@ -148,8 +132,7 @@
     "category": "Mobile",
     "since": 2018,
     "featured": true,
-    "icon": "mobile",
-    "tracks": ["mobile"]
+    "icon": "mobile"
   },
   {
     "id": "flutter",
@@ -157,8 +140,7 @@
     "category": "Mobile",
     "since": 2023,
     "featured": false,
-    "icon": "mobile",
-    "tracks": ["mobile"]
+    "icon": "mobile"
   },
   {
     "id": "ionic",
@@ -166,8 +148,7 @@
     "category": "Mobile",
     "since": 2018,
     "featured": false,
-    "icon": "mobile",
-    "tracks": ["mobile"]
+    "icon": "mobile"
   },
   {
     "id": "firebase",
@@ -175,8 +156,7 @@
     "category": "Mobile",
     "since": 2017,
     "featured": false,
-    "icon": "flame",
-    "tracks": ["mobile", "fullstack"]
+    "icon": "flame"
   },
   {
     "id": "mysql",
@@ -184,8 +164,7 @@
     "category": "Data",
     "since": 2014,
     "featured": false,
-    "icon": "database",
-    "tracks": ["fullstack"]
+    "icon": "database"
   },
   {
     "id": "postgresql",
@@ -193,8 +172,7 @@
     "category": "Data",
     "since": 2020,
     "featured": false,
-    "icon": "database",
-    "tracks": ["fullstack"]
+    "icon": "database"
   },
   {
     "id": "mongodb",
@@ -202,8 +180,7 @@
     "category": "Data",
     "since": 2017,
     "featured": false,
-    "icon": "database",
-    "tracks": ["fullstack"]
+    "icon": "database"
   },
   {
     "id": "docker",
@@ -211,8 +188,7 @@
     "category": "Cloud & DevOps",
     "since": 2021,
     "featured": true,
-    "icon": "package",
-    "tracks": ["devops", "fullstack"]
+    "icon": "package"
   },
   {
     "id": "kubernetes",
@@ -220,8 +196,7 @@
     "category": "Cloud & DevOps",
     "since": 2022,
     "featured": false,
-    "icon": "cloud",
-    "tracks": ["devops"]
+    "icon": "cloud"
   },
   {
     "id": "aws",
@@ -229,8 +204,7 @@
     "category": "Cloud & DevOps",
     "since": 2021,
     "featured": true,
-    "icon": "cloud",
-    "tracks": ["devops"]
+    "icon": "cloud"
   },
   {
     "id": "google-cloud",
@@ -238,8 +212,7 @@
     "category": "Cloud & DevOps",
     "since": 2018,
     "featured": false,
-    "icon": "cloud",
-    "tracks": ["devops"]
+    "icon": "cloud"
   },
   {
     "id": "azure",
@@ -247,8 +220,7 @@
     "category": "Cloud & DevOps",
     "since": 2022,
     "featured": false,
-    "icon": "cloud",
-    "tracks": ["devops"]
+    "icon": "cloud"
   },
   {
     "id": "azure-devops",
@@ -256,8 +228,7 @@
     "category": "Cloud & DevOps",
     "since": 2022,
     "featured": false,
-    "icon": "workflow",
-    "tracks": ["devops"]
+    "icon": "workflow"
   },
   {
     "id": "digitalocean",
@@ -265,8 +236,7 @@
     "category": "Cloud & DevOps",
     "since": 2019,
     "featured": false,
-    "icon": "cloud",
-    "tracks": ["devops"]
+    "icon": "cloud"
   },
   {
     "id": "heroku",
@@ -274,8 +244,7 @@
     "category": "Cloud & DevOps",
     "since": 2016,
     "featured": false,
-    "icon": "cloud",
-    "tracks": ["devops", "fullstack"]
+    "icon": "cloud"
   },
   {
     "id": "vercel",
@@ -283,8 +252,7 @@
     "category": "Cloud & DevOps",
     "since": 2023,
     "featured": false,
-    "icon": "rocket",
-    "tracks": ["devops", "fullstack"]
+    "icon": "rocket"
   },
   {
     "id": "git",
@@ -292,8 +260,7 @@
     "category": "Tools",
     "since": 2016,
     "featured": true,
-    "icon": "git-branch",
-    "tracks": ["fullstack", "mobile", "devops"]
+    "icon": "git-branch"
   },
   {
     "id": "github",
@@ -301,16 +268,14 @@
     "category": "Tools",
     "since": 2016,
     "featured": false,
-    "icon": "github",
-    "tracks": ["fullstack", "mobile", "devops"]
+    "icon": "github"
   },
   {
     "id": "linux",
     "name": "Linux",
     "category": "Tools",
     "featured": false,
-    "icon": "terminal",
-    "tracks": ["devops"]
+    "icon": "terminal"
   },
   {
     "id": "vscode",
@@ -318,8 +283,7 @@
     "category": "Tools",
     "since": 2017,
     "featured": false,
-    "icon": "code",
-    "tracks": ["fullstack", "mobile"]
+    "icon": "code"
   },
   {
     "id": "jetbrains-ides",
@@ -327,7 +291,6 @@
     "category": "Tools",
     "since": 2018,
     "featured": false,
-    "icon": "code",
-    "tracks": ["fullstack", "mobile"]
+    "icon": "code"
   }
 ]

@@ -43,31 +43,48 @@
   "languages": [
     {
       "name": "English",
-      "proficiency": "Spoken and written"
+      "proficiency": "Spoken and written",
+      "level": "Professional working"
     },
     {
       "name": "Yoruba",
-      "proficiency": "Spoken and written"
+      "proficiency": "Spoken and written",
+      "level": "Native"
     }
   ],
   "education": [
     {
       "title": "Computer Software Engineering",
+      "institution": "FirstMark Innovation School of Technology",
       "start": 2013,
       "end": 2015
     }
   ],
   "publications": [
     {
-      "title": "COVID-19 Daily Update app and API",
+      "title": "Coronavirus Daily Update",
+      "kind": "mobile app",
       "year": 2020,
-      "description": "Mobile app and API with daily COVID-19 case updates, open source."
+      "description": "Mobile app with daily COVID-19 case updates."
+    },
+    {
+      "title": "Covid-19 Daily Update API",
+      "kind": "open source",
+      "year": 2020,
+      "description": "Open-source API behind the Coronavirus Daily Update app."
     },
     {
       "title": "GraphUI",
+      "kind": "open source",
       "year": 2019,
       "description": "Open-source JavaScript extension for plotting graphs on any website.",
       "url": "https://github.com/factman/GraphUI"
+    }
+  ],
+  "press": [
+    {
+      "title": "Nigerian engineer launches Coronavirus Daily Update mobile app",
+      "year": 2020
     }
   ],
   "updatedAt": "2026-11-10"

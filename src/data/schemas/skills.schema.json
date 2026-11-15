@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://factman.vercel.app/schemas/skills.schema.json",
   "title": "Skills",
-  "description": "Technologies, grouped by area (PRD FR-11, FR-12). Years are computed from `since`, so they never go stale.",
+  "description": "Technologies, grouped by area (PRD FR-11, FR-12). Years are computed from `since`, so they never go stale. Each résumé picks its skills in resumes.json.",
   "type": "array",
   "minItems": 1,
   "items": {
@@ -13,7 +13,7 @@
       "title": "Skill",
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "name", "category", "featured", "icon", "tracks"],
+      "required": ["id", "name", "category", "featured", "icon"],
       "properties": {
         "id": {
           "type": "string",
@@ -44,16 +44,6 @@
           "type": "string",
           "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
           "description": "Design-system icon name."
-        },
-        "tracks": {
-          "type": "array",
-          "minItems": 1,
-          "uniqueItems": true,
-          "items": {
-            "type": "string",
-            "enum": ["fullstack", "mobile", "devops"]
-          },
-          "description": "Résumés the skill appears on (resumes.json ids)."
         }
       }
     }

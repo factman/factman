@@ -37,7 +37,7 @@ test('every service in services.json has a prerendered page', async ({ request }
 test('every project in projects.json has a prerendered page', async ({ request }) => {
   const res = await request.get('/projects');
   const links = [...(await res.text()).matchAll(/href="(\/projects\/[^"]+)"/g)].map((m) => m[1]);
-  expect(links).toHaveLength(6);
+  expect(links).toHaveLength(7);
   for (const link of links) expect((await request.get(link)).status(), link).toBe(200);
 });
 

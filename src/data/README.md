@@ -11,7 +11,7 @@ The site's content, one JSON file per data type (PRD section 7, ADR-001). Each f
 | `projects.json` | ETE-31 |
 | `blog.json` | ETE-32 |
 | `contact.json` | ETE-33 |
-| `resumes.json` | ETE-34 |
+| `resumes.json` | ETE-34 (résumés, canvas page 06) |
 | `site.json` | ETE-35 |
 | `clients.json` | ETE-36 |
 
@@ -46,7 +46,10 @@ The site's content, one JSON file per data type (PRD section 7, ADR-001). Each f
 | DS-14 | Generated TypeScript models are reproducible, so regenerating never changes them                                                        | `ds.test.ts`              |
 | DS-15 | One deliberately broken file per case in `scripts/data/fixtures/`, each failing for that case only                                     | `ds.test.ts`              |
 | DS-16 | `clients.json`: unique ids, type is `client` or `company`, https website, a name, and a logo under `src/assets/clients` that exists     | `clientEntries`, schema   |
-| DS-17 | `profile.json` photo: the file exists, alt text is not empty, width and height match the file (PNG, JPEG or WebP)                       | `profilePhoto`            |
+| DS-17 | `profile.json` photos (hero, About, contact): the file exists, alt text is not empty, width and height match the file (PNG, JPEG or WebP) | `profilePhoto`            |
+| RS-01 | `resumes.json` passes its schema; highlight `tracks`, roles, organizations, projects, skills, contact links and `{since:…}` exist; a role is listed once; every `[placeholder]` is declared and every declared one is used | `trackReferences`, `resumeChecks`, schema |
+| RS-02 | At least 1 role and 5 skills per résumé; `limits`; unique id, slug and file name; summary at most 500 and scope at most 90 characters | `resumeChecks`, `uniqueIds`, schema |
+| RS-03 | `showPhone: true` needs a phone in `contact.json`                                                                                      | `resumeChecks`            |
 
 No `http://` link is allowed anywhere. The rules live in `scripts/data/rules.ts`; `pnpm test:scripts` runs the DS suite.
 
@@ -58,3 +61,20 @@ Add `scripts/data/fixtures/ds-<nn>-<what>.json` with `rule` and `case`, and eith
 - `file` with `patch` (`replace`, `remove` or `copy` at a JSON Pointer) or `raw` text: applied to a copy of the real data and validated with the real schemas.
 
 The suite fails if any case has no fixture, or a fixture fails for a different case too.
+
+## Editing a résumé
+
+The three résumés (Fullstack, Mobile, DevOps / Cloud) are built only from these files; the generator holds no résumé content. To change one, edit the data and run `pnpm data:validate`:
+
+| To change                                                    | Edit                                                                                                                                 |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Headline, profile paragraph, skill groups, file name         | the résumé in `resumes.json`                                                                                                         |
+| Which roles appear, their order, the one-line earlier roles | `experience.roles` (role ids; `{ "merge": [...] }` shows several roles of one organization as one entry) and `experience.earlier`. Roles in neither list are left out. |
+| A role's bullets on one résumé                               | `experience.json`: a highlight `{ "text": "…", "tracks": ["mobile"] }` shows only on that résumé. A résumé with no tagged bullets for a role shows the role's plain-string highlights, which are also the site's. |
+| Stack lines, selected projects                               | `experience.stacks` and `projects` in the résumé. A project entry without `name`, `description` or `tech` uses the project's title, summary and stack from `projects.json`. |
+| Name, contact line, education, languages, publications, press | `profile.json`, `contact.json` and `site.json`, shared with the site                                                               |
+| Companies and clients                                        | `clients.json`: every client and company except the employers in `experience.json`, clients first                                    |
+
+Skill items are `{ "skill": "<id>" }` (shows the skill's name, or "Name (since YYYY)" with `"since": true`) or plain text.
+
+Text can use `{years}` (whole years since `profile.careerStart`, the "13+"), `{since:<skill id>}` (that skill's start year) and `[placeholders]`. Every `[placeholder]` must have an entry in `resumes.json` `placeholders`; put the figure in its `value` and the generator swaps it in. Until then the token stays in the text and previews highlight it.
