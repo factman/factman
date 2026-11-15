@@ -1,0 +1,10 @@
+{
+  "/feeds/medium": {
+    "target": "https://medium.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/feeds/medium": "/feed/@factman60"
+    }
+  }
+}

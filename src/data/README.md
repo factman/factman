@@ -9,7 +9,7 @@ The site's content, one JSON file per data type (PRD section 7, ADR-001). Each f
 | `experience.json` | ETE-29 |
 | `services.json` | ETE-30 |
 | `projects.json` | ETE-31 |
-| `blog.json` | ETE-32 |
+| _(no blog file)_ | ETE-32: articles are read live from Medium; see Blog below |
 | `contact.json` | ETE-33 |
 | `resumes.json` | ETE-34 (résumés, canvas page 06) |
 | `site.json` | ETE-35 |
@@ -42,7 +42,7 @@ The site's content, one JSON file per data type (PRD section 7, ADR-001). Each f
 | DS-10 | `summary` at most 200 characters, `excerpt` at most 280                                                                                 | `textLengths`, schemas    |
 | DS-11 | `contact.json`: email is an address, phone is E.164 (`+234…`), WhatsApp is digits only                                                 | `contactFormats`          |
 | DS-12 | `site.json`: `gtmId` matches `^GTM-[A-Z0-9]+$`, `ga4Id` matches `^G-[A-Z0-9]+$` (or null), `consent.version` is an integer               | `siteSettings`, schema    |
-| DS-13 | `blog.json`: https URLs, unique ids, a real `publishedAt` date, `origin` is `manual` or `rss`                                            | `blogFields`, `uniqueIds` |
+| DS-13 | Retired: there is no `blog.json`; articles come live from Medium (ETE-32) | — |
 | DS-14 | Generated TypeScript models are reproducible, so regenerating never changes them                                                        | `ds.test.ts`              |
 | DS-15 | One deliberately broken file per case in `scripts/data/fixtures/`, each failing for that case only                                     | `ds.test.ts`              |
 | DS-16 | `clients.json`: unique ids, type is `client` or `company`, https website, a name, and a logo under `src/assets/clients` that exists     | `clientEntries`, schema   |
@@ -78,3 +78,7 @@ The three résumés (Fullstack, Mobile, DevOps / Cloud) are built only from thes
 Skill items are `{ "skill": "<id>" }` (shows the skill's name, or "Name (since YYYY)" with `"since": true`) or plain text.
 
 Text can use `{years}` (whole years since `profile.careerStart`, the "13+"), `{since:<skill id>}` (that skill's start year) and `[placeholders]`. Every `[placeholder]` must have an entry in `resumes.json` `placeholders`; put the figure in its `value` and the generator swaps it in. Until then the token stays in the text and previews highlight it.
+
+## Blog
+
+There is no blog data file. The site reads the Medium feed (`site.json` → `blog.feed`) live in the visitor's browser through the same-origin path `blog.feedPath`: `vercel.json` rewrites it to Medium in production, and `proxy.conf.json` does the same for `pnpm start`, because Medium's feed sends no CORS header. The parsed articles are kept in `localStorage` (`fm_blog`) for `blog.cacheHours` (12 hours), and covers load from Medium's own image URLs. Prerendered pages show a loading state with a link to Medium, and the list fills in in the browser. `BlogRepository` in `@core/data` does the fetching and caching.

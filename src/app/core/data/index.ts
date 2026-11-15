@@ -1,4 +1,5 @@
 // Public API of the data access concern. Import via `@core/data`.
+export { BLOG_CACHE_KEY, BlogRepository, type BlogStatus } from './blog.repository';
 export { ClientsRepository } from './clients.repository';
 export { DataModule } from './data.module';
 export { projectResolver, projectTitleResolver } from './project.resolver';

@@ -17,7 +17,8 @@
     "consent",
     "features",
     "defaultTheme",
-    "environments"
+    "environments",
+    "blog"
   ],
   "properties": {
     "url": {
@@ -46,16 +47,59 @@
       "type": "string",
       "description": "Default Open Graph image, relative to src/assets. Added with the generated OG image (ETE-113)."
     },
-    "locale": { "type": "string", "pattern": "^[a-z]{2}_[A-Z]{2}$" },
-    "robots": { "$ref": "#/$defs/robots" },
+    "locale": {
+      "type": "string",
+      "pattern": "^[a-z]{2}_[A-Z]{2}$"
+    },
+    "robots": {
+      "$ref": "#/$defs/robots"
+    },
     "nav": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "#/$defs/navItem" }
+      "items": {
+        "$ref": "#/$defs/navItem"
+      }
     },
-    "analytics": { "$ref": "#/$defs/analytics" },
-    "consent": { "$ref": "#/$defs/consent" },
-    "features": { "$ref": "#/$defs/features" },
+    "blog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile", "feed", "feedPath", "cacheHours"],
+      "description": "Blog (ETE-32): articles are read live from Medium in the browser, never stored in the site.",
+      "properties": {
+        "profile": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://medium\\.com/",
+          "description": "Medium profile, linked when the feed can't load."
+        },
+        "feed": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://medium\\.com/feed/",
+          "description": "Medium RSS feed. vercel.json rewrites feedPath to it (test:headers checks they match)."
+        },
+        "feedPath": {
+          "type": "string",
+          "pattern": "^/[a-z0-9/-]+$",
+          "description": "Same-origin path the browser fetches; Medium's feed sends no CORS header."
+        },
+        "cacheHours": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "How long the browser keeps the articles in localStorage (fm_blog)."
+        }
+      }
+    },
+    "analytics": {
+      "$ref": "#/$defs/analytics"
+    },
+    "consent": {
+      "$ref": "#/$defs/consent"
+    },
+    "features": {
+      "$ref": "#/$defs/features"
+    },
     "defaultTheme": {
       "enum": ["system", "light", "dark"],
       "description": "FR-04: follow the system preference until the visitor chooses."
@@ -65,21 +109,31 @@
       "additionalProperties": false,
       "required": ["preview"],
       "properties": {
-        "preview": { "$ref": "#/$defs/environmentOverride" }
+        "preview": {
+          "$ref": "#/$defs/environmentOverride"
+        }
       },
       "description": "Overrides applied on top of the base settings per deployment environment. Production uses the base values."
     }
   },
   "$defs": {
-    "robots": { "enum": ["index", "noindex"] },
+    "robots": {
+      "enum": ["index", "noindex"]
+    },
     "navItem": {
       "title": "SiteNavItem",
       "type": "object",
       "additionalProperties": false,
       "required": ["id", "label", "anchor"],
       "properties": {
-        "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
-        "label": { "type": "string", "minLength": 1 },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
         "anchor": {
           "type": "string",
           "pattern": "^#[a-z0-9-]+$",
@@ -98,13 +152,31 @@
       "additionalProperties": false,
       "required": ["enabled", "gtmId", "ga4Id"],
       "properties": {
-        "enabled": { "type": "boolean" },
+        "enabled": {
+          "type": "boolean"
+        },
         "gtmId": {
-          "oneOf": [{ "type": "string", "pattern": "^GTM-[A-Z0-9]+$" }, { "type": "null" }],
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^GTM-[A-Z0-9]+$"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "description": "Google Tag Manager container ID (DS-12)."
         },
         "ga4Id": {
-          "oneOf": [{ "type": "string", "pattern": "^G-[A-Z0-9]+$" }, { "type": "null" }],
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^G-[A-Z0-9]+$"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "description": "GA4 measurement ID (G-…, not the numeric property ID); null until known."
         }
       }
@@ -120,12 +192,21 @@
           "minimum": 1,
           "description": "Bump to re-prompt every visitor (stored decision carries the version)."
         },
-        "cookie": { "type": "string", "pattern": "^[a-z_]+$" },
-        "maxAgeDays": { "type": "integer", "minimum": 1, "maximum": 395 },
+        "cookie": {
+          "type": "string",
+          "pattern": "^[a-z_]+$"
+        },
+        "maxAgeDays": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 395
+        },
         "categories": {
           "type": "array",
           "minItems": 1,
-          "items": { "$ref": "#/$defs/consentCategory" }
+          "items": {
+            "$ref": "#/$defs/consentCategory"
+          }
         }
       }
     },
@@ -135,11 +216,24 @@
       "additionalProperties": false,
       "required": ["id", "label", "description", "required", "defaultGranted", "storage"],
       "properties": {
-        "id": { "enum": ["necessary", "analytics", "advertising"] },
-        "label": { "type": "string", "minLength": 1 },
-        "description": { "type": "string", "minLength": 1 },
-        "required": { "type": "boolean", "description": "Always on; cannot be switched off." },
-        "defaultGranted": { "type": "boolean" },
+        "id": {
+          "enum": ["necessary", "analytics", "advertising"]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Always on; cannot be switched off."
+        },
+        "defaultGranted": {
+          "type": "boolean"
+        },
         "used": {
           "type": "boolean",
           "default": true,
@@ -147,7 +241,10 @@
         },
         "storage": {
           "type": "array",
-          "items": { "type": "string", "minLength": 1 },
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
           "description": "Cookies or storage keys in this category, with lifetime (shown on /privacy)."
         }
       }
@@ -166,12 +263,24 @@
         "scrollSpy"
       ],
       "properties": {
-        "stackFilter": { "type": "boolean" },
-        "expandableRoles": { "type": "boolean" },
-        "blogTagFilter": { "type": "boolean" },
-        "contributionGraph": { "type": "boolean" },
-        "terminal": { "type": "boolean" },
-        "scrollSpy": { "type": "boolean" }
+        "stackFilter": {
+          "type": "boolean"
+        },
+        "expandableRoles": {
+          "type": "boolean"
+        },
+        "blogTagFilter": {
+          "type": "boolean"
+        },
+        "contributionGraph": {
+          "type": "boolean"
+        },
+        "terminal": {
+          "type": "boolean"
+        },
+        "scrollSpy": {
+          "type": "boolean"
+        }
       }
     },
     "environmentOverride": {
@@ -179,11 +288,17 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "robots": { "$ref": "#/$defs/robots" },
+        "robots": {
+          "$ref": "#/$defs/robots"
+        },
         "analytics": {
           "type": "object",
           "additionalProperties": false,
-          "properties": { "enabled": { "type": "boolean" } }
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            }
+          }
         }
       }
     }

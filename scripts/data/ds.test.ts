@@ -71,7 +71,6 @@ const DATA_CASES: DsRule[] = [
   'DS-10',
   'DS-11',
   'DS-12',
-  'DS-13',
   'DS-16',
   'DS-17',
 ];
