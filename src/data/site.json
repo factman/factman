@@ -3,6 +3,7 @@
   "name": "Odunayo Mohammed",
   "titleTemplate": "%s · Odunayo Mohammed",
   "description": "Fullstack Software Engineer and CTO in Lagos, Nigeria. Building web, mobile and payment products since 2013.",
+  "ogImage": "og/default.jpg",
   "locale": "en_NG",
   "robots": "index",
   "nav": [
