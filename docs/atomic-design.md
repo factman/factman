@@ -82,9 +82,13 @@ Every component in `ui/<level>` or `features/` carries a JSDoc tag that matches 
 export class Button {}
 ```
 
+## Component inventory
+
+[component-inventory.md](component-inventory.md) maps every artboard of the design canvas to its Angular component, level, selector, inputs and outputs, and records which canvas pieces are variants of an existing component. Check it before adding a component.
+
 ## Adding a component
 
-1. Pick the lowest level that fits. If it needs data, it is a page, or the page passes the data in.
+1. Find the component in the [inventory](component-inventory.md) and use its name, level and selector. If it isn't there, pick the lowest level that fits and add a row. If it needs data, it is a page, or the page passes the data in.
 2. Create `src/app/ui/<level>/<name>/<name>.ts` (plus template, styles, spec and story).
 3. Add the `@level` tag.
 4. Export it from the level's `index.ts`.
