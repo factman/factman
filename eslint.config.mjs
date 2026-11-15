@@ -41,6 +41,9 @@ export default defineConfig([
         'error',
         { type: 'element', prefix: 'fm', style: 'kebab-case' },
       ],
+      // ETE-233: a component keeps its template or styles inline only up to 10 lines; anything
+      // longer goes in templateUrl / styleUrl files.
+      '@angular-eslint/component-max-inline-declarations': ['error', { template: 10, styles: 10 }],
     },
   },
   {

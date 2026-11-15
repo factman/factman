@@ -26,55 +26,7 @@ const LOCKUP_RATIO = 2512 / 768;
   encapsulation: ViewEncapsulation.None,
   styleUrl: './logo.scss',
   host: { style: 'display: contents' },
-  template: `
-    @if (type() === 'mark') {
-      <span class="fm-logo" [class]="'fm-logo--' + theme()">
-        <img
-          class="fm-logo__mark"
-          [attr.src]="markSrc()"
-          [attr.srcset]="markSrcset()"
-          [attr.sizes]="size() + 'px'"
-          [width]="size()"
-          [height]="size()"
-          [alt]="alt() ?? 'Odunayo Mohammed'"
-          decoding="async"
-        />
-      </span>
-    } @else if (artwork()) {
-      <img
-        class="fm-logo fm-logo--art"
-        [attr.src]="lockupSrc()"
-        [attr.srcset]="lockupSrcset()"
-        [attr.sizes]="lockupWidth() + 'px'"
-        [width]="lockupWidth()"
-        [height]="size()"
-        [alt]="alt() ?? 'Odunayo'"
-        decoding="async"
-      />
-    } @else {
-      <span
-        class="fm-logo fm-logo--lockup"
-        [class]="'fm-logo--' + theme()"
-        [style.--fm-logo-size.px]="size()"
-        role="img"
-        [attr.aria-label]="alt() ?? 'Odunayo'"
-      >
-        <img
-          class="fm-logo__mark"
-          [attr.src]="markSrc()"
-          [attr.srcset]="markSrcset()"
-          [attr.sizes]="size() + 'px'"
-          [width]="size()"
-          [height]="size()"
-          alt=""
-          decoding="async"
-        />
-        <span class="fm-logo__words" aria-hidden="true"
-          ><span class="fm-logo__word">ODUNAYO</span></span
-        >
-      </span>
-    }
-  `,
+  templateUrl: './logo.html',
 })
 export class Logo {
   /** `mark`: the AY tile alone. `odunayo`: the mark with the ODUNAYO wordmark (navbar, footer). */

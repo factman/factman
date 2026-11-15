@@ -33,34 +33,7 @@ export const initialsOf = (name: string): string =>
   encapsulation: ViewEncapsulation.None,
   styleUrl: './avatar.scss',
   host: { style: 'display: contents' },
-  template: `
-    <span
-      class="fm-avatar"
-      [class.fm-avatar--square]="shape() === 'square'"
-      [style.width.px]="px()"
-      [style.height.px]="px()"
-      [style.font-size.px]="fontPx()"
-      [attr.role]="showImage() ? null : 'img'"
-      [attr.aria-label]="showImage() ? null : name()"
-    >
-      <span class="fm-avatar__body">
-        @if (showImage()) {
-          <img
-            class="fm-avatar__img"
-            [attr.src]="src()"
-            [alt]="name()"
-            [width]="px()"
-            [height]="px()"
-            [attr.loading]="eager() ? null : 'lazy'"
-            decoding="async"
-            (error)="failed.set(true)"
-          />
-        } @else {
-          <span class="fm-avatar__initials" aria-hidden="true">{{ initials() }}</span>
-        }
-      </span>
-    </span>
-  `,
+  templateUrl: './avatar.html',
 })
 export class Avatar {
   /** The person's name: alt text for the photo, and the source of the initials. */

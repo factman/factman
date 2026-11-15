@@ -29,32 +29,7 @@ export type IconSize = 16 | 20 | 24 | number;
   selector: 'fm-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { style: 'display: contents' },
-  template: `
-    @if (def(); as d) {
-      <svg
-        class="fm-icon"
-        [attr.width]="size()"
-        [attr.height]="size()"
-        viewBox="0 0 24 24"
-        fill="none"
-        [attr.stroke]="d.fill ? 'none' : 'currentColor'"
-        [attr.stroke-width]="d.fill ? null : d.stroke"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        focusable="false"
-        [attr.data-icon]="d.name"
-        [attr.role]="label() ? 'img' : null"
-        [attr.aria-label]="label() || null"
-        [attr.aria-hidden]="label() ? null : 'true'"
-      >
-        @if (d.fill) {
-          <path [attr.d]="d.d" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" />
-        } @else {
-          <path [attr.d]="d.d" />
-        }
-      </svg>
-    }
-  `,
+  templateUrl: './icon.html',
 })
 export class Icon {
   /** The icon: an imported `IconDef`, or the name of a registered one. */

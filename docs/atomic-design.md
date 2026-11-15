@@ -89,7 +89,7 @@ export class Button {}
 ## Adding a component
 
 1. Find the component in the [inventory](component-inventory.md) and use its name, level and selector. If it isn't there, pick the lowest level that fits and add a row. If it needs data, it is a page, or the page passes the data in.
-2. Create `src/app/ui/<level>/<name>/<name>.ts` (plus template, styles, spec and story).
+2. Create `src/app/ui/<level>/<name>/<name>.ts` (plus template, styles, spec and story). A template or styles longer than 10 lines goes in its own file (`<name>.html` with `templateUrl`, `<name>.scss` with `styleUrl`); `pnpm lint` enforces it for every component and page.
 3. Add the `@level` tag.
 4. Export it from the level's `index.ts`.
 5. Run `pnpm lint`.
