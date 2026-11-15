@@ -85,13 +85,12 @@ describe('skillReferences', () => {
 });
 
 describe('trackReferences', () => {
-  test('flags tracks that are not résumé ids, including highlight tracks', () => {
+  test('flags highlight tracks that are not résumé ids', () => {
     const issues = trackReferences({
-      resumes: [{ id: 'fullstack' }, { id: 'mobile' }],
-      skills: [{ id: 'a', tracks: ['fullstack', 'devops'] }],
-      experience: [{ roles: [{ highlights: ['x', { text: 'y', tracks: ['qa'] }] }] }],
+      resumes: { placeholders: [], resumes: [{ id: 'fullstack' }, { id: 'mobile' }] },
+      experience: [{ roles: [{ highlights: ['x', { text: 'y', tracks: ['fullstack', 'qa'] }] }] }],
     });
-    assert.deepEqual(paths(issues), ['/0/tracks/1', '/0/roles/0/highlights/1/tracks/0']);
+    assert.deepEqual(paths(issues), ['/0/roles/0/highlights/1/tracks/1']);
   });
 });
 

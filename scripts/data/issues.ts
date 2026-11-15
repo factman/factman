@@ -5,14 +5,21 @@ export interface Issue {
   /** JSON Pointer inside the file, e.g. `/0/slug`; empty for the whole file. */
   path: string;
   message: string;
-  /** The PRD test case it breaks (DS-01 to DS-17, PRD section 12). */
+  /** The PRD test case it breaks (DS-01 to DS-17 and the RS data cases, PRD section 12). */
   rule?: DsRule;
   /** Warnings are printed but do not fail `data:validate`. Default: error. */
   level?: 'error' | 'warning';
 }
 
-/** PRD section 12 data source cases. DS-14 and DS-15 are tests, not data rules. */
+/**
+ * PRD section 12 cases checked on the data: DS-01 to DS-17 (DS-14 and DS-15 are tests, not data
+ * rules) and the résumé data cases RS-01 (schema and references), RS-02 (counts, limits,
+ * duplicates) and RS-03 (phone).
+ */
 export type DsRule =
+  | 'RS-01'
+  | 'RS-02'
+  | 'RS-03'
   | 'DS-01'
   | 'DS-02'
   | 'DS-03'

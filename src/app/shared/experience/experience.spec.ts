@@ -53,6 +53,14 @@ describe('sortByRecency (UT-01)', () => {
     expect(() => sortByRecency([{ start: '2020-1' }, { start: '2020-01' }])).toThrow(/YYYY-MM/);
     expect(() => sortByRecency([{ start: '2020-13' }, { start: '2020-01' }])).toThrow(/YYYY-MM/);
   });
+
+  it('accepts a bare year, ordered as January of that year', () => {
+    const roles = [
+      { id: 'year', start: '2018', end: '2020-10' },
+      { id: 'month', start: '2018-06', end: '2018-11' },
+    ];
+    expect(sortByRecency(roles).map((r) => r.id)).toEqual(['month', 'year']);
+  });
 });
 
 describe('sortExperience', () => {
@@ -106,6 +114,11 @@ describe('formatPeriod (FR-15)', () => {
   it('shows "Present" for an open role', () => {
     expect(formatPeriod({ start: '2020-01' })).toBe(`Jan 2020 – ${PRESENT}`);
     expect(formatPeriod({ start: '2020-01', end: null })).toBe('Jan 2020 – Present');
+  });
+
+  it('shows a bare year as the year alone', () => {
+    expect(formatPeriod({ start: '2018', end: '2020-10' })).toBe('2018 – Oct 2020');
+    expect(formatDuration({ start: '2018', end: '2018-12' }, NOW)).toBe('1 yr');
   });
 
   it('shows both months for an ended role, ignoring any day', () => {

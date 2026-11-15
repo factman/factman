@@ -10,3 +10,5 @@ export * from './time/year-month';
 export * from './experience/experience';
 export * from './experience/years';
 export * from './experience/counters';
+export * from './resume/resume-text';
+export * from './resume/resume-view-model';

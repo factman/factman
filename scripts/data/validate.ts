@@ -22,11 +22,12 @@ export interface ValidationResult {
 
 /**
  * The PRD case a schema error breaks: a missing field is DS-02 and a bad enum DS-03, unless the
- * file or field has its own case (site IDs DS-12, clients DS-16, contact DS-11, blog DS-13,
+ * file or field has its own case (résumés RS-01/RS-02, site IDs DS-12, clients DS-16, contact DS-11, blog DS-13,
  * summary and excerpt length DS-10). Anything else (type, format, extra field) is DS-01.
  */
 export function schemaRule(file: string, keyword: string, path: string): DsRule {
   if (keyword === 'required') return 'DS-02';
+  if (file === 'resumes') return keyword === 'maxLength' ? 'RS-02' : 'RS-01';
   if (file === 'site' && /^\/(analytics\/(gtmId|ga4Id)|consent\/version)$/.test(path))
     return 'DS-12';
   if (file === 'clients') return 'DS-16';

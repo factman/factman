@@ -3,6 +3,8 @@
  * tagged with the PRD section 12 case they enforce (DS-04 to DS-17).
  * Every rule is a pure function of the loaded data, so it is unit-tested without the file system.
  */
+import { placeholdersIn, VARIABLE } from '../../src/app/shared/resume/resume-text';
+import { highlightsFor } from '../../src/app/shared/resume/resume-view-model';
 import type { ImageSize } from './image-size';
 import type { DsRule, Issue } from './issues';
 import { DATA_DIR } from './registry';
@@ -21,11 +23,17 @@ export interface RuleContext {
 
 const file = (name: string) => `${DATA_DIR}/${name}.json`;
 const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-/** `2021-08` or `2021-08-15`: the date format for roles and projects (DS-06). */
-const DATE = /^\d{4}-(0[1-9]|1[0-2])(?:-(0[1-9]|[12]\d|3[01]))?$/;
-/** Projects may give only a year (`2020`) when the month isn't known. */
-const PROJECT_DATE = /^\d{4}(?:-(0[1-9]|1[0-2])(?:-(0[1-9]|[12]\d|3[01]))?)?$/;
+/**
+ * Role and project dates (DS-06): `2021-08`, `2021-08-15`, or a bare year (`2018`) when the month
+ * isn't known. A bare year counts as January when it starts a range and December when it ends one.
+ */
+const DATE = /^\d{4}(?:-(0[1-9]|1[0-2])(?:-(0[1-9]|[12]\d|3[01]))?)?$/;
 const OPEN_END = '9999-12';
+/** `YYYY-MM` for comparing range ends, or undefined when the value isn't a valid date. */
+const toMonth = (v: Json | undefined, edge: 'start' | 'end'): string | undefined => {
+  if (typeof v !== 'string' || !DATE.test(v)) return undefined;
+  return v.length === 4 ? `${v}-${edge === 'start' ? '01' : '12'}` : v.slice(0, 7);
+};
 const isObject = (v: Json | undefined): v is JsonObject =>
   typeof v === 'object' && v !== null && !Array.isArray(v);
 const asArray = (v: Json | undefined): Json[] => (Array.isArray(v) ? v : []);
@@ -33,7 +41,11 @@ const str = (v: Json | undefined): string | undefined => (typeof v === 'string' 
 const toAssetPath = (v: string) => v.replace(/^\/?(assets\/)?/, '');
 
 /** Some files have a more specific case than the generic rule (blog DS-13, clients DS-16). */
-const FILE_RULE: Partial<Record<string, DsRule>> = { blog: 'DS-13', clients: 'DS-16' };
+const FILE_RULE: Partial<Record<string, DsRule>> = {
+  blog: 'DS-13',
+  clients: 'DS-16',
+  resumes: 'RS-02',
+};
 const ruleFor = (name: string, fallback: DsRule): DsRule => FILE_RULE[name] ?? fallback;
 
 /** blog.json may be a list of posts or `{ posts: [...] }`; the schema (ETE-32) decides. */
@@ -42,6 +54,12 @@ const blogPosts = (data: DataSet): Json[] => {
   return Array.isArray(blog) ? blog : isObject(blog) ? asArray(blog['posts']) : [];
 };
 const blogBase = (data: DataSet) => (Array.isArray(data['blog']) ? '' : '/posts');
+
+/** The résumé records in resumes.json (`{ placeholders, resumes }`). */
+const resumesOf = (data: DataSet): Json[] => {
+  const file = data['resumes'];
+  return isObject(file) ? asArray(file['resumes']) : [];
+};
 
 /** Walks every value with its JSON Pointer. */
 function* walk(value: Json, path = ''): Generator<[string, Json]> {
@@ -88,6 +106,7 @@ export function uniqueIds(data: DataSet): Issue[] {
     if (Array.isArray(value)) check(name, value, '');
   }
   if (isObject(data['blog'])) check('blog', blogPosts(data), '/posts');
+  if (isObject(data['resumes'])) check('resumes', resumesOf(data), '/resumes');
   const roles: Json[] = [];
   asArray(data['experience']).forEach((org) => {
     if (isObject(org)) roles.push(...asArray(org['roles']));
@@ -160,9 +179,9 @@ export function skillReferences(data: DataSet): Issue[] {
   return issues;
 }
 
-/** Every `tracks` value (skills, projects, roles, highlights) is a résumé id from resumes.json (a DS-05 cross-reference). */
+/** RS-01: every highlight `tracks` value in experience.json is a résumé id from resumes.json. */
 export function trackReferences(data: DataSet): Issue[] {
-  const resumes = asArray(data['resumes']);
+  const resumes = resumesOf(data);
   if (!resumes.length) return [];
   const ids = new Set(
     resumes.map((r) => (isObject(r) ? str(r['id']) : undefined)).filter((x): x is string => !!x),
@@ -178,8 +197,8 @@ export function trackReferences(data: DataSet): Issue[] {
           issues.push({
             file: file(name),
             path: `${path}/${j}`,
-            message: `unknown résumé track "${t}" (not an id in resumes.json)`,
-            rule: 'DS-05',
+            message: `unknown résumé "${t}" (not an id in resumes.json)`,
+            rule: 'RS-01',
           });
         }
       });
@@ -278,7 +297,6 @@ function* periods(data: DataSet): Generator<{
   name: string;
   path: string;
   fields: [string, string];
-  format: RegExp;
   start: Json | undefined;
   end: Json | undefined;
 }> {
@@ -290,7 +308,6 @@ function* periods(data: DataSet): Generator<{
           name: 'experience',
           path: `/${i}/roles/${r}`,
           fields: ['start', 'end'],
-          format: DATE,
           start: role['start'],
           end: role['end'],
         };
@@ -302,23 +319,22 @@ function* periods(data: DataSet): Generator<{
         name: 'projects',
         path: `/${i}`,
         fields: ['startedAt', 'completedAt'],
-        format: PROJECT_DATE,
         start: p['startedAt'],
         end: p['completedAt'],
       };
   }
 }
 
-/** DS-06: role dates are `YYYY-MM` or `YYYY-MM-DD`; project dates may also be a bare `YYYY`. */
+/** DS-06: role and project dates are `YYYY-MM`, `YYYY-MM-DD` or a bare `YYYY`. */
 export function dateFormat(data: DataSet): Issue[] {
   const issues: Issue[] = [];
-  for (const { name, path, fields, format, start, end } of periods(data)) {
+  for (const { name, path, fields, start, end } of periods(data)) {
     [start, end].forEach((v, k) => {
-      if (typeof v === 'string' && !format.test(v)) {
+      if (typeof v === 'string' && !DATE.test(v)) {
         issues.push({
           file: file(name),
           path: `${path}/${fields[k]}`,
-          message: `date "${v}" must be ${format === DATE ? 'YYYY-MM or YYYY-MM-DD' : 'YYYY, YYYY-MM or YYYY-MM-DD'}`,
+          message: `date "${v}" must be YYYY, YYYY-MM or YYYY-MM-DD`,
           rule: 'DS-06',
         });
       }
@@ -330,10 +346,10 @@ export function dateFormat(data: DataSet): Issue[] {
 /** DS-06: date ranges are ordered: a role or project never ends before it starts. */
 export function dateOrder(data: DataSet): Issue[] {
   const issues: Issue[] = [];
-  for (const { name, path, format, start, end } of periods(data)) {
-    if (typeof start !== 'string' || typeof end !== 'string') continue;
-    if (!format.test(start) || !format.test(end)) continue;
-    if (end < start) {
+  for (const { name, path, start, end } of periods(data)) {
+    const [from, to] = [toMonth(start, 'start'), toMonth(end, 'end')];
+    if (!from || !to) continue;
+    if (to < from) {
       issues.push({
         file: file(name),
         path,
@@ -352,16 +368,16 @@ export function dateOrder(data: DataSet): Issue[] {
  */
 export function roleOverlap(data: DataSet): Issue[] {
   const issues: Issue[] = [];
-  const month = (v: Json | undefined) =>
-    typeof v === 'string' && DATE.test(v) ? v.slice(0, 7) : undefined;
   asArray(data['experience']).forEach((org, i) => {
     if (!isObject(org)) return;
     const roles = asArray(org['roles'])
       .map((role, r) =>
-        isObject(role) ? { r, start: month(role['start']), end: role['end'] } : undefined,
+        isObject(role)
+          ? { r, start: toMonth(role['start'], 'start'), end: toMonth(role['end'], 'end') }
+          : undefined,
       )
       .filter((x) => x?.start)
-      .map((x) => ({ ...x!, start: x!.start!, end: month(x!.end) ?? OPEN_END }));
+      .map((x) => ({ ...x!, start: x!.start!, end: x!.end ?? OPEN_END }));
     for (let a = 0; a < roles.length; a++) {
       for (let b = a + 1; b < roles.length; b++) {
         const [x, y] = [roles[a], roles[b]];
@@ -384,7 +400,8 @@ export const TEXT_LIMITS: Record<string, number> = { summary: 200, excerpt: 280 
 export function textLengths(data: DataSet): Issue[] {
   const issues: Issue[] = [];
   for (const [name, value] of Object.entries(data)) {
-    if (value === undefined) continue;
+    // Résumé summaries have their own, longer limit in resumes.schema.json (RS-02).
+    if (value === undefined || name === 'resumes') continue;
     for (const [path, v] of walk(value)) {
       const key = path.split('/').pop() ?? '';
       const limit = TEXT_LIMITS[key];
@@ -553,6 +570,235 @@ function checkPhoto(key: string, photo: JsonObject, ctx: RuleContext): Issue[] {
   return issues;
 }
 
+/**
+ * Résumé checks (PRD section 7, résumé validation):
+ * - RS-01: roles, organizations, projects, skills, contact links and `{since:…}` exist; a role is
+ *   listed once; merged roles share an organization; every `[placeholder]` in résumé text is
+ *   declared in `placeholders`, and every declared one is used.
+ * - RS-02: at least 1 role and 5 skills; the `limits`; unique file names.
+ * - RS-03: `showPhone` needs a phone in contact.json.
+ */
+export function resumeChecks(data: DataSet): Issue[] {
+  const resumesFile = data['resumes'];
+  if (!isObject(resumesFile)) return [];
+  const issues: Issue[] = [];
+  const push = (path: string, message: string, rule: DsRule, name = 'resumes') =>
+    issues.push({ file: file(name), path, message, rule });
+
+  const roleOrg = new Map<string, string>();
+  const roleById = new Map<string, JsonObject>();
+  for (const org of asArray(data['experience'])) {
+    if (!isObject(org)) continue;
+    for (const role of asArray(org['roles'])) {
+      const id = isObject(role) ? str(role['id']) : undefined;
+      if (id && isObject(role)) {
+        roleOrg.set(id, str(org['id']) ?? '');
+        roleById.set(id, role);
+      }
+    }
+  }
+  const orgIds = new Set(roleOrg.values());
+  const projectIds = new Set(
+    asArray(data['projects']).map((p) => (isObject(p) ? str(p['id']) : '')),
+  );
+  const skillSince = new Map<string, Json | undefined>();
+  for (const s of asArray(data['skills'])) {
+    if (isObject(s) && str(s['id'])) skillSince.set(str(s['id'])!, s['since']);
+  }
+  const contact = data['contact'];
+  const linkIds = new Set(
+    isObject(contact)
+      ? asArray(contact['links']).map((l) => (isObject(l) ? str(l['id']) : ''))
+      : [],
+  );
+  const hasPhone = isObject(contact) && typeof contact['phone'] === 'string' && !!contact['phone'];
+
+  const fileNames = new Map<string, number>();
+  resumesOf(data).forEach((resume, i) => {
+    if (!isObject(resume)) return;
+    const at = `/resumes/${i}`;
+    const id = str(resume['id']) ?? '';
+
+    if (resume['showPhone'] === true && !hasPhone)
+      push(`${at}/showPhone`, 'showPhone needs a phone number in contact.json', 'RS-03');
+
+    const fileName = str(resume['fileName']);
+    if (fileName) {
+      if (fileNames.has(fileName))
+        push(
+          `${at}/fileName`,
+          `duplicate fileName "${fileName}" (also at /resumes/${fileNames.get(fileName)})`,
+          'RS-02',
+        );
+      else fileNames.set(fileName, i);
+    }
+
+    asArray(resume['links']).forEach((l, j) => {
+      if (typeof l === 'string' && !linkIds.has(l))
+        push(
+          `${at}/links/${j}`,
+          `unknown contact link "${l}" (not an id in contact.json links)`,
+          'RS-01',
+        );
+    });
+
+    // Skills, stacks and project tech: { skill } items must name a skill.
+    let skillCount = 0;
+    const checkItem = (item: Json, path: string) => {
+      if (!isObject(item)) return;
+      const skill = str(item['skill']);
+      if (skill && !skillSince.has(skill))
+        push(path, `unknown skill "${skill}" (not in skills.json)`, 'RS-01');
+    };
+    asArray(resume['skillGroups']).forEach((g, gi) => {
+      if (!isObject(g)) return;
+      asArray(g['items']).forEach((item, k) => {
+        if (isObject(item)) skillCount++;
+        checkItem(item, `${at}/skillGroups/${gi}/items/${k}`);
+      });
+    });
+
+    // Roles: full entries (ids or merges) and earlier ones.
+    const experience = isObject(resume['experience']) ? resume['experience'] : {};
+    const seen = new Map<string, string>();
+    const useRole = (roleId: Json, path: string): string | undefined => {
+      if (typeof roleId !== 'string') return undefined;
+      if (!roleById.has(roleId)) {
+        push(path, `unknown role "${roleId}" (not a role id in experience.json)`, 'RS-01');
+        return undefined;
+      }
+      if (seen.has(roleId))
+        push(path, `role "${roleId}" is listed twice (also at ${seen.get(roleId)})`, 'RS-01');
+      else seen.set(roleId, path);
+      return roleId;
+    };
+    const entries = asArray(experience['roles']);
+    const limits = isObject(resume['limits']) ? resume['limits'] : {};
+    const limit = (key: string) =>
+      typeof limits[key] === 'number' ? (limits[key] as number) : Infinity;
+    entries.forEach((entry, k) => {
+      const path = `${at}/experience/roles/${k}`;
+      const ids = (isObject(entry) ? asArray(entry['merge']) : [entry])
+        .map((r, m) => useRole(r, isObject(entry) ? `${path}/merge/${m}` : path))
+        .filter((r): r is string => !!r);
+      if (new Set(ids.map((r) => roleOrg.get(r))).size > 1)
+        push(path, 'merged roles must belong to the same organization', 'RS-01');
+      const bullets = highlightsFor(ids.map((r) => roleById.get(r)) as never, id);
+      if (bullets.length > limit('highlightsPerRole'))
+        push(
+          path,
+          `${bullets.length} bullets for this entry; limits.highlightsPerRole is ${limit('highlightsPerRole')}`,
+          'RS-02',
+        );
+    });
+    asArray(experience['earlier']).forEach((r, k) => useRole(r, `${at}/experience/earlier/${k}`));
+    if (isObject(experience['stacks'])) {
+      for (const [orgId, items] of Object.entries(experience['stacks'])) {
+        const path = `${at}/experience/stacks/${orgId.replace(/~/g, '~0').replace(/\//g, '~1')}`;
+        if (!orgIds.has(orgId))
+          push(path, `unknown organization "${orgId}" (not an id in experience.json)`, 'RS-01');
+        asArray(items).forEach((item, k) => checkItem(item, `${path}/${k}`));
+      }
+    }
+
+    // Projects: references and tech items.
+    const projects = asArray(resume['projects']);
+    projects.forEach((p, k) => {
+      if (!isObject(p)) return;
+      const projectId = str(p['project']);
+      if (projectId && !projectIds.has(projectId))
+        push(
+          `${at}/projects/${k}/project`,
+          `unknown project "${projectId}" (not in projects.json)`,
+          'RS-01',
+        );
+      asArray(p['tech']).forEach((item, t) => checkItem(item, `${at}/projects/${k}/tech/${t}`));
+    });
+
+    // Counts and limits.
+    if (entries.length < 1)
+      push(`${at}/experience/roles`, 'a résumé needs at least 1 role', 'RS-02');
+    if (skillCount < 5)
+      push(`${at}/skillGroups`, `${skillCount} skills; a résumé needs at least 5`, 'RS-02');
+    if (skillCount > limit('skills'))
+      push(
+        `${at}/skillGroups`,
+        `${skillCount} skills; limits.skills is ${limit('skills')}`,
+        'RS-02',
+      );
+    if (entries.length > limit('roles'))
+      push(
+        `${at}/experience/roles`,
+        `${entries.length} roles; limits.roles is ${limit('roles')}`,
+        'RS-02',
+      );
+    if (projects.length > limit('projects'))
+      push(
+        `${at}/projects`,
+        `${projects.length} projects; limits.projects is ${limit('projects')}`,
+        'RS-02',
+      );
+
+    // {since:<skill>} needs a skill with a start year.
+    for (const [path, v] of walk(resume, at)) {
+      if (typeof v !== 'string') continue;
+      for (const m of v.matchAll(VARIABLE)) {
+        const skill = m[1].startsWith('since:') ? m[1].slice('since:'.length) : undefined;
+        if (skill && typeof skillSince.get(skill) !== 'number')
+          push(
+            path,
+            `{since:${skill}}: skill "${skill}" has no start year in skills.json`,
+            'RS-01',
+          );
+      }
+    }
+  });
+
+  // Placeholders: declared once, each used, and every token in résumé text declared.
+  const declared = new Map<string, number>();
+  asArray(resumesFile['placeholders']).forEach((p, k) => {
+    const token = isObject(p) ? str(p['token']) : undefined;
+    if (!token) return;
+    if (declared.has(token))
+      push(
+        `/placeholders/${k}/token`,
+        `duplicate placeholder "${token}" (also at /placeholders/${declared.get(token)})`,
+        'RS-01',
+      );
+    else declared.set(token, k);
+  });
+  const used = new Set<string>();
+  const scan = (name: string, value: Json | undefined, base = '') => {
+    if (value === undefined) return;
+    for (const [path, v] of walk(value, base)) {
+      if (typeof v !== 'string' || path.startsWith('/placeholders')) continue;
+      for (const token of placeholdersIn(v)) {
+        used.add(token);
+        if (!declared.has(token))
+          push(
+            path,
+            `placeholder ${token} is not declared in resumes.json placeholders`,
+            'RS-01',
+            name,
+          );
+      }
+    }
+  };
+  scan('resumes', resumesFile);
+  scan('experience', data['experience']);
+  asArray(data['projects']).forEach((p, k) => {
+    if (isObject(p)) {
+      scan('projects', p['title'], `/${k}/title`);
+      scan('projects', p['summary'], `/${k}/summary`);
+    }
+  });
+  for (const [token, k] of declared) {
+    if (!used.has(token))
+      push(`/placeholders/${k}`, `placeholder ${token} is not used in any résumé text`, 'RS-01');
+  }
+  return issues;
+}
+
 export const RULES = [
   uniqueIds,
   noInsecureLinks,
@@ -571,6 +817,7 @@ export const RULES = [
   blogFields,
   clientEntries,
   profilePhoto,
+  resumeChecks,
 ];
 
 export function runRules(data: DataSet, ctx: RuleContext): Issue[] {

@@ -1,0 +1,95 @@
+{
+  "rule": "RS-03",
+  "case": "showPhone without a phone in contact.json",
+  "data": {
+    "skills": [
+      {
+        "id": "a",
+        "name": "A",
+        "since": 2020
+      },
+      {
+        "id": "b",
+        "name": "B",
+        "since": 2020
+      },
+      {
+        "id": "c",
+        "name": "C",
+        "since": 2020
+      },
+      {
+        "id": "d",
+        "name": "D",
+        "since": 2020
+      },
+      {
+        "id": "e",
+        "name": "E",
+        "since": 2020
+      }
+    ],
+    "experience": [
+      {
+        "id": "acme",
+        "roles": [
+          {
+            "id": "dev",
+            "start": "2020-01",
+            "highlights": ["Built things"]
+          }
+        ]
+      }
+    ],
+    "contact": {
+      "email": "a@b.co",
+      "links": []
+    },
+    "resumes": {
+      "placeholders": [],
+      "resumes": [
+        {
+          "id": "fullstack",
+          "slug": "fullstack",
+          "fileName": "cv-fullstack.pdf",
+          "links": [],
+          "skillGroups": [
+            {
+              "label": "Core",
+              "items": [
+                {
+                  "skill": "a"
+                },
+                {
+                  "skill": "b"
+                },
+                {
+                  "skill": "c"
+                },
+                {
+                  "skill": "d"
+                },
+                {
+                  "skill": "e"
+                }
+              ]
+            }
+          ],
+          "experience": {
+            "roles": ["dev"],
+            "earlier": []
+          },
+          "projects": [],
+          "summary": "Engineer.",
+          "limits": {
+            "skills": 30,
+            "roles": 8,
+            "highlightsPerRole": 4,
+            "projects": 3
+          },
+          "showPhone": true
+        }
+      ]
+    }
+  }
+}

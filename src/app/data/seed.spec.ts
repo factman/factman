@@ -23,7 +23,7 @@ describe('seed data with the experience helpers (ETE-42)', () => {
     expect(counters({ experience, projects, skills, posts: [] })).toEqual({
       organizations: 10,
       roles: 12,
-      projects: 6,
+      projects: 7,
       technologies: 37,
       articles: 0,
     });

@@ -1,0 +1,797 @@
+{
+  "placeholders": [
+    {
+      "token": "[N customers]",
+      "value": "its customers",
+      "note": "Simple Finance: customers served by the web platform (Fullstack)"
+    },
+    {
+      "token": "[efficiency gain %]",
+      "value": "streamlining core workflows",
+      "note": "Simple Finance: efficiency gain from new systems (Fullstack, Mobile)"
+    },
+    {
+      "token": "[mobile]",
+      "value": "mobile",
+      "note": "Simple Finance: confirm the customer-facing products include mobile (Mobile)"
+    },
+    {
+      "token": "[release time before]",
+      "value": "manual deployments",
+      "note": "Simple Finance: release time before CI/CD (DevOps)"
+    },
+    {
+      "token": "[release time after]",
+      "value": "automated pipeline releases",
+      "note": "Simple Finance: release time after CI/CD (DevOps)"
+    },
+    {
+      "token": "[uptime %]",
+      "value": "with high availability",
+      "note": "Simple Finance: production uptime (DevOps)"
+    },
+    {
+      "token": "[N engineers]",
+      "value": "engineers",
+      "note": "ETeam Technology: team size (Fullstack, Mobile)"
+    },
+    {
+      "token": "[N projects]",
+      "value": "client projects",
+      "note": "ETeam Technology: projects using the engineering standards (Fullstack)"
+    },
+    {
+      "token": "[N developers]",
+      "value": "developers",
+      "note": "ETeam Technology: developers grown into senior and lead roles (Fullstack)"
+    },
+    {
+      "token": "[N apps shipped]",
+      "value": "across several apps",
+      "note": "ETeam Technology: mobile apps shipped to the stores (Mobile)"
+    },
+    {
+      "token": "[store rating]",
+      "value": "a high level",
+      "note": "ETeam Technology: store rating, e.g. 4.6★ (Mobile)"
+    },
+    {
+      "token": "[crash-free %]",
+      "value": "target",
+      "note": "ETeam Technology: crash-free sessions (Mobile)"
+    },
+    {
+      "token": "[N services]",
+      "value": "for multiple services",
+      "note": "ETeam Technology: services on the Docker/CI/CD setup (DevOps)"
+    },
+    {
+      "token": "[name the platforms]",
+      "value": "in production",
+      "note": "ETeam Technology: client platforms with monitoring and backups (DevOps)"
+    },
+    {
+      "token": "[hosting cost reduction %]",
+      "value": "right-sizing infrastructure",
+      "note": "ETeam Technology: hosting cost reduction (DevOps)"
+    },
+    {
+      "token": "[delivery efficiency gain %]",
+      "value": "removing workflow bottlenecks",
+      "note": "Mazadat: delivery efficiency gain (Fullstack)"
+    },
+    {
+      "token": "[Lighthouse X → Y]",
+      "value": "for search and speed",
+      "note": "Mazadat: Lighthouse score before → after (Fullstack)"
+    },
+    {
+      "token": "[web and mobile apps]",
+      "value": "across web and mobile",
+      "note": "Travoofy: confirm the platform's web and mobile apps (Mobile)"
+    },
+    {
+      "token": "[N downloads]",
+      "value": "and free to use",
+      "note": "Coronavirus Daily Update: downloads (Mobile)"
+    },
+    {
+      "token": "[Client app name]",
+      "value": "Gifti App",
+      "note": "Mobile résumé: a client app to feature"
+    },
+    {
+      "token": "[Flutter / React Native / Ionic]",
+      "value": "iOS",
+      "note": "Mobile résumé: that app's stack"
+    },
+    {
+      "token": "[Platform, your role and outcome, e.g. built and released the iOS and Android app for …]",
+      "value": "Client mobile app delivered by ETeam Technology, from build to App Store release.",
+      "note": "Mobile résumé: one line about that app"
+    }
+  ],
+  "resumes": [
+    {
+      "id": "fullstack",
+      "slug": "fullstack",
+      "title": "Fullstack Software Engineer",
+      "headline": "Fullstack Software Engineer · CTO",
+      "scope": "Frontend and backend development for product and engineering roles.",
+      "icon": "layout",
+      "fileName": "odunayo-mohammed-fullstack.pdf",
+      "paper": "A4",
+      "pages": {
+        "target": 2,
+        "max": 3
+      },
+      "showPhone": true,
+      "links": ["linkedin", "github"],
+      "showWebsite": true,
+      "sections": [
+        "profile",
+        "skills",
+        "experience",
+        "earlier",
+        "clients",
+        "projects",
+        "education",
+        "languages",
+        "publications"
+      ],
+      "limits": {
+        "skills": 30,
+        "roles": 8,
+        "highlightsPerRole": 4,
+        "projects": 3
+      },
+      "summary": "Fullstack software engineer and technology leader with {years}+ years of experience designing, building and shipping web, mobile and payment products. Works end to end in TypeScript: Angular, React and Next.js interfaces, Node.js and PHP services, and the data, cloud and CI/CD behind them. Currently CTO at Simple Finance and co-founder of ETeam Technology, leading teams that ship every week across fintech, marketplaces and SaaS.",
+      "skillGroups": [
+        {
+          "label": "Languages",
+          "items": [
+            {
+              "skill": "typescript"
+            },
+            "JavaScript (ES6+)",
+            {
+              "skill": "php"
+            },
+            {
+              "skill": "python"
+            },
+            {
+              "skill": "java"
+            },
+            {
+              "skill": "cpp"
+            },
+            "SQL"
+          ]
+        },
+        {
+          "label": "Frontend",
+          "items": [
+            {
+              "skill": "angular"
+            },
+            {
+              "skill": "react"
+            },
+            {
+              "skill": "nextjs"
+            },
+            {
+              "skill": "mui"
+            },
+            {
+              "skill": "html5"
+            },
+            "CSS3 / Sass",
+            "accessibility",
+            "SEO and web performance"
+          ]
+        },
+        {
+          "label": "Backend & APIs",
+          "items": [
+            {
+              "skill": "nodejs"
+            },
+            {
+              "skill": "expressjs"
+            },
+            "REST API design",
+            "authentication",
+            "payment integrations"
+          ]
+        },
+        {
+          "label": "Data",
+          "items": [
+            {
+              "skill": "postgresql"
+            },
+            {
+              "skill": "mysql"
+            },
+            {
+              "skill": "mongodb"
+            },
+            "Elasticsearch",
+            {
+              "skill": "firebase"
+            }
+          ]
+        },
+        {
+          "label": "Cloud & delivery",
+          "items": [
+            {
+              "skill": "docker"
+            },
+            {
+              "skill": "aws"
+            },
+            {
+              "skill": "azure"
+            },
+            {
+              "skill": "google-cloud"
+            },
+            {
+              "skill": "vercel"
+            },
+            "Jenkins",
+            "GitHub Actions",
+            {
+              "skill": "git"
+            }
+          ]
+        },
+        {
+          "label": "Leadership",
+          "items": [
+            "Architecture and technical strategy",
+            "hiring and mentoring",
+            "agile delivery",
+            "A/B experimentation"
+          ]
+        }
+      ],
+      "experience": {
+        "roles": [
+          "simple-finance-cto",
+          "simple-finance-cto-2021",
+          "eteam-cto",
+          "mazadat-frontend-lead",
+          "mazadat-senior-frontend",
+          "travoofy-cto",
+          "investa-engineering-manager",
+          "386konsult-cto"
+        ],
+        "earlier": [
+          "abuad-it-support",
+          "pmt-it-consultant",
+          "nano-blockchain-senior-fullstack",
+          "jit-web-developer"
+        ],
+        "stacks": {
+          "simple-finance": [
+            {
+              "skill": "angular"
+            },
+            {
+              "skill": "nodejs"
+            },
+            {
+              "skill": "typescript"
+            },
+            {
+              "skill": "postgresql"
+            },
+            "Cloud"
+          ],
+          "eteam-technology": [
+            {
+              "skill": "angular"
+            },
+            {
+              "skill": "react"
+            },
+            {
+              "skill": "nodejs"
+            },
+            {
+              "skill": "php"
+            },
+            {
+              "skill": "react-native"
+            },
+            {
+              "skill": "aws"
+            }
+          ],
+          "mazadat": [
+            {
+              "skill": "react"
+            },
+            "ES6",
+            "Elasticsearch",
+            {
+              "skill": "mongodb"
+            },
+            "Azure",
+            {
+              "skill": "docker"
+            },
+            "Jenkins"
+          ]
+        }
+      },
+      "projects": [
+        {
+          "project": "factman-portfolio",
+          "description": "This portfolio: statically generated Angular site on a custom design system, with build-time PDF résumés and consent-gated analytics.",
+          "tech": [
+            {
+              "skill": "angular"
+            },
+            "SSG",
+            {
+              "skill": "typescript"
+            },
+            "GitHub Actions"
+          ]
+        },
+        {
+          "project": "covid19-api",
+          "description": "Open-source API serving daily COVID-19 figures to the mobile app and public clients.",
+          "tech": [
+            {
+              "skill": "nodejs"
+            },
+            {
+              "skill": "expressjs"
+            },
+            "REST"
+          ]
+        },
+        {
+          "project": "graphui"
+        }
+      ]
+    },
+    {
+      "id": "mobile",
+      "slug": "mobile",
+      "title": "Mobile Developer",
+      "headline": "Mobile Developer · React Native · Flutter · Ionic",
+      "scope": "React Native, Flutter and Ionic apps for Android and iOS roles.",
+      "icon": "mobile",
+      "fileName": "odunayo-mohammed-mobile.pdf",
+      "paper": "A4",
+      "pages": {
+        "target": 2,
+        "max": 3
+      },
+      "showPhone": true,
+      "links": ["linkedin", "github"],
+      "showWebsite": true,
+      "sections": [
+        "profile",
+        "skills",
+        "experience",
+        "earlier",
+        "clients",
+        "projects",
+        "education",
+        "languages",
+        "publications"
+      ],
+      "limits": {
+        "skills": 30,
+        "roles": 8,
+        "highlightsPerRole": 4,
+        "projects": 3
+      },
+      "summary": "Mobile developer with {years}+ years in software and cross-platform mobile experience since {since:ionic}, building Android and iOS apps with React Native, Flutter and Ionic. Takes apps from prototype to App Store and Google Play release, backed by Firebase and REST APIs, with a strong web and backend foundation in TypeScript, Angular and Node.js. Creator of the Coronavirus Daily Update app, covered by the Nigerian tech press at launch.",
+      "skillGroups": [
+        {
+          "label": "Mobile",
+          "items": [
+            {
+              "skill": "react-native"
+            },
+            {
+              "skill": "flutter",
+              "since": true
+            },
+            {
+              "skill": "ionic",
+              "since": true
+            },
+            "Android and iOS builds"
+          ]
+        },
+        {
+          "label": "Languages",
+          "items": [
+            {
+              "skill": "typescript"
+            },
+            "JavaScript (ES6+)",
+            "Dart",
+            {
+              "skill": "java"
+            }
+          ]
+        },
+        {
+          "label": "App backends",
+          "items": [
+            {
+              "skill": "firebase"
+            },
+            {
+              "skill": "nodejs"
+            },
+            {
+              "skill": "expressjs"
+            },
+            "REST APIs",
+            "authentication",
+            "payment integrations"
+          ]
+        },
+        {
+          "label": "Release",
+          "items": [
+            "App Store Connect",
+            "Google Play Console",
+            "versioning and staged roll-outs",
+            "CI/CD"
+          ]
+        },
+        {
+          "label": "UI & quality",
+          "items": [
+            "Component design systems",
+            {
+              "skill": "mui"
+            },
+            "responsive layouts",
+            "accessibility",
+            "code review",
+            "testing"
+          ]
+        },
+        {
+          "label": "Also",
+          "items": [
+            {
+              "skill": "angular"
+            },
+            {
+              "skill": "react"
+            },
+            {
+              "skill": "nextjs"
+            },
+            {
+              "skill": "postgresql"
+            },
+            {
+              "skill": "mongodb"
+            },
+            {
+              "skill": "docker"
+            },
+            {
+              "skill": "git"
+            }
+          ]
+        }
+      ],
+      "experience": {
+        "roles": [
+          "eteam-cto",
+          "simple-finance-cto",
+          "simple-finance-cto-2021",
+          {
+            "merge": ["mazadat-frontend-lead", "mazadat-senior-frontend"]
+          },
+          "travoofy-cto",
+          "investa-engineering-manager"
+        ],
+        "earlier": [
+          "386konsult-cto",
+          "abuad-it-support",
+          "pmt-it-consultant",
+          "nano-blockchain-senior-fullstack",
+          "jit-web-developer"
+        ],
+        "stacks": {
+          "eteam-technology": [
+            {
+              "skill": "react-native"
+            },
+            {
+              "skill": "flutter"
+            },
+            {
+              "skill": "ionic"
+            },
+            {
+              "skill": "firebase"
+            },
+            {
+              "skill": "nodejs"
+            },
+            {
+              "skill": "typescript"
+            }
+          ],
+          "mazadat": [
+            {
+              "skill": "react"
+            },
+            "ES6",
+            "Elasticsearch",
+            "Azure",
+            {
+              "skill": "docker"
+            }
+          ]
+        }
+      },
+      "projects": [
+        {
+          "project": "covid-daily-update",
+          "description": "Creator. App with daily COVID-19 case updates for Nigeria, covered in the Nigerian tech press at launch [N downloads].",
+          "tech": [
+            {
+              "skill": "react-native"
+            },
+            "Android",
+            "iOS"
+          ]
+        },
+        {
+          "project": "covid19-api",
+          "description": "Open-source API behind the app, serving daily figures to the app and other clients.",
+          "tech": [
+            {
+              "skill": "nodejs"
+            },
+            {
+              "skill": "expressjs"
+            },
+            "REST"
+          ]
+        },
+        {
+          "name": "[Client app name]",
+          "description": "[Platform, your role and outcome, e.g. built and released the iOS and Android app for …]",
+          "tech": ["[Flutter / React Native / Ionic]"]
+        }
+      ]
+    },
+    {
+      "id": "devops",
+      "slug": "devops",
+      "title": "DevOps / Cloud Engineer",
+      "headline": "DevOps / Cloud Engineer",
+      "scope": "Docker, Kubernetes, AWS, GCP and Azure for platform and cloud roles.",
+      "icon": "cloud",
+      "fileName": "odunayo-mohammed-devops.pdf",
+      "paper": "A4",
+      "pages": {
+        "target": 2,
+        "max": 3
+      },
+      "showPhone": true,
+      "links": ["linkedin", "github"],
+      "showWebsite": true,
+      "sections": [
+        "profile",
+        "skills",
+        "experience",
+        "earlier",
+        "clients",
+        "projects",
+        "education",
+        "languages",
+        "publications"
+      ],
+      "limits": {
+        "skills": 30,
+        "roles": 8,
+        "highlightsPerRole": 4,
+        "projects": 3
+      },
+      "summary": "DevOps and cloud engineer and CTO with {years}+ years in software, building the CI/CD pipelines, containers and cloud infrastructure that let teams ship safely and often. Works across AWS, Google Cloud and Microsoft Azure with Docker, Kubernetes, Jenkins and Azure DevOps, and brings a developer’s view of the systems being deployed (Node.js, Angular, TypeScript). Has owned production operations, network administration, information security and technology budgets.",
+      "skillGroups": [
+        {
+          "label": "Cloud",
+          "items": [
+            "Amazon Web Services",
+            {
+              "skill": "google-cloud"
+            },
+            {
+              "skill": "azure"
+            },
+            {
+              "skill": "digitalocean"
+            },
+            {
+              "skill": "heroku"
+            },
+            {
+              "skill": "vercel"
+            }
+          ]
+        },
+        {
+          "label": "Containers",
+          "items": [
+            {
+              "skill": "docker"
+            },
+            "Docker Compose",
+            {
+              "skill": "kubernetes"
+            }
+          ]
+        },
+        {
+          "label": "CI/CD",
+          "items": [
+            "Jenkins",
+            {
+              "skill": "azure-devops"
+            },
+            "GitHub Actions",
+            "trunk-based Git workflows",
+            "automated testing gates"
+          ]
+        },
+        {
+          "label": "Systems",
+          "items": [
+            "Linux (Ubuntu Server)",
+            {
+              "skill": "bash"
+            },
+            "Nginx",
+            "networking",
+            "backups and recovery"
+          ]
+        },
+        {
+          "label": "Operations",
+          "items": [
+            "Monitoring and alerting",
+            "incident response",
+            "information security management",
+            "cost control"
+          ]
+        },
+        {
+          "label": "Development",
+          "items": [
+            {
+              "skill": "nodejs"
+            },
+            {
+              "skill": "typescript"
+            },
+            {
+              "skill": "python"
+            },
+            {
+              "skill": "php"
+            },
+            {
+              "skill": "postgresql"
+            },
+            {
+              "skill": "mysql"
+            },
+            {
+              "skill": "mongodb"
+            },
+            "Elasticsearch"
+          ]
+        }
+      ],
+      "experience": {
+        "roles": [
+          "simple-finance-cto",
+          "simple-finance-cto-2021",
+          "eteam-cto",
+          {
+            "merge": ["mazadat-frontend-lead", "mazadat-senior-frontend"]
+          },
+          "abuad-it-support",
+          "travoofy-cto",
+          "investa-engineering-manager"
+        ],
+        "earlier": ["pmt-it-consultant", "nano-blockchain-senior-fullstack", "jit-web-developer"],
+        "stacks": {
+          "simple-finance": [
+            {
+              "skill": "docker"
+            },
+            {
+              "skill": "aws"
+            },
+            "CI/CD",
+            {
+              "skill": "linux"
+            },
+            {
+              "skill": "postgresql"
+            }
+          ],
+          "eteam-technology": [
+            {
+              "skill": "docker"
+            },
+            {
+              "skill": "kubernetes"
+            },
+            {
+              "skill": "aws"
+            },
+            "Azure",
+            {
+              "skill": "digitalocean"
+            },
+            "Jenkins"
+          ],
+          "mazadat": [
+            "Azure",
+            {
+              "skill": "docker"
+            },
+            "Jenkins",
+            "Elasticsearch",
+            {
+              "skill": "mongodb"
+            }
+          ]
+        }
+      },
+      "projects": [
+        {
+          "project": "factman-portfolio",
+          "name": "Factman portfolio pipeline",
+          "description": "Trunk-based CI/CD with build, test and preview deploys, plus scheduled jobs for content sync, link checks and résumé rebuilds.",
+          "tech": [
+            "GitHub Actions",
+            {
+              "skill": "vercel"
+            }
+          ]
+        },
+        {
+          "project": "ubuntu-server-setup"
+        },
+        {
+          "project": "covid19-api",
+          "description": "Open-source API serving daily COVID-19 figures to a mobile app and public clients.",
+          "tech": [
+            {
+              "skill": "nodejs"
+            },
+            {
+              "skill": "docker"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
