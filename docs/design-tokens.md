@@ -84,8 +84,23 @@ Allowed without tokens: `0`, `auto`, `inherit`, `initial`, `unset`, `none`, `tra
 ## Updating from the design system
 
 1. Copy the design system's `project/tokens.json` over `src/styles/factman/tokens.json`, and `project/components/bundle.css` over `src/styles/factman/bundle.css`.
-2. Run `pnpm ds:tokens` and `pnpm ds:split`.
+2. Run `pnpm ds:tokens` and `pnpm ds:split`, and `pnpm ds:icons --from <path/to/components/bundle.js>` for the icon set.
 3. `pnpm test:scripts` fails if the generated files drift from their sources, or if the split loses a line.
+
+## Icons (ETE-69, ADR-004)
+
+The design system's 227 icons live in `src/styles/factman/icons.json`, vendored from the DS `ICONS`. `pnpm ds:icons` turns them into `src/app/ui/atoms/icon/icons.ts`: one constant per icon (`arrow-right` → `iconArrowRight`), so a bundle carries only the icons its components import ([ADR-004](adr/004-per-icon-imports.md)).
+
+```ts
+import { Icon, iconArrowRight } from '@ui/atoms';
+// template: <fm-icon [icon]="arrow" [size]="16" />
+```
+
+- **Colour:** icons draw in `currentColor`; set the colour on a parent with an `--icon-*` or `--text-*` token.
+- **Size:** 16 (inline with small text), 20 (in controls) or 24 (on its own, the default).
+- **Accessibility:** decorative by default (`aria-hidden`); pass `label` when the icon stands alone.
+- **Icons chosen by data** (a skill's `icon` in `skills.json`): the page registers them on its route with `provideIcons([iconCloud, …])`, then `<fm-icon icon="cloud" />` works. The ds:icons tests check that every `icon` in `src/data` exists in the set.
+- **New DS version:** `pnpm ds:icons --from <path/to/components/bundle.js>`. `pnpm test:scripts` fails if `icons.ts` is out of date.
 
 ## Fonts
 

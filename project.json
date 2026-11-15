@@ -191,6 +191,9 @@
     },
     "ds:og": {
       "command": "tsx scripts/design-system/build-og.ts"
+    },
+    "ds:icons": {
+      "command": "tsx scripts/design-system/build-icons.ts"
     }
   }
 }
