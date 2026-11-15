@@ -15,6 +15,19 @@ body {
   background: var(--bg-canvas);
 }
 
+/*
+ * Text for screen readers only, such as a link's "(opens in a new tab)" note (ETE-68). The design
+ * system defines .fm-sr only inside its Range section, so it is made global here.
+ */
+.fm-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
 /* Skip link (ETE-43): hidden until it receives keyboard focus, then pinned top-left. */
 .skip-link:not(:focus) {
   position: absolute;

@@ -1,0 +1,24 @@
+<ng-template #inner>
+  <ng-content />
+  @if (opensNewTab()) {
+    <fm-icon [icon]="arrow" [size]="16" /><span class="fm-sr"> (opens in a new tab)</span>
+  }
+</ng-template>
+@let target = link();
+@if (target.kind === 'router') {
+  <a
+    class="fm-link"
+    [routerLink]="target.path"
+    [queryParams]="target.queryParams"
+    [fragment]="target.fragment"
+    ><ng-container [ngTemplateOutlet]="inner"
+  /></a>
+} @else {
+  <a
+    class="fm-link"
+    [attr.href]="target.url"
+    [attr.target]="opensNewTab() ? '_blank' : null"
+    [attr.rel]="opensNewTab() ? 'noopener noreferrer' : null"
+    ><ng-container [ngTemplateOutlet]="inner"
+  /></a>
+}
