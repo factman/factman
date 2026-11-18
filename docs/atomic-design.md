@@ -104,6 +104,7 @@ Every component has a story next to it (`<name>.stories.ts`). `pnpm storybook` r
 - **Styles:** stories load the same global styles as the app (tokens, fonts, the design system's shared CSS, `styles.scss`). Each component brings its own design-system CSS, as in the app.
 - **Accessibility gate:** every story runs axe in `pnpm test:storybook` (and in CI). Any violation fails the run. Don't switch a rule off to make a story pass; fix the component.
 - **Interaction tests:** put them in the story's `play` function; they run in the same suite.
+- **UI suite (PRD §12):** `src/app/ui/ui-suite` checks the PRD's UI-nn promises across the kit (keyboard paths, reduced motion). `pnpm test:scripts` fails when a UI-kit component has no spec or no story, and prints how many components per level have a spec, a story and a `play` test.
 
 ## How the rule is tested
 

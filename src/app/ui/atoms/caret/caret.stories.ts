@@ -1,4 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/angular-vite';
+import { expect } from 'storybook/test';
 
 import { Caret } from './caret';
 
@@ -17,6 +18,10 @@ export default meta;
 
 type Story = StoryObj<Caret>;
 
-export const Bar: Story = {};
+export const Bar: Story = {
+  play: async ({ canvasElement }) => {
+    await expect(canvasElement.querySelector('.fm-caret')).toHaveAttribute('aria-hidden', 'true');
+  },
+};
 
 export const Block: Story = { args: { shape: 'block' } };
