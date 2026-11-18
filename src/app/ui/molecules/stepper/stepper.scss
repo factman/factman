@@ -1,0 +1,24 @@
+// The design system's Stepper styles, loaded only with this component (docs/design-tokens.md).
+@use 'factman/components/stepper';
+
+// The step number circle (the DS sizes it per use).
+.fm-stepper .step-index {
+  width: 32px;
+  height: 32px;
+  font: 500 14px/1 var(--font-sans);
+}
+
+// The DS's upcoming titles and descriptions use --text-tertiary, under 4.5:1 at these sizes.
+.fm-stepper .step-title,
+.fm-stepper .step-desc {
+  color: var(--text-secondary);
+}
+
+.fm-stepper .step-current .step-title,
+.fm-stepper .step-completed .step-title {
+  color: var(--text-primary);
+}
+
+.fm-stepper .step-error .step-title {
+  color: var(--text-danger);
+}

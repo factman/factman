@@ -1,0 +1,31 @@
+// The design system's List styles, loaded only with this component (docs/design-tokens.md).
+@use 'factman/components/list';
+
+.fm-list.list {
+  max-width: none;
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+// A linked row: the whole row is the link, laid out like the DS row.
+.fm-list .list-link {
+  display: flex;
+  flex: 1;
+  gap: var(--gap-sm);
+  align-items: center;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.fm-list .list-link:focus-visible {
+  border-radius: var(--radius-sm);
+  outline: var(--border-width-lg) solid var(--border-focus);
+  outline-offset: 4px;
+}
+
+// The DS's description and value use secondary text; the chevron is decorative.
+.fm-list .list-row {
+  color: var(--text-primary);
+}

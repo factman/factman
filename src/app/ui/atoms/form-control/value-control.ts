@@ -1,5 +1,7 @@
-import { Directive, input, signal } from '@angular/core';
+import { Directive, type InputSignal, computed, inject, input, signal } from '@angular/core';
 import type { ControlValueAccessor } from '@angular/forms';
+
+import { FIELD_CONTEXT } from './field-context';
 
 let nextId = 0;
 
@@ -19,8 +21,19 @@ export abstract class ValueControl<T> implements ControlValueAccessor {
   readonly invalid = input(false);
   readonly required = input(false);
   readonly name = input<string>();
-  /** Ids of the hint and error text (FormField sets these). */
+  /** Ids of more text that describes the control. A FormField adds its hint and error itself. */
   readonly ariaDescribedby = input<string>();
+  /** The control's id, for a `<label for>`; a unique one by default. */
+  abstract readonly inputId: InputSignal<string>;
+
+  /** The FormField around this control, if any. */
+  protected readonly field = inject(FIELD_CONTEXT, { optional: true });
+  protected readonly controlId = computed(() => this.field?.controlId ?? this.inputId());
+  protected readonly describedByIds = computed(
+    () => [this.field?.describedBy(), this.ariaDescribedby()].filter(Boolean).join(' ') || null,
+  );
+  protected readonly isInvalid = computed(() => this.invalid() || !!this.field?.invalid());
+  protected readonly isRequired = computed(() => this.required() || !!this.field?.required());
 
   /** The value for "nothing": `''` for text, `false` for a checkbox. */
   protected abstract emptyValue(): T;

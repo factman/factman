@@ -38,6 +38,6 @@ export class TextArea extends ValueControl<string> {
   }
 
   protected readonly classes = computed(
-    () => `${fieldClasses(this.size(), this.invalid(), this.isDisabled())} fm-textarea`,
+    () => `${fieldClasses(this.size(), this.isInvalid(), this.isDisabled())} fm-textarea`,
   );
 }

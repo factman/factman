@@ -1,0 +1,49 @@
+// The design system's card and selectable-card styles, loaded only with this component.
+@use 'factman/components/card';
+
+.fm-selcard.selcard {
+  max-width: none;
+}
+
+.fm-selcard.selcard.is-disabled {
+  cursor: not-allowed;
+}
+
+// The DS's selected card ring, on the label.
+.fm-selcard.selcard.is-selected {
+  border-color: var(--glass-stroke-strong);
+  background: var(--glass-fill-elevated);
+  box-shadow: var(--shadow-glass-focus);
+}
+
+.fm-selcard .selcard-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  color: var(--icon-secondary);
+  background: var(--bg-sunken);
+}
+
+// The radio mark (the DS styles only its selected state).
+.fm-selcard .selcard-mark {
+  position: relative;
+  flex: none;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  border: var(--border-width-md) solid var(--border-default);
+  border-radius: var(--radius-full);
+  background: var(--glass-fill-strong);
+}
+
+.fm-selcard .selcard-mark.is-box {
+  border-radius: var(--radius-xs);
+}
+
+.fm-selcard.is-selected .selcard-mark.is-box::before {
+  border-radius: var(--radius-xs);
+}

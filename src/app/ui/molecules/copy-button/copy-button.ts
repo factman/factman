@@ -37,6 +37,8 @@ export class CopyButton {
   readonly label = input('Copy');
   readonly variant = input<ButtonVariant>('secondary');
   readonly size = input<ButtonSize>('sm');
+  /** A fuller name when the label is short, e.g. "Copy email address"; it must contain the label. */
+  readonly ariaLabel = input<string>();
 
   readonly copied = output<string>();
 

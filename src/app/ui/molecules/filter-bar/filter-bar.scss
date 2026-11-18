@@ -1,0 +1,28 @@
+// Layout for the filter bar; the chips, field and select bring their own design-system styles.
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filter-bar-chips,
+.filter-bar-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+  align-items: center;
+}
+
+.filter-bar-search {
+  width: 240px;
+}
+
+.filter-bar-sort {
+  width: 180px;
+}
+
+.filter-bar-count {
+  font-variant-numeric: tabular-nums;
+}

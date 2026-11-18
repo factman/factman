@@ -1,4 +1,9 @@
-<fm-button [variant]="variant()" [size]="size()" [leadingIcon]="icon()" (pressed)="copy()">{{
-  text()
-}}</fm-button>
+<fm-button
+  [variant]="variant()"
+  [size]="size()"
+  [leadingIcon]="icon()"
+  [ariaLabel]="state() === 'copied' ? undefined : ariaLabel()"
+  (pressed)="copy()"
+  >{{ text() }}</fm-button
+>
 <span class="fm-sr" role="status">{{ announcement() }}</span>

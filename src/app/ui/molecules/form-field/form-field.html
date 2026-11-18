@@ -1,0 +1,18 @@
+<div class="fm-field fm-field--fluid" [class.is-error]="invalid()">
+  <label class="fm-field__label" [for]="controlId">
+    {{ label() }}
+    @if (required()) {
+      <span class="form-field-required" aria-hidden="true">*</span>
+    }
+  </label>
+  <ng-content />
+  <!-- Always present, so screen readers announce an error when it appears. -->
+  <p class="fm-field__help" [id]="errorId" aria-live="polite" [hidden]="!error()">
+    @if (error(); as error) {
+      <span class="fm-field__helper"><fm-icon [icon]="alert" [size]="16" />{{ error }}</span>
+    }
+  </p>
+  @if (hint() && !error()) {
+    <p class="fm-field__help" [id]="hintId">{{ hint() }}</p>
+  }
+</div>

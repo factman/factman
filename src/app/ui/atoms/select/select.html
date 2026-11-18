@@ -2,13 +2,13 @@
   <div class="fm-field__control field-control">
     <select
       class="fm-field__input"
-      [id]="inputId()"
+      [id]="controlId()"
       [attr.name]="name()"
       [attr.aria-label]="ariaLabel()"
-      [attr.aria-describedby]="ariaDescribedby()"
-      [attr.aria-invalid]="invalid() || null"
+      [attr.aria-describedby]="describedByIds()"
+      [attr.aria-invalid]="isInvalid() || null"
       [class.is-placeholder]="!value()"
-      [required]="required()"
+      [required]="isRequired()"
       [disabled]="isDisabled()"
       (change)="commit($any($event.target).value)"
       (blur)="onTouched()"
