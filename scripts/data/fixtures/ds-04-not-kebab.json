@@ -1,0 +1,12 @@
+{
+  "rule": "DS-04",
+  "case": "an id that is not kebab-case",
+  "data": {
+    "skills": [
+      {
+        "id": "TypeScript",
+        "name": "TypeScript"
+      }
+    ]
+  }
+}

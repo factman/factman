@@ -1,0 +1,24 @@
+// After the design system's .fm-avatar-label (avatar.css), md size.
+.avatar-label {
+  display: inline-flex;
+  gap: var(--gap-sm);
+  align-items: center;
+  font-family: var(--font-sans);
+}
+
+.avatar-label-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-3xs);
+  min-width: 0;
+}
+
+.avatar-label-title {
+  font: 500 14px/18px var(--font-sans);
+  color: var(--text-primary);
+}
+
+.avatar-label-desc {
+  font: 400 12px/16px var(--font-sans);
+  color: var(--text-secondary);
+}

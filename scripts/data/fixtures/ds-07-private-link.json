@@ -1,0 +1,15 @@
+{
+  "rule": "DS-07",
+  "case": "a private project with a live link",
+  "data": {
+    "projects": [
+      {
+        "id": "bank",
+        "visibility": "private",
+        "links": {
+          "live": "https://bank.example.com"
+        }
+      }
+    ]
+  }
+}

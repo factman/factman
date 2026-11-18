@@ -1,0 +1,7 @@
+/* Factman "logo" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Logo ---------- */
+.fm-logo { display: inline-flex; align-items: center; gap: calc(var(--fm-logo-size, 48px) * 0.19); }
+.fm-logo__mark { display: block; flex: none; object-fit: contain; }
+.fm-logo__words { display: flex; flex-direction: column; font-family: var(--font-logo); font-weight: 500; letter-spacing: 0.14em; line-height: 1; color: var(--text-primary); font-size: calc(var(--fm-logo-size, 48px) * 0.354); }
+.fm-logo--stacked .fm-logo__words { font-size: calc(var(--fm-logo-size, 48px) * 0.3125); gap: calc(var(--fm-logo-size, 48px) * 0.08); }
+.fm-logo--art { display: block; height: auto; max-width: 100%; }

@@ -1,0 +1,19 @@
+/* Factman "notifications" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Notifications ---------- */
+.fm-notif { display: flex; align-items: flex-start; gap: var(--gap-sm); padding: var(--padding-sm); border-radius: var(--radius-md); cursor: default; }
+.fm-notif.is-unread { background: var(--glass-fill); }
+.fm-notif:hover { background: var(--glass-fill-hover); }
+.fm-notif__content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.fm-notif__title { font-size: 14px; line-height: 18px; font-weight: 600; color: var(--text-primary); }
+.fm-notif:not(.is-unread) .fm-notif__title { font-weight: 500; }
+.fm-notif__desc { font-size: 13px; line-height: 20px; color: var(--text-secondary); }
+.fm-notif__actions { display: flex; gap: var(--gap-xs); margin-top: 4px; }
+.fm-notif__meta { display: flex; flex-direction: column; align-items: flex-end; gap: var(--gap-xs); font-size: 11px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
+.fm-ncenter { display: flex; flex-direction: column; gap: var(--gap-xs); width: 400px; max-width: 100%; box-sizing: border-box; padding: var(--padding-md); border-radius: var(--radius-lg); background: var(--glass-fill-elevated); border: var(--border-width-sm) solid var(--glass-stroke-strong); box-shadow: var(--shadow-modal-elevation); -webkit-backdrop-filter: blur(var(--blur-modal-elevation)); backdrop-filter: blur(var(--blur-modal-elevation)); font-family: var(--font-sans); }
+.fm-ncenter--panel { border-radius: var(--radius-2xl) 0 0 var(--radius-2xl); min-height: 560px; }
+.fm-ncenter__head { display: flex; justify-content: space-between; align-items: center; }
+.fm-ncenter__title { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+.fm-ncenter__body { display: flex; flex-direction: column; gap: var(--gap-sm); max-height: 420px; overflow: auto; }
+.fm-ncenter__group { display: flex; flex-direction: column; gap: 4px; }
+.fm-ncenter__group .fm-feed__label { padding: 4px var(--padding-sm) 0; }
+.fm-ncenter__empty { padding: var(--padding-xl) 0; display: flex; justify-content: center; }

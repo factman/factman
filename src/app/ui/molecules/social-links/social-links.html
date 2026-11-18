@@ -1,0 +1,25 @@
+<ul class="social-links" [attr.aria-label]="label()">
+  @for (item of items(); track item.link.id) {
+    <li>
+      <a
+        class="fm-social"
+        [class.fm-social--icon]="variant() === 'icon'"
+        [href]="item.link.url"
+        [attr.target]="item.web ? '_blank' : null"
+        [attr.rel]="item.web ? 'noopener noreferrer' : null"
+        [attr.aria-label]="
+          variant() === 'icon' ? item.link.label + (item.web ? ' (opens in a new tab)' : '') : null
+        "
+        (click)="linkClick.emit(item.link)"
+      >
+        <span class="fm-social__logo"><fm-icon [icon]="item.icon" [size]="20" /></span>
+        @if (variant() === 'pill') {
+          {{ item.link.label }}
+          @if (item.web) {
+            <span class="fm-sr">(opens in a new tab)</span>
+          }
+        }
+      </a>
+    </li>
+  }
+</ul>

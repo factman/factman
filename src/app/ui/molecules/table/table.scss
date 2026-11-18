@@ -1,0 +1,22 @@
+// The design system's Table styles, loaded only with this component (docs/design-tokens.md).
+@use 'factman/components/table';
+
+// The caption is the table's title, styled like the DS table bar's title.
+.fm-table .table-caption {
+  padding: var(--padding-md) var(--padding-lg);
+  border-bottom: var(--border-width-sm) solid var(--border-subtle);
+  font: 600 16px/24px var(--font-sans);
+  color: var(--text-primary);
+  text-align: left;
+}
+
+.fm-table .table-row-head {
+  font-weight: 500;
+  text-align: left;
+}
+
+.fm-table [role='region']:focus-visible {
+  border-radius: var(--radius-lg);
+  outline: var(--border-width-lg) solid var(--border-focus);
+  outline-offset: 2px;
+}

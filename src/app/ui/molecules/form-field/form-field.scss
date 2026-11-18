@@ -1,0 +1,10 @@
+// The design system's field label, help and error styles, loaded only with this component.
+@use 'factman/components/textinput';
+
+.fm-field p {
+  margin: 0;
+}
+
+.fm-field .form-field-required {
+  color: var(--text-danger);
+}

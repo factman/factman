@@ -1,0 +1,24 @@
+<aside class="glance" aria-labelledby="glance-title">
+  <p class="glance-title" id="glance-title">At a glance</p>
+  <ul class="glance-roles" aria-label="Current roles">
+    @for (role of roles(); track role.title) {
+      <li>
+        <fm-avatar-label
+          [title]="role.title"
+          [description]="role.description"
+          [avatar]="role.avatar"
+        />
+      </li>
+    }
+  </ul>
+  <div class="glance-stats">
+    @for (stat of stats(); track stat.label) {
+      <fm-stat-counter [value]="stat.value" [suffix]="stat.suffix ?? ''" [label]="stat.label" />
+    }
+  </div>
+  <div class="glance-cta">
+    <fm-button variant="secondary" [full]="true" [href]="resumeHref()" [leadingIcon]="fileText"
+      >Get the résumé</fm-button
+    >
+  </div>
+</aside>

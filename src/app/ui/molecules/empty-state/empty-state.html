@@ -1,0 +1,18 @@
+<div class="fm-empty fm-empty--md empty-state" [class.fm-empty--card]="card()">
+  <span class="fm-empty__visual empty-visual" aria-hidden="true">
+    <span class="fm-empty__circle empty-circle"><fm-icon [icon]="icon()" [size]="24" /></span>
+  </span>
+  <div class="fm-empty__content">
+    <p class="fm-empty__title">{{ title() }}</p>
+    @if (description(); as description) {
+      <p class="fm-empty__desc">{{ description }}</p>
+    }
+  </div>
+  @if (actionLabel(); as actionLabel) {
+    <div class="fm-empty__actions">
+      <fm-button variant="secondary" size="sm" (pressed)="action.emit()">{{
+        actionLabel
+      }}</fm-button>
+    </div>
+  }
+</div>

@@ -1,0 +1,12 @@
+{
+  "rule": "DS-11",
+  "case": "a WhatsApp number with a plus sign and spaces",
+  "data": {
+    "contact": {
+      "whatsapp": {
+        "number": "+234 706 678 0373",
+        "message": "Hi"
+      }
+    }
+  }
+}

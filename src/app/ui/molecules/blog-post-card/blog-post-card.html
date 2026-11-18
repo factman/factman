@@ -1,0 +1,35 @@
+<article class="post-card" [class.is-row]="layout() === 'row'">
+  <div class="post-card-cover">
+    @if (post().cover; as cover) {
+      <fm-image [src]="cover" alt="" [width]="640" [height]="360" />
+    } @else {
+      <span class="post-card-ph" aria-hidden="true">Medium</span>
+    }
+  </div>
+  <div class="post-card-body">
+    <p class="post-card-meta">
+      <time [attr.datetime]="post().publishedAt">{{ date() }}</time> ·
+      {{ post().readingMinutes }} min read
+    </p>
+    <div role="heading" [attr.aria-level]="headingLevel()" class="post-card-title">
+      <a class="post-card-link" [href]="post().url" target="_blank" rel="noopener noreferrer"
+        >{{ post().title }}<span class="fm-sr"> (opens Medium in a new tab)</span></a
+      >
+    </div>
+    <p class="post-card-excerpt">{{ post().excerpt }}</p>
+    <div class="post-card-foot">
+      @if (post().tags.length) {
+        <ul class="post-card-tags" aria-label="Tags">
+          @for (tag of post().tags.slice(0, 3); track tag) {
+            <li>
+              <fm-tag size="sm">{{ tag }}</fm-tag>
+            </li>
+          }
+        </ul>
+      }
+      <span class="post-card-read" aria-hidden="true"
+        >Read <fm-icon [icon]="external" [size]="14"
+      /></span>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,12 @@
+<div [class]="classes()" [attr.role]="role()">
+  <span class="fm-alert__icon"><fm-icon [icon]="icon()" [size]="20" /></span>
+  <div class="fm-alert__content">
+    @if (title(); as title) {
+      <p class="fm-alert__title">{{ title }}</p>
+    }
+    <div class="fm-alert__desc"><ng-content /></div>
+  </div>
+  @if (dismissible()) {
+    <fm-icon-button [icon]="close" label="Dismiss" size="sm" (pressed)="dismissed.emit()" />
+  }
+</div>

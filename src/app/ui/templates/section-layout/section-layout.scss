@@ -1,0 +1,23 @@
+@use 'ui/layout';
+
+.section-layout {
+  @include layout.section;
+}
+
+.section-layout.is-tight {
+  @include layout.section-tight;
+}
+
+.section-layout-container {
+  @include layout.container;
+}
+
+.section-layout-body {
+  margin-top: var(--gap-3xl);
+}
+
+@media (width < 768px) {
+  .section-layout-body {
+    margin-top: var(--gap-xl);
+  }
+}

@@ -1,0 +1,21 @@
+// The design system's EmptyState styles, loaded only with this component (docs/design-tokens.md).
+@use 'factman/components/empty-state';
+
+.fm-empty.empty-state {
+  margin-inline: auto;
+}
+
+.fm-empty p {
+  margin: 0;
+}
+
+// The DS sizes the halo and circle per use.
+.fm-empty .empty-visual {
+  width: 72px;
+  height: 72px;
+}
+
+.fm-empty .empty-circle {
+  width: 48px;
+  height: 48px;
+}

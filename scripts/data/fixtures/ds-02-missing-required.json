@@ -1,0 +1,11 @@
+{
+  "rule": "DS-02",
+  "case": "a missing required field",
+  "file": "services",
+  "patch": [
+    {
+      "op": "remove",
+      "path": "/0/title"
+    }
+  ]
+}

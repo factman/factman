@@ -1,0 +1,209 @@
+{
+  "$schema": "node_modules/nx/schemas/project-schema.json",
+  "name": "factman",
+  "projectType": "application",
+  "sourceRoot": "src",
+  "targets": {
+    "data:validate": {
+      "command": "tsx scripts/data/validate.ts",
+      "cache": true,
+      "inputs": ["data"]
+    },
+    "data:types": {
+      "command": "tsx scripts/data/generate-types.ts",
+      "cache": true,
+      "inputs": [
+        "{projectRoot}/src/data/schemas/**/*",
+        "{projectRoot}/scripts/data/**/*.ts",
+        "sharedGlobals"
+      ],
+      "outputs": ["{projectRoot}/src/app/shared/models/generated"]
+    },
+    "data:docs": {
+      "command": "tsx scripts/data/generate-docs.ts",
+      "inputs": ["{projectRoot}/src/data/schemas/**/*", "{projectRoot}/scripts/data/**/*.ts"],
+      "outputs": ["{projectRoot}/docs/data-reference.md"],
+      "cache": true
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["data:validate", "data:types", "build-storybook"],
+      "inputs": [
+        "production",
+        {
+          "dependentTasksOutputFiles": "**/*"
+        },
+        "{projectRoot}/tools/build/add-storybook.mjs"
+      ],
+      "outputs": ["{projectRoot}/dist/factman"],
+      "options": {
+        "command": "ng build && node tools/build/add-storybook.mjs"
+      },
+      "configurations": {
+        "preview": {
+          "command": "ng build --configuration production,preview && node tools/build/add-storybook.mjs"
+        }
+      }
+    },
+    "watch": {
+      "command": "ng build --watch --configuration development",
+      "dependsOn": ["data:types"],
+      "continuous": true
+    },
+    "start": {
+      "command": "ng serve",
+      "dependsOn": ["data:types"],
+      "continuous": true
+    },
+    "serve:ssr:factman": {
+      "command": "node dist/factman/server/server.mjs",
+      "dependsOn": ["build"],
+      "continuous": true
+    },
+    "test": {
+      "command": "ng test",
+      "dependsOn": ["data:validate", "data:types"],
+      "inputs": ["source", "!{projectRoot}/e2e/**/*"]
+    },
+    "test:storybook": {
+      "command": "vitest run --project storybook",
+      "dependsOn": ["data:types"],
+      "cache": true,
+      "inputs": ["source", "!{projectRoot}/e2e/**/*"]
+    },
+    "test:scripts": {
+      "command": "node --import tsx --test --test-reporter=spec \"scripts/**/*.test.ts\"",
+      "cache": true,
+      "inputs": [
+        "source",
+        "{projectRoot}/docs/component-inventory.md",
+        "{projectRoot}/docs/data-reference.md",
+        "{projectRoot}/docs/interaction-and-motion.md"
+      ]
+    },
+    "test:lint-rules": {
+      "command": "node --test --test-reporter=spec tools/eslint/boundaries.test.mjs",
+      "cache": true,
+      "inputs": [
+        "{projectRoot}/tools/eslint/**/*",
+        "{projectRoot}/eslint.config.mjs",
+        "sharedGlobals"
+      ]
+    },
+    "test:headers": {
+      "command": "node --test --test-reporter=spec tools/vercel/headers.test.mjs",
+      "cache": true,
+      "inputs": ["{projectRoot}/tools/vercel/**/*", "{projectRoot}/vercel.json", "sharedGlobals"]
+    },
+    "test:build": {
+      "command": "node --test --test-reporter=spec \"tools/build/*.test.mjs\"",
+      "dependsOn": ["build"],
+      "cache": true,
+      "inputs": [
+        "{projectRoot}/tools/build/**/*",
+        "{projectRoot}/src/data/**/*.json",
+        "{projectRoot}/vercel.json",
+        {
+          "dependentTasksOutputFiles": "**/*.{js,html}"
+        }
+      ]
+    },
+    "csp:hashes": {
+      "command": "node tools/build/csp-hashes.mjs",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "nx:noop",
+      "dependsOn": ["lint:eslint", "lint:styles", "test:lint-rules"]
+    },
+    "lint:eslint": {
+      "command": "eslint .",
+      "cache": true,
+      "inputs": ["source"]
+    },
+    "lint:styles": {
+      "command": "stylelint \"src/**/*.{css,scss}\"",
+      "cache": true,
+      "inputs": [
+        "{projectRoot}/src/**/*.{css,scss}",
+        "{projectRoot}/.stylelintrc.json",
+        "sharedGlobals"
+      ]
+    },
+    "lint:fix": {
+      "command": "eslint . --fix"
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["data:types"],
+      "inputs": ["source"],
+      "options": {
+        "parallel": false,
+        "commands": [
+          "tsc -p tsconfig.app.json --noEmit",
+          "tsc -p tsconfig.spec.json --noEmit",
+          "tsc -p tsconfig.scripts.json --noEmit"
+        ]
+      }
+    },
+    "format": {
+      "command": "prettier --write ."
+    },
+    "format:check": {
+      "command": "prettier --check .",
+      "cache": true,
+      "inputs": ["default"]
+    },
+    "storybook": {
+      "command": "ng run factman:storybook",
+      "dependsOn": ["data:types"],
+      "continuous": true
+    },
+    "build-storybook": {
+      "command": "ng run factman:build-storybook",
+      "dependsOn": ["data:types"],
+      "cache": true,
+      "inputs": ["source", "!{projectRoot}/e2e/**/*"],
+      "outputs": ["{projectRoot}/storybook-static"]
+    },
+    "e2e": {
+      "command": "playwright test",
+      "dependsOn": ["build"],
+      "cache": false
+    },
+    "e2e:install": {
+      "command": "playwright install --with-deps"
+    },
+    "ds:tokens": {
+      "command": "tsx scripts/design-system/build-tokens.ts"
+    },
+    "ds:split": {
+      "command": "tsx scripts/design-system/split-components.ts"
+    },
+    "ds:fonts": {
+      "command": "tsx scripts/design-system/build-fonts.ts"
+    },
+    "ds:brand": {
+      "command": "tsx scripts/design-system/build-brand.ts"
+    },
+    "ds:portraits": {
+      "command": "tsx scripts/design-system/build-portraits.ts"
+    },
+    "ds:og": {
+      "command": "tsx scripts/design-system/build-og.ts"
+    },
+    "ds:icons": {
+      "command": "tsx scripts/design-system/build-icons.ts"
+    },
+    "vr": {
+      "command": "playwright test -c playwright.vr.config.ts",
+      "dependsOn": ["build"],
+      "cache": false
+    },
+    "vr:update": {
+      "command": "playwright test -c playwright.vr.config.ts --update-snapshots",
+      "dependsOn": ["build"],
+      "cache": false
+    }
+  }
+}

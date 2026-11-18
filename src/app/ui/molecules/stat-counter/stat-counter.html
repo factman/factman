@@ -1,0 +1,5 @@
+<p class="stat-counter" [class.is-framed]="framed()">
+  <span class="fm-sr">{{ value() }}{{ suffix() }} {{ label() }}</span>
+  <span class="stat-counter-value" aria-hidden="true">{{ shown() ?? value() }}{{ suffix() }}</span>
+  <span class="stat-counter-label" aria-hidden="true">{{ label() }}</span>
+</p>

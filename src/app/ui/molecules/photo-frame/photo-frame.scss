@@ -1,0 +1,109 @@
+// The canvas's photo frame (site.css .photo-frame, .about__plate, .contact-photo).
+.photo-frame {
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--padding-sm);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  background: var(--glass-fill-strong);
+  box-shadow: var(--shadow-glass-panel);
+  backdrop-filter: blur(var(--blur-glass-panel));
+}
+
+.photo-frame .photo-frame-media {
+  position: relative;
+  height: 100%;
+}
+
+.photo-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  object-position: center top;
+  background: var(--bg-surface);
+}
+
+.photo-frame .photo-frame-over:empty {
+  display: none;
+}
+
+// About: a 4:5 portrait; the plate overlaps the bottom-right corner.
+.photo-frame.is-plate {
+  max-width: 480px;
+  aspect-ratio: 4 / 5;
+}
+
+.photo-frame.is-plate .photo-frame-over {
+  position: absolute;
+  right: calc(var(--gap-xl) * -1);
+  bottom: var(--gap-3xl);
+  box-sizing: border-box;
+  padding: var(--padding-md) var(--padding-lg);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-lg);
+  background: var(--glass-chrome-panel);
+  box-shadow: var(--shadow-glass-panel);
+  backdrop-filter: blur(var(--blur-glass-panel));
+}
+
+// Contact: 16:9 with a note card over the left side.
+.photo-frame.is-note .photo-frame-media {
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+}
+
+.photo-frame.is-note img {
+  position: absolute;
+  inset: 0;
+  object-position: 70% center;
+}
+
+.photo-frame.is-note .photo-frame-over {
+  position: absolute;
+  top: 50%;
+  left: var(--gap-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: min(46%, 260px);
+  padding: var(--padding-md) var(--padding-lg);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  background: var(--glass-chrome-panel);
+  box-shadow: var(--shadow-glass-panel);
+  backdrop-filter: blur(var(--blur-glass-panel));
+  transform: translateY(-50%);
+}
+
+@media (width < 600px) {
+  .photo-frame.is-plate .photo-frame-over {
+    right: var(--gap-sm);
+  }
+
+  .photo-frame.is-note .photo-frame-media {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    aspect-ratio: auto;
+  }
+
+  .photo-frame.is-note img {
+    position: static;
+    aspect-ratio: 4 / 3;
+  }
+
+  .photo-frame.is-note .photo-frame-over {
+    position: static;
+    width: auto;
+    margin-top: var(--gap-sm);
+    box-shadow: none;
+    transform: none;
+  }
+}

@@ -1,0 +1,20 @@
+/* Factman "list" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- List ---------- */
+.fm-list { display: flex; flex-direction: column; gap: 2px; width: 100%; max-width: 380px; font-family: var(--font-sans); }
+.fm-list--inset { gap: 0; padding: var(--padding-xs); border-radius: var(--radius-lg); background: var(--glass-fill-strong); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-regular); }
+.fm-list--inset > .fm-list__item + .fm-list__item { border-top: var(--border-width-sm) solid var(--border-subtle); border-top-left-radius: 0; border-top-right-radius: 0; }
+.fm-list--grouped { gap: var(--gap-md); }
+.fm-list__group { display: flex; flex-direction: column; gap: var(--gap-xs); }
+.fm-list__gtitle { padding: 0 var(--padding-sm); font: 500 12px/16px var(--font-sans); color: var(--text-tertiary); }
+.fm-list__item { display: flex; align-items: center; gap: var(--gap-sm); width: 100%; box-sizing: border-box; padding: 10px 14px; border: 0; border-radius: var(--radius-md); background: transparent; color: var(--text-primary); font: inherit; text-align: left; text-decoration: none; }
+.fm-list__item.is-interactive { cursor: pointer; }
+.fm-list__item.is-interactive:hover, .fm-list__item.is-force-hover { background: var(--glass-fill-hover); }
+.fm-list__item.is-selected { background: var(--glass-fill-elevated); box-shadow: var(--shadow-glass-chip); }
+.fm-list__item:focus-visible, .fm-list__item.is-force-focus { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: -2px; }
+.fm-list__item.is-disabled { opacity: .45; cursor: not-allowed; }
+.fm-list__icon { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--bg-sunken); color: var(--icon-secondary); flex: none; }
+.fm-list__content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.fm-list__title { font-size: 14px; line-height: 18px; }
+.fm-list__desc { font-size: 12px; line-height: 16px; color: var(--text-secondary); }
+.fm-list__value { font-size: 14px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.fm-list__chev { color: var(--icon-tertiary); }

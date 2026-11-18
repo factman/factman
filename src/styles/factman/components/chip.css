@@ -1,0 +1,12 @@
+/* Factman "chip" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Chip ---------- */
+.fm-chip { display: inline-flex; align-items: center; gap: var(--gap-2xs); height: 24px; padding: 0 var(--padding-xs); box-sizing: border-box; border-radius: var(--radius-sm); background: var(--glass-fill-elevated); border: var(--border-width-sm) solid var(--glass-stroke-subtle); box-shadow: var(--shadow-glass-chip); color: var(--text-primary); font: 400 12px/16px var(--font-sans); white-space: nowrap; transition: border-color 150ms ease-out, background-color 150ms ease-out; }
+.fm-chip--sm { height: 20px; border-radius: var(--radius-xs); font-size: 10px; line-height: 14px; }
+.fm-chip--lg { height: 28px; font-size: 13px; }
+.fm-chip--xl { height: 32px; font-size: 14px; line-height: 20px; }
+.fm-chip__main, .fm-chip__x { display: inline-flex; align-items: center; gap: var(--gap-2xs); padding: 0; border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; }
+.fm-chip:hover, .fm-chip.is-force-hover { border-color: var(--border-hover); }
+.fm-chip.is-selected { background: var(--bg-inverse); color: var(--text-inverse); border-color: transparent; box-shadow: var(--shadow-button-raised-dark); }
+.fm-chip:focus-within, .fm-chip.is-force-focus { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: 2px; }
+.fm-chip.is-disabled { opacity: var(--opacity-disabled-control); background: var(--glass-fill-subtle); box-shadow: none; }
+.fm-chip.is-disabled button { cursor: not-allowed; }

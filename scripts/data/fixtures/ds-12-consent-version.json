@@ -1,0 +1,11 @@
+{
+  "rule": "DS-12",
+  "case": "a consent version that is not an integer",
+  "data": {
+    "site": {
+      "consent": {
+        "version": 1.5
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+/* Factman "banner" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Banner ---------- */
+.fm-banner { display: flex; align-items: center; gap: var(--gap-md); padding: 10px var(--padding-md) 10px var(--padding-xl); min-height: 52px; box-sizing: border-box; background: var(--tone-bg); border-bottom: var(--border-width-sm) solid var(--tone-bd); font-family: var(--font-sans); color: var(--text-primary); }
+.fm-banner__icon { display: inline-flex; color: var(--tone-ic); flex: none; }
+.fm-banner__text { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: var(--gap-xs); row-gap: 2px; }
+.fm-banner__title { font-size: 14px; line-height: 20px; font-weight: 600; }
+.fm-banner__desc { font-size: 13px; line-height: 20px; color: var(--text-secondary); }
+.fm-banner--inverse { color: var(--text-inverse); border-bottom-color: transparent; }
+.fm-banner--inverse .fm-banner__desc { color: var(--text-inverse); opacity: .8; }
+.fm-banner--inverse .fm-btn--tertiary { color: var(--text-inverse); }

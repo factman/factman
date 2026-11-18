@@ -1,0 +1,63 @@
+/* Factman "textinput" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- TextInput ---------- */
+.fm-field { display: flex; flex-direction: column; gap: var(--gap-xs); width: 100%; max-width: 320px; font-family: var(--font-sans); }
+.fm-field--fluid, .fm-fluid .fm-field { max-width: none; }
+.fm-field__label { padding: 0 var(--padding-md); font-size: 12px; line-height: 18px; color: var(--text-primary); }
+.fm-field__control {
+  --fm-h: 40px;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  height: var(--fm-h);
+  padding: 0 var(--padding-md);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-md);
+  background: var(--glass-fill);
+  box-shadow: var(--shadow-glass-regular);
+  -webkit-backdrop-filter: blur(var(--blur-glass-regular));
+  backdrop-filter: blur(var(--blur-glass-regular));
+  color: var(--icon-secondary);
+  transition: background-color 150ms ease-out, box-shadow 150ms ease-out, border-color 150ms ease-out;
+}
+.fm-field--sm .fm-field__control { --fm-h: 32px; padding: 0 var(--padding-sm); border-radius: var(--radius-sm); }
+.fm-field--lg .fm-field__control { --fm-h: 48px; }
+.fm-field--xl .fm-field__control { --fm-h: 56px; padding: 0 var(--padding-lg); }
+.fm-field__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 14px;
+  line-height: 20px;
+}
+.fm-field--sm .fm-field__input { font-size: 12px; line-height: 16px; }
+.fm-field--lg .fm-field__input, .fm-field--xl .fm-field__input { font-size: 16px; line-height: 24px; }
+.fm-field__input::placeholder { color: var(--text-tertiary); opacity: 1; }
+.fm-field__affix { font-size: 14px; line-height: 20px; color: var(--text-tertiary); flex: none; }
+.fm-field__clear { display: inline-flex; padding: 0; border: 0; background: transparent; color: var(--icon-secondary); cursor: pointer; border-radius: var(--radius-xs); }
+.fm-field__clear:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); }
+.fm-field__status { display: inline-flex; color: var(--icon-secondary); }
+.fm-field__status--success { color: var(--icon-success); }
+.fm-field__help { display: flex; justify-content: space-between; align-items: center; gap: var(--gap-xs); padding: 0 var(--padding-md); font-size: 12px; line-height: 18px; color: var(--text-secondary); }
+.fm-field__helper { display: inline-flex; align-items: center; gap: var(--gap-2xs); }
+.fm-field__helper .fm-icon { color: var(--icon-secondary); }
+.fm-field__counter { color: var(--text-tertiary); flex: none; font-variant-numeric: tabular-nums; }
+
+.fm-field__control:hover, .fm-field.is-force-hover .fm-field__control { background: var(--glass-fill-hover); }
+.fm-field__control:focus-within, .fm-field.is-force-active .fm-field__control {
+  background: var(--glass-fill-elevated);
+  border-color: var(--glass-stroke-strong);
+  border-width: var(--border-width-md);
+  box-shadow: var(--shadow-glass-focus);
+}
+.fm-field.is-success .fm-field__control { background: var(--glass-fill-strong); border-color: var(--border-success); }
+.fm-field.is-error .fm-field__control { background: var(--glass-fill-strong); border-color: var(--border-danger); }
+.fm-field.is-error .fm-field__help, .fm-field.is-error .fm-field__counter, .fm-field.is-error .fm-field__helper .fm-icon { color: var(--text-danger); }
+.fm-field.is-disabled { opacity: var(--opacity-disabled-field); }
+.fm-field.is-disabled .fm-field__control { background: var(--glass-fill-subtle); border-color: var(--glass-stroke-subtle); border-style: dashed; box-shadow: none; }
+.fm-field.is-disabled .fm-field__input { cursor: not-allowed; }

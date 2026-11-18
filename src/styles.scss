@@ -1,0 +1,80 @@
+/*
+ * Global styles. The Factman Design System loads before this file (angular.json):
+ *   1. src/styles/factman/tokens.css      design tokens (Light on :root, Dark on [data-theme="dark"])
+ *   2. src/styles/factman/components.css  fm-* component classes (the design system's bundle.css)
+ * Use tokens only: stylelint rejects raw colours, sizes and spacing (see docs/design-tokens.md).
+ */
+html {
+  background: var(--bg-canvas);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--bg-canvas);
+}
+
+/*
+ * Text for screen readers only, such as a link's "(opens in a new tab)" note (ETE-68). The design
+ * system defines .fm-sr only inside its Range section, so it is made global here.
+ */
+.fm-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+/* Skip link (ETE-43): hidden until it receives keyboard focus, then pinned top-left. */
+.skip-link:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.skip-link:focus {
+  position: fixed;
+  top: var(--gap-md);
+  left: var(--gap-md);
+  z-index: 1000;
+  padding: var(--padding-sm) var(--padding-md);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-glass-regular);
+  outline: var(--border-width-md) solid var(--border-focus);
+}
+
+/* <main> takes focus after navigation; the content is the cue, not a ring around the page. */
+main:focus {
+  outline: none;
+}
+
+/* Anchor targets clear the sticky navbar. */
+section[id] {
+  scroll-margin-top: var(--navbar-height);
+}
+
+/*
+ * Reduced motion (ETE-26): when the visitor asks for less motion, every animation and transition
+ * finishes at once (reveals appear, hovers snap) and smooth scrolling is off. Components also check
+ * prefersReducedMotion() to skip work: counters show their final value, typing shows the first role in full.
+ */
+@media (prefers-reduced-motion: reduce) {
+  /* stylelint-disable scale-unlimited/declaration-strict-value -- near-zero, not a design duration */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* stylelint-enable scale-unlimited/declaration-strict-value */
+}

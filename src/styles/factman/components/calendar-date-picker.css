@@ -1,0 +1,35 @@
+/* Factman "calendar-date-picker" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Calendar & date picker ---------- */
+.fm-cal { border-collapse: separate; border-spacing: 0 2px; font-family: var(--font-sans); }
+.fm-cal th { width: 32px; height: 24px; padding: 0; font: 500 10px/1 var(--font-sans); color: var(--text-tertiary); }
+.fm-cal th.is-holiday { color: var(--text-danger); }
+.fm-cal__cell { position: relative; width: 32px; height: 32px; padding: 0; text-align: center; }
+.fm-cal--md .fm-cal__cell, .fm-cal--md th { width: 40px; }
+.fm-cal--md .fm-cal__cell { height: 40px; }
+.fm-cal__cell.is-inrange { background: var(--bg-sunken); }
+.fm-cal__cell.is-rstart { background: linear-gradient(90deg, transparent 50%, var(--bg-sunken) 50%); }
+.fm-cal__cell.is-rend { background: linear-gradient(90deg, var(--bg-sunken) 50%, transparent 50%); }
+.fm-cal__day { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 0; border: var(--border-width-sm) solid transparent; border-radius: var(--radius-sm); background: transparent; color: var(--text-primary); font: 400 12px/1 var(--font-sans); font-variant-numeric: tabular-nums; cursor: pointer; }
+.fm-cal--md .fm-cal__day { width: 36px; height: 36px; font-size: 14px; }
+.fm-cal__day:hover { background: var(--bg-sunken); }
+.fm-cal__day:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: 1px; }
+.fm-cal__day.is-holiday { color: var(--text-danger); }
+.fm-cal__day.is-outside { color: var(--text-disabled); }
+.fm-cal__day.is-today { border-color: var(--border-strong); }
+.fm-cal__day.is-selected { background: var(--bg-inverse); color: var(--text-inverse); border-color: transparent; }
+.fm-cal__day:disabled { color: var(--text-disabled); text-decoration: line-through; cursor: not-allowed; background: transparent; }
+.fm-cal__dot { position: absolute; bottom: 2px; left: calc(50% - 2px); width: 4px; height: 4px; border-radius: var(--radius-full); background: var(--icon-secondary); }
+.fm-cal__day.is-selected .fm-cal__dot { background: var(--icon-inverse); }
+.fm-calhead { display: flex; align-items: center; justify-content: space-between; gap: var(--gap-xs); padding-bottom: var(--gap-xs); }
+.fm-calhead__title { font: 600 14px/20px var(--font-sans); color: var(--text-primary); }
+.fm-calhead__sp { width: 32px; }
+.fm-dp { display: inline-flex; box-sizing: border-box; border-radius: var(--radius-lg); background: var(--glass-fill-strong); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-panel); -webkit-backdrop-filter: blur(var(--blur-glass-panel)); backdrop-filter: blur(var(--blur-glass-panel)); font-family: var(--font-sans); overflow: hidden; }
+.fm-dp__main { display: flex; flex-direction: column; gap: var(--gap-sm); padding: var(--padding-md); }
+.fm-dp__months { display: flex; gap: var(--gap-xl); }
+.fm-dp__presets { display: flex; flex-direction: column; gap: 2px; padding: var(--padding-xs); border-right: var(--border-width-sm) solid var(--border-subtle); background: var(--glass-fill-subtle); min-width: 140px; }
+.fm-dp__preset { border: 0; background: transparent; text-align: left; padding: 8px var(--padding-sm); border-radius: var(--radius-sm); color: var(--text-primary); font: 400 13px/18px var(--font-sans); cursor: pointer; }
+.fm-dp__preset:hover { background: var(--glass-fill); }
+.fm-dp__foot { display: flex; justify-content: space-between; align-items: center; gap: var(--gap-xs); padding-top: var(--padding-sm); border-top: var(--border-width-sm) solid var(--border-subtle); }
+.fm-dp__actions { display: flex; gap: var(--gap-xs); }
+.fm-dateinput__pop, .fm-timeinput__pop { right: auto; }
+.fm-dateinput__pop .fm-dp, .fm-timeinput__pop .fm-tp { box-shadow: var(--shadow-modal-elevation); background: var(--glass-fill-elevated); }

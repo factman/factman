@@ -1,0 +1,8 @@
+<span [class]="classes()">
+  @if (label(); as label) {
+    <span aria-hidden="true">{{ text() }}</span
+    ><span class="fm-sr">{{ label }}</span>
+  } @else {
+    {{ text() }}
+  }
+</span>

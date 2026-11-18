@@ -1,0 +1,46 @@
+<div class="fm-table" [class.fm-table--compact]="density() === 'compact'">
+  <div class="fm-table__scroll" tabindex="0" role="region" [attr.aria-label]="caption()">
+    <table>
+      <caption class="table-caption">
+        {{
+          caption()
+        }}
+      </caption>
+      <thead>
+        <tr>
+          @for (col of columns(); track col.key) {
+            <th
+              class="fm-th"
+              scope="col"
+              [class.is-end]="col.align === 'end'"
+              [class.is-center]="col.align === 'center'"
+            >
+              {{ col.label }}
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows(); track $index) {
+          <tr class="fm-tr">
+            @for (col of columns(); track col.key; let first = $first) {
+              @if (first) {
+                <th class="fm-td table-row-head" scope="row" [class.is-end]="col.align === 'end'">
+                  {{ row[col.key] }}
+                </th>
+              } @else {
+                <td
+                  class="fm-td"
+                  [class.is-end]="col.align === 'end'"
+                  [class.is-center]="col.align === 'center'"
+                >
+                  {{ row[col.key] }}
+                </td>
+              }
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

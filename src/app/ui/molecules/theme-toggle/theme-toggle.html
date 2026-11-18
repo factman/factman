@@ -1,0 +1,12 @@
+@if (showLabel()) {
+  <fm-button
+    variant="tertiary"
+    size="sm"
+    [leadingIcon]="icon()"
+    [toggled]="dark()"
+    (pressed)="toggle()"
+    >Dark theme</fm-button
+  >
+} @else {
+  <fm-icon-button [icon]="icon()" label="Dark theme" [toggled]="dark()" (pressed)="toggle()" />
+}

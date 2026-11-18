@@ -1,0 +1,25 @@
+/* Factman "rating" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Rating ---------- */
+.fm-star { display: block; flex: none; }
+.fm-star__empty { fill: var(--bg-track); }
+.fm-star__full { fill: var(--icon-warning); }
+.fm-rating { display: inline-flex; align-items: center; gap: var(--gap-xs); font-family: var(--font-sans); }
+.fm-rating__stars { display: inline-flex; gap: 2px; }
+.fm-rating__value { font-size: 14px; font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.fm-rating__count { font-size: 13px; color: var(--text-tertiary); }
+.fm-rating-input { display: inline-flex; align-items: center; gap: var(--gap-sm); font-family: var(--font-sans); }
+.fm-rating__btn { display: inline-flex; padding: 2px; border: 0; background: transparent; border-radius: var(--radius-xs); cursor: pointer; transition: transform 150ms ease-out; }
+.fm-rating__btn:hover { transform: scale(1.1); }
+.fm-rating__btn:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); }
+.fm-rating__label { font-size: 13px; color: var(--text-secondary); min-width: 80px; }
+.fm-rating-input.is-disabled { opacity: .5; }
+.fm-rating-input.is-disabled .fm-rating__btn { cursor: not-allowed; transform: none; }
+.fm-rsum { display: flex; align-items: stretch; gap: var(--gap-lg); max-width: 420px; padding: var(--padding-lg); border-radius: var(--radius-lg); background: var(--glass-fill-strong); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-regular); font-family: var(--font-sans); }
+.fm-rsum__score { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+.fm-rsum__avg { font-size: 44px; line-height: 55px; font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.fm-rsum__total { font-size: 12px; color: var(--text-tertiary); }
+.fm-rsum__bars { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
+.fm-rsum__row { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.fm-rsum__n { width: 8px; }
+.fm-rsum__track { flex: 1; height: 6px; }
+.fm-rsum__c { width: 24px; text-align: right; color: var(--text-tertiary); }

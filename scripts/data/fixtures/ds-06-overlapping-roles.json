@@ -1,0 +1,22 @@
+{
+  "rule": "DS-06",
+  "case": "two roles in one organization with overlapping dates",
+  "data": {
+    "experience": [
+      {
+        "id": "acme",
+        "roles": [
+          {
+            "id": "lead",
+            "start": "2019-03"
+          },
+          {
+            "id": "dev",
+            "start": "2018-01",
+            "end": "2020-06"
+          }
+        ]
+      }
+    ]
+  }
+}

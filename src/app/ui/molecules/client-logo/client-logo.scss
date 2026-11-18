@@ -1,0 +1,52 @@
+// A logo on its plate (FR-51). Greyscale at rest; the colour switches instantly and the opacity
+// animates (docs/interaction-and-motion.md).
+.client-logo {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  align-items: center;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.client-logo-plate {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-sm) var(--padding-md);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-md);
+  background: var(--neutral-0);
+  opacity: 0.8;
+  filter: grayscale(1);
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+// White artwork sits on a dark plate in either theme.
+.client-logo-plate.is-dark {
+  background: var(--neutral-950);
+}
+
+.client-logo-plate img {
+  display: block;
+  max-width: 160px;
+  height: 32px;
+  object-fit: contain;
+}
+
+a.client-logo:hover .client-logo-plate,
+a.client-logo:focus-visible .client-logo-plate,
+span.client-logo:hover .client-logo-plate {
+  opacity: 1;
+  filter: none;
+}
+
+a.client-logo:focus-visible {
+  border-radius: var(--radius-md);
+  outline: var(--border-width-lg) solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.client-logo-name {
+  font: 500 12px/16px var(--font-sans);
+}

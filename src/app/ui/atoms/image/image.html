@@ -1,0 +1,18 @@
+<picture>
+  @if (sources().avif; as srcset) {
+    <source type="image/avif" [attr.srcset]="srcset" [attr.sizes]="sizes()" />
+  }
+  @if (sources().webp; as srcset) {
+    <source type="image/webp" [attr.srcset]="srcset" [attr.sizes]="sizes()" />
+  }
+  <img
+    [src]="src()"
+    [alt]="alt()"
+    [width]="width()"
+    [height]="height()"
+    [attr.loading]="loading()"
+    [attr.fetchpriority]="priority() ? 'high' : null"
+    [attr.class]="imgClass()"
+    decoding="async"
+  />
+</picture>

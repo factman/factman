@@ -1,0 +1,27 @@
+<div [class]="classes()">
+  <div class="fm-field__control field-control">
+    <select
+      class="fm-field__input"
+      [id]="controlId()"
+      [attr.name]="name()"
+      [attr.aria-label]="ariaLabel()"
+      [attr.aria-describedby]="describedByIds()"
+      [attr.aria-invalid]="isInvalid() || null"
+      [class.is-placeholder]="!value()"
+      [required]="isRequired()"
+      [disabled]="isDisabled()"
+      (change)="commit($any($event.target).value)"
+      (blur)="onTouched()"
+    >
+      @if (placeholder(); as placeholder) {
+        <option value="" disabled [selected]="!value()">{{ placeholder }}</option>
+      }
+      @for (o of options(); track o.value) {
+        <option [value]="o.value" [disabled]="o.disabled" [selected]="o.value === value()">
+          {{ o.label }}
+        </option>
+      }
+    </select>
+    <fm-icon [icon]="chevron" [size]="20" />
+  </div>
+</div>

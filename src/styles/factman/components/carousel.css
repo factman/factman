@@ -1,0 +1,21 @@
+/* Factman "carousel" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Carousel ---------- */
+.fm-dots { display: inline-flex; align-items: center; gap: var(--gap-2xs); }
+.fm-dots__dot { width: 6px; height: 6px; padding: 0; border: 0; border-radius: var(--radius-full); background: var(--bg-track-hover); cursor: pointer; transition: width 200ms ease-out, background-color 200ms ease-out; }
+.fm-dots--md .fm-dots__dot { width: 8px; height: 8px; }
+.fm-dots__dot.is-active { width: 20px; background: var(--bg-inverse); }
+.fm-dots--md .fm-dots__dot.is-active { width: 24px; }
+.fm-dots--light .fm-dots__dot { background: var(--alpha-white-55); }
+.fm-dots--light .fm-dots__dot.is-active { background: var(--neutral-0); }
+.fm-dots__dot:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: 2px; }
+.fm-carousel { display: flex; flex-direction: column; gap: var(--gap-md); align-items: flex-start; font-family: var(--font-sans); color: var(--text-primary); width: 100%; }
+.fm-carousel__head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--gap-sm); align-self: stretch; }
+.fm-carousel__heading { display: flex; flex-direction: column; gap: 2px; }
+.fm-carousel__title { display: flex; align-items: center; gap: var(--gap-xs); font-size: 16px; line-height: 24px; font-weight: 600; }
+.fm-carousel__title .fm-icon { color: var(--icon-secondary); }
+.fm-carousel__desc { font-size: 12px; line-height: 18px; color: var(--text-tertiary); }
+.fm-carousel__actions { display: flex; align-items: center; gap: var(--gap-2xs); }
+.fm-carousel__track { --per: 1; display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - (var(--per) - 1) * var(--gap-sm)) / var(--per)); gap: var(--gap-sm); align-self: stretch; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.fm-carousel__track::-webkit-scrollbar { display: none; }
+.fm-carousel__slide { scroll-snap-align: start; min-width: 0; }
+.fm-stat__cap { white-space: nowrap; }

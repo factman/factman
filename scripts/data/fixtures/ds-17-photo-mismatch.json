@@ -1,0 +1,18 @@
+{
+  "rule": "DS-17",
+  "case": "a photo with no alt text and a height that does not match the file",
+  "data": {
+    "profile": {
+      "photo": {
+        "src": "profile/photo.webp",
+        "alt": "",
+        "width": 800,
+        "height": 900
+      }
+    }
+  },
+  "assets": ["profile/photo.webp"],
+  "images": {
+    "profile/photo.webp": [800, 1000]
+  }
+}

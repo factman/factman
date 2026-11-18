@@ -1,0 +1,12 @@
+// The design system's `.fm-icode` (portfolio-code-terminal-ui.css), copied here so inline code
+// doesn't load the whole terminal file. Keep it in step with that file.
+.fm-icode {
+  /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- relative to the text (em), as in the DS */
+  padding: 0.15em 0.4em;
+  border: var(--border-width-sm) solid var(--code-border);
+  border-radius: var(--radius-xs);
+  font: 500 0.9em/1 var(--font-mono);
+  color: var(--syntax-function);
+  white-space: nowrap;
+  background: var(--code-chrome);
+}

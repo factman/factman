@@ -1,0 +1,42 @@
+<figure class="career-strip" [attr.aria-labelledby]="captionId">
+  <figcaption class="career-strip-caption">
+    <span class="career-strip-title" [id]="captionId">{{ caption() }}</span>
+    <span class="career-strip-desc">{{ description() }}</span>
+  </figcaption>
+  <div class="career-strip-chart" aria-hidden="true">
+    @for (row of rows(); track row.org) {
+      <div class="career-strip-row">
+        <span class="career-strip-org">{{ row.org }}</span>
+        <div class="career-strip-track">
+          @for (bar of row.bars; track $index) {
+            <span
+              class="career-strip-bar"
+              [title]="bar.label"
+              [style.left.%]="bar.left"
+              [style.width.%]="bar.width"
+              [style.background]="'var(--chart-series-' + (bar.series ?? 1) + ')'"
+            ></span>
+          }
+        </div>
+      </div>
+    }
+    <div class="career-strip-row">
+      <span></span>
+      <div class="career-strip-ticks">
+        @for (tick of ticks(); track tick) {
+          <span>{{ tick }}</span>
+        }
+      </div>
+    </div>
+  </div>
+  <ul class="fm-sr">
+    @for (row of rows(); track row.org) {
+      <li>
+        {{ row.org }}:
+        @for (bar of row.bars; track $index; let last = $last) {
+          {{ bar.label }}{{ last ? '' : '; ' }}
+        }
+      </li>
+    }
+  </ul>
+</figure>

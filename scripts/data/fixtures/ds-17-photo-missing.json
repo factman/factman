@@ -1,0 +1,15 @@
+{
+  "rule": "DS-17",
+  "case": "a photo file that does not exist",
+  "data": {
+    "profile": {
+      "photo": {
+        "src": "profile/photo.webp",
+        "alt": "Odunayo Mohammed",
+        "width": 800,
+        "height": 1000
+      }
+    }
+  },
+  "assets": []
+}

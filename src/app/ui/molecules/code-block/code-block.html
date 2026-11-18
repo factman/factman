@@ -1,0 +1,16 @@
+<fm-window-frame [title]="filename()">
+  <fm-copy-button
+    windowActions
+    [value]="code()"
+    label="Copy"
+    [ariaLabel]="'Copy ' + regionLabel()"
+    variant="tertiary"
+    (copied)="copied.emit($event)"
+  />
+  <pre
+    class="fm-code fm-codeblock"
+    tabindex="0"
+    role="region"
+    [attr.aria-label]="regionLabel()"
+  ><code>@for (line of lines(); track $index; let n = $index) {<span class="fm-code__line">@if (lineNumbers()) {<span class="fm-code__num" aria-hidden="true">{{ n + 1 }}</span>}@for (tok of line; track $index) {@if (tok.kind) {<span [class]="'tok-' + tok.kind">{{ tok.text }}</span>} @else {{{ tok.text }}}}</span>}</code></pre>
+</fm-window-frame>

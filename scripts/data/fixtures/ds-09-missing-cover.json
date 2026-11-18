@@ -1,0 +1,13 @@
+{
+  "rule": "DS-09",
+  "case": "a project cover that is not in src/assets",
+  "data": {
+    "projects": [
+      {
+        "id": "shop",
+        "cover": "projects/shop/cover.webp"
+      }
+    ]
+  },
+  "assets": []
+}

@@ -1,0 +1,26 @@
+<label [class]="classes()" [for]="controlId()">
+  <input
+    type="checkbox"
+    class="fm-check__input"
+    [id]="controlId()"
+    [checked]="value()"
+    [attr.name]="name()"
+    [attr.aria-describedby]="describedBy()"
+    [attr.aria-invalid]="isInvalid() || null"
+    [required]="isRequired()"
+    [disabled]="isDisabled()"
+    (change)="commit($any($event.target).checked)"
+    (blur)="onTouched()"
+  />
+  <span class="fm-check__box check-box" [class.is-on]="value()" aria-hidden="true">
+    @if (value()) {
+      <fm-icon [icon]="check" [size]="size() === 16 ? 12 : 16" />
+    }
+  </span>
+  <span class="fm-check__text">
+    {{ label() }}
+    @if (description(); as description) {
+      <span class="fm-check__desc" [id]="descId()">{{ description }}</span>
+    }
+  </span>
+</label>

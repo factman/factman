@@ -1,0 +1,6 @@
+{
+  "rule": "DS-01",
+  "case": "a data file that is not valid JSON",
+  "file": "services",
+  "raw": "[{\"id\": \"web-development\","
+}

@@ -1,0 +1,16 @@
+/* Factman "segmented-control" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Segmented control ---------- */
+.fm-seg { display: inline-flex; gap: 2px; padding: 4px; box-sizing: border-box; height: 40px; border-radius: var(--radius-md); background: var(--bg-sunken); box-shadow: var(--shadow-elevation-sunken); font-family: var(--font-sans); }
+.fm-seg--sm { height: 32px; border-radius: var(--radius-sm); }
+.fm-seg--lg { height: 48px; } .fm-seg--xl { height: 56px; border-radius: var(--radius-lg); padding: 6px; }
+.fm-seg--block { display: flex; }
+.fm-seg--block .fm-seg__item { flex: 1; }
+.fm-seg__item { display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 0 var(--padding-sm); border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--text-secondary); font: 400 13px/16px var(--font-sans); white-space: nowrap; cursor: pointer; transition: background-color 150ms ease-out, color 150ms ease-out; }
+.fm-seg--sm .fm-seg__item { border-radius: var(--radius-xs); font-size: 12px; }
+.fm-seg--lg .fm-seg__item, .fm-seg--xl .fm-seg__item { font-size: 14px; padding: 0 var(--padding-md); }
+.fm-seg--xl .fm-seg__item { border-radius: var(--radius-md); }
+.fm-seg__item:hover { color: var(--text-primary); }
+.fm-seg__item:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); }
+.fm-seg__item:disabled { color: var(--text-disabled); cursor: not-allowed; }
+.fm-seg__item.is-selected { background: var(--glass-fill-elevated); color: var(--text-primary); font-weight: 500; box-shadow: var(--shadow-glass-chip); }
+.fm-seg--contrast .fm-seg__item.is-selected { background: var(--bg-inverse); color: var(--text-inverse); box-shadow: var(--shadow-button-raised-dark); }

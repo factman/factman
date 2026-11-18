@@ -1,0 +1,7 @@
+/* Factman "split-dropdown-button" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Split & dropdown button ---------- */
+.fm-split { position: relative; display: inline-flex; }
+.fm-split .fm-split__main { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.fm-split .fm-split__toggle { border-top-left-radius: 0; border-bottom-left-radius: 0; width: auto; padding: 0 var(--padding-xs); margin-left: 1px; }
+.fm-split--secondary .fm-split__toggle { margin-left: -1px; }
+.fm-split__menu { position: absolute; top: calc(100% + 6px); left: 0; z-index: 50; animation: fm-fade 200ms ease-out; }

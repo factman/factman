@@ -1,0 +1,36 @@
+/* Factman "select-combobox" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Select / Combobox ---------- */
+.fm-select__wrap { position: relative; }
+.fm-select__control { width: 100%; box-sizing: border-box; font: inherit; text-align: left; cursor: pointer; }
+.fm-select__control:disabled, .fm-select__control[aria-disabled="true"] { cursor: not-allowed; }
+.fm-select__control:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: 2px; }
+.fm-select__value { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; line-height: 20px; color: var(--text-primary); }
+.fm-field--sm .fm-select__value { font-size: 12px; line-height: 16px; }
+.fm-field--lg .fm-select__value, .fm-field--xl .fm-select__value { font-size: 16px; line-height: 24px; }
+.fm-select__value.is-placeholder { color: var(--text-tertiary); }
+.fm-select__chev { color: var(--icon-secondary); flex: none; transition: transform 200ms ease-out; }
+[aria-expanded="true"] .fm-select__chev, .is-force-active .fm-select__chev { transform: rotate(180deg); }
+.fm-select__chips { flex: 1; min-width: 0; display: flex; gap: 4px; overflow: hidden; }
+.fm-select__menu { position: absolute; z-index: 50; top: calc(100% + 6px); left: 0; right: 0; }
+.fm-selmenu { display: flex; flex-direction: column; gap: 2px; box-sizing: border-box; max-height: 320px; overflow: auto; padding: var(--padding-2xs); border-radius: var(--radius-md); background: var(--glass-popover); border: var(--border-width-sm) solid var(--glass-stroke-strong); box-shadow: var(--shadow-modal-elevation); -webkit-backdrop-filter: blur(var(--blur-modal-elevation)); backdrop-filter: blur(var(--blur-modal-elevation)); font-family: var(--font-sans); animation: fm-fade 200ms ease-out; }
+.fm-selmenu--lg, .fm-selmenu--xl { border-radius: var(--radius-lg); padding: var(--padding-xs); }
+.fm-selmenu__search { display: flex; align-items: center; gap: var(--gap-xs); height: 32px; padding: 0 var(--padding-xs); margin-bottom: 4px; border-radius: var(--radius-sm); background: var(--glass-fill); border: var(--border-width-sm) solid var(--glass-stroke-subtle); color: var(--icon-secondary); }
+.fm-selmenu__search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text-primary); font: 400 13px/16px var(--font-sans); }
+.fm-selmenu__empty { padding: var(--padding-sm); font-size: 13px; color: var(--text-tertiary); text-align: center; display: flex; justify-content: center; }
+.fm-selmenu__foot { display: flex; justify-content: flex-end; gap: var(--gap-xs); padding: var(--padding-xs) 4px 4px; margin-top: 4px; border-top: var(--border-width-sm) solid var(--border-subtle); position: sticky; bottom: calc(-1 * var(--padding-2xs)); background: inherit; }
+.fm-option { display: flex; align-items: center; gap: var(--gap-xs); min-height: 32px; box-sizing: border-box; padding: 4px var(--padding-xs); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 12px; line-height: 16px; cursor: pointer; }
+.fm-option--md { min-height: 36px; font-size: 14px; line-height: 20px; padding: 6px var(--padding-sm); }
+.fm-option--lg, .fm-option--xl { min-height: 40px; font-size: 14px; line-height: 20px; padding: 4px var(--padding-sm); border-radius: var(--radius-md); }
+.fm-option.is-active, .fm-option:hover { background: var(--glass-fill); }
+.fm-option.is-selected { background: var(--glass-fill-elevated); box-shadow: var(--shadow-glass-chip); }
+.fm-option.is-disabled { opacity: .4; cursor: not-allowed; }
+.fm-option__icon { color: var(--icon-secondary); flex: none; }
+.fm-option__content { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.fm-option__title strong { font-weight: 700; }
+.fm-option__desc { font-size: 12px; line-height: 16px; color: var(--text-tertiary); }
+.fm-option__check { color: var(--icon-primary); flex: none; }
+.fm-option__box { width: 16px; height: 16px; }
+.fm-combo__control { cursor: text; }
+.fm-combo__control .fm-select__chips { flex: 0 1 auto; }
+.fm-combo__meta { padding: 6px var(--padding-sm); font: 500 11px/14px var(--font-sans); color: var(--text-tertiary); }
+.fm-combo__menu { border-radius: var(--radius-lg); padding: var(--padding-xs); }

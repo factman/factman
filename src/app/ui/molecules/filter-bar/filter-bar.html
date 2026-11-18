@@ -1,0 +1,43 @@
+<div class="filter-bar">
+  <div class="filter-bar-chips" role="group" [attr.aria-label]="label()">
+    @for (o of options(); track o.value) {
+      <fm-chip [value]="o.value" [selected]="chosen().includes(o.value)" (toggled)="toggle($event)">
+        {{ o.label }}
+        @if (o.count !== undefined) {
+          <span class="filter-bar-count">{{ o.count }}</span>
+        }
+      </fm-chip>
+    }
+    @if (active()) {
+      <fm-button variant="text" size="sm" (pressed)="clear()">Clear filters</fm-button>
+    }
+  </div>
+  @if (searchLabel() || sortOptions()) {
+    <div class="filter-bar-tools">
+      @if (searchLabel(); as searchLabel) {
+        <div class="filter-bar-search">
+          <fm-text-input
+            type="search"
+            size="sm"
+            [leadingIcon]="searchIcon"
+            [ariaLabel]="searchLabel"
+            [placeholder]="searchLabel"
+            [ngModel]="text()"
+            (ngModelChange)="search($event)"
+          />
+        </div>
+      }
+      @if (sortOptions(); as sortOptions) {
+        <div class="filter-bar-sort">
+          <fm-select
+            size="sm"
+            ariaLabel="Sort by"
+            [options]="sortOptions"
+            [ngModel]="order()"
+            (ngModelChange)="sortBy($event)"
+          />
+        </div>
+      }
+    </div>
+  }
+</div>

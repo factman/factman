@@ -1,0 +1,32 @@
+<ng-template #row let-item>
+  @if (item.icon) {
+    <span class="fm-list__icon" aria-hidden="true"><fm-icon [icon]="item.icon" [size]="20" /></span>
+  }
+  <span class="fm-list__content">
+    <span class="fm-list__title">{{ item.title }}</span>
+    @if (item.description) {
+      <span class="fm-list__desc">{{ item.description }}</span>
+    }
+  </span>
+  @if (item.value) {
+    <span class="fm-list__value">{{ item.value }}</span>
+  }
+  @if (item.href) {
+    <span class="fm-list__chev"><fm-icon [icon]="chevron" [size]="16" /></span>
+  }
+</ng-template>
+<ul class="fm-list list" [class.fm-list--inset]="variant() === 'inset'">
+  @for (item of items(); track $index) {
+    @if (item.href) {
+      <li class="fm-list__item is-interactive list-row">
+        <a class="list-link" [routerLink]="item.href"
+          ><ng-container *ngTemplateOutlet="row; context: { $implicit: item }"
+        /></a>
+      </li>
+    } @else {
+      <li class="fm-list__item list-row">
+        <ng-container *ngTemplateOutlet="row; context: { $implicit: item }" />
+      </li>
+    }
+  }
+</ul>

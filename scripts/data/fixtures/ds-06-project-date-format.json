@@ -1,0 +1,12 @@
+{
+  "rule": "DS-06",
+  "case": "a project date with slashes",
+  "data": {
+    "projects": [
+      {
+        "id": "shop",
+        "startedAt": "2020/03"
+      }
+    ]
+  }
+}

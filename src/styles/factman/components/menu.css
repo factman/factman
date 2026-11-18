@@ -1,0 +1,18 @@
+/* Factman "menu" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Menu ---------- */
+.fm-menu { display: flex; flex-direction: column; gap: 2px; min-width: 200px; box-sizing: border-box; padding: var(--padding-2xs); border-radius: var(--radius-md); background: var(--glass-popover); border: var(--border-width-sm) solid var(--glass-stroke-strong); box-shadow: var(--shadow-modal-elevation); -webkit-backdrop-filter: blur(var(--blur-modal-elevation)); backdrop-filter: blur(var(--blur-modal-elevation)); font-family: var(--font-sans); }
+.fm-menu-panel--lg { border-radius: var(--radius-lg); padding: var(--padding-xs); }
+.fm-menu__item { display: flex; align-items: center; gap: var(--gap-xs); width: 100%; min-height: 32px; box-sizing: border-box; padding: 4px var(--padding-xs); border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--text-primary); font: 400 12px/18px var(--font-sans); text-align: left; cursor: pointer; }
+.fm-menu__item .fm-icon { color: var(--icon-secondary); }
+.fm-menu--md.fm-menu__item { min-height: 36px; font-size: 14px; line-height: 20px; padding: 6px var(--padding-sm); }
+.fm-menu--lg.fm-menu__item { min-height: 44px; font-size: 14px; line-height: 20px; padding: 8px var(--padding-sm); border-radius: var(--radius-md); }
+.fm-menu__item:hover, .fm-menu__item:focus-visible, .fm-menu__item.is-force-hover { background: var(--glass-fill-hover); outline: 0; box-shadow: var(--shadow-glass-chip); }
+.fm-menu__item.is-force-focus, .fm-menu__item:focus-visible { box-shadow: inset 0 0 0 2px var(--border-focus); }
+.fm-menu__item.is-danger, .fm-menu__item.is-danger .fm-icon { color: var(--text-danger); }
+.fm-menu__item.is-danger:hover { background: var(--bg-danger-subtle); }
+.fm-menu__item:disabled { opacity: .45; cursor: not-allowed; background: transparent; box-shadow: none; }
+.fm-menu__text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.fm-menu__desc { font-size: 12px; line-height: 16px; color: var(--text-tertiary); }
+.fm-menu__sub { color: var(--icon-tertiary); }
+.fm-menu__divider { height: 1px; margin: 4px 0; background: var(--border-subtle); }
+.fm-menu__group { padding: 8px var(--padding-sm) 4px; font: 500 11px/16px var(--font-sans); letter-spacing: .04em; text-transform: uppercase; color: var(--text-tertiary); }

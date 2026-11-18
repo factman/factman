@@ -1,0 +1,30 @@
+{
+  "rule": "DS-05",
+  "case": "a project stack and a role naming skills that do not exist",
+  "data": {
+    "skills": [
+      {
+        "id": "angular",
+        "name": "Angular"
+      }
+    ],
+    "projects": [
+      {
+        "id": "shop",
+        "stack": ["angular", "vue"]
+      }
+    ],
+    "experience": [
+      {
+        "id": "acme",
+        "roles": [
+          {
+            "id": "dev",
+            "start": "2020-01",
+            "skills": ["rust"]
+          }
+        ]
+      }
+    ]
+  }
+}

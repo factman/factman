@@ -1,0 +1,67 @@
+/* Factman "button" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Button ---------- */
+.fm-btn {
+  --fm-h: 40px;
+  --fm-px: var(--padding-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-xs);
+  height: var(--fm-h);
+  padding: 0 var(--fm-px);
+  border: var(--border-width-sm) solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 150ms ease-out, box-shadow 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out;
+}
+.fm-btn--sm { --fm-h: 32px; --fm-px: var(--padding-sm); border-radius: var(--radius-sm); font-size: 12px; line-height: 16px; }
+.fm-btn--lg { --fm-h: 48px; --fm-px: var(--padding-lg); font-size: 16px; line-height: 24px; }
+.fm-btn--xl { --fm-h: 56px; --fm-px: var(--padding-xl); font-size: 16px; line-height: 24px; }
+.fm-btn--icon { padding: 0; width: var(--fm-h); }
+.fm-btn:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: 2px; }
+
+.fm-btn--primary { background: var(--bg-inverse); color: var(--text-inverse); box-shadow: var(--shadow-button-raised-dark); }
+.fm-btn--primary:hover { background: var(--bg-inverse-hover); }
+.fm-btn--primary:active, .fm-btn--primary.is-pressed { background: var(--bg-inverse); box-shadow: var(--shadow-button-pressed-dark); }
+
+.fm-btn--secondary {
+  background: var(--glass-fill-strong);
+  border-color: var(--glass-stroke);
+  box-shadow: var(--shadow-glass-regular);
+  -webkit-backdrop-filter: blur(var(--blur-glass-regular));
+  backdrop-filter: blur(var(--blur-glass-regular));
+}
+.fm-btn--secondary:hover { background: var(--glass-fill-elevated); border-color: var(--glass-stroke-strong); box-shadow: var(--shadow-glass-focus); }
+.fm-btn--secondary:active, .fm-btn--secondary.is-pressed { background: var(--glass-fill); border-color: var(--glass-stroke); box-shadow: var(--shadow-button-pressed-light); }
+
+.fm-btn--tertiary:hover, .fm-btn--text:hover { background: var(--glass-fill); }
+.fm-btn--tertiary:active, .fm-btn--tertiary.is-pressed, .fm-btn--text:active, .fm-btn--text.is-pressed { background: var(--glass-fill-hover); }
+.fm-btn--text { color: var(--text-secondary); }
+
+.fm-btn--dashed { border-style: dashed; border-color: var(--border-strong); }
+.fm-btn--dashed:hover { background: var(--glass-fill); }
+
+.fm-btn--link { padding: 0; height: auto; min-height: var(--fm-h); text-decoration: underline; text-underline-offset: 3px; }
+.fm-btn--link:hover { color: var(--text-info); }
+
+.fm-btn--danger { background: var(--bg-danger-subtle); color: var(--text-danger); }
+.fm-btn--danger:hover { border-color: var(--border-danger); }
+
+.fm-btn--danger-solid { background: var(--bg-danger); color: var(--text-on-danger); box-shadow: var(--shadow-button-raised-dark); }
+.fm-btn--danger-solid:hover { background: var(--bg-danger-hover); }
+.fm-btn--danger-solid:active, .fm-btn--danger-solid.is-pressed { box-shadow: var(--shadow-button-pressed-dark); }
+
+.fm-btn.is-loading { cursor: progress; }
+.fm-btn:disabled:not(.is-loading), .fm-btn[aria-disabled="true"] { cursor: not-allowed; color: var(--text-disabled); box-shadow: none; }
+.fm-btn--primary:disabled:not(.is-loading), .fm-btn--danger:disabled:not(.is-loading), .fm-btn--danger-solid:disabled:not(.is-loading) { background: var(--bg-disabled); border-color: transparent; }
+.fm-btn--secondary:disabled:not(.is-loading) { background: var(--glass-fill-subtle); border-color: var(--glass-stroke-subtle); border-style: dashed; }
+.fm-btn--dashed:disabled:not(.is-loading) { border-color: var(--border-disabled); background: transparent; }
+.fm-btn--tertiary:disabled, .fm-btn--text:disabled, .fm-btn--link:disabled { background: transparent; }

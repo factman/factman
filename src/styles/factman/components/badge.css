@@ -1,0 +1,9 @@
+/* Factman "badge" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Badge ---------- */
+.fm-badge { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; min-width: 16px; height: 16px; padding: 0 5px; border: var(--border-width-lg) solid var(--bg-surface); border-radius: var(--radius-full); background: var(--border-danger); color: var(--text-inverse); font: 600 10px/1 var(--font-sans); font-variant-numeric: tabular-nums; }
+.fm-badge--md { min-width: 20px; height: 20px; padding: 0 6px; font-size: 11px; }
+.fm-badge--dot { min-width: 0; width: 8px; height: 8px; padding: 0; }
+.fm-badge--md.fm-badge--dot { width: 10px; height: 10px; }
+.fm-badge--inverse { background: var(--bg-inverse); }
+.fm-badge--neutral { background: var(--bg-sunken); color: var(--text-primary); }
+.fm-badge--success { background: var(--border-success); }

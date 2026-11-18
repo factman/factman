@@ -1,0 +1,53 @@
+<aside class="side-card booking-card" aria-labelledby="booking-title">
+  <div class="booking-card-who">
+    <fm-avatar [name]="person().name" [src]="person().photo" size="lg" />
+    <div class="booking-card-person">
+      <span class="booking-card-name">{{ person().name }}</span>
+      <span class="booking-card-meta">{{ person().meta }}</span>
+    </div>
+  </div>
+  <fm-availability-badge status="available" />
+  <div>
+    <h2 class="side-card-title" id="booking-title">Book {{ service() }}</h2>
+    <p class="side-card-text">
+      Pricing: <strong class="booking-card-price">{{ price() }}</strong
+      >. Email and WhatsApp open with the service name filled in.
+    </p>
+  </div>
+  <fm-schedule-call-button
+    [full]="true"
+    [service]="service()"
+    (schedule)="channel.emit('schedule')"
+  />
+  <fm-button
+    variant="secondary"
+    size="lg"
+    [full]="true"
+    [href]="booking().email"
+    [leadingIcon]="mail"
+    (pressed)="channel.emit('email')"
+    >Email me</fm-button
+  >
+  <fm-button
+    variant="secondary"
+    size="lg"
+    [full]="true"
+    [href]="booking().whatsapp"
+    [leadingIcon]="whatsapp"
+    (pressed)="channel.emit('whatsapp')"
+    >WhatsApp</fm-button
+  >
+  <fm-button
+    variant="tertiary"
+    size="lg"
+    [full]="true"
+    [href]="booking().phone"
+    [leadingIcon]="phoneCall"
+    (pressed)="channel.emit('phone')"
+    >{{ phoneLabel() }}</fm-button
+  >
+  <fm-divider label="or" />
+  <fm-button variant="link" size="sm" [href]="briefHref()" [trailingIcon]="arrow"
+    >Send a detailed brief</fm-button
+  >
+</aside>

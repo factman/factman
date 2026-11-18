@@ -1,0 +1,75 @@
+@use 'ui/card';
+
+.resume-card {
+  @include card.surface;
+}
+
+// The first page at A4 proportions on the code-grid backdrop.
+.resume-card-thumb {
+  @include card.placeholder;
+
+  height: auto;
+  padding: var(--padding-lg) var(--padding-lg) 0;
+  border-bottom: var(--border-width-sm) solid var(--border-subtle);
+}
+
+.resume-card-thumb img,
+.resume-card-page {
+  display: block;
+  width: 60%;
+  height: auto;
+  aspect-ratio: 210 / 297;
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+  background: var(--neutral-0);
+  box-shadow: var(--shadow-glass-regular);
+}
+
+// A placeholder page: a few grey lines.
+.resume-card-page {
+  box-sizing: border-box;
+  padding: var(--padding-md);
+}
+
+.resume-card-page i {
+  display: block;
+  height: 6px;
+  margin-bottom: var(--gap-xs);
+  border-radius: var(--radius-full);
+  background: var(--neutral-50);
+}
+
+.resume-card-page i:first-child {
+  width: 60%;
+  height: 10px;
+}
+
+.resume-card-body {
+  @include card.body;
+}
+
+.resume-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  color: var(--blue-900);
+  background: linear-gradient(135deg, var(--ice-300), var(--ice-200));
+}
+
+.resume-card-title {
+  @include card.title;
+}
+
+.resume-card-scope {
+  @include card.text;
+}
+
+.resume-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+  margin-top: auto;
+  padding-top: var(--gap-sm);
+}

@@ -1,0 +1,24 @@
+<label class="selcard" [class.is-selected]="selected()" [class.is-disabled]="disabled()" [for]="id">
+  <input
+    class="selcard-input"
+    [id]="id"
+    [type]="type()"
+    [attr.name]="name()"
+    [attr.value]="value()"
+    [checked]="selected()"
+    [disabled]="disabled()"
+    [attr.aria-labelledby]="id + '-title'"
+    [attr.aria-describedby]="description() ? id + '-desc' : null"
+    (change)="selectedChange.emit($any($event.target).checked)"
+  />
+  @if (icon(); as icon) {
+    <span class="selcard-icon" aria-hidden="true"><fm-icon [icon]="icon" [size]="20" /></span>
+  }
+  <span class="selcard-text">
+    <span class="selcard-title" [id]="id + '-title'">{{ title() }}</span>
+    @if (description(); as description) {
+      <span class="selcard-desc" [id]="id + '-desc'">{{ description }}</span>
+    }
+  </span>
+  <span class="selcard-mark" [class.is-box]="type() === 'checkbox'" aria-hidden="true"></span>
+</label>

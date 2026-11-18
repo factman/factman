@@ -1,0 +1,15 @@
+// The design system's social buttons, loaded only with this component (docs/design-tokens.md).
+@use 'factman/components/social-button';
+
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social-links a {
+  text-decoration: none;
+}

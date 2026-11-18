@@ -1,0 +1,11 @@
+/* Factman "tooltip" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Tooltip ---------- */
+.fm-tooltip { position: relative; display: inline-block; max-width: 240px; border-radius: var(--radius-sm); font-family: var(--font-sans); }
+.fm-tooltip--dark { background: var(--bg-inverse); color: var(--text-inverse); box-shadow: var(--shadow-tooltip-dark); }
+.fm-tooltip--glass { background: var(--glass-fill-elevated); border: var(--border-width-sm) solid var(--glass-stroke-strong); color: var(--text-primary); box-shadow: var(--shadow-modal-elevation); }
+.fm-tooltip__body { position: relative; z-index: 2; padding: var(--padding-xs) var(--padding-sm); font-size: 12px; line-height: 18px; font-weight: 500; }
+.fm-tooltip--rich { border-radius: var(--radius-md); }
+.fm-tooltip--rich .fm-tooltip__body { display: flex; flex-direction: column; gap: var(--gap-2xs); padding: var(--padding-sm); font-weight: 400; }
+.fm-tooltip__title { font-size: 13px; line-height: 20px; font-weight: 600; }
+.fm-tooltip__desc { opacity: .85; }
+.fm-tooltip__action { align-self: flex-start; margin-top: var(--gap-2xs); border: 0; padding: 0; background: transparent; color: inherit; font: 600 12px/18px var(--font-sans); text-decoration: underline; cursor: pointer; }

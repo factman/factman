@@ -1,0 +1,11 @@
+// The design system's Accordion styles, loaded only with this component (docs/design-tokens.md).
+@use 'factman/components/accordion';
+
+// A FAQ fills its column, and only opacity and transform animate (the chevron turns).
+.fm-acc.accordion {
+  max-width: none;
+}
+
+.fm-acc .acc-item {
+  transition: none;
+}

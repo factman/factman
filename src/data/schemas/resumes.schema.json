@@ -1,0 +1,354 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.factman.dev/schemas/resumes.schema.json",
+  "title": "Resumes",
+  "description": "The downloadable résumés (PRD FR-38 to FR-49, canvas page 06). Each résumé picks its roles, skills and projects from the other data files; only role-specific wording lives here. Text may use {years} (years since profile.careerStart), {since:<skill id>} (that skill's start year) and [placeholders] filled from `placeholders`.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["placeholders", "resumes"],
+  "properties": {
+    "placeholders": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/placeholder"
+      },
+      "description": "Values for the [bracketed] tokens in résumé text. A token without a value stays in the text and is highlighted on previews."
+    },
+    "resumes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/resume"
+      }
+    }
+  },
+  "$defs": {
+    "item": {
+      "description": "A skill from skills.json (its name is shown, with \"(since YYYY)\" when `since` is true), or literal text.",
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["skill"],
+          "properties": {
+            "skill": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            },
+            "since": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    },
+    "placeholder": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["token", "value"],
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^\\[[^\\[\\]\\n]+\\]$",
+          "description": "Exactly as it appears in the text, brackets included."
+        },
+        "value": {
+          "type": ["string", "null"],
+          "description": "Replacement text; null until the owner supplies it."
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Where the token is used, to help fill it in."
+        }
+      }
+    },
+    "resume": {
+      "title": "Resume",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "title",
+        "headline",
+        "scope",
+        "icon",
+        "fileName",
+        "paper",
+        "pages",
+        "showPhone",
+        "links",
+        "showWebsite",
+        "summary",
+        "sections",
+        "skillGroups",
+        "experience",
+        "projects",
+        "limits"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "Used by highlight `tracks` in experience.json."
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Card title, footer and running header, e.g. Mobile Developer."
+        },
+        "headline": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Role line under the name."
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 90,
+          "description": "One line on the résumé card (RS-02)."
+        },
+        "icon": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "fileName": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+\\.pdf$"
+        },
+        "paper": {
+          "const": "A4"
+        },
+        "pages": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["target", "max"],
+          "properties": {
+            "target": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "max": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "description": "2 pages as standard, 3 at most (ETE-222)."
+        },
+        "showPhone": {
+          "type": "boolean",
+          "description": "Requires a phone in contact.json (RS-03)."
+        },
+        "links": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "description": "contact.json link ids shown in the header."
+        },
+        "showWebsite": {
+          "type": "boolean",
+          "description": "Show the site URL (site.json) in the header."
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "description": "Profile paragraph (RS-02)."
+        },
+        "sections": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "profile",
+              "skills",
+              "experience",
+              "earlier",
+              "clients",
+              "projects",
+              "education",
+              "languages",
+              "publications"
+            ]
+          }
+        },
+        "skillGroups": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "items"],
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "items": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/item"
+                }
+              }
+            }
+          }
+        },
+        "experience": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["roles", "earlier"],
+          "properties": {
+            "roles": {
+              "type": "array",
+              "minItems": 1,
+              "description": "Full entries in order. A string is a role id; {merge} shows several roles of one organization as one entry.",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["merge"],
+                    "properties": {
+                      "merge": {
+                        "type": "array",
+                        "minItems": 2,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "earlier": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "description": "Role ids shown one line each under Earlier experience. Roles in neither list are left out."
+            },
+            "stacks": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "additionalProperties": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/item"
+                }
+              },
+              "description": "Stack line per organization id."
+            }
+          }
+        },
+        "projects": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["project"],
+                "properties": {
+                  "project": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "tech": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/$defs/item"
+                    }
+                  }
+                },
+                "description": "A project from projects.json; name, description and tech default to its title, summary and stack."
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["name", "description", "tech"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "tech": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/$defs/item"
+                    }
+                  }
+                },
+                "description": "A project that exists only on this résumé."
+              }
+            ]
+          }
+        },
+        "limits": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["skills", "roles", "highlightsPerRole", "projects"],
+          "properties": {
+            "skills": {
+              "type": "integer",
+              "minimum": 5
+            },
+            "roles": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "highlightsPerRole": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "projects": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "description": "Caps checked by data:validate (RS-02)."
+        }
+      }
+    }
+  }
+}

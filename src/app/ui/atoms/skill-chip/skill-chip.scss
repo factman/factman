@@ -1,0 +1,16 @@
+// The design system's `.fm-skill` (portfolio-sections.css), copied here so a skill chip doesn't
+// load the whole portfolio-sections file. Keep it in step with that file.
+.fm-skill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-2xs);
+  box-sizing: border-box;
+  height: 24px;
+  padding: 0 var(--padding-xs);
+  border: var(--border-width-sm) solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  font: 500 11px/1 var(--font-mono);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  background: var(--code-line-active);
+}

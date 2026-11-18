@@ -1,0 +1,26 @@
+<label [class]="classes()" [for]="controlId()">
+  <input
+    type="checkbox"
+    role="switch"
+    class="fm-switch__input"
+    [id]="controlId()"
+    [checked]="value()"
+    [attr.aria-checked]="value()"
+    [attr.name]="name()"
+    [attr.aria-describedby]="describedBy()"
+    [attr.aria-invalid]="isInvalid() || null"
+    [required]="isRequired()"
+    [disabled]="isDisabled()"
+    (change)="commit($any($event.target).checked)"
+    (blur)="onTouched()"
+  />
+  <span class="fm-switch__track switch-track" aria-hidden="true"
+    ><span class="fm-switch__knob"></span
+  ></span>
+  <span class="fm-check__text">
+    <span class="fm-field-title">{{ label() }}</span>
+    @if (description(); as description) {
+      <span class="fm-check__desc" [id]="descId()">{{ description }}</span>
+    }
+  </span>
+</label>

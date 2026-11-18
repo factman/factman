@@ -1,0 +1,35 @@
+<div
+  [class]="classes()"
+  role="status"
+  (mouseenter)="pause(true)"
+  (mouseleave)="pause(false)"
+  (focusin)="pause(true)"
+  (focusout)="pause(false)"
+>
+  <div class="fm-toast__row">
+    <span class="fm-toast__icon"><fm-icon [icon]="icon()" [size]="20" /></span>
+    <div class="fm-toast__text">
+      <p class="fm-toast__title">{{ title() }}</p>
+      @if (description(); as description) {
+        <p class="fm-toast__desc">{{ description }}</p>
+      }
+    </div>
+    <button
+      type="button"
+      class="fm-toast__close toast-close"
+      aria-label="Close"
+      (click)="closed.emit()"
+    >
+      <fm-icon [icon]="close" [size]="16" />
+    </button>
+  </div>
+  @if (duration()) {
+    <div class="fm-toast__timer" aria-hidden="true">
+      <span
+        class="toast-timer"
+        [class.is-paused]="paused()"
+        [style.animation-duration.ms]="duration()"
+      ></span>
+    </div>
+  }
+</div>

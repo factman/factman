@@ -1,0 +1,18 @@
+{
+  "rule": "DS-06",
+  "case": "a role that ends before it starts",
+  "data": {
+    "experience": [
+      {
+        "id": "acme",
+        "roles": [
+          {
+            "id": "dev",
+            "start": "2021-05",
+            "end": "2020-01"
+          }
+        ]
+      }
+    ]
+  }
+}

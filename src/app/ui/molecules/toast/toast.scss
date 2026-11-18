@@ -1,0 +1,33 @@
+// The design system's Toast styles, loaded only with this component (docs/design-tokens.md).
+@use 'factman/components/toast';
+
+.fm-toast p {
+  margin: 0;
+}
+
+.fm-toast .toast-close:focus-visible {
+  outline: var(--border-width-lg) solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+// The timer bar shrinks with transform (only opacity and transform animate); it pauses with the toast.
+.fm-toast .toast-timer {
+  transform-origin: left;
+  animation-name: toast-timer;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.fm-toast .toast-timer.is-paused {
+  animation-play-state: paused;
+}
+
+@keyframes toast-timer {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
+}

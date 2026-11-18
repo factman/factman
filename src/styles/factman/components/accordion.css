@@ -1,0 +1,30 @@
+/* Factman "accordion" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Accordion ---------- */
+.fm-acc { display: flex; flex-direction: column; gap: var(--gap-xs); width: 100%; max-width: 400px; font-family: var(--font-sans); }
+.fm-acc--lg, .fm-acc--xl { gap: var(--gap-sm); }
+.fm-acc--lg { max-width: 480px; } .fm-acc--xl { max-width: 560px; } .fm-acc--sm { max-width: 320px; }
+.fm-acc--grouped { gap: 0; padding: var(--padding-2xs); border-radius: var(--radius-md); background: var(--glass-fill); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-regular); }
+.fm-acc--grouped .fm-acc-item + .fm-acc-item { border-top: var(--border-width-sm) solid var(--border-subtle); }
+.fm-acc-item { color: var(--text-primary); }
+.fm-acc-item--card { border-radius: var(--radius-md); background: var(--glass-fill); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-regular); transition: background-color 150ms ease-out; }
+.fm-acc-item--card.is-open { background: var(--glass-fill-strong); }
+.fm-acc-item--card:hover:not(.is-disabled) { background: var(--glass-fill-hover); }
+.fm-acc--sm .fm-acc-item--card { border-radius: var(--radius-sm); }
+.fm-acc-item__head { display: flex; align-items: center; gap: var(--gap-xs); width: 100%; padding: var(--padding-xs) var(--padding-sm); border: 0; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; border-radius: inherit; }
+.fm-acc--md .fm-acc-item__head { padding: 10px var(--padding-md); }
+.fm-acc--lg .fm-acc-item__head { padding: var(--padding-sm) var(--padding-md); }
+.fm-acc--xl .fm-acc-item__head { padding: var(--padding-md) var(--padding-lg); }
+.fm-acc-item__head:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: 2px; }
+.fm-acc-item__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.fm-acc-item__title { font-size: 12px; line-height: 18px; }
+.fm-acc--md .fm-acc-item__title { font-size: 14px; line-height: 20px; }
+.fm-acc--lg .fm-acc-item__title, .fm-acc--xl .fm-acc-item__title { font-size: 16px; line-height: 24px; font-weight: 500; }
+.fm-acc-item__desc { font-size: 12px; line-height: 18px; color: var(--text-secondary); }
+.fm-acc-item__icon, .fm-acc-item__chev { color: var(--icon-secondary); flex: none; }
+.fm-acc-item__chev { transition: transform 200ms ease-out; }
+.fm-acc-item.is-open .fm-acc-item__chev { transform: rotate(180deg); }
+.fm-acc-item__body { padding: 0 var(--padding-sm) var(--padding-sm); font-size: 12px; line-height: 18px; color: var(--text-secondary); }
+.fm-acc--md .fm-acc-item__body { padding: 0 var(--padding-md) var(--padding-md); font-size: 14px; line-height: 22px; }
+.fm-acc--lg .fm-acc-item__body, .fm-acc--xl .fm-acc-item__body { padding: 0 var(--padding-lg) var(--padding-lg); font-size: 14px; line-height: 24px; }
+.fm-acc-item.is-disabled { opacity: .5; }
+.fm-acc-item.is-disabled .fm-acc-item__head { cursor: not-allowed; }

@@ -1,0 +1,21 @@
+<section
+  class="section-layout"
+  [class.is-tight]="tight()"
+  [id]="sectionId()"
+  [attr.aria-labelledby]="headingId()"
+>
+  <div class="section-layout-container">
+    <fm-section-header
+      [index]="index()"
+      [eyebrow]="eyebrow()"
+      [title]="title()"
+      [description]="description()"
+      [level]="level()"
+      [align]="align()"
+      [headingId]="headingId()"
+    >
+      <ng-content select="[sectionAction]" />
+    </fm-section-header>
+    <div class="section-layout-body" fmReveal><ng-content /></div>
+  </div>
+</section>

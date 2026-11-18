@@ -1,0 +1,7 @@
+// The design system's Checkbox styles, loaded only with this component (docs/design-tokens.md).
+@use 'factman/components/checkbox';
+
+// Only opacity and transform animate (docs/interaction-and-motion.md).
+.fm-check .check-box {
+  transition: none;
+}

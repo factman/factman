@@ -1,0 +1,12 @@
+{
+  "rule": "DS-12",
+  "case": "a GTM container id in the wrong shape",
+  "file": "site",
+  "patch": [
+    {
+      "op": "replace",
+      "path": "/analytics/gtmId",
+      "value": "gtm-123"
+    }
+  ]
+}

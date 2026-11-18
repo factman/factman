@@ -1,0 +1,12 @@
+{
+  "rule": "DS-01",
+  "case": "a field of the wrong type fails its schema",
+  "file": "services",
+  "patch": [
+    {
+      "op": "replace",
+      "path": "/0/order",
+      "value": "one"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+// The canvas's career glance (site.css .glance).
+.glance {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+  box-sizing: border-box;
+  padding: var(--padding-xl);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--glass-fill-strong);
+  box-shadow: var(--shadow-glass-panel);
+  backdrop-filter: blur(var(--blur-glass-panel));
+}
+
+.glance-title {
+  margin: 0;
+  font: 500 12px/16px var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-default);
+}
+
+.glance-roles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.glance-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-md);
+  padding-top: var(--padding-lg);
+  border-top: var(--border-width-sm) solid var(--glass-stroke);
+}
+
+// The glance's numbers are mono and smaller than a hero counter.
+.glance-stats .stat-counter-value {
+  font: 600 32px/1.1 var(--font-mono);
+}
+
+.glance-stats .stat-counter-label {
+  font: 500 12px/16px var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+@media (width < 600px) {
+  .glance {
+    padding: var(--padding-lg);
+  }
+
+  .glance-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--gap-xs);
+    padding-top: var(--padding-md);
+  }
+
+  .glance-stats .stat-counter-value {
+    font-size: var(--glance-num-sm, 24px);
+  }
+}
+
+// The full-width button includes its border, so it stays inside the panel.
+.glance .fm-btn {
+  box-sizing: border-box;
+  max-width: 100%;
+}

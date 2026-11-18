@@ -1,0 +1,30 @@
+// A number and its label, after the design system's StatCounter and CounterCard (.fm-stat).
+.stat-counter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-2xs);
+  margin: 0;
+  font-family: var(--font-sans);
+}
+
+// Tabular figures, so the width doesn't jump while it counts.
+.stat-counter-value {
+  font: 700 40px/1.1 var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.stat-counter-label {
+  font: 500 14px/20px var(--font-sans);
+  color: var(--text-secondary);
+}
+
+// The CounterCard: a glass card.
+.stat-counter.is-framed {
+  padding: var(--padding-lg);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  background: var(--glass-fill-strong);
+  box-shadow: var(--shadow-glass-regular);
+}

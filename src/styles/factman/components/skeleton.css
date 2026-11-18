@@ -1,0 +1,10 @@
+/* Factman "skeleton" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Skeleton ---------- */
+.fm-skel { display: block; width: 240px; height: 12px; border-radius: var(--radius-full); background: var(--skeleton-base); animation: fm-pulse 1.4s ease-in-out infinite; }
+.fm-skel--circle { width: 40px; height: 40px; }
+.fm-skel--rectangle { width: 240px; height: 140px; border-radius: var(--radius-lg); }
+.fm-skel--pill { width: 80px; height: 24px; }
+.fm-skel--shimmer { animation: none; background: linear-gradient(90deg, var(--skeleton-base) 0%, var(--skeleton-highlight) 50%, var(--skeleton-base) 100%) 0 0 / 200% 100%, var(--skeleton-base); animation: fm-shimmer 1.4s linear infinite; }
+@keyframes fm-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+@keyframes fm-shimmer { from { background-position: 100% 0, 0 0; } to { background-position: -100% 0, 0 0; } }
+@media (prefers-reduced-motion: reduce) { .fm-skel, .fm-skel--shimmer { animation: none; } }

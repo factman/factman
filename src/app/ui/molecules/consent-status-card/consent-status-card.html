@@ -1,0 +1,22 @@
+<div class="consent-status">
+  <fm-window-frame variant="terminal" title="consent.sh">
+    <div class="fm-term__body consent-status-body">
+      <p class="fm-term__line">
+        <span class="fm-term__user">odunayo</span><span class="fm-term__sep">:</span
+        ><span class="fm-term__path">~</span><span class="fm-term__sep">$ </span
+        ><span class="fm-term__cmd">./consent --status</span>
+      </p>
+      <p class="fm-term__line fm-term__out is-success">necessary on</p>
+      <p class="fm-term__line fm-term__out is-default">analytics {{ state() }}</p>
+      <p class="fm-term__line fm-term__out is-default">advertising off (never used)</p>
+    </div>
+  </fm-window-frame>
+  <fm-button
+    size="lg"
+    [full]="true"
+    [leadingIcon]="settings"
+    ariaHaspopup="dialog"
+    (pressed)="changeSettings.emit()"
+    >Change cookie settings</fm-button
+  >
+</div>

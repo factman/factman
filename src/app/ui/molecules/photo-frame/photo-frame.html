@@ -1,0 +1,14 @@
+<figure class="photo-frame is-{{ variant() }}">
+  <div class="photo-frame-media">
+    <fm-image
+      [src]="image().src"
+      [alt]="image().alt"
+      [width]="image().width"
+      [height]="image().height"
+      [sources]="image().sources ?? {}"
+      [sizes]="image().sizes"
+      [priority]="priority()"
+    />
+    <div class="photo-frame-over"><ng-content /></div>
+  </div>
+</figure>

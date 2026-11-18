@@ -1,0 +1,24 @@
+/* Factman "tabs" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
+/* ---------- Tabs ---------- */
+.fm-tabs-wrap { display: flex; flex-direction: column; gap: var(--gap-md); font-family: var(--font-sans); }
+.fm-tabs-wrap--v { flex-direction: row; }
+.fm-tabs { display: flex; gap: 4px; }
+.fm-tabs--line { gap: 0; border-bottom: var(--border-width-sm) solid var(--border-subtle); }
+.fm-tabs--v { flex-direction: column; border-bottom: 0; }
+.fm-tabs--line.fm-tabs--v { border-left: var(--border-width-sm) solid var(--border-subtle); }
+.fm-tabs--soft { display: inline-flex; padding: 4px; border-radius: var(--radius-md); background: var(--glass-fill-subtle); border: var(--border-width-sm) solid var(--glass-stroke); align-self: flex-start; }
+.fm-tab { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: var(--gap-xs); height: 40px; padding: 0 var(--padding-md); border: 0; background: transparent; color: var(--text-secondary); font: 500 14px/20px var(--font-sans); white-space: nowrap; cursor: pointer; transition: color 150ms ease-out, background-color 150ms ease-out; }
+.fm-tabs--sm .fm-tab { height: 32px; padding: 0 var(--padding-sm); font-size: 12px; gap: 6px; }
+.fm-tabs--lg .fm-tab { height: 48px; padding: 0 var(--padding-lg); font-size: 16px; line-height: 24px; }
+.fm-tab:hover { color: var(--text-primary); }
+.fm-tab:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: -2px; border-radius: var(--radius-sm); }
+.fm-tab:disabled { color: var(--text-disabled); cursor: not-allowed; }
+.fm-tab.is-selected { color: var(--text-primary); }
+.fm-tabs--line .fm-tab.is-selected::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; border-radius: 2px; background: var(--accent-default); }
+.fm-tabs--line.fm-tabs--v .fm-tab { justify-content: flex-start; }
+.fm-tabs--line.fm-tabs--v .fm-tab.is-selected::after { left: -1px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; }
+.fm-tabs--soft .fm-tab { border-radius: var(--radius-md); border: var(--border-width-sm) solid transparent; }
+.fm-tabs--soft.fm-tabs--sm .fm-tab { border-radius: var(--radius-sm); }
+.fm-tabs--soft .fm-tab:hover { background: var(--glass-fill); }
+.fm-tabs--soft .fm-tab.is-selected { background: var(--glass-fill-elevated); border-color: var(--glass-stroke); box-shadow: var(--shadow-glass-chip); }
+.fm-tabs__panel { font-size: 14px; line-height: 22px; color: var(--text-secondary); }

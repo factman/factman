@@ -1,0 +1,296 @@
+[
+  {
+    "id": "javascript",
+    "name": "JavaScript",
+    "category": "Languages",
+    "since": 2014,
+    "featured": true,
+    "icon": "braces"
+  },
+  {
+    "id": "typescript",
+    "name": "TypeScript",
+    "category": "Languages",
+    "since": 2017,
+    "featured": true,
+    "icon": "braces"
+  },
+  {
+    "id": "php",
+    "name": "PHP",
+    "category": "Languages",
+    "since": 2014,
+    "featured": false,
+    "icon": "file-code"
+  },
+  {
+    "id": "java",
+    "name": "Java",
+    "category": "Languages",
+    "since": 2015,
+    "featured": false,
+    "icon": "file-code"
+  },
+  {
+    "id": "python",
+    "name": "Python",
+    "category": "Languages",
+    "since": 2019,
+    "featured": false,
+    "icon": "file-code"
+  },
+  {
+    "id": "cpp",
+    "name": "C++",
+    "category": "Languages",
+    "since": 2014,
+    "featured": false,
+    "icon": "file-code"
+  },
+  {
+    "id": "bash",
+    "name": "Bash",
+    "category": "Languages",
+    "featured": false,
+    "icon": "terminal"
+  },
+  {
+    "id": "angular",
+    "name": "Angular",
+    "category": "Frontend",
+    "since": 2017,
+    "featured": true,
+    "icon": "layout"
+  },
+  {
+    "id": "react",
+    "name": "React",
+    "category": "Frontend",
+    "since": 2017,
+    "featured": true,
+    "icon": "layout"
+  },
+  {
+    "id": "nextjs",
+    "name": "Next.js",
+    "category": "Frontend",
+    "since": 2020,
+    "featured": false,
+    "icon": "layout"
+  },
+  {
+    "id": "html5",
+    "name": "HTML5",
+    "category": "Frontend",
+    "since": 2014,
+    "featured": false,
+    "icon": "code"
+  },
+  {
+    "id": "css3",
+    "name": "CSS3",
+    "category": "Frontend",
+    "since": 2014,
+    "featured": false,
+    "icon": "code"
+  },
+  {
+    "id": "mui",
+    "name": "Material UI",
+    "category": "Frontend",
+    "since": 2017,
+    "featured": false,
+    "icon": "layers"
+  },
+  {
+    "id": "tailwind-css",
+    "name": "Tailwind CSS",
+    "category": "Frontend",
+    "since": 2020,
+    "featured": false,
+    "icon": "layers"
+  },
+  {
+    "id": "nodejs",
+    "name": "Node.js",
+    "category": "Backend",
+    "since": 2016,
+    "featured": true,
+    "icon": "server"
+  },
+  {
+    "id": "expressjs",
+    "name": "Express.js",
+    "category": "Backend",
+    "since": 2016,
+    "featured": false,
+    "icon": "server"
+  },
+  {
+    "id": "react-native",
+    "name": "React Native",
+    "category": "Mobile",
+    "since": 2018,
+    "featured": true,
+    "icon": "mobile"
+  },
+  {
+    "id": "flutter",
+    "name": "Flutter",
+    "category": "Mobile",
+    "since": 2023,
+    "featured": false,
+    "icon": "mobile"
+  },
+  {
+    "id": "ionic",
+    "name": "Ionic",
+    "category": "Mobile",
+    "since": 2018,
+    "featured": false,
+    "icon": "mobile"
+  },
+  {
+    "id": "firebase",
+    "name": "Firebase",
+    "category": "Mobile",
+    "since": 2017,
+    "featured": false,
+    "icon": "flame"
+  },
+  {
+    "id": "mysql",
+    "name": "MySQL",
+    "category": "Data",
+    "since": 2014,
+    "featured": false,
+    "icon": "database"
+  },
+  {
+    "id": "postgresql",
+    "name": "PostgreSQL",
+    "category": "Data",
+    "since": 2020,
+    "featured": false,
+    "icon": "database"
+  },
+  {
+    "id": "mongodb",
+    "name": "MongoDB",
+    "category": "Data",
+    "since": 2017,
+    "featured": false,
+    "icon": "database"
+  },
+  {
+    "id": "docker",
+    "name": "Docker",
+    "category": "Cloud & DevOps",
+    "since": 2021,
+    "featured": true,
+    "icon": "package"
+  },
+  {
+    "id": "kubernetes",
+    "name": "Kubernetes",
+    "category": "Cloud & DevOps",
+    "since": 2022,
+    "featured": false,
+    "icon": "cloud"
+  },
+  {
+    "id": "aws",
+    "name": "AWS",
+    "category": "Cloud & DevOps",
+    "since": 2021,
+    "featured": true,
+    "icon": "cloud"
+  },
+  {
+    "id": "google-cloud",
+    "name": "Google Cloud",
+    "category": "Cloud & DevOps",
+    "since": 2018,
+    "featured": false,
+    "icon": "cloud"
+  },
+  {
+    "id": "azure",
+    "name": "Microsoft Azure",
+    "category": "Cloud & DevOps",
+    "since": 2022,
+    "featured": false,
+    "icon": "cloud"
+  },
+  {
+    "id": "azure-devops",
+    "name": "Azure DevOps",
+    "category": "Cloud & DevOps",
+    "since": 2022,
+    "featured": false,
+    "icon": "workflow"
+  },
+  {
+    "id": "digitalocean",
+    "name": "DigitalOcean",
+    "category": "Cloud & DevOps",
+    "since": 2019,
+    "featured": false,
+    "icon": "cloud"
+  },
+  {
+    "id": "heroku",
+    "name": "Heroku",
+    "category": "Cloud & DevOps",
+    "since": 2016,
+    "featured": false,
+    "icon": "cloud"
+  },
+  {
+    "id": "vercel",
+    "name": "Vercel",
+    "category": "Cloud & DevOps",
+    "since": 2023,
+    "featured": false,
+    "icon": "rocket"
+  },
+  {
+    "id": "git",
+    "name": "Git",
+    "category": "Tools",
+    "since": 2016,
+    "featured": true,
+    "icon": "git-branch"
+  },
+  {
+    "id": "github",
+    "name": "GitHub",
+    "category": "Tools",
+    "since": 2016,
+    "featured": false,
+    "icon": "github"
+  },
+  {
+    "id": "linux",
+    "name": "Linux",
+    "category": "Tools",
+    "featured": false,
+    "icon": "terminal"
+  },
+  {
+    "id": "vscode",
+    "name": "VS Code",
+    "category": "Tools",
+    "since": 2017,
+    "featured": false,
+    "icon": "code"
+  },
+  {
+    "id": "jetbrains-ides",
+    "name": "JetBrains IDEs",
+    "category": "Tools",
+    "since": 2018,
+    "featured": false,
+    "icon": "code"
+  }
+]

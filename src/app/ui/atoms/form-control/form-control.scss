@@ -1,0 +1,7 @@
+// Shared by the text controls (ETE-71): the design system's field styles. Only opacity and
+// transform animate (docs/interaction-and-motion.md), so the field's colour changes are instant.
+@use 'factman/components/textinput';
+
+.fm-field .field-control {
+  transition: none;
+}

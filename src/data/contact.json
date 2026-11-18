@@ -1,0 +1,44 @@
+{
+  "email": "factman60@gmail.com",
+  "phone": "+2347066780373",
+  "whatsapp": {
+    "number": "2347066780373",
+    "message": "Hi Odunayo, I found you through your portfolio and I'd like to talk about a project."
+  },
+  "links": [
+    {
+      "id": "linkedin",
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/mohammed-odunayo",
+      "handle": "mohammed-odunayo"
+    },
+    {
+      "id": "github",
+      "label": "GitHub",
+      "url": "https://github.com/factman",
+      "handle": "factman"
+    },
+    {
+      "id": "x",
+      "label": "X",
+      "url": "https://x.com/MohammedFactman",
+      "handle": "@MohammedFactman"
+    },
+    {
+      "id": "medium",
+      "label": "Medium",
+      "url": "https://medium.com/@factman60",
+      "handle": "@factman60"
+    },
+    {
+      "id": "eteam",
+      "label": "ETeam Technology",
+      "url": "https://eteam.ng",
+      "handle": "eteam.ng"
+    }
+  ],
+  "responseTime": "within 24 hours",
+  "timezone": "Africa/Lagos",
+  "city": "Lagos",
+  "country": "Nigeria"
+}

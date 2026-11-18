@@ -1,0 +1,35 @@
+<article class="resume-card">
+  <div class="resume-card-thumb">
+    @if (thumbnail(); as thumbnail) {
+      <fm-image [src]="thumbnail" alt="" [width]="240" [height]="340" />
+    } @else {
+      <span class="resume-card-page" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+    }
+  </div>
+  <div class="resume-card-body">
+    <span class="resume-card-icon" aria-hidden="true"
+      ><fm-icon [icon]="resume().icon" [size]="20"
+    /></span>
+    <div role="heading" [attr.aria-level]="headingLevel()" class="resume-card-title">
+      {{ resume().title }}
+    </div>
+    <p class="resume-card-scope">{{ resume().scope }}</p>
+    <div class="resume-card-actions">
+      <fm-button
+        variant="secondary"
+        size="sm"
+        [leadingIcon]="eye"
+        [ariaLabel]="'Preview ' + resume().title + ' résumé'"
+        (pressed)="preview.emit(resume())"
+        >Preview</fm-button
+      >
+      <fm-button
+        size="sm"
+        [leadingIcon]="downloadIcon"
+        [ariaLabel]="'Download ' + resume().title + ' résumé (PDF)'"
+        (pressed)="download.emit(resume())"
+        >Download</fm-button
+      >
+    </div>
+  </div>
+</article>
