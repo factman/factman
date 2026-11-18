@@ -20,7 +20,7 @@ export default defineConfig({
     ? [['github'], ['html', { open: 'never', outputFolder: 'vr-report' }]]
     : 'list',
   expect: {
-    // Proposed thresholds (docs/visual-regression.md): a pixel counts as changed past 0.2 colour
+    // Agreed thresholds (docs/visual-regression.md): a pixel counts as changed past 0.2 colour
     // distance, and a story fails when more than 1% of its pixels change.
     toHaveScreenshot: {
       threshold: 0.2,
