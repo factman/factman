@@ -1,0 +1,7 @@
+<div class="site fm-backdrop">
+  <a class="skip-link" href="#main" (click)="skipToMain($event)">Skip to content</a>
+  <ng-content select="[layoutHeader]" />
+  <main id="main" class="site-main" tabindex="-1"><ng-content /></main>
+  <ng-content select="[layoutFooter]" />
+  <ng-content select="[layoutOverlays]" />
+</div>
