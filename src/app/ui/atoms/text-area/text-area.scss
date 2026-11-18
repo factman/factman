@@ -1,0 +1,12 @@
+// The design system's text-area rules live in a shared file; these are the two that apply here.
+.fm-field .textarea-control {
+  align-items: stretch;
+  height: auto;
+  padding: var(--padding-sm) var(--padding-md);
+}
+
+.fm-field .textarea-input {
+  min-height: 80px;
+  line-height: 22px;
+  resize: vertical;
+}

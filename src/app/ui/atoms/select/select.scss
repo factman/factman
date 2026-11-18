@@ -1,0 +1,30 @@
+// A native <select> inside the design system's field: no browser arrow, the DS chevron instead.
+.fm-native-select select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.fm-native-select select:disabled {
+  cursor: not-allowed;
+}
+
+// --text-tertiary (the design system's placeholder colour) is under 4.5:1 on an error field.
+.fm-native-select select.is-placeholder {
+  color: var(--text-secondary);
+}
+
+.fm-native-select option {
+  color: var(--text-primary);
+}
+
+// The chevron sits over the select's right edge; clicks pass through to it.
+.fm-native-select .field-control {
+  position: relative;
+}
+
+.fm-native-select svg {
+  flex: none;
+  margin-left: calc(-1 * var(--gap-xl));
+  color: var(--icon-secondary);
+  pointer-events: none;
+}
