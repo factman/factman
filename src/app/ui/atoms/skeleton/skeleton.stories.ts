@@ -1,4 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/angular-vite';
+import { expect } from 'storybook/test';
 
 import { Skeleton } from './skeleton';
 
@@ -13,7 +14,11 @@ export default meta;
 
 type Story = StoryObj<Skeleton>;
 
-export const Line: Story = {};
+export const Line: Story = {
+  play: async ({ canvasElement }) => {
+    await expect(canvasElement.querySelector('.fm-skel')).toHaveAttribute('aria-hidden', 'true');
+  },
+};
 
 /** A card loading: photo, avatar and two lines. */
 export const Card: Story = {
