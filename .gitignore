@@ -169,6 +169,8 @@ yarn-error.log
 testem.log
 /typings
 __screenshots__/
+# Visual regression baselines are committed (ETE-84, docs/visual-regression.md).
+!vr/__screenshots__/
 
 # System files
 .DS_Store
