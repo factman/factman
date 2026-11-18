@@ -18,7 +18,7 @@ with a diff to review, before it reaches the site.
 - **Locally:** `pnpm vr` runs the comparison against a local build. It is useful for checking
   that stories render, but expect font differences against the Linux baselines.
 
-## Thresholds (proposed, for the owner to agree)
+## Thresholds (agreed with the owner, 2026-11-18)
 
 | Setting             | Value | Meaning                                                              |
 | ------------------- | ----- | -------------------------------------------------------------------- |
@@ -38,8 +38,8 @@ A baseline changes only when a component's look changes on purpose.
    `vr-actual` holds the new screenshots.
 3. Copy the new screenshots for the intended changes into `vr/__screenshots__` (named
    `<story-id>--<theme>.png`) and push them to the same pull request.
-4. **Approval (proposed):** the project owner reviews the screenshot changes in the pull request
-   and approves them before it merges. A baseline change nobody asked for is a regression, not an
+4. **Approval (agreed 2026-11-18):** the project owner, as the pull request's reviewer, checks
+   the screenshot changes and approves them before it merges. A baseline change nobody asked for is a regression, not an
    update.
 
 A new story needs its two baselines the same way, from its first CI run.
