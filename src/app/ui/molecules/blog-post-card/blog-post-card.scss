@@ -1,0 +1,97 @@
+@use 'ui/card';
+
+.post-card {
+  @include card.surface;
+}
+
+.post-card-cover {
+  @include card.cover;
+}
+
+.post-card-ph {
+  @include card.placeholder;
+}
+
+.post-card-body {
+  @include card.body;
+}
+
+.post-card-meta {
+  @include card.meta;
+
+  margin: 0;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.post-card-title {
+  @include card.title;
+}
+
+.post-card-link {
+  @include card.stretched-link;
+}
+
+.post-card-excerpt {
+  @include card.text;
+
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.post-card-foot {
+  display: flex;
+  gap: var(--gap-sm);
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: var(--gap-sm);
+}
+
+.post-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-2xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post-card-read {
+  display: inline-flex;
+  flex: none;
+  gap: var(--gap-2xs);
+  align-items: center;
+  font: 500 13px/1 var(--font-sans);
+  color: var(--accent-default);
+}
+
+// The compact list layout: a small cover on the left.
+.post-card.is-row {
+  flex-direction: row;
+  border-radius: var(--radius-lg);
+}
+
+.post-card.is-row .post-card-cover {
+  flex: none;
+  width: 160px;
+  aspect-ratio: auto;
+  border-right: var(--border-width-sm) solid var(--border-subtle);
+  border-bottom: 0;
+}
+
+.post-card.is-row .post-card-body {
+  padding: var(--padding-md) var(--padding-lg);
+}
+
+.post-card.is-row .post-card-excerpt {
+  -webkit-line-clamp: 2;
+}
+
+@media (width < 768px) {
+  .post-card.is-row .post-card-cover {
+    display: none;
+  }
+}

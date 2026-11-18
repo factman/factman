@@ -1,0 +1,116 @@
+// Shared by the content cards (ProjectCard, ServiceCard, BlogPostCard, ETE-76): the design system's
+// glass card (.fm-proj, .fm-post, .fm-service in portfolio-sections.css) and the stretched-link
+// pattern that makes the whole card one click target. Use: `@use 'ui/card'; .x { @include card.surface; }`.
+
+/// The glass card. Hover lifts it 2px (docs/interaction-and-motion.md); only transform animates.
+@mixin surface {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-width: 0;
+  overflow: hidden;
+  isolation: isolate;
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--glass-fill-strong);
+  box-shadow: var(--shadow-glass-regular);
+  backdrop-filter: blur(var(--blur-glass-regular));
+  transition: transform var(--duration-fast) var(--ease-out);
+
+  &:hover,
+  &:focus-within {
+    border-color: var(--glass-stroke-strong);
+    box-shadow: var(--shadow-card-lift);
+    transform: translateY(-2px);
+  }
+}
+
+/// The card's main link: its ::after covers the whole card, so a click anywhere follows it.
+/// Other links and buttons in the card sit above it with `@include card.raised`.
+@mixin stretched-link {
+  color: inherit;
+  text-decoration: none;
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    content: '';
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:focus-visible::after {
+    outline: var(--border-width-lg) solid var(--border-focus);
+    outline-offset: -2px;
+  }
+}
+
+@mixin raised {
+  position: relative;
+  z-index: 2;
+}
+
+/// A 16:9 cover image, or the DS's code-grid placeholder.
+@mixin cover {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-bottom: var(--border-width-sm) solid var(--border-subtle);
+  background: var(--code-bg);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+@mixin placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font: 500 15px/1 var(--font-mono);
+  color: var(--syntax-function);
+  background-color: var(--code-bg);
+  background-image:
+    radial-gradient(120% 90% at 0% 0%, var(--accent-glow), transparent 60%),
+    repeating-linear-gradient(0deg, transparent 0 23px, var(--code-line-active) 23px 24px);
+}
+
+@mixin body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  padding: var(--padding-lg) var(--padding-xl) var(--padding-xl);
+}
+
+@mixin title {
+  margin: 0;
+  font: 600 18px/1.35 var(--font-sans);
+  color: var(--text-primary);
+}
+
+@mixin text {
+  margin: 0;
+  font: 400 14px/1.65 var(--font-sans);
+  color: var(--text-secondary);
+}
+
+// The DS's meta line uses --text-tertiary, under 4.5:1 at 11px; secondary meets it.
+@mixin meta {
+  font: 500 11px/16px var(--font-sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}

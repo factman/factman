@@ -1,0 +1,71 @@
+@use 'ui/card';
+
+.project-card {
+  @include card.surface;
+}
+
+.project-card.is-featured {
+  border-color: var(--glass-stroke-strong);
+}
+
+.project-card-cover {
+  @include card.cover;
+}
+
+.project-card-ph {
+  @include card.placeholder;
+}
+
+.project-card-status {
+  position: absolute;
+  top: var(--gap-sm);
+  left: var(--gap-sm);
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--gap-2xs);
+}
+
+.project-card-body {
+  @include card.body;
+}
+
+.project-card-meta {
+  @include card.meta;
+
+  margin: 0;
+}
+
+.project-card-title {
+  @include card.title;
+}
+
+.project-card-link {
+  @include card.stretched-link;
+}
+
+.project-card-summary {
+  @include card.text;
+}
+
+.project-card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-2xs);
+  margin: var(--gap-2xs) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-card-actions {
+  @include card.raised;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+  margin-top: auto;
+  padding-top: var(--gap-sm);
+}
+
+.project-card-actions:empty {
+  display: none;
+}

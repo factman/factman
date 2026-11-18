@@ -1,0 +1,34 @@
+<article class="service-card" [class.is-current]="current()" [class.is-tile]="!!href()">
+  <span class="service-card-icon" aria-hidden="true"
+    ><fm-icon [icon]="service().icon" [size]="24"
+  /></span>
+  <div role="heading" [attr.aria-level]="headingLevel()" class="service-card-title">
+    @if (href(); as href) {
+      <a
+        class="service-card-link"
+        [routerLink]="href"
+        [attr.aria-current]="current() ? 'page' : null"
+        >{{ service().title }}</a
+      >
+    } @else {
+      {{ service().title }}
+    }
+  </div>
+  <p class="service-card-summary">{{ service().summary }}</p>
+  @if (href()) {
+    <ul class="service-card-deliverables">
+      @for (item of deliverables(); track item) {
+        <li>{{ item }}</li>
+      }
+    </ul>
+    <span class="service-card-more" aria-hidden="true"
+      >Learn more <fm-icon [icon]="arrow" [size]="16"
+    /></span>
+  } @else {
+    <div class="service-card-cta">
+      <fm-button variant="secondary" size="sm" [href]="quoteHref()" [trailingIcon]="arrow"
+        >Get a quote</fm-button
+      >
+    </div>
+  }
+</article>

@@ -1,0 +1,49 @@
+<article class="project-card" [class.is-featured]="project().featured">
+  <div class="project-card-cover">
+    @if (project().cover; as cover) {
+      <fm-image [src]="cover" alt="" [width]="640" [height]="360" />
+    } @else {
+      <span class="project-card-ph" aria-hidden="true">{{ initials() }}</span>
+    }
+    <span class="project-card-status">
+      <fm-tag size="sm" [tone]="status().tone" [dot]="true">{{ status().label }}</fm-tag>
+      @if (isPrivate()) {
+        <fm-tag size="sm" [leadingIcon]="lock">Private</fm-tag>
+      }
+    </span>
+  </div>
+  <div class="project-card-body">
+    <p class="project-card-meta">{{ project().category }} · {{ years() }}</p>
+    <div role="heading" [attr.aria-level]="headingLevel()" class="project-card-title">
+      <a class="project-card-link" [routerLink]="href()">{{ project().title }}</a>
+    </div>
+    <p class="project-card-summary">{{ project().summary }}</p>
+    <ul class="project-card-stack" aria-label="Stack">
+      @for (tech of project().stack; track tech) {
+        <li>
+          <fm-tag size="sm" variant="outline">{{ tech }}</fm-tag>
+        </li>
+      }
+    </ul>
+    <div class="project-card-actions">
+      @if (isPrivate()) {
+        @if (engageLabel(); as label) {
+          <fm-button variant="secondary" size="sm" (pressed)="engage.emit(project())">{{
+            label
+          }}</fm-button>
+        }
+      } @else {
+        @if (project().links.live; as live) {
+          <fm-button variant="secondary" size="sm" [href]="live" [trailingIcon]="external"
+            >Live site</fm-button
+          >
+        }
+        @if (project().links.source; as source) {
+          <fm-button variant="tertiary" size="sm" [href]="source" [leadingIcon]="code"
+            >Source</fm-button
+          >
+        }
+      }
+    </div>
+  </div>
+</article>
