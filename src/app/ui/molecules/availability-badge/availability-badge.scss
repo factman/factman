@@ -1,0 +1,18 @@
+// The design system's availability pill (.fm-avail in portfolio-sections.css), around a StatusDot.
+.availability {
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  height: 32px;
+  padding: 0 var(--padding-md) 0 var(--padding-sm);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-full);
+  background: var(--glass-fill-strong);
+  box-shadow: var(--shadow-glass-chip);
+  white-space: nowrap;
+}
+
+.availability .fm-status {
+  font: 500 13px/1 var(--font-sans);
+  color: var(--text-primary);
+}

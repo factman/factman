@@ -1,0 +1,14 @@
+// The design system's window, editor and terminal styles (also the code lines and syntax colours
+// CodeBlock uses), loaded only with this component (docs/design-tokens.md).
+@use 'factman/components/portfolio-code-terminal-ui';
+
+// The DS's title and inactive tabs use --code-gutter, about 2.4:1 on the window bar. Use the code
+// text colour so they meet 4.5:1; the active tab keeps its accent bar.
+.fm-window .window-title,
+.fm-window .window-tab {
+  color: var(--code-fg);
+}
+
+.fm-window.is-terminal .window-title {
+  color: var(--terminal-fg);
+}
