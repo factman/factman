@@ -197,3 +197,7 @@ yarn.lock
 # Claude Code (local only)
 .claude/worktrees
 .claude/settings.local.json
+
+# Visual regression (ETE-84): reports and screenshots a run collects
+vr-report/
+vr-actual/
