@@ -1,0 +1,20 @@
+@if (shown()) {
+  <fm-contact-method
+    [icon]="phone"
+    label="Phone"
+    [value]="display()"
+    [href]="'tel:' + number()"
+    [copy]="true"
+  />
+} @else {
+  <fm-contact-method [icon]="phone" label="Phone" [value]="masked()">
+    <fm-button
+      variant="tertiary"
+      size="sm"
+      [leadingIcon]="eye"
+      ariaLabel="Show phone number"
+      (pressed)="reveal()"
+      >Show number</fm-button
+    >
+  </fm-contact-method>
+}

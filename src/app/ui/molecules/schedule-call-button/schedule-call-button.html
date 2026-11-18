@@ -1,0 +1,11 @@
+<fm-button
+  [variant]="variant()"
+  [size]="size()"
+  [full]="full()"
+  [leadingIcon]="lead()"
+  [trailingIcon]="trailingIcon()"
+  ariaHaspopup="dialog"
+  [ariaExpanded]="expanded()"
+  (pressed)="schedule.emit(service())"
+  >{{ label() }}</fm-button
+>

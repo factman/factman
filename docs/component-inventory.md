@@ -79,18 +79,18 @@ All atoms come from the Factman design system. Tokens only; per-component CSS fr
 
 ### Canvas-only molecules
 
-| Artboard           | Angular component    | Selector                  | Inputs                                                                         | Outputs         | Issue  |
-| ------------------ | -------------------- | ------------------------- | ------------------------------------------------------------------------------ | --------------- | ------ |
-| ChannelCard        | `ChannelCard`        | `fm-channel-card`         | `channel` (`{icon, label, meta, href?, schedule?}`)                            | `schedule`      | ETE-78 |
-| EngageCard         | `EngageCard`         | `fm-engage-card`          | `project`, `facts`                                                             | `requestAccess` | ETE-78 |
-| CareerGlance       | `CareerGlance`       | `fm-career-glance`        | `roles` (current roles), `stats` (`{value, label}[]`), `resumeHref`            |                 | ETE-78 |
-| ConsentStatusCard  | `ConsentStatusCard`  | `fm-consent-status-card`  | `analytics` (granted, denied, unset)                                           | `change`        | ETE-78 |
-| PhoneReveal        | `PhoneReveal`        | `fm-phone-reveal`         | `number`                                                                       | `revealed`      | ETE-78 |
-| TerminalSignOff    | `TerminalSignOff`    | `fm-terminal-sign-off`    | `command`, `signature`                                                         |                 | ETE-78 |
-| CareerStrip        | `CareerStrip`        | `fm-career-strip`         | `rows` (`{org, bars[]}`), `ticks`                                              |                 | ETE-78 |
-| PortraitPlate      | `PhotoFrame`         | `fm-photo-frame`          | `image` (`{src, alt, width, height, sources}`), `variant` (plate, note, panel) |                 | ETE-78 |
-| BookingCard        | `BookingCard`        | `fm-booking-card`         | `service`, `price`, `booking`, `person`                                        | `channel`       | ETE-78 |
-| ScheduleCallButton | `ScheduleCallButton` | `fm-schedule-call-button` | `label`, `variant`, `size`, `full`, `leadingIcon`, `trailingIcon`, `service`   | `schedule`      | ETE-78 |
+| Artboard           | Angular component    | Selector                  | Inputs                                                                                                                      | Outputs                                      | Issue  |
+| ------------------ | -------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- | ------ |
+| ChannelCard        | `ChannelCard`        | `fm-channel-card`         | `channel` (`{icon, label, meta, href?, schedule?}`)                                                                         | `schedule`                                   | ETE-78 |
+| EngageCard         | `EngageCard`         | `fm-engage-card`          | `project`, `facts` (`ListItem[]`), `similarHref`                                                                            | `requestAccess`                              | ETE-78 |
+| CareerGlance       | `CareerGlance`       | `fm-career-glance`        | `roles` (`{title, description, avatar?}[]`), `stats` (`{value, suffix?, label}[]`), `resumeHref`                            |                                              | ETE-78 |
+| ConsentStatusCard  | `ConsentStatusCard`  | `fm-consent-status-card`  | `analytics` (granted, denied, unset)                                                                                        | `change`                                     | ETE-78 |
+| PhoneReveal        | `PhoneReveal`        | `fm-phone-reveal`         | `number` (E.164)                                                                                                            | `revealed`                                   | ETE-78 |
+| TerminalSignOff    | `TerminalSignOff`    | `fm-terminal-sign-off`    | `command`, `signature`                                                                                                      |                                              | ETE-78 |
+| CareerStrip        | `CareerStrip`        | `fm-career-strip`         | `rows` (`{org, bars: {label, left, width, series?}[]}`), `ticks`, `caption`, `description`                                  |                                              | ETE-78 |
+| PortraitPlate      | `PhotoFrame`         | `fm-photo-frame`          | `image` (`{src, alt, width, height, sources?, sizes?}`), `variant` (plate, note, panel), `priority`; overlay is the content |                                              | ETE-78 |
+| BookingCard        | `BookingCard`        | `fm-booking-card`         | `service`, `price`, `booking` (`{email, whatsapp, phone}`), `person` (`{name, photo?, meta}`), `briefHref`                  | `channel` (schedule, email, whatsapp, phone) | ETE-78 |
+| ScheduleCallButton | `ScheduleCallButton` | `fm-schedule-call-button` | `label`, `variant`, `size`, `full`, `leadingIcon`, `trailingIcon`, `service`, `expanded`                                    | `schedule`                                   | ETE-78 |
 
 ## Organisms (level 3)
 

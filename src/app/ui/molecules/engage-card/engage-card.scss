@@ -1,0 +1,13 @@
+@use 'ui/side-card';
+
+.side-card {
+  @include side-card.surface;
+}
+
+.side-card-title {
+  @include side-card.title;
+}
+
+.side-card-text {
+  @include side-card.text;
+}

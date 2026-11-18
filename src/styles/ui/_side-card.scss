@@ -1,0 +1,32 @@
+// The canvas's side card (site.css .side-card): EngageCard and BookingCard (ETE-78).
+@mixin surface {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  box-sizing: border-box;
+  padding: var(--padding-xl);
+  border: var(--border-width-sm) solid var(--glass-stroke-strong);
+  border-radius: var(--radius-xl);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--glass-fill-elevated);
+  box-shadow: var(--shadow-glass-focus);
+  backdrop-filter: blur(var(--blur-glass-focus));
+
+  // Full-width buttons include their border, so they don't spill past the card.
+  .fm-btn {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+}
+
+@mixin title {
+  margin: 0;
+  font: 600 20px/1.5 var(--font-sans);
+}
+
+@mixin text {
+  margin: 0;
+  font: 400 14px/1.7 var(--font-sans);
+  color: var(--text-secondary);
+}

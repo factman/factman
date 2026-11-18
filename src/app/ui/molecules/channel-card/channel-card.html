@@ -1,0 +1,22 @@
+<ng-template #content>
+  <fm-icon [icon]="channel().icon" [size]="24" />
+  <span class="channel-card-label">{{ channel().label }}</span>
+  <span class="channel-card-meta">{{ channel().meta }}</span>
+</ng-template>
+@if (channel().schedule || !channel().href) {
+  <button type="button" class="channel-card" aria-haspopup="dialog" (click)="schedule.emit()">
+    <ng-container [ngTemplateOutlet]="content" />
+  </button>
+} @else {
+  <a
+    class="channel-card"
+    [href]="channel().href"
+    [attr.target]="external() ? '_blank' : null"
+    [attr.rel]="external() ? 'noopener noreferrer' : null"
+  >
+    <ng-container [ngTemplateOutlet]="content" />
+    @if (external()) {
+      <span class="fm-sr">(opens in a new tab)</span>
+    }
+  </a>
+}

@@ -1,0 +1,85 @@
+// The canvas's career strip (site.css .career-strip): a glass card with a bar chart.
+.career-strip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--padding-xl);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--glass-fill-strong);
+  box-shadow: var(--shadow-glass-regular);
+}
+
+.career-strip-caption {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-3xs);
+}
+
+.career-strip-title {
+  font: 600 16px/24px var(--font-sans);
+}
+
+.career-strip-desc {
+  font: 400 12px/18px var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.career-strip-chart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.career-strip-row {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: var(--gap-sm);
+  align-items: center;
+}
+
+.career-strip-org {
+  overflow: hidden;
+  font: 600 12px/16px var(--font-sans);
+  color: var(--text-secondary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.career-strip-track {
+  position: relative;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--bg-track);
+}
+
+.career-strip-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  min-width: 6px;
+  border-radius: var(--radius-full);
+  outline: var(--border-width-sm) solid var(--glass-stroke-subtle);
+  outline-offset: calc(var(--border-width-sm) * -1);
+}
+
+.career-strip-ticks {
+  display: flex;
+  justify-content: space-between;
+  font: 500 12px/16px var(--font-mono);
+  color: var(--text-secondary);
+}
+
+@media (width < 600px) {
+  .career-strip {
+    padding: var(--padding-lg);
+  }
+
+  .career-strip-row {
+    grid-template-columns: 88px minmax(0, 1fr);
+  }
+}

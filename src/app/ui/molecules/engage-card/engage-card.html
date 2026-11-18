@@ -1,0 +1,18 @@
+<aside class="side-card" aria-labelledby="engage-title">
+  <h2 class="side-card-title" id="engage-title">How to engage</h2>
+  <p class="side-card-text">{{ note() }}</p>
+  @if (facts().length) {
+    <fm-list variant="inset" [items]="facts()" />
+  }
+  <fm-button size="lg" [full]="true" [href]="similarHref()" [trailingIcon]="arrow"
+    >Start a similar project</fm-button
+  >
+  <fm-button
+    variant="secondary"
+    size="lg"
+    [full]="true"
+    [leadingIcon]="mail"
+    (pressed)="requestAccess.emit()"
+    >{{ askLabel() }}</fm-button
+  >
+</aside>
