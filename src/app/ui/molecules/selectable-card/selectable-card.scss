@@ -1,22 +1,51 @@
-// The design system's card and selectable-card styles, loaded only with this component.
-@use 'factman/components/card';
-
-.fm-selcard.selcard {
-  max-width: none;
+// The design system's glass card and selectable card (.fm-card, .fm-selcard in card.css), copied
+// here with our own class names: card.css is over the 8 kB style budget for one component.
+// Keep the values in step with the DS.
+.selcard {
+  position: relative;
+  display: flex;
+  gap: var(--gap-sm);
+  align-items: center;
+  box-sizing: border-box;
+  padding: var(--padding-md);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  cursor: pointer;
+  background: var(--glass-fill-strong);
+  box-shadow: var(--shadow-glass-regular);
+  backdrop-filter: blur(var(--blur-glass-regular));
 }
 
-.fm-selcard.selcard.is-disabled {
-  cursor: not-allowed;
+.selcard:hover:not(.is-disabled) {
+  border-color: var(--glass-stroke-strong);
+  background: var(--glass-fill-hover);
 }
 
-// The DS's selected card ring, on the label.
-.fm-selcard.selcard.is-selected {
+.selcard:has(:focus-visible) {
+  outline: var(--border-width-lg) solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.selcard.is-selected {
   border-color: var(--glass-stroke-strong);
   background: var(--glass-fill-elevated);
   box-shadow: var(--shadow-glass-focus);
 }
 
-.fm-selcard .selcard-icon {
+.selcard.is-disabled {
+  cursor: not-allowed;
+}
+
+.selcard-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.selcard-icon {
   display: inline-flex;
   flex: none;
   align-items: center;
@@ -28,8 +57,34 @@
   background: var(--bg-sunken);
 }
 
-// The radio mark (the DS styles only its selected state).
-.fm-selcard .selcard-mark {
+.selcard.is-disabled .selcard-icon,
+.selcard.is-disabled .selcard-mark {
+  opacity: 0.5;
+}
+
+.selcard-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--gap-3xs);
+  min-width: 0;
+}
+
+.selcard-title {
+  font: 600 16px/20px var(--font-sans);
+}
+
+.selcard-desc {
+  font: 400 13px/18px var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.selcard.is-disabled .selcard-desc {
+  color: var(--text-disabled);
+}
+
+// The radio (or checkbox) mark.
+.selcard-mark {
   position: relative;
   flex: none;
   box-sizing: border-box;
@@ -40,10 +95,19 @@
   background: var(--glass-fill-strong);
 }
 
-.fm-selcard .selcard-mark.is-box {
+.selcard-mark.is-box {
   border-radius: var(--radius-xs);
 }
 
-.fm-selcard.is-selected .selcard-mark.is-box::before {
-  border-radius: var(--radius-xs);
+.selcard.is-selected .selcard-mark {
+  border-color: var(--border-strong);
+  background: var(--glass-fill-elevated);
+}
+
+.selcard.is-selected .selcard-mark::before {
+  position: absolute;
+  inset: 3.5px;
+  border-radius: inherit;
+  content: '';
+  background: var(--icon-primary);
 }

@@ -1,11 +1,6 @@
-<label
-  class="fm-card fm-card--glass fm-selcard selcard"
-  [class.is-selected]="selected()"
-  [class.is-disabled]="disabled()"
-  [for]="id"
->
+<label class="selcard" [class.is-selected]="selected()" [class.is-disabled]="disabled()" [for]="id">
   <input
-    class="fm-selcard__input"
+    class="selcard-input"
     [id]="id"
     [type]="type()"
     [attr.name]="name()"
@@ -19,15 +14,11 @@
   @if (icon(); as icon) {
     <span class="selcard-icon" aria-hidden="true"><fm-icon [icon]="icon" [size]="20" /></span>
   }
-  <span class="fm-selcard__text">
-    <span class="fm-selcard__title" [id]="id + '-title'">{{ title() }}</span>
+  <span class="selcard-text">
+    <span class="selcard-title" [id]="id + '-title'">{{ title() }}</span>
     @if (description(); as description) {
-      <span class="fm-selcard__desc" [id]="id + '-desc'">{{ description }}</span>
+      <span class="selcard-desc" [id]="id + '-desc'">{{ description }}</span>
     }
   </span>
-  <span
-    class="fm-selcard__radio selcard-mark"
-    [class.is-box]="type() === 'checkbox'"
-    aria-hidden="true"
-  ></span>
+  <span class="selcard-mark" [class.is-box]="type() === 'checkbox'" aria-hidden="true"></span>
 </label>
