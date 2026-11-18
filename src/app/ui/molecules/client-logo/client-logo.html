@@ -1,0 +1,24 @@
+<ng-template #content>
+  <span class="client-logo-plate" [class.is-dark]="client().plate === 'dark'">
+    <img
+      [src]="src()"
+      [alt]="showName() ? '' : client().name"
+      [width]="width()"
+      [height]="height"
+      loading="lazy"
+      decoding="async"
+    />
+  </span>
+  @if (showName()) {
+    <span class="client-logo-name">{{ client().name }}</span>
+  }
+</ng-template>
+@if (link(); as href) {
+  <a class="client-logo" [href]="href" target="_blank" rel="noopener noreferrer"
+    ><ng-container [ngTemplateOutlet]="content" /><span class="fm-sr">
+      (opens in a new tab)</span
+    ></a
+  >
+} @else {
+  <span class="client-logo"><ng-container [ngTemplateOutlet]="content" /></span>
+}
