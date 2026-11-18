@@ -1,0 +1,18 @@
+// The canvas's page frame (site.css .site): full height, the main area grows, the backdrop from
+// global.css (.fm-backdrop). The skip link's styles are global (styles.scss).
+.site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.site .site-main {
+  flex: 1 1 auto;
+}
+
+// The header is fixed: anchor jumps and focus scrolling stop below it.
+:root:has(.site) {
+  scroll-padding-top: calc(var(--navbar-height) + 2 * var(--padding-sm));
+}
