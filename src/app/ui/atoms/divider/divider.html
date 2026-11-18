@@ -1,0 +1,9 @@
+@if (label() && orientation() === 'horizontal') {
+  <div [class]="classes()">
+    <span class="fm-divider__line" aria-hidden="true"></span>
+    <span class="fm-divider-text">{{ label() }}</span>
+    <span class="fm-divider__line" aria-hidden="true"></span>
+  </div>
+} @else {
+  <div [class]="classes()" aria-hidden="true"></div>
+}

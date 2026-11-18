@@ -1,0 +1,12 @@
+// The design system's Chip styles, loaded only with this component (docs/design-tokens.md).
+@use 'factman/components/chip';
+
+// Only opacity and transform animate (docs/interaction-and-motion.md): colour changes are instant.
+.fm-chip {
+  transition: none;
+}
+
+// The ring shows for keyboard focus only, not a mouse click.
+.fm-chip:focus-within:not(:has(:focus-visible)) {
+  outline: none;
+}

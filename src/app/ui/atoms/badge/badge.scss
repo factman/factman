@@ -1,0 +1,9 @@
+// The design system's Badge styles, loaded only with this component (docs/design-tokens.md).
+@use 'factman/components/badge';
+
+// The design system's danger badge (white on --border-danger) is 3.8:1, below WCAG AA for its
+// 10px text; the solid danger tokens are 5.6:1.
+.fm-badge.fm-badge-danger {
+  color: var(--text-on-danger);
+  background: var(--bg-danger);
+}

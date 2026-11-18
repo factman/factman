@@ -1,0 +1,9 @@
+<span [class]="classes()">
+  @if (dot()) {
+    <span class="fm-tag__dot" aria-hidden="true"></span>
+  }
+  @if (leadingIcon(); as icon) {
+    <fm-icon [icon]="icon" [size]="iconSize()" />
+  }
+  <ng-content />
+</span>
