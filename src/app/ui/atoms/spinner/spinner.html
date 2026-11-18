@@ -1,0 +1,35 @@
+<span
+  role="status"
+  class="fm-spinner fm-spinner--ring fm-spinner--{{ tone() }}"
+  [style.width.px]="size()"
+  [style.height.px]="size()"
+>
+  <svg
+    class="fm-spinner__ring spinner-ring"
+    [attr.width]="size()"
+    [attr.height]="size()"
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+  >
+    <circle
+      class="fm-spinner__track"
+      cx="12"
+      cy="12"
+      [attr.r]="ring().r"
+      [attr.stroke-width]="ring().w"
+    />
+    <path
+      class="fm-spinner__arc"
+      [attr.d]="ring().d"
+      [attr.stroke-width]="ring().w"
+      stroke-linecap="round"
+    />
+  </svg>
+  @if (type() === 'logo') {
+    <span class="spinner-logo" aria-hidden="true"
+      ><fm-logo type="mark" [size]="logoSize()" alt=""
+    /></span>
+  }
+  <span class="fm-sr">{{ label() }}</span>
+</span>

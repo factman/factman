@@ -12,6 +12,7 @@ import { RouterLink } from '@angular/router';
 import { Icon } from '../icon/icon';
 import type { IconDef } from '../icon/icon-def';
 import { parseHref } from '../link/href';
+import { spinnerRing } from '../spinner/ring';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'text' | 'link';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
@@ -76,12 +77,7 @@ export class Button {
   });
   protected readonly iconSize = computed(() => ICON_SIZE[this.size()]);
   /** The design system's ring geometry for this icon size. */
-  protected readonly ring = computed(() => {
-    const size = this.iconSize();
-    const sw = size >= 48 ? 4 : size >= 32 ? 3 : 2;
-    const r = 12 - (sw * 12) / size;
-    return { r, w: (sw * 24) / size, d: `M12 ${12 - r}a${r} ${r} 0 0 1 ${r} ${r}` };
-  });
+  protected readonly ring = computed(() => spinnerRing(this.iconSize()));
   protected readonly classes = computed(() =>
     [
       'fm-btn',
