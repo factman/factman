@@ -1,0 +1,17 @@
+<!-- Projected content can fill only one ng-content, so both branches share this template. -->
+<ng-template #content><ng-content /></ng-template>
+<span [class]="classes()">
+  @if (selectable()) {
+    <button
+      type="button"
+      class="fm-chip__main"
+      [attr.aria-pressed]="selected()"
+      [disabled]="disabled()"
+      (click)="toggle()"
+    >
+      <ng-container [ngTemplateOutlet]="content" />
+    </button>
+  } @else {
+    <ng-container [ngTemplateOutlet]="content" />
+  }
+</span>

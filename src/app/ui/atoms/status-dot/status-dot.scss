@@ -1,0 +1,47 @@
+// A dot in the tone's icon colour, as the Tag's `dot`, with its label beside it (ETE-70).
+.fm-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  font: 500 12px/16px var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.fm-status-dot {
+  position: relative;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--tone-ic);
+}
+
+// The pulse is a ring that grows and fades: transform and opacity only.
+.is-pulsing .fm-status-dot::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  content: '';
+  background: var(--tone-ic);
+  animation: fm-status-pulse calc(var(--duration-reveal) * 3) var(--ease-out) infinite;
+}
+
+@keyframes fm-status-pulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(2.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-pulsing .fm-status-dot::after {
+    animation: none;
+    opacity: 0;
+  }
+}

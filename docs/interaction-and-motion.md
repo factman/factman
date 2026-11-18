@@ -95,17 +95,17 @@ In-page anchors (`#about`, `#contact` …) scroll smoothly; targets clear the st
 
 ## Reduced motion, per component
 
-| Component                                                     | Normally                       | With reduced motion                     |
-| ------------------------------------------------------------- | ------------------------------ | --------------------------------------- |
-| `[fmReveal]`                                                  | Fades and rises in             | Shown at once, never hidden             |
-| `Typewriter`, `Caret`                                         | Types and erases roles; blinks | First role in full; steady caret        |
-| `StatCounter`                                                 | Counts up                      | Final value                             |
-| `ClientLogoStrip`                                             | Endless marquee                | Static, wrapped, centred grid; no clone |
-| `Dialog`                                                      | Fades and scales in            | Appears at once                         |
-| Mobile menu, consent banner, toast                            | Fade and slide in              | Appear at once                          |
-| Hover lifts and nudges                                        | 2–3px movement                 | No movement; colour changes only        |
-| `AvailabilityBadge`, `TerminalSignOff`, `Skeleton`, `Spinner` | Endless loops                  | No loop                                 |
-| Anchor links                                                  | Smooth scroll                  | Jump                                    |
+| Component                                                                            | Normally                       | With reduced motion                     |
+| ------------------------------------------------------------------------------------ | ------------------------------ | --------------------------------------- |
+| `[fmReveal]`                                                                         | Fades and rises in             | Shown at once, never hidden             |
+| `Typewriter`, `Caret`                                                                | Types and erases roles; blinks | First role in full; steady caret        |
+| `StatCounter`                                                                        | Counts up                      | Final value                             |
+| `ClientLogoStrip`                                                                    | Endless marquee                | Static, wrapped, centred grid; no clone |
+| `Dialog`                                                                             | Fades and scales in            | Appears at once                         |
+| Mobile menu, consent banner, toast                                                   | Fade and slide in              | Appear at once                          |
+| Hover lifts and nudges                                                               | 2–3px movement                 | No movement; colour changes only        |
+| `AvailabilityBadge`, `StatusDot` (`pulse`), `TerminalSignOff`, `Skeleton`, `Spinner` | Endless loops                  | No loop                                 |
+| Anchor links                                                                         | Smooth scroll                  | Jump                                    |
 
 Unit tests cover both states for each component that checks `prefersReducedMotion()` (stub `matchMedia`).
 

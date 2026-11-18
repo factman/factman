@@ -1,0 +1,7 @@
+// The design system's Divider styles, loaded only with this component (docs/design-tokens.md).
+@use 'factman/components/divider';
+
+// The design system's label colour (--text-tertiary) is below WCAG AA at 12px.
+.fm-divider-text {
+  color: var(--text-secondary);
+}
