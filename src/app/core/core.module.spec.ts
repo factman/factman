@@ -5,6 +5,7 @@ import { ANALYTICS } from './analytics/analytics.module';
 import { SITE } from './config/site';
 import { CONSENT } from './consent/consent.module';
 import { CoreModule } from './core.module';
+import siteJson from '../../data/site.json';
 
 describe('CoreModule', () => {
   const setup = (environment: 'production' | 'preview') =>
@@ -16,7 +17,8 @@ describe('CoreModule', () => {
     setup('production');
     const site = TestBed.inject(SITE);
     expect(site.name).toBe('Odunayo Mohammed');
-    expect(site.robots).toBe('index');
+    // site.json's own value: noindex until launch (ETE-235), then index.
+    expect(site.robots).toBe(siteJson.robots);
     expect(TestBed.inject(ANALYTICS).enabled).toBe(true);
     expect(TestBed.inject(CONSENT).cookie).toBe('fm_consent');
   });

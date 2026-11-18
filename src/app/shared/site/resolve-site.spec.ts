@@ -7,7 +7,8 @@ const base = site as Site;
 describe('resolveSite', () => {
   it('uses the base settings in production', () => {
     const prod = resolveSite(base, 'production');
-    expect(prod.robots).toBe('index');
+    // Production follows site.json: noindex until launch (ETE-235), then index.
+    expect(prod.robots).toBe(base.robots);
     expect(prod.analytics.enabled).toBe(true);
     expect(prod.analytics.gtmId).toBe('GTM-MB3JFBJ6');
     expect(prod.analytics.ga4Id).toBe('G-NZ7SLG4X1Q');
