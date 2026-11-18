@@ -1,0 +1,61 @@
+@use 'ui/layout';
+
+.detail-layout .detail-container {
+  @include layout.container;
+}
+
+.detail-layout .detail-hero {
+  @include layout.section;
+
+  padding-bottom: var(--gap-3xl);
+}
+
+.detail-layout .detail-crumbs {
+  margin-bottom: var(--gap-xl);
+}
+
+.detail-layout .detail-gallery {
+  @include layout.section-tight;
+
+  padding-top: 0;
+}
+
+.detail-layout .detail-body {
+  @include layout.section;
+
+  padding-top: var(--gap-xl);
+}
+
+.detail-layout .detail-split {
+  @include layout.split-aside;
+}
+
+.detail-layout .detail-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-4xl);
+  min-width: 0;
+}
+
+.detail-layout .detail-aside {
+  @include layout.sticky-aside;
+}
+
+.detail-layout .detail-cta,
+.detail-layout .detail-related {
+  @include layout.section;
+
+  padding-top: 0;
+}
+
+// Slots left empty take no space.
+.detail-layout .detail-gallery:not(:has(.detail-container > *)),
+.detail-layout .detail-cta:not(:has(.detail-container > *)),
+.detail-layout .detail-related:not(:has(.detail-container > *)),
+.detail-layout .detail-aside:empty {
+  display: none;
+}
+
+.detail-layout .detail-split:has(.detail-aside:empty) {
+  grid-template-columns: minmax(0, 1fr);
+}
