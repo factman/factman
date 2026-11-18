@@ -48,6 +48,6 @@ export class Select extends ValueControl<string> {
 
   protected readonly chevron = iconChevronDown;
   protected readonly classes = computed(
-    () => `${fieldClasses(this.size(), this.invalid(), this.isDisabled())} fm-native-select`,
+    () => `${fieldClasses(this.size(), this.isInvalid(), this.isDisabled())} fm-native-select`,
   );
 }

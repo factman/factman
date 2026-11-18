@@ -1,0 +1,71 @@
+// The design system's contact method (portfolio-sections.css) and icon tile (range.css), copied
+// here so a contact method doesn't load those whole files. Keep them in step with the DS.
+.fm-cmethod {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: var(--padding-sm);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-lg);
+  background: var(--glass-fill);
+}
+
+.fm-cmethod:hover,
+.fm-cmethod:focus-within {
+  border-color: var(--glass-stroke-strong);
+}
+
+.fm-icon-tile {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  color: var(--blue-900);
+  background: linear-gradient(135deg, var(--ice-300), var(--ice-200));
+}
+
+.fm-cmethod .cmethod-label {
+  font: 400 12px/16px var(--font-sans);
+
+  // --text-tertiary (the DS's colour) is under 4.5:1 at 12px.
+  color: var(--text-secondary);
+}
+
+.fm-cmethod .cmethod-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--gap-3xs);
+  min-width: 0;
+}
+
+.fm-cmethod .cmethod-value {
+  overflow: hidden;
+  font: 600 14px/20px var(--font-sans);
+  color: var(--text-primary);
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fm-cmethod a.cmethod-value:hover,
+.fm-cmethod a.cmethod-value:focus-visible {
+  color: var(--accent-default);
+  text-decoration: underline;
+}
+
+.fm-cmethod a.cmethod-value:focus-visible {
+  border-radius: var(--radius-xs);
+  outline: var(--border-width-lg) solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+// The InfoTile: icon on top, for a grid of methods.
+.fm-cmethod.cmethod-tile {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--padding-md);
+}

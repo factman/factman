@@ -35,10 +35,10 @@ export class Switch extends ValueControl<boolean> {
     return false;
   }
 
-  protected readonly descId = computed(() => `${this.inputId()}-desc`);
+  protected readonly descId = computed(() => `${this.controlId()}-desc`);
   protected readonly describedBy = computed(
     () =>
-      [this.description() ? this.descId() : '', this.ariaDescribedby() ?? '']
+      [this.description() ? this.descId() : '', this.describedByIds() ?? '']
         .filter(Boolean)
         .join(' ') || null,
   );
@@ -46,7 +46,7 @@ export class Switch extends ValueControl<boolean> {
     const c = ['fm-switch'];
     if (this.size() !== 'md') c.push(`fm-switch--${this.size()}`);
     if (this.value()) c.push('is-on');
-    if (this.invalid()) c.push('is-error');
+    if (this.isInvalid()) c.push('is-error');
     if (this.isDisabled()) c.push('is-disabled');
     return c.join(' ');
   });

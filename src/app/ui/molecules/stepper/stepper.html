@@ -1,0 +1,43 @@
+<ol
+  class="fm-stepper"
+  [class.fm-stepper--h]="orientation() === 'horizontal'"
+  [class.fm-stepper--v]="orientation() === 'vertical'"
+>
+  @for (step of steps(); track $index; let i = $index, last = $last) {
+    @let status = step.status ?? 'completed';
+    <li
+      class="fm-step fm-step--{{ status }} step-{{ status }}"
+      [attr.aria-current]="step.status === 'current' ? 'step' : null"
+    >
+      <span class="fm-step__rail">
+        <span class="fm-stepi fm-stepi--{{ status }} step-index" aria-hidden="true">
+          @if (step.status === 'completed') {
+            <fm-icon [icon]="check" [size]="16" />
+          } @else {
+            {{ i + 1 }}
+          }
+        </span>
+        @if (!last) {
+          <span
+            class="fm-step__line"
+            [class.is-done]="step.status === 'completed'"
+            aria-hidden="true"
+          ></span>
+        }
+      </span>
+      <span class="fm-step__text">
+        <span class="fm-step__title step-title"
+          ><span class="fm-sr">Step {{ i + 1 }}: </span>{{ step.title }}
+          @if (step.status === 'completed') {
+            <span class="fm-sr">(completed)</span>
+          } @else if (step.status === 'error') {
+            <span class="fm-sr">(needs attention)</span>
+          }
+        </span>
+        @if (step.description) {
+          <span class="fm-step__desc step-desc">{{ step.description }}</span>
+        }
+      </span>
+    </li>
+  }
+</ol>

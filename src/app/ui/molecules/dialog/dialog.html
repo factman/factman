@@ -1,0 +1,22 @@
+<dialog
+  #dialog
+  class="fm-modal dialog"
+  [class.fm-modal--md]="size() === 'md'"
+  [class.fm-modal--lg]="size() === 'lg'"
+  [attr.aria-labelledby]="titleId"
+  (cancel)="cancel($event)"
+>
+  <div class="dialog-panel">
+    <div class="fm-modal__head">
+      <div class="fm-modal__heading">
+        <h2 class="fm-modal__title dialog-title" [id]="titleId">{{ label() }}</h2>
+        @if (description(); as description) {
+          <p class="fm-modal__desc dialog-desc">{{ description }}</p>
+        }
+      </div>
+      <fm-icon-button [icon]="close" label="Close" size="sm" (pressed)="closed.emit()" />
+    </div>
+    <div class="fm-modal__body"><ng-content /></div>
+    <div class="fm-modal__foot dialog-foot"><ng-content select="[dialogFooter]" /></div>
+  </div>
+</dialog>

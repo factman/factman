@@ -1,0 +1,29 @@
+<div class="fm-cmethod" [class.cmethod-tile]="variant() === 'tile'">
+  <span class="fm-icon-tile" aria-hidden="true"><fm-icon [icon]="icon()" [size]="20" /></span>
+  <div class="fm-cmethod__text cmethod-text">
+    <span class="fm-cmethod__label cmethod-label">{{ label() }}</span>
+    @if (href(); as href) {
+      <a
+        class="fm-cmethod__value cmethod-value"
+        [href]="href"
+        [attr.target]="external() ? '_blank' : null"
+        [attr.rel]="external() ? 'noopener noreferrer' : null"
+        >{{ value() }}
+        @if (external()) {
+          <span class="fm-sr">(opens in a new tab)</span>
+        }
+      </a>
+    } @else {
+      <span class="fm-cmethod__value cmethod-value">{{ value() }}</span>
+    }
+  </div>
+  @if (copy()) {
+    <fm-copy-button
+      [value]="value()"
+      label="Copy"
+      [ariaLabel]="'Copy ' + label()"
+      variant="tertiary"
+      (copied)="copied.emit($event)"
+    />
+  }
+</div>

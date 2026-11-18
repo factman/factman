@@ -1,0 +1,54 @@
+// The design system's modal styles, loaded only with this component (docs/design-tokens.md).
+@use 'factman/components/overlay-modal-dialog-drawer-sheet';
+
+// A native <dialog> as the DS modal: no browser chrome, the DS backdrop.
+dialog.dialog {
+  max-height: calc(100dvh - 2 * var(--padding-md));
+  margin: auto;
+  padding: 0;
+  color: var(--text-primary);
+}
+
+dialog.dialog:not([open]) {
+  display: none;
+}
+
+dialog.dialog::backdrop {
+  background: var(--bg-overlay);
+  backdrop-filter: blur(4px);
+}
+
+// The panel fills the dialog, so a click on the dialog element itself is a click on the backdrop
+// only when the panel is smaller; the panel catches every click inside.
+.dialog .dialog-panel {
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
+}
+
+.dialog .dialog-title,
+.dialog .dialog-desc {
+  margin: 0;
+}
+
+.dialog .dialog-foot:empty {
+  display: none;
+}
+
+// Opening: fade, and the panel scales up from 0.98 (docs/interaction-and-motion.md). Closing is
+// instant. Reduced motion is handled by the global rule.
+dialog.dialog[open] {
+  animation: dialog-in var(--duration-base) var(--ease-out);
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+// Scroll lock while a dialog is open.
+:root.dialog-scroll-lock {
+  overflow: hidden;
+}

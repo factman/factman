@@ -40,17 +40,17 @@ export class Checkbox extends ValueControl<boolean> {
   }
 
   protected readonly check = iconCheck;
-  protected readonly descId = computed(() => `${this.inputId()}-desc`);
+  protected readonly descId = computed(() => `${this.controlId()}-desc`);
   protected readonly describedBy = computed(
     () =>
-      [this.description() ? this.descId() : '', this.ariaDescribedby() ?? '']
+      [this.description() ? this.descId() : '', this.describedByIds() ?? '']
         .filter(Boolean)
         .join(' ') || null,
   );
   protected readonly classes = computed(() => {
     const c = ['fm-check'];
     if (this.size() === 16) c.push('fm-check--16');
-    if (this.invalid()) c.push('is-error');
+    if (this.isInvalid()) c.push('is-error');
     if (this.isDisabled()) c.push('is-disabled');
     return c.join(' ');
   });

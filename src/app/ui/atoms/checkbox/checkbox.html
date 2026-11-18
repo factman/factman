@@ -1,13 +1,13 @@
-<label [class]="classes()" [for]="inputId()">
+<label [class]="classes()" [for]="controlId()">
   <input
     type="checkbox"
     class="fm-check__input"
-    [id]="inputId()"
+    [id]="controlId()"
     [checked]="value()"
     [attr.name]="name()"
     [attr.aria-describedby]="describedBy()"
-    [attr.aria-invalid]="invalid() || null"
-    [required]="required()"
+    [attr.aria-invalid]="isInvalid() || null"
+    [required]="isRequired()"
     [disabled]="isDisabled()"
     (change)="commit($any($event.target).checked)"
     (blur)="onTouched()"

@@ -1,0 +1,31 @@
+<div class="fm-acc fm-acc--lg accordion">
+  @for (item of items(); track item.id) {
+    @let isOpen = open().includes(item.id);
+    <div class="fm-acc-item fm-acc-item--card acc-item" [class.is-open]="isOpen">
+      <div role="heading" [attr.aria-level]="headingLevel()">
+        <button
+          type="button"
+          class="fm-acc-item__head"
+          [id]="prefix + '-' + item.id"
+          [attr.aria-expanded]="isOpen"
+          [attr.aria-controls]="prefix + '-' + item.id + '-panel'"
+          (click)="toggle(item.id)"
+        >
+          <span class="fm-acc-item__text"
+            ><span class="fm-acc-item__title">{{ item.title }}</span></span
+          >
+          <span class="fm-acc-item__chev"><fm-icon [icon]="chevron" [size]="20" /></span>
+        </button>
+      </div>
+      <div
+        class="fm-acc-item__body"
+        role="region"
+        [id]="prefix + '-' + item.id + '-panel'"
+        [attr.aria-labelledby]="prefix + '-' + item.id"
+        [hidden]="!isOpen"
+      >
+        {{ item.content }}
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,21 @@
+<nav class="fm-crumbs fm-crumbs--md" aria-label="Breadcrumb">
+  <ol>
+    @for (crumb of crumbs(); track $index; let last = $last) {
+      <li>
+        @if (last || !crumb.href) {
+          <span
+            class="fm-crumbs__item"
+            [class.fm-crumbs__current]="last"
+            [attr.aria-current]="last ? 'page' : null"
+            >{{ crumb.label }}</span
+          >
+        } @else {
+          <a class="fm-crumbs__item" [routerLink]="crumb.href">{{ crumb.label }}</a>
+        }
+        @if (!last) {
+          <span class="fm-crumbs__sep"><fm-icon [icon]="chevron" [size]="16" /></span>
+        }
+      </li>
+    }
+  </ol>
+</nav>

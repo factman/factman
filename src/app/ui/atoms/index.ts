@@ -6,6 +6,7 @@ export { Caret } from './caret/caret';
 export { Checkbox } from './checkbox/checkbox';
 export { Chip, type ChipSize, type ChipToggle } from './chip/chip';
 export { Divider } from './divider/divider';
+export { FIELD_CONTEXT, type FieldContext } from './form-control/field-context';
 export { fieldId, ValueControl } from './form-control/value-control';
 export { Icon, type IconSize } from './icon/icon';
 export { IconButton } from './icon-button/icon-button';
