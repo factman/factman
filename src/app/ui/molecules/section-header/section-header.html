@@ -1,0 +1,27 @@
+<header class="section-head" [class.is-center]="align() === 'center'">
+  <div class="section-head-text">
+    @if (eyebrow()) {
+      <p class="section-eyebrow">
+        @if (index(); as index) {
+          <span class="section-eyebrow-index">{{ index }} · </span>
+        }
+        {{ eyebrow() }}
+      </p>
+    }
+    @switch (level()) {
+      @case (1) {
+        <h1 class="section-head-title" [attr.id]="headingId()">{{ title() }}</h1>
+      }
+      @case (3) {
+        <h3 class="section-head-title" [attr.id]="headingId()">{{ title() }}</h3>
+      }
+      @default {
+        <h2 class="section-head-title" [attr.id]="headingId()">{{ title() }}</h2>
+      }
+    }
+    @if (description(); as description) {
+      <p class="section-head-desc">{{ description }}</p>
+    }
+  </div>
+  <div class="section-head-action"><ng-content /></div>
+</header>
