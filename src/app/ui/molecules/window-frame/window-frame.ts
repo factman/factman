@@ -38,6 +38,8 @@ export class WindowFrame {
   readonly closable = input(false);
   /** The accent glow around the window, for the hero. */
   readonly glow = input(false);
+  /** Show the title bar; off for a bare terminal strip (TerminalSignOff). */
+  readonly bar = input(true);
 
   readonly closed = output<void>();
 

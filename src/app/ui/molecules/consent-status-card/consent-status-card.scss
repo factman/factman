@@ -1,0 +1,14 @@
+.consent-status {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  font-family: var(--font-sans);
+}
+
+.consent-status .consent-status-body {
+  min-height: 0;
+}
+
+.consent-status p {
+  margin: 0;
+}

@@ -1,0 +1,40 @@
+// The canvas's channel card (site.css .channel-card): a light-on-dark tile for the booking band.
+.channel-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: var(--padding-lg);
+  border: var(--border-width-sm) solid var(--stroke-on-inverse);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-sans);
+  color: var(--text-inverse);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  background: var(--fill-on-inverse);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+// Hover lifts 2px; the fill changes at once (only transform animates).
+.channel-card:hover,
+.channel-card:focus-visible {
+  background: var(--fill-on-inverse-hover);
+  transform: translateY(-2px);
+}
+
+.channel-card:focus-visible {
+  outline: var(--border-width-lg) solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.channel-card-label {
+  font: 600 16px/24px var(--font-sans);
+}
+
+.channel-card-meta {
+  font: 400 12px/18px var(--font-mono);
+}

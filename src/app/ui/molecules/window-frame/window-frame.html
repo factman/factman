@@ -4,18 +4,25 @@
   [class.is-terminal]="variant() === 'terminal'"
   [class.fm-window--glow]="glow()"
 >
-  <div class="fm-window__bar">
-    <span class="fm-window__dots" aria-hidden="true"
-      ><i></i><i class="is-min"></i><i class="is-zoom"></i
-    ></span>
-    <span class="fm-window__title window-title">{{ title() }}</span>
-    <span class="fm-window__actions">
-      <ng-content select="[windowActions]" />
-      @if (closable()) {
-        <fm-icon-button [icon]="close" [label]="closeLabel()" size="sm" (pressed)="closed.emit()" />
-      }
-    </span>
-  </div>
+  @if (bar()) {
+    <div class="fm-window__bar">
+      <span class="fm-window__dots" aria-hidden="true"
+        ><i></i><i class="is-min"></i><i class="is-zoom"></i
+      ></span>
+      <span class="fm-window__title window-title">{{ title() }}</span>
+      <span class="fm-window__actions">
+        <ng-content select="[windowActions]" />
+        @if (closable()) {
+          <fm-icon-button
+            [icon]="close"
+            [label]="closeLabel()"
+            size="sm"
+            (pressed)="closed.emit()"
+          />
+        }
+      </span>
+    </div>
+  }
   @if (tabs().length) {
     <div class="fm-window__tabs" aria-hidden="true">
       @for (tab of tabs(); track tab.label) {

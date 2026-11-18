@@ -14,7 +14,8 @@ import { CopyButton } from '../copy-button/copy-button';
 /**
  * One way to reach Odunayo: an icon, a label ("Email") and the value ("hello@…"), which is a link
  * when there is an `href` (mailto:, tel:, a URL). `copy` adds a copy button for the value. `row`
- * lists methods one under another; `tile` is the canvas's InfoTile, for a grid.
+ * lists methods one under another; `tile` is the canvas's InfoTile, for a grid. Projected content
+ * (an action button) goes at the end of the row.
  * @level molecule
  */
 @Component({

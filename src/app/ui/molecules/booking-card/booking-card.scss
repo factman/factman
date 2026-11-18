@@ -1,0 +1,46 @@
+@use 'ui/side-card';
+
+.side-card {
+  @include side-card.surface;
+}
+
+.side-card-title {
+  @include side-card.title;
+}
+
+.side-card-text {
+  @include side-card.text;
+}
+
+.booking-card-who {
+  display: flex;
+  gap: var(--gap-sm);
+  align-items: center;
+  padding-bottom: var(--padding-sm);
+  border-bottom: var(--border-width-sm) solid var(--glass-stroke);
+}
+
+.booking-card-person {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-3xs);
+  min-width: 0;
+}
+
+.booking-card-name {
+  font: 600 14px/1.4 var(--font-sans);
+}
+
+.booking-card-meta {
+  font: 500 12px/16px var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+.booking-card-price {
+  color: var(--text-primary);
+}
+
+.booking-card .availability {
+  align-self: flex-start;
+}

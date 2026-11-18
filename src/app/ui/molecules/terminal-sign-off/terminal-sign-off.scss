@@ -1,0 +1,57 @@
+.sign-off .fm-window {
+  border-radius: var(--radius-md);
+}
+
+.sign-off .sign-off-body {
+  min-height: 0;
+  padding: var(--padding-sm) var(--padding-md);
+}
+
+.sign-off p {
+  margin: 0;
+}
+
+.sign-off .sign-off-out {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--gap-2xs);
+  align-items: center;
+}
+
+// A heartbeat (transform only), endless; it stops with reduced motion.
+.sign-off .sign-off-heart {
+  display: inline-flex;
+  color: var(--terminal-error);
+  transform-origin: center;
+  animation: sign-off-beat var(--duration-count) var(--ease-in-out) infinite;
+}
+
+.sign-off .sign-off-heart svg * {
+  fill: currentcolor;
+}
+
+@keyframes sign-off-beat {
+  0%,
+  40%,
+  100% {
+    transform: scale(1);
+  }
+
+  10% {
+    transform: scale(1.25);
+  }
+
+  20% {
+    transform: scale(1.05);
+  }
+
+  30% {
+    transform: scale(1.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sign-off .sign-off-heart {
+    animation: none;
+  }
+}

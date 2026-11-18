@@ -1,0 +1,18 @@
+<div class="sign-off">
+  <fm-window-frame variant="terminal" [bar]="false">
+    <div class="fm-term__body sign-off-body">
+      <p class="fm-term__line">
+        <span class="fm-term__user">odunayo</span><span class="fm-term__sep">:</span
+        ><span class="fm-term__path">~</span><span class="fm-term__sep">$ </span
+        ><span class="fm-term__cmd">{{ command() }}</span>
+      </p>
+      <p class="fm-term__line fm-term__out is-default sign-off-out">
+        Built with
+        <span class="sign-off-heart" role="img" aria-label="love"
+          ><fm-icon [icon]="heart" [size]="16"
+        /></span>
+        by {{ signature() }}
+      </p>
+    </div>
+  </fm-window-frame>
+</div>
