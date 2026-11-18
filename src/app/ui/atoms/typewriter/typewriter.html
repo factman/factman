@@ -1,0 +1,12 @@
+<span class="fm-typewriter">
+  <span aria-hidden="true">
+    @if (prefix(); as prefix) {
+      {{ prefix }}
+    }
+    <span class="fm-typewriter__word">{{ shown() }}</span>
+    @if (caret()) {
+      <fm-caret />
+    }
+  </span>
+  <span class="fm-sr">{{ spoken() }}</span>
+</span>

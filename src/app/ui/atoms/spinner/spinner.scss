@@ -1,0 +1,13 @@
+// The design system's Spinner styles, loaded only with this component (docs/design-tokens.md).
+@use 'factman/components/spinner-loader';
+
+.spinner-logo {
+  display: inline-flex;
+}
+
+// Endless loops stop with reduced motion (docs/interaction-and-motion.md); the DS only slows it.
+@media (prefers-reduced-motion: reduce) {
+  .fm-spinner .spinner-ring {
+    animation: none;
+  }
+}

@@ -1,0 +1,39 @@
+// The design system's caret (portfolio-code-terminal-ui.css), copied here so the caret doesn't
+// load the whole terminal file. Keep it in step with that file.
+/* stylelint-disable scale-unlimited/declaration-strict-value -- sizes are relative to the text (em), as in the DS */
+.fm-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.1em;
+  margin-left: 1px;
+  vertical-align: -0.15em;
+  background: var(--accent-default);
+  animation: fm-blink var(--duration-blink) step-end infinite;
+}
+/* stylelint-enable scale-unlimited/declaration-strict-value */
+
+.fm-caret.is-bar {
+  width: 2px;
+}
+
+.fm-caret.is-block {
+  background: var(--terminal-cursor);
+}
+
+@keyframes fm-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fm-caret {
+    animation: none;
+  }
+}
