@@ -1,0 +1,9 @@
+// The design system's Switch styles, loaded only with this component (docs/design-tokens.md).
+// The label text uses .fm-check__text, which comes with the Checkbox styles.
+@use 'factman/components/switch';
+
+// Only opacity and transform animate (docs/interaction-and-motion.md): the knob slides, the
+// track's colour changes at once.
+.fm-switch .switch-track {
+  transition: none;
+}

@@ -1,0 +1,20 @@
+<div [class]="classes()">
+  <div class="fm-field__control fm-textarea__control field-control textarea-control">
+    <textarea
+      class="fm-field__input fm-textarea__input textarea-input"
+      [id]="inputId()"
+      [rows]="rows()"
+      [value]="value()"
+      [attr.name]="name()"
+      [attr.placeholder]="placeholder()"
+      [attr.maxlength]="maxLength()"
+      [attr.aria-label]="ariaLabel()"
+      [attr.aria-describedby]="ariaDescribedby()"
+      [attr.aria-invalid]="invalid() || null"
+      [required]="required()"
+      [disabled]="isDisabled()"
+      (input)="commit($any($event.target).value)"
+      (blur)="onTouched()"
+    ></textarea>
+  </div>
+</div>
