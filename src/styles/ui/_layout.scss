@@ -1,0 +1,63 @@
+// The canvas's page layout (site.css): the content container, section rhythm, splits and grids.
+// Used by the templates (ETE-80, ETE-81): `@use 'ui/layout'; .x { @include layout.container; }`.
+
+/// Centred content, 1200px wide, with side gutters per breakpoint (docs/interaction-and-motion.md).
+@mixin container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: calc(var(--content-max) + 2 * var(--scale-64));
+  margin-inline: auto;
+  padding-inline: var(--scale-64);
+
+  @media (width < 1024px) {
+    padding-inline: var(--scale-32);
+  }
+
+  @media (width < 768px) {
+    padding-inline: var(--scale-16);
+  }
+}
+
+/// Vertical rhythm between sections: 96px, 64px on tablets, 40px on phones.
+@mixin section {
+  padding-block: calc(var(--gap-5xl) * 1.5);
+
+  @media (width < 1024px) {
+    padding-block: var(--gap-5xl);
+  }
+
+  @media (width < 768px) {
+    padding-block: var(--gap-4xl);
+  }
+}
+
+@mixin section-tight {
+  padding-block: var(--gap-5xl);
+
+  @media (width < 768px) {
+    padding-block: var(--gap-3xl);
+  }
+}
+
+/// 8 / 4 columns (content and a side card), one column below 1024px.
+@mixin split-aside {
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: var(--gap-5xl);
+  align-items: start;
+
+  @media (width < 1024px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-4xl);
+  }
+}
+
+/// A side card that stays in view under the header while its column scrolls (desktop only).
+@mixin sticky-aside {
+  position: sticky;
+  top: calc(var(--navbar-height) + var(--gap-xl));
+
+  @media (width < 1024px) {
+    position: static;
+  }
+}
