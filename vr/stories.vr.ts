@@ -26,7 +26,9 @@ for (const theme of ['light', 'dark'] as const) {
         // `iframe`, not `iframe.html`: the static server's clean-URL redirect would drop the query.
         await page.goto(`/storybook/iframe?id=${id}&viewMode=story&globals=theme:${theme}`);
         const root = page.locator('#storybook-root');
-        await expect(root).not.toBeEmpty();
+        // Rendered means the root has an element: toBeEmpty() also fails stories without text
+        // (icons, images, inputs, skeletons).
+        await expect(root.locator(':scope > *').first()).toBeAttached();
         await page.evaluate(() => document.fonts.ready);
         await page.waitForLoadState('networkidle');
         await expect(root).toHaveScreenshot(`${id}--${theme}.png`);
