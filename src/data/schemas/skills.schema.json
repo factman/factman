@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://factman.vercel.app/schemas/skills.schema.json",
+  "$id": "https://www.factman.dev/schemas/skills.schema.json",
   "title": "Skills",
   "description": "Technologies, grouped by area (PRD FR-11, FR-12). Years are computed from `since`, so they never go stale. Each résumé picks its skills in resumes.json.",
   "type": "array",

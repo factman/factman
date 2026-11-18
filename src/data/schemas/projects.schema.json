@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://factman.vercel.app/schemas/projects.schema.json",
+  "$id": "https://www.factman.dev/schemas/projects.schema.json",
   "title": "Projects",
   "description": "Projects for the gallery and /projects/:slug (PRD FR-20 to FR-23). Private projects show the role and stack and never link out.",
   "type": "array",

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://factman.vercel.app/schemas/clients.schema.json",
+  "$id": "https://www.factman.dev/schemas/clients.schema.json",
   "title": "Clients",
   "description": "Clients and companies for the \"Worked with\" strip (PRD FR-51, FR-52). An empty list is valid: the strip is then omitted.",
   "type": "array",

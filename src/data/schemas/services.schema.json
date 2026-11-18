@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://factman.vercel.app/schemas/services.schema.json",
+  "$id": "https://www.factman.dev/schemas/services.schema.json",
   "title": "Services",
   "description": "The services offered (PRD FR-17 to FR-19). One record per /services/:slug page.",
   "type": "array",

@@ -31,7 +31,7 @@ describe('résumé view model (canvas page 06)', () => {
     expect(cv.header.headline).toBe('Fullstack Software Engineer · CTO');
     expect(cv.header.contact.map((line) => line.map((c) => c.text))).toEqual([
       ['Lagos, Nigeria', '+234 706 678 0373', 'factman60@gmail.com'],
-      ['linkedin.com/in/mohammed-odunayo', 'github.com/factman', 'factman.vercel.app'],
+      ['linkedin.com/in/mohammed-odunayo', 'github.com/factman', 'factman.dev'],
     ]);
     expect(cv.education).toEqual([
       {

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://factman.vercel.app/schemas/site.schema.json",
+  "$id": "https://www.factman.dev/schemas/site.schema.json",
   "title": "Site",
   "description": "Site-wide settings: SEO, navigation, analytics IDs, consent and feature flags (PRD §7, §10). Anything environment-specific lives here, with per-environment overrides under `environments` (PRD §8: no value is read from window or env vars at run time).",
   "type": "object",
@@ -25,7 +25,7 @@
       "type": "string",
       "format": "uri",
       "pattern": "^https://[^/]+$",
-      "description": "Canonical origin, no trailing slash. Placeholder factman.vercel.app until a custom domain is attached."
+      "description": "Canonical origin, no trailing slash: https://www.factman.dev (the apex factman.dev redirects to it)."
     },
     "name": {
       "type": "string",

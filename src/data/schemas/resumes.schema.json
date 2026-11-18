@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://factman.vercel.app/schemas/resumes.schema.json",
+  "$id": "https://www.factman.dev/schemas/resumes.schema.json",
   "title": "Resumes",
   "description": "The downloadable résumés (PRD FR-38 to FR-49, canvas page 06). Each résumé picks its roles, skills and projects from the other data files; only role-specific wording lives here. Text may use {years} (years since profile.careerStart), {since:<skill id>} (that skill's start year) and [placeholders] filled from `placeholders`.",
   "type": "object",

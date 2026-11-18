@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://factman.vercel.app/schemas/profile.schema.json",
+  "$id": "https://www.factman.dev/schemas/profile.schema.json",
   "title": "Profile",
   "description": "Who the owner is: hero, About section and résumé header (PRD FR-07 to FR-10, FR-50). No street address.",
   "type": "object",
