@@ -21,6 +21,8 @@
     "test:storybook": "nx run factman:test:storybook",
     "e2e": "nx run factman:e2e",
     "e2e:install": "nx run factman:e2e:install",
+    "vr": "nx run factman:vr",
+    "vr:update": "nx run factman:vr:update",
     "test:headers": "nx run factman:test:headers",
     "test:build": "nx run factman:test:build",
     "csp:hashes": "nx run factman:csp:hashes",

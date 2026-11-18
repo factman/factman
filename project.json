@@ -194,6 +194,16 @@
     },
     "ds:icons": {
       "command": "tsx scripts/design-system/build-icons.ts"
+    },
+    "vr": {
+      "command": "playwright test -c playwright.vr.config.ts",
+      "dependsOn": ["build"],
+      "cache": false
+    },
+    "vr:update": {
+      "command": "playwright test -c playwright.vr.config.ts --update-snapshots",
+      "dependsOn": ["build"],
+      "cache": false
     }
   }
 }
