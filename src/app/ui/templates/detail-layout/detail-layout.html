@@ -1,0 +1,25 @@
+<div class="detail-layout">
+  <div class="detail-hero">
+    <div class="detail-container">
+      @if (crumbs().length) {
+        <div class="detail-crumbs"><fm-breadcrumbs [crumbs]="crumbs()" /></div>
+      }
+      <ng-content select="[detailHero]" />
+    </div>
+  </div>
+  <div class="detail-gallery">
+    <div class="detail-container"><ng-content select="[detailGallery]" /></div>
+  </div>
+  <div class="detail-body">
+    <div class="detail-container detail-split">
+      <div class="detail-main"><ng-content select="[detailBody]" /></div>
+      <div class="detail-aside"><ng-content select="[detailAside]" /></div>
+    </div>
+  </div>
+  <div class="detail-cta">
+    <div class="detail-container"><ng-content select="[detailCta]" /></div>
+  </div>
+  <div class="detail-related">
+    <div class="detail-container"><ng-content select="[detailRelated]" /></div>
+  </div>
+</div>
