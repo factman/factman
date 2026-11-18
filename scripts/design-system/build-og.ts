@@ -57,7 +57,8 @@ export function defaultContent(root: string, now = new Date()): OgContent {
     name: profile.name,
     headline: profile.headline,
     meta: `${profile.location.city}, ${profile.location.country} · ${yearsSince(profile.careerStart, now)}+ years`,
-    url: new URL(site.url).host,
+    // The card shows the short form people type: factman.dev, not www.factman.dev.
+    url: new URL(site.url).host.replace(/^www\./, ''),
     portrait: join('src/assets', profile.photo.src),
   };
 }

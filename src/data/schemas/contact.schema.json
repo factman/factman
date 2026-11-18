@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://factman.vercel.app/schemas/contact.schema.json",
+  "$id": "https://www.factman.dev/schemas/contact.schema.json",
   "title": "Contact",
   "description": "How to reach the owner (PRD FR-27 to FR-30). City and country only: a street address is never stored.",
   "type": "object",

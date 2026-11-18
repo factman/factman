@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://factman.vercel.app/schemas/experience.schema.json",
+  "$id": "https://www.factman.dev/schemas/experience.schema.json",
   "title": "Experience",
   "description": "Work history: organizations with their roles (PRD FR-13 to FR-16). The timeline orders roles itself (current first, then newest), so file order doesn't matter. Each résumé picks its roles in resumes.json.",
   "type": "array",

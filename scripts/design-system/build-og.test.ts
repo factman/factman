@@ -10,7 +10,7 @@ describe('ds:og (ETE-198)', () => {
       name: 'Odunayo Mohammed',
       headline: 'Fullstack Software Engineer and CTO',
       meta: 'Lagos, Nigeria · 13+ years',
-      url: 'factman.vercel.app',
+      url: 'factman.dev',
       portrait: 'src/assets/profile/odunayo-hero.webp',
     });
   });
