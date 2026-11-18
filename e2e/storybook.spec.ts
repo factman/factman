@@ -42,8 +42,13 @@ test('/storybook loads a story under its production Content-Security-Policy', as
   });
 
   await page.goto('/storybook?path=/story/atoms-logo--lockup');
+  // Exact: other stories contain "Logo" too (ClientLogo), and names match as substrings otherwise.
+  // On phones the sidebar is collapsed; the toolbar shows the story's path instead.
   await expect(
-    page.getByRole('button', { name: 'Logo' }).or(page.getByText('Logo').first()),
+    page
+      .getByRole('button', { name: 'Logo', exact: true })
+      .or(page.getByText('Atoms/Logo/Lockup', { exact: true }))
+      .first(),
   ).toBeVisible();
   const preview = page.frameLocator('#storybook-preview-iframe');
   await expect(preview.locator('#storybook-root > *').first()).toBeVisible();

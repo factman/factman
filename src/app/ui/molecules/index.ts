@@ -8,6 +8,7 @@ export { BlogPostCard, postDate } from './blog-post-card/blog-post-card';
 export { type Crumb, Breadcrumbs } from './breadcrumbs/breadcrumbs';
 export { CodeBlock } from './code-block/code-block';
 export { type CodeLanguage, highlight, type Token, type TokenKind } from './code-block/highlight';
+export { ClientLogo, LOGO_HEIGHT } from './client-logo/client-logo';
 export { ContactMethod } from './contact-method/contact-method';
 export { copyText } from './copy-button/clipboard';
 export { COPIED_FOR, CopyButton } from './copy-button/copy-button';
@@ -17,6 +18,7 @@ export { FilterBar, type FilterOption, type FilterState } from './filter-bar/fil
 export { FormField } from './form-field/form-field';
 export { List, type ListItem } from './list/list';
 export { ProjectCard } from './project-card/project-card';
+export { ResumeCard, type ResumeSummary } from './resume-card/resume-card';
 export { SectionHeader } from './section-header/section-header';
 export { SelectableCard } from './selectable-card/selectable-card';
 export { ServiceCard } from './service-card/service-card';
