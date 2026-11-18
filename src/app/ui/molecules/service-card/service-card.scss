@@ -1,0 +1,74 @@
+@use 'ui/card';
+
+.service-card {
+  @include card.surface;
+
+  gap: var(--gap-sm);
+  padding: var(--padding-xl);
+}
+
+// The DS's highlighted service: accent border and focus glow.
+.service-card.is-current {
+  border-color: var(--accent-default);
+  box-shadow: var(--shadow-glass-focus);
+}
+
+.service-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  color: var(--blue-900);
+  background: linear-gradient(135deg, var(--ice-300), var(--ice-200));
+}
+
+.service-card-title {
+  @include card.title;
+}
+
+.service-card-link {
+  @include card.stretched-link;
+}
+
+.service-card-summary {
+  @include card.text;
+}
+
+.service-card-deliverables {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-2xs);
+  margin: 0;
+  padding: var(--padding-sm) 0 0 var(--padding-md);
+  border-top: var(--border-width-sm) solid var(--border-subtle);
+  font: 400 13px/1.5 var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.service-card-more {
+  display: inline-flex;
+  gap: var(--gap-2xs);
+  align-items: center;
+  margin-top: auto;
+  font: 500 13px/1 var(--font-sans);
+  color: var(--accent-default);
+}
+
+// The arrow nudges 3px right with the card's hover lift.
+.service-card-more svg {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.service-card:hover .service-card-more svg,
+.service-card:focus-within .service-card-more svg {
+  transform: translateX(3px);
+}
+
+.service-card-cta {
+  @include card.raised;
+
+  margin-top: auto;
+  padding-top: var(--gap-xs);
+}
