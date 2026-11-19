@@ -9,9 +9,39 @@ export const DIST = 'dist/factman/browser';
 export const STORYBOOK_DIR = 'storybook';
 export const STORYBOOK_BASE = `/${STORYBOOK_DIR}/`;
 
-/** vercel.json header sources: every path but /storybook gets the app's policy. */
-export const APP_SOURCE = '/((?!storybook(?:/|$)).*)';
+/** vercel.json header sources: every path but the tool paths gets the app's policy. */
+export const APP_SOURCE = '/((?!(?:storybook|coverage|playwright)(?:/|$)).*)';
 export const STORYBOOK_SOURCE = '/storybook/:path*';
+/** The test reports on previews (ETE-237): coverage at /coverage, Playwright at /playwright. */
+export const REPORTS_SOURCE = '/:report(coverage|playwright)/:path*';
+/** On the production hosts every tool path gets the app's CSP: it is a plain 404 there. */
+export const TOOLS_SOURCE = '/:tool(storybook|coverage|playwright)/:path*';
+/** Folders the preview build may have and the production build must not. */
+export const TOOL_DIRS = ['storybook', 'coverage', 'playwright'];
+
+/**
+ * Storybook ships only in the preview build (ETE-236). vercel.json headers cannot see the
+ * environment, so the Storybook rule is scoped by host: the production domains (factman.dev and
+ * www.factman.dev) are `missing` from it, and a second rule gives /storybook there the app's own
+ * CSP, so the 404 page production serves at that path keeps the strict policy.
+ */
+export const PRODUCTION_HOST = { type: 'host', value: { suf: 'factman.dev' } };
+
+const isProductionHost = (c) =>
+  c.type === PRODUCTION_HOST.type && c.value?.suf === PRODUCTION_HOST.value.suf;
+
+/**
+ * The vercel.json header rule for a source: the production-host rule when `production` is true,
+ * otherwise the rule that is not limited to the production hosts.
+ */
+export function headerRule(config, source, { production = false } = {}) {
+  return config.headers.find(
+    (h) => h.source === source && (h.has ?? []).some(isProductionHost) === production,
+  );
+}
+
+/** The build variant tools/build checks: `production` (no Storybook) or `preview`. */
+export const BUILD_VARIANT = process.env['BUILD_VARIANT'] ?? 'preview';
 
 function htmlFiles(dir, skip = []) {
   return readdirSync(dir).flatMap((name) => {
@@ -34,9 +64,9 @@ function hashScripts(files, base) {
   return hashes;
 }
 
-/** `'sha256-…'` source for each distinct executable inline script in the app's pages. */
+/** `'sha256-…'` source for each distinct executable inline script in the app's pages (not tools). */
 export function inlineScriptHashes(dist = DIST) {
-  return hashScripts(htmlFiles(dist, [STORYBOOK_DIR]), dist);
+  return hashScripts(htmlFiles(dist, TOOL_DIRS), dist);
 }
 
 /** The same for the static Storybook; empty when it isn't in the build. */

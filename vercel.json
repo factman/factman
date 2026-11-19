@@ -2,7 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "installCommand": "pnpm install --frozen-lockfile",
-  "buildCommand": "if [ \"$VERCEL_ENV\" = production ]; then pnpm build; else pnpm build:preview; fi",
+  "buildCommand": "if [ -n \"$FM_PREBUILT\" ]; then echo \"Prebuilt in CI (ETE-237)\"; elif [ \"$VERCEL_ENV\" = production ]; then pnpm build; else pnpm build:preview; fi",
+  "ignoreCommand": "[ \"$VERCEL_ENV\" != production ]",
   "outputDirectory": "dist/factman/browser",
   "cleanUrls": true,
   "trailingSlash": false,
@@ -40,7 +41,12 @@
     },
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "factman.vercel.app" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "factman.vercel.app"
+        }
+      ],
       "headers": [
         {
           "key": "X-Robots-Tag",
@@ -49,7 +55,7 @@
       ]
     },
     {
-      "source": "/((?!storybook(?:/|$)).*)",
+      "source": "/((?!(?:storybook|coverage|playwright)(?:/|$)).*)",
       "headers": [
         {
           "key": "Content-Security-Policy",
@@ -63,6 +69,14 @@
     },
     {
       "source": "/storybook/:path*",
+      "missing": [
+        {
+          "type": "host",
+          "value": {
+            "suf": "factman.dev"
+          }
+        }
+      ],
       "headers": [
         {
           "key": "Content-Security-Policy",
@@ -83,7 +97,57 @@
       ]
     },
     {
-      "source": "/((?!storybook/).*)\\.(js|css)",
+      "source": "/:report(coverage|playwright)/:path*",
+      "missing": [
+        {
+          "type": "host",
+          "value": {
+            "suf": "factman.dev"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' data: blob:; worker-src 'self' blob:; frame-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/:tool(storybook|coverage|playwright)/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": {
+            "suf": "factman.dev"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'sha256-8sGKvDKC8crv9OBcqEMvqrNDWlm1/80h7NJpJzqOnLI=' 'sha256-VM2mZqyEQZoLzoTrp5EigFvzQ0+f1wSeBuoOn95WHCg=' 'sha256-po5pyNPwHCnPItlrYXeMmtdRLp5JAKXzvX60XU2YzT4='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://cdn-images-1.medium.com https://miro.medium.com; font-src 'self'; connect-src 'self'; frame-src https://calendar.google.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        }
+      ]
+    },
+    {
+      "source": "/((?!(?:storybook|coverage|playwright)/).*)\\.(js|css)",
       "headers": [
         {
           "key": "Cache-Control",

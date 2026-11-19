@@ -203,3 +203,5 @@ yarn.lock
 # Visual regression (ETE-84): reports and screenshots a run collects
 vr-report/
 vr-actual/
+/coverage-raw
+/blob-report

@@ -5,12 +5,24 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 
 const config = JSON.parse(readFileSync(new URL('../../vercel.json', import.meta.url), 'utf8'));
-const forPath = (source) => config.headers.find((h) => h.source === source)?.headers ?? [];
+/** The production domains (factman.dev, www.factman.dev): no Storybook (ETE-236), no reports (ETE-237). */
+const PRODUCTION_HOST = { type: 'host', value: { suf: 'factman.dev' } };
+const onProductionHost = (h) =>
+  (h.has ?? []).some((c) => c.value?.suf === PRODUCTION_HOST.value.suf);
+/** The rule for a source: the production-host one, or the one that is not limited to those hosts. */
+const ruleFor = (source, { production = false } = {}) =>
+  config.headers.find((h) => h.source === source && onProductionHost(h) === production);
+const forPath = (source, options) => ruleFor(source, options)?.headers ?? [];
 const value = (source, key) => forPath(source).find((h) => h.key === key)?.value;
-/** Header sources: every path, the app (everything but /storybook) and the static Storybook (ETE-220). */
+/**
+ * Header sources: every path, the app (everything but the tool paths), the static Storybook
+ * (ETE-220), the test reports (ETE-237), and the tool paths on the production hosts (ETE-236).
+ */
 const ALL = '/(.*)';
-const APP = '/((?!storybook(?:/|$)).*)';
+const APP = '/((?!(?:storybook|coverage|playwright)(?:/|$)).*)';
 const STORYBOOK = '/storybook/:path*';
+const REPORTS = '/:report(coverage|playwright)/:path*';
+const TOOLS = '/:tool(storybook|coverage|playwright)/:path*';
 const directive = (csp, name) =>
   csp
     .split(';')
@@ -19,11 +31,17 @@ const directive = (csp, name) =>
 
 test('build settings point at the prerendered output', () => {
   // Production deployments build the production site; previews build the preview one (ETE-40).
+  // CI deploys previews prebuilt, with the reports in them (FM_PREBUILT, ETE-237).
   assert.match(
     config.buildCommand,
-    /\$VERCEL_ENV" = production \]; then pnpm build; else pnpm build:preview;/,
+    /^if \[ -n "\$FM_PREBUILT" \]; then .*; elif \[ "\$VERCEL_ENV" = production \]; then pnpm build; else pnpm build:preview; fi$/,
   );
   assert.equal(config.outputDirectory, 'dist/factman/browser');
+});
+
+test('Vercel builds production only; CI deploys every preview (ETE-237)', () => {
+  // The Ignored Build Step skips a Git build when the command exits 0.
+  assert.equal(config.ignoreCommand, '[ "$VERCEL_ENV" != production ]');
 });
 
 for (const key of [
@@ -36,7 +54,7 @@ for (const key of [
   test(`every response sends ${key}`, () => assert.ok(value(ALL, key)));
 }
 
-for (const source of [APP, STORYBOOK]) {
+for (const source of [APP, STORYBOOK, REPORTS]) {
   for (const key of ['Content-Security-Policy', 'X-Frame-Options']) {
     test(`${source} sends ${key}`, () => assert.ok(value(source, key)));
   }
@@ -75,11 +93,41 @@ test('Storybook may frame its own preview and nothing else, and is not indexed (
   assert.match(value(STORYBOOK, 'X-Robots-Tag'), /noindex/);
 });
 
+for (const source of [STORYBOOK, REPORTS]) {
+  test(`${source} never applies on the production hosts (ETE-236, ETE-237)`, () => {
+    assert.deepEqual(ruleFor(source).missing, [PRODUCTION_HOST]);
+    assert.equal(ruleFor(source).has, undefined);
+  });
+}
+
+test('on the production hosts, every tool path gets the app CSP and DENY (ETE-236, ETE-237)', () => {
+  const production = (key) =>
+    forPath(TOOLS, { production: true }).find((h) => h.key === key)?.value;
+  assert.deepEqual(ruleFor(TOOLS, { production: true }).has, [PRODUCTION_HOST]);
+  assert.equal(production('Content-Security-Policy'), value(APP, 'Content-Security-Policy'));
+  assert.equal(production('X-Frame-Options'), 'DENY');
+  assert.doesNotMatch(directive(production('Content-Security-Policy'), 'script-src'), /unsafe-/);
+});
+
+test('the reports may run their own inline scripts, framed only by the site, and are not indexed (ETE-237)', () => {
+  const csp = value(REPORTS, 'Content-Security-Policy');
+  // The Playwright report and the coverage HTML are generated pages with inline scripts and
+  // styles; the trace viewer uses a service worker and blob: URLs. Nothing loads from elsewhere.
+  assert.equal(directive(csp, 'script-src'), "script-src 'self' 'unsafe-inline'");
+  assert.equal(directive(csp, 'connect-src'), "connect-src 'self' data: blob:");
+  assert.equal(directive(csp, 'frame-ancestors'), "frame-ancestors 'self'");
+  assert.match(csp, /object-src 'none'/);
+  assert.doesNotMatch(csp, /https?:/);
+  assert.equal(value(REPORTS, 'X-Frame-Options'), 'SAMEORIGIN');
+  assert.equal(value(REPORTS, 'X-Robots-Tag'), 'noindex, nofollow');
+  assert.match(value(REPORTS, 'Cache-Control'), /max-age=0, must-revalidate/);
+});
+
 test("Storybook's files have no content hash in their names, so they always revalidate", () => {
   assert.match(value(STORYBOOK, 'Cache-Control'), /max-age=0, must-revalidate/);
   assert.equal(
     config.headers.find((h) => h.source.endsWith('\\.(js|css)')).source,
-    '/((?!storybook/).*)\\.(js|css)',
+    '/((?!(?:storybook|coverage|playwright)/).*)\\.(js|css)',
   );
 });
 
@@ -111,6 +159,9 @@ test('self-hosted fonts (versioned file names) are immutable', () => {
 });
 
 test('hashed JS/CSS are immutable and HTML revalidates', () => {
-  assert.match(value('/((?!storybook/).*)\\.(js|css)', 'Cache-Control'), /immutable/);
+  assert.match(
+    value('/((?!(?:storybook|coverage|playwright)/).*)\\.(js|css)', 'Cache-Control'),
+    /immutable/,
+  );
   assert.match(value('/((?!.*\\.).*)', 'Cache-Control'), /max-age=0, must-revalidate/);
 });

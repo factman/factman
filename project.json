@@ -27,6 +27,21 @@
     },
     "build": {
       "executor": "nx:run-commands",
+      "dependsOn": ["data:validate", "data:types"],
+      "inputs": [
+        "production",
+        {
+          "dependentTasksOutputFiles": "**/*"
+        }
+      ],
+      "outputs": ["{projectRoot}/dist/factman"],
+      "options": {
+        "command": "ng build"
+      }
+    },
+    "build-preview": {
+      "executor": "nx:run-commands",
+      "cache": true,
       "dependsOn": ["data:validate", "data:types", "build-storybook"],
       "inputs": [
         "production",
@@ -37,12 +52,7 @@
       ],
       "outputs": ["{projectRoot}/dist/factman"],
       "options": {
-        "command": "ng build && node tools/build/add-storybook.mjs"
-      },
-      "configurations": {
-        "preview": {
-          "command": "ng build --configuration production,preview && node tools/build/add-storybook.mjs"
-        }
+        "command": "ng build --configuration production,preview && node tools/build/add-storybook.mjs"
       }
     },
     "watch": {
@@ -71,6 +81,23 @@
       "cache": true,
       "inputs": ["source", "!{projectRoot}/e2e/**/*"]
     },
+    "test:coverage": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["data:validate", "data:types"],
+      "cache": true,
+      "inputs": ["source", "!{projectRoot}/e2e/**/*"],
+      "outputs": ["{projectRoot}/coverage", "{projectRoot}/coverage-raw"],
+      "options": {
+        "parallel": false,
+        "commands": [
+          "rm -rf coverage coverage-raw",
+          "ng test --watch=false --coverage --coverage-reporters=json --coverage-reporters=text-summary",
+          "mkdir -p coverage-raw && mv coverage/factman coverage-raw/unit",
+          "vitest run --project storybook --coverage.enabled --coverage.provider=v8 --coverage.reporter=json --coverage.reporter=text-summary --coverage.reportsDirectory=coverage-raw/storybook --coverage.include='src/app/**/*.ts' --coverage.exclude='**/*.stories.ts' --coverage.exclude='**/*.spec.ts'",
+          "node tools/reports/merge-coverage.mjs"
+        ]
+      }
+    },
     "test:scripts": {
       "command": "node --import tsx --test --test-reporter=spec \"scripts/**/*.test.ts\"",
       "cache": true,
@@ -95,8 +122,26 @@
       "cache": true,
       "inputs": ["{projectRoot}/tools/vercel/**/*", "{projectRoot}/vercel.json", "sharedGlobals"]
     },
+    "test:reports": {
+      "command": "node --test --test-reporter=spec \"tools/reports/*.test.mjs\"",
+      "cache": true,
+      "inputs": ["{projectRoot}/tools/reports/**/*", "sharedGlobals"]
+    },
     "test:build": {
-      "command": "node --test --test-reporter=spec \"tools/build/*.test.mjs\"",
+      "command": "BUILD_VARIANT=preview node --test --test-reporter=spec \"tools/build/*.test.mjs\"",
+      "dependsOn": ["build-preview"],
+      "cache": true,
+      "inputs": [
+        "{projectRoot}/tools/build/**/*",
+        "{projectRoot}/src/data/**/*.json",
+        "{projectRoot}/vercel.json",
+        {
+          "dependentTasksOutputFiles": "**/*.{js,html}"
+        }
+      ]
+    },
+    "test:build-production": {
+      "command": "BUILD_VARIANT=production node --test --test-reporter=spec \"tools/build/*.test.mjs\"",
       "dependsOn": ["build"],
       "cache": true,
       "inputs": [
@@ -110,7 +155,7 @@
     },
     "csp:hashes": {
       "command": "node tools/build/csp-hashes.mjs",
-      "dependsOn": ["build"]
+      "dependsOn": ["build-preview"]
     },
     "lint": {
       "executor": "nx:noop",
@@ -168,7 +213,16 @@
     },
     "e2e": {
       "command": "playwright test",
+      "dependsOn": ["build-preview"],
+      "cache": false
+    },
+    "e2e-production": {
+      "command": "E2E_VARIANT=production playwright test",
       "dependsOn": ["build"],
+      "cache": false
+    },
+    "e2e:report": {
+      "command": "playwright merge-reports --reporter html blob-report",
       "cache": false
     },
     "e2e:install": {
@@ -197,12 +251,12 @@
     },
     "vr": {
       "command": "playwright test -c playwright.vr.config.ts",
-      "dependsOn": ["build"],
+      "dependsOn": ["build-preview"],
       "cache": false
     },
     "vr:update": {
       "command": "playwright test -c playwright.vr.config.ts --update-snapshots",
-      "dependsOn": ["build"],
+      "dependsOn": ["build-preview"],
       "cache": false
     }
   }

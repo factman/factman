@@ -1,5 +1,6 @@
-// Copies the static Storybook build into the site output, so every deployment serves the UI kit
-// at /storybook (ETE-220). Runs after `ng build`, which empties dist/factman first.
+// Copies the static Storybook build into the site output, so preview deployments serve the UI kit
+// at /storybook (ETE-220). Runs in build-preview only: production ships without it (ETE-236).
+// Runs after `ng build`, which empties dist/factman first.
 //
 // Vercel serves /storybook without a trailing slash (trailingSlash: false), where the manager's
 // relative URLs (./sb-manager/…, ./index.json, fonts) would resolve from the site root. A <base>
