@@ -54,7 +54,7 @@ available" page; the CI run for that commit has the details.
    in `vercel.json` then skips building) and `vercel deploy --prebuilt`. A push to `dev` is also
    served at `factman.vercel.app`.
 3. **Production:** Vercel builds `main` itself, with `pnpm build`, which has neither Storybook
-   nor reports. `ignoreCommand` in `vercel.json` skips Vercel's own build for everything else.
+   nor reports. `ignoreCommand` in `vercel.json` skips Vercel's own build for everything else: it builds when `VERCEL_ENV` is `production` or the branch is `main`, since `VERCEL_ENV` alone did not reach that step.
 
 The job runs whenever the build passed, even when tests failed, so a red run still has its
 reports to read.
