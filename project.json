@@ -81,6 +81,23 @@
       "cache": true,
       "inputs": ["source", "!{projectRoot}/e2e/**/*"]
     },
+    "test:coverage": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["data:validate", "data:types"],
+      "cache": true,
+      "inputs": ["source", "!{projectRoot}/e2e/**/*"],
+      "outputs": ["{projectRoot}/coverage", "{projectRoot}/coverage-raw"],
+      "options": {
+        "parallel": false,
+        "commands": [
+          "rm -rf coverage coverage-raw",
+          "ng test --watch=false --coverage --coverage-reporters=json --coverage-reporters=text-summary",
+          "mkdir -p coverage-raw && mv coverage/factman coverage-raw/unit",
+          "vitest run --project storybook --coverage.enabled --coverage.provider=v8 --coverage.reporter=json --coverage.reporter=text-summary --coverage.reportsDirectory=coverage-raw/storybook --coverage.include='src/app/**/*.ts' --coverage.exclude='**/*.stories.ts' --coverage.exclude='**/*.spec.ts'",
+          "node tools/reports/merge-coverage.mjs"
+        ]
+      }
+    },
     "test:scripts": {
       "command": "node --import tsx --test --test-reporter=spec \"scripts/**/*.test.ts\"",
       "cache": true,
@@ -104,6 +121,11 @@
       "command": "node --test --test-reporter=spec tools/vercel/headers.test.mjs",
       "cache": true,
       "inputs": ["{projectRoot}/tools/vercel/**/*", "{projectRoot}/vercel.json", "sharedGlobals"]
+    },
+    "test:reports": {
+      "command": "node --test --test-reporter=spec \"tools/reports/*.test.mjs\"",
+      "cache": true,
+      "inputs": ["{projectRoot}/tools/reports/**/*", "sharedGlobals"]
     },
     "test:build": {
       "command": "BUILD_VARIANT=preview node --test --test-reporter=spec \"tools/build/*.test.mjs\"",
@@ -197,6 +219,10 @@
     "e2e-production": {
       "command": "E2E_VARIANT=production playwright test",
       "dependsOn": ["build"],
+      "cache": false
+    },
+    "e2e:report": {
+      "command": "playwright merge-reports --reporter html blob-report",
       "cache": false
     },
     "e2e:install": {

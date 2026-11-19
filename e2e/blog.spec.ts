@@ -9,7 +9,7 @@ const vercel = JSON.parse(readFileSync('vercel.json', 'utf8')) as {
 };
 const csp = (
   vercel.headers
-    .find((h) => h.source === '/((?!storybook(?:/|$)).*)')
+    .find((h) => h.source === '/((?!(?:storybook|coverage|playwright)(?:/|$)).*)')
     ?.headers.find((h) => h.key === 'Content-Security-Policy')?.value ?? ''
 ).replace('upgrade-insecure-requests', '');
 // A 1×1 transparent PNG.
