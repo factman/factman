@@ -40,8 +40,13 @@ test('build settings point at the prerendered output', () => {
 });
 
 test('Vercel builds production only; CI deploys every preview (ETE-237)', () => {
-  // The Ignored Build Step skips a Git build when the command exits 0.
-  assert.equal(config.ignoreCommand, '[ "$VERCEL_ENV" != production ]');
+  // The Ignored Build Step skips a Git build when the command exits 0. VERCEL_ENV alone is not
+  // enough: it was not "production" in that step, so v0.1.0-beta.2's production build was skipped.
+  // Production deploys from main, so either signal keeps the build.
+  assert.equal(
+    config.ignoreCommand,
+    '[ "$VERCEL_ENV" != production ] && [ "$VERCEL_GIT_COMMIT_REF" != main ]',
+  );
 });
 
 for (const key of [
