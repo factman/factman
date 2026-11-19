@@ -289,6 +289,14 @@ jobs:
             echo "- Coverage: $url/coverage"
             echo "- Playwright report: $url/playwright"
           } >> "$GITHUB_STEP_SUMMARY"
+      # Through the REST API with the team ID: the CLI's alias command looks up a user account,
+      # which a team token does not have.
       - name: Serve dev at factman.vercel.app
         if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
-        run: pnpm dlx "$VERCEL_CLI" alias set "${{ steps.deploy.outputs.url }}" factman.vercel.app --token="$VERCEL_TOKEN" --scope=eteam-apps
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          api() { curl -fsS -H "Authorization: Bearer $VERCEL_TOKEN" -H 'Content-Type: application/json' "$@"; }
+          id=$(api "https://api.vercel.com/v13/deployments/${URL#https://}?teamId=$VERCEL_ORG_ID" | jq -r .id)
+          api -X POST -d '{"alias":"factman.vercel.app"}' \
+            "https://api.vercel.com/v2/deployments/$id/aliases?teamId=$VERCEL_ORG_ID" | jq -r '"aliased " + .alias'
