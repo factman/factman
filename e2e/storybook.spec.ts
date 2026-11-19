@@ -13,7 +13,7 @@ const cspFor = (source: string) =>
       .find((h) => h.source === source && !h.has)
       ?.headers.find((h) => h.key === 'Content-Security-Policy')?.value ?? ''
   ).replace('upgrade-insecure-requests', '');
-const APP_CSP = cspFor('/((?!storybook(?:/|$)).*)');
+const APP_CSP = cspFor('/((?!(?:storybook|coverage|playwright)(?:/|$)).*)');
 const STORYBOOK_CSP = cspFor('/storybook/:path*');
 
 // The preview build ships the static Storybook at /storybook (ETE-220, ETE-236). It must load a story, with

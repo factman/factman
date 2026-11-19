@@ -3,8 +3,9 @@
 // against their own vercel.json rules. Fix with: pnpm csp:hashes
 //
 // BUILD_VARIANT says which build is in dist (ETE-236): `preview` ships Storybook at /storybook,
-// `production` must not. pnpm test:build checks the preview build, pnpm test:build-production
-// the production one.
+// `production` must not, nor the test reports (ETE-237). pnpm test:build checks the preview build,
+// pnpm test:build-production the production one. REPORTS=required (the preview deploy job, after
+// tools/reports/add-reports.mjs) also checks /coverage and /playwright are in the preview output.
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -21,6 +22,8 @@ import {
   STORYBOOK_SOURCE,
   storybookScriptExtras,
   storybookScriptHashes,
+  TOOL_DIRS,
+  TOOLS_SOURCE,
 } from './inline-scripts.mjs';
 
 assert.ok(
@@ -38,7 +41,7 @@ const scriptSrcOf = (rule) =>
 
 const appRule = headerRule(vercel, APP_SOURCE);
 const storybookRule = headerRule(vercel, STORYBOOK_SOURCE);
-const productionStorybookRule = headerRule(vercel, STORYBOOK_SOURCE, { production: true });
+const productionToolsRule = headerRule(vercel, TOOLS_SOURCE, { production: true });
 const storybookDir = join(DIST, STORYBOOK_DIR);
 
 test("the app CSP allows exactly the app's inline scripts (run pnpm csp:hashes if not)", () => {
@@ -50,12 +53,12 @@ test('script-src never falls back to unsafe-inline, and the app never allows eva
   assert.doesNotMatch(scriptSrcOf(storybookRule), /unsafe-inline/);
 });
 
-test('on the production hosts, /storybook gets the app CSP and DENY, not the Storybook rule (ETE-236)', () => {
+test('on the production hosts, the tool paths get the app CSP and DENY (ETE-236, ETE-237)', () => {
   assert.equal(
-    header(productionStorybookRule, 'Content-Security-Policy'),
+    header(productionToolsRule, 'Content-Security-Policy'),
     header(appRule, 'Content-Security-Policy'),
   );
-  assert.equal(header(productionStorybookRule, 'X-Frame-Options'), 'DENY');
+  assert.equal(header(productionToolsRule, 'X-Frame-Options'), 'DENY');
 });
 
 if (BUILD_VARIANT === 'preview') {
@@ -76,15 +79,28 @@ if (BUILD_VARIANT === 'preview') {
       /<base href="\/storybook\/"/,
     );
   });
+
+  if (process.env['REPORTS'] === 'required') {
+    test('the preview deploy output has the coverage and Playwright reports (ETE-237)', () => {
+      for (const dir of ['coverage', 'playwright']) {
+        const index = join(DIST, dir, 'index.html');
+        assert.ok(existsSync(index), `${index} is missing`);
+      }
+    });
+  }
 } else {
-  test('the production build has no Storybook (ETE-236)', () => {
-    assert.ok(!existsSync(storybookDir), `${storybookDir} must not exist in the production build`);
+  test('the production build has no Storybook and no test reports (ETE-236, ETE-237)', () => {
+    for (const dir of TOOL_DIRS) {
+      const path = join(DIST, dir);
+      assert.ok(!existsSync(path), `${path} must not exist in the production build`);
+    }
   });
 
-  test('no production page links to /storybook', () => {
+  test('no production page links to /storybook, /coverage or /playwright', () => {
     const pages = ['index.html', '404.html', 'services/index.html', 'projects/index.html'];
     for (const page of pages.filter((p) => existsSync(join(DIST, p)))) {
-      assert.doesNotMatch(readFileSync(join(DIST, page), 'utf8'), /href="\/storybook/, page);
+      const html = readFileSync(join(DIST, page), 'utf8');
+      assert.doesNotMatch(html, /href="\/(?:storybook|coverage|playwright)(?:[/"?#])/, page);
     }
   });
 }

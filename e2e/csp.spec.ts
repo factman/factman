@@ -12,7 +12,7 @@ interface VercelConfig {
 const vercel = JSON.parse(readFileSync('vercel.json', 'utf8')) as VercelConfig;
 // The app's rule: every path but /storybook (which has its own, see storybook.spec.ts).
 const csp = vercel.headers
-  .find((h) => h.source === '/((?!storybook(?:/|$)).*)')
+  .find((h) => h.source === '/((?!(?:storybook|coverage|playwright)(?:/|$)).*)')
   ?.headers.find((h) => h.key === 'Content-Security-Policy')?.value;
 
 // Serves pages with the production CSP from vercel.json and checks nothing is blocked: inline

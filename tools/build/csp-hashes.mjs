@@ -1,7 +1,8 @@
 // pnpm csp:hashes: writes the hash of every inline script in the build into the CSP script-src
 // in vercel.json, so they run under script-src 'self' without 'unsafe-inline'. The app's pages
 // and the static Storybook at /storybook (ETE-220) each get their own header rule and hashes.
-// The production hosts' /storybook rule (ETE-236) gets the app's hashes, like every other path.
+// The production hosts' tool-path rule (ETE-236, ETE-237) gets the app's hashes, like every other
+// path. The reports' rule (/coverage, /playwright) allows inline scripts and is not hashed.
 // Run it after a change adds or alters an inline script (Angular's event replay, the theme
 // pre-paint script, a Storybook upgrade); pnpm test:build fails until you do. It reads the
 // preview build, the only one that contains Storybook.
@@ -18,6 +19,7 @@ import {
   STORYBOOK_DIR,
   STORYBOOK_SOURCE,
   storybookScriptHashes,
+  TOOLS_SOURCE,
   storybookScriptExtras,
 } from './inline-scripts.mjs';
 
@@ -39,7 +41,7 @@ function setScriptSrc(rule, directive) {
 const app = inlineScriptHashes();
 const storybook = storybookScriptHashes();
 setScriptSrc(headerRule(config, APP_SOURCE), scriptSrc(app));
-setScriptSrc(headerRule(config, STORYBOOK_SOURCE, { production: true }), scriptSrc(app));
+setScriptSrc(headerRule(config, TOOLS_SOURCE, { production: true }), scriptSrc(app));
 setScriptSrc(headerRule(config, STORYBOOK_SOURCE), scriptSrc(storybook, storybookScriptExtras));
 
 writeFileSync(

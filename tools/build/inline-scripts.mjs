@@ -9,9 +9,15 @@ export const DIST = 'dist/factman/browser';
 export const STORYBOOK_DIR = 'storybook';
 export const STORYBOOK_BASE = `/${STORYBOOK_DIR}/`;
 
-/** vercel.json header sources: every path but /storybook gets the app's policy. */
-export const APP_SOURCE = '/((?!storybook(?:/|$)).*)';
+/** vercel.json header sources: every path but the tool paths gets the app's policy. */
+export const APP_SOURCE = '/((?!(?:storybook|coverage|playwright)(?:/|$)).*)';
 export const STORYBOOK_SOURCE = '/storybook/:path*';
+/** The test reports on previews (ETE-237): coverage at /coverage, Playwright at /playwright. */
+export const REPORTS_SOURCE = '/:report(coverage|playwright)/:path*';
+/** On the production hosts every tool path gets the app's CSP: it is a plain 404 there. */
+export const TOOLS_SOURCE = '/:tool(storybook|coverage|playwright)/:path*';
+/** Folders the preview build may have and the production build must not. */
+export const TOOL_DIRS = ['storybook', 'coverage', 'playwright'];
 
 /**
  * Storybook ships only in the preview build (ETE-236). vercel.json headers cannot see the
@@ -58,9 +64,9 @@ function hashScripts(files, base) {
   return hashes;
 }
 
-/** `'sha256-…'` source for each distinct executable inline script in the app's pages. */
+/** `'sha256-…'` source for each distinct executable inline script in the app's pages (not tools). */
 export function inlineScriptHashes(dist = DIST) {
-  return hashScripts(htmlFiles(dist, [STORYBOOK_DIR]), dist);
+  return hashScripts(htmlFiles(dist, TOOL_DIRS), dist);
 }
 
 /** The same for the static Storybook; empty when it isn't in the build. */
