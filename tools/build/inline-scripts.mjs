@@ -13,6 +13,30 @@ export const STORYBOOK_BASE = `/${STORYBOOK_DIR}/`;
 export const APP_SOURCE = '/((?!storybook(?:/|$)).*)';
 export const STORYBOOK_SOURCE = '/storybook/:path*';
 
+/**
+ * Storybook ships only in the preview build (ETE-236). vercel.json headers cannot see the
+ * environment, so the Storybook rule is scoped by host: the production domains (factman.dev and
+ * www.factman.dev) are `missing` from it, and a second rule gives /storybook there the app's own
+ * CSP, so the 404 page production serves at that path keeps the strict policy.
+ */
+export const PRODUCTION_HOST = { type: 'host', value: { suf: 'factman.dev' } };
+
+const isProductionHost = (c) =>
+  c.type === PRODUCTION_HOST.type && c.value?.suf === PRODUCTION_HOST.value.suf;
+
+/**
+ * The vercel.json header rule for a source: the production-host rule when `production` is true,
+ * otherwise the rule that is not limited to the production hosts.
+ */
+export function headerRule(config, source, { production = false } = {}) {
+  return config.headers.find(
+    (h) => h.source === source && (h.has ?? []).some(isProductionHost) === production,
+  );
+}
+
+/** The build variant tools/build checks: `production` (no Storybook) or `preview`. */
+export const BUILD_VARIANT = process.env['BUILD_VARIANT'] ?? 'preview';
+
 function htmlFiles(dir, skip = []) {
   return readdirSync(dir).flatMap((name) => {
     const p = join(dir, name);

@@ -87,11 +87,17 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # Production (www.factman.dev) builds without Storybook; previews ship it at /storybook (ETE-236).
       - run: pnpm build
       - name: Check the home route was prerendered
         run: grep -q '<h1>Odunayo Mohammed</h1>' dist/factman/browser/index.html
-      - name: Check the build output (bundle contents, CSP hashes)
+      - name: Check the production build (no Storybook, bundle contents, CSP hashes)
+        run: pnpm test:build-production
+      - name: Build the preview variant (preview settings, Storybook at /storybook)
+        run: pnpm build:preview
+      - name: Check the preview build (Storybook, bundle contents, CSP hashes)
         run: pnpm test:build
+      # The preview build: visual regression screenshots its Storybook.
       - uses: actions/upload-artifact@v4
         with:
           name: dist
@@ -170,8 +176,10 @@ jobs:
         if: steps.pw-cache.outputs.cache-hit != 'true'
       - run: pnpm exec playwright install-deps
         if: steps.pw-cache.outputs.cache-hit == 'true'
-      # Nx restores the build job's output from the Nx Cloud remote cache.
+      # Nx restores the build job's output from the Nx Cloud remote cache: the preview build for
+      # the five-browser suite, then the production build for its own checks (ETE-236).
       - run: pnpm e2e
+      - run: pnpm e2e:production
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
