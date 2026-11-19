@@ -5,7 +5,14 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 
 const config = JSON.parse(readFileSync(new URL('../../vercel.json', import.meta.url), 'utf8'));
-const forPath = (source) => config.headers.find((h) => h.source === source)?.headers ?? [];
+/** The production domains (factman.dev, www.factman.dev); Storybook is not served there (ETE-236). */
+const PRODUCTION_HOST = { type: 'host', value: { suf: 'factman.dev' } };
+const onProductionHost = (h) =>
+  (h.has ?? []).some((c) => c.value?.suf === PRODUCTION_HOST.value.suf);
+/** The rule for a source; for /storybook, the one that is not limited to the production hosts. */
+const ruleFor = (source, { production = false } = {}) =>
+  config.headers.find((h) => h.source === source && onProductionHost(h) === production);
+const forPath = (source, options) => ruleFor(source, options)?.headers ?? [];
 const value = (source, key) => forPath(source).find((h) => h.key === key)?.value;
 /** Header sources: every path, the app (everything but /storybook) and the static Storybook (ETE-220). */
 const ALL = '/(.*)';
@@ -73,6 +80,20 @@ test('Storybook may frame its own preview and nothing else, and is not indexed (
   assert.match(csp, /object-src 'none'/);
   assert.equal(value(STORYBOOK, 'X-Frame-Options'), 'SAMEORIGIN');
   assert.match(value(STORYBOOK, 'X-Robots-Tag'), /noindex/);
+});
+
+test('the Storybook rule never applies on the production hosts (ETE-236)', () => {
+  assert.deepEqual(ruleFor(STORYBOOK).missing, [PRODUCTION_HOST]);
+  assert.equal(ruleFor(STORYBOOK).has, undefined);
+});
+
+test('on the production hosts, /storybook gets the app CSP and DENY (ETE-236)', () => {
+  const production = (key) =>
+    forPath(STORYBOOK, { production: true }).find((h) => h.key === key)?.value;
+  assert.deepEqual(ruleFor(STORYBOOK, { production: true }).has, [PRODUCTION_HOST]);
+  assert.equal(production('Content-Security-Policy'), value(APP, 'Content-Security-Policy'));
+  assert.equal(production('X-Frame-Options'), 'DENY');
+  assert.doesNotMatch(production('Content-Security-Policy'), /unsafe-eval/);
 });
 
 test("Storybook's files have no content hash in their names, so they always revalidate", () => {

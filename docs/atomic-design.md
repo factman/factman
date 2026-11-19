@@ -96,7 +96,7 @@ export class Button {}
 
 ## Stories
 
-Every component has a story next to it (`<name>.stories.ts`). `pnpm storybook` runs Storybook locally; the static build is served with the site at `/storybook`.
+Every component has a story next to it (`<name>.stories.ts`). `pnpm storybook` runs Storybook locally; the static build is served with the site at `/storybook` on preview deployments (`factman.vercel.app` and pull requests), never on production (ETE-236).
 
 - **Title:** the level, then the component: `Atoms/Button`, `Molecules/ProjectCard`, `Organisms/SiteHeader`, `Templates/MainLayout`. Pages under `src/app/features` use `Pages/<Page>`. `pnpm test:scripts` fails when a title doesn't match its folder.
 - **Theme:** the toolbar's Theme switch renders the story in Light or Dark (`data-theme` on `<html>`, like the app). Check both. To pin one, set `globals: { theme: 'dark' }`.

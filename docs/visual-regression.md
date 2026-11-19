@@ -7,7 +7,8 @@ with a diff to review, before it reaches the site.
 ## How it runs
 
 - **What:** each story under `Atoms/`, `Molecules/` and `Templates/` in the built Storybook
-  (`dist/factman/browser/storybook`), once with `theme: light` and once with `theme: dark`.
+  (`dist/factman/browser/storybook`, in the preview build: `pnpm build:preview`), once with
+  `theme: light` and once with `theme: dark`.
 - **Where:** Chromium on Linux, 1280 × 1600, with reduced motion, so counters, typing and pulses
   show their final state. Animations are disabled and the text caret is hidden.
 - **Baselines:** `vr/__screenshots__/<story-id>--<theme>.png`, made on Linux in CI. Fonts render

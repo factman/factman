@@ -2,20 +2,21 @@ import { expect, test } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 
 interface VercelConfig {
-  headers: { source: string; headers: { key: string; value: string }[] }[];
+  headers: { source: string; has?: unknown[]; headers: { key: string; value: string }[] }[];
 }
 
 const vercel = JSON.parse(readFileSync('vercel.json', 'utf8')) as VercelConfig;
 const cspFor = (source: string) =>
   (
     vercel.headers
-      .find((h) => h.source === source)
+      // The rule without a host condition: the preview one (ETE-236).
+      .find((h) => h.source === source && !h.has)
       ?.headers.find((h) => h.key === 'Content-Security-Policy')?.value ?? ''
   ).replace('upgrade-insecure-requests', '');
 const APP_CSP = cspFor('/((?!storybook(?:/|$)).*)');
 const STORYBOOK_CSP = cspFor('/storybook/:path*');
 
-// The static Storybook ships with the site at /storybook (ETE-220). It must load a story, with
+// The preview build ships the static Storybook at /storybook (ETE-220, ETE-236). It must load a story, with
 // every file found, under its own production CSP (script hashes, same-origin preview frame).
 test('/storybook loads a story under its production Content-Security-Policy', async ({ page }) => {
   expect(STORYBOOK_CSP).toContain('script-src');
