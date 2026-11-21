@@ -1,0 +1,15 @@
+@let target = link();
+@if (target.kind === 'router') {
+  <a
+    [class]="classes()"
+    [routerLink]="target.path"
+    [queryParams]="target.queryParams"
+    [fragment]="target.fragment"
+    [attr.aria-current]="current()"
+    ><span>{{ label() }}</span></a
+  >
+} @else {
+  <a [class]="classes()" [attr.href]="target.url" [attr.aria-current]="current()"
+    ><span>{{ label() }}</span></a
+  >
+}

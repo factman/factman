@@ -18,6 +18,12 @@ export { InlineCode } from './inline-code/inline-code';
 export { type ParsedHref, parseHref } from './link/href';
 export { Link } from './link/link';
 export { Logo, type LogoTheme, type LogoType } from './logo/logo';
+export {
+  NavLink,
+  type NavLinkActive,
+  type NavLinkSize,
+  type NavLinkVariant,
+} from './nav-link/nav-link';
 export { Select, type SelectOption } from './select/select';
 export { Skeleton } from './skeleton/skeleton';
 export { SkillChip, yearsText } from './skill-chip/skill-chip';
