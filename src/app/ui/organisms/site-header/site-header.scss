@@ -1,0 +1,134 @@
+// The canvas's site header (project/site.css, SiteHeader artboard): a fixed glass pill bar, and
+// below 1024px a menu button with a drop-down glass panel (docs/interaction-and-motion.md).
+@use 'ui/layout';
+
+// The fixed header takes no room in the flow; this keeps the page below it.
+.site-header-spacer {
+  height: calc(var(--navbar-height) + 2 * var(--padding-sm));
+}
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
+  padding-block: var(--padding-sm);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+
+  // Buttons in the header are pills, like the bar.
+  .fm-btn {
+    border-radius: var(--radius-full);
+  }
+}
+
+.site-header-inner {
+  @include layout.container;
+}
+
+.site-header-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  box-sizing: border-box;
+  height: var(--navbar-height);
+  padding: 0 var(--padding-sm) 0 var(--padding-lg);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-full);
+  background: var(--glass-chrome);
+  box-shadow: var(--shadow-glass-regular);
+  backdrop-filter: blur(var(--blur-glass-regular));
+}
+
+.site-header-home {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  text-decoration: none;
+
+  &:focus-visible {
+    outline: var(--border-width-lg) solid var(--border-focus);
+    outline-offset: 1px;
+  }
+}
+
+.site-header-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-2xs);
+  margin-inline: auto;
+}
+
+.site-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-2xs);
+  margin-left: auto;
+}
+
+// The full navbar from 1024px; the menu button and its panel below.
+.site-header-mobile {
+  display: none !important;
+}
+
+@media (width < 1024px) {
+  .site-header-desktop {
+    display: none !important;
+  }
+
+  .site-header-mobile {
+    display: inline-flex !important;
+  }
+
+  // The panel spans the bar's width.
+  .site-header-menu.site-header-mobile {
+    display: flex !important;
+  }
+}
+
+.site-header-menu {
+  flex-direction: column;
+  gap: var(--gap-2xs);
+  box-sizing: border-box;
+  max-height: calc(100dvh - var(--navbar-height) - 4 * var(--padding-sm));
+  margin-top: var(--gap-xs);
+  padding: var(--padding-md);
+  overflow-y: auto;
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  background: var(--glass-chrome-panel);
+  box-shadow: var(--shadow-modal-elevation);
+  backdrop-filter: blur(var(--blur-glass-panel));
+  animation: fm-site-header-drop var(--duration-base) var(--ease-out);
+
+  // Menu links fill the row, so the whole width is the target.
+  .fm-navlink {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.site-header-menu-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+  margin-top: var(--gap-xs);
+  padding-top: var(--padding-sm);
+  border-top: var(--border-width-sm) solid var(--glass-stroke);
+
+  // fm-button is `display: contents`, so its .fm-btn is the flex item.
+  .fm-btn {
+    flex: 1 1 140px;
+  }
+}
+
+@keyframes fm-site-header-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
