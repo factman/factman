@@ -1,5 +1,5 @@
 // Copies the test reports into the preview build, so each preview deployment shows the results of
-// the commit it was built from (ETE-237): coverage/ → /coverage, playwright-report/ → /playwright.
+// the commit it was built from (ETE-237): coverage/deploy/ → /coverage, playwright-report/ → /playwright.
 // CI runs it in the preview deploy job, after the tests. Production never gets them: this refuses
 // a production build (no Storybook in it, ETE-236) or VERCEL_ENV=production.
 //
@@ -11,7 +11,8 @@ import { join } from 'node:path';
 import { DIST, STORYBOOK_DIR } from '../build/inline-scripts.mjs';
 
 export const REPORTS = [
-  { source: 'coverage', target: 'coverage', title: 'Coverage' },
+  // The copy of the HTML report whose links work under clean URLs (merge-coverage.mjs).
+  { source: 'coverage/deploy', target: 'coverage', title: 'Coverage' },
   { source: 'playwright-report', target: 'playwright', title: 'Playwright report' },
 ];
 
