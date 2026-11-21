@@ -1,0 +1,131 @@
+// The canvas's site footer (SiteFooter artboard): a glass panel with four columns, a divider, then
+// the sign-off and the copyright row. Columns follow the grid-4 rule in
+// docs/interaction-and-motion.md: 4 from 1280px, 2 from 768px, 1 below.
+@use 'ui/layout';
+
+.site-footer {
+  padding-block: var(--gap-4xl) var(--gap-3xl);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.site-footer-inner {
+  @include layout.container;
+}
+
+.site-footer-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-3xl);
+  box-sizing: border-box;
+  padding: var(--padding-4xl);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  background: var(--glass-panel);
+  box-shadow: var(--shadow-glass-panel);
+
+  @media (width < 768px) {
+    padding: var(--padding-xl);
+  }
+}
+
+.site-footer-columns {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap-3xl);
+
+  @media (width < 1280px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (width < 768px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.site-footer-about,
+.site-footer-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-xs);
+}
+
+.site-footer-about {
+  gap: var(--gap-md);
+}
+
+.site-footer-connect {
+  gap: var(--gap-sm);
+}
+
+// The design system's eyebrow (.fm-eyebrow in portfolio-sections.css), copied with our own class
+// name so the footer doesn't load that whole file (as SectionHeader does). Keep it in step.
+.site-footer-heading {
+  margin: 0;
+  font: 500 12px/16px var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-default);
+}
+
+.site-footer-tagline {
+  margin: 0;
+  font: 400 14px/1.8 var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.site-footer-link,
+.site-footer-email {
+  border-radius: var(--radius-xs);
+  color: var(--text-primary);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: var(--border-width-lg) solid var(--border-focus);
+    outline-offset: 2px;
+  }
+}
+
+.site-footer-link {
+  font: 500 14px/28px var(--font-sans);
+}
+
+.site-footer-email {
+  font: 600 14px/20px var(--font-sans);
+}
+
+.site-footer-location {
+  font: 400 14px/20px var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.site-footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-md);
+}
+
+.site-footer-sign-off {
+  flex: 1 1 360px;
+  max-width: 520px;
+}
+
+.site-footer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-xs);
+}
+
+.site-footer-copyright {
+  font: 500 12px/16px var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}

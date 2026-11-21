@@ -2,9 +2,17 @@ import { provideRouter } from '@angular/router';
 import { applicationConfig, type Meta, type StoryObj } from '@storybook/angular-vite';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
 
-import { site } from '@data/site';
-
 import { SiteHeader } from './site-header';
+
+// The navigation in site.json (stories don't read the data layer; pages do).
+const nav = [
+  { id: 'about', label: 'About', anchor: '#about' },
+  { id: 'experience', label: 'Experience', anchor: '#experience' },
+  { id: 'services', label: 'Services', anchor: '#services', route: '/services' },
+  { id: 'projects', label: 'Projects', anchor: '#projects', route: '/projects' },
+  { id: 'blog', label: 'Blog', anchor: '#blog', route: '/blog' },
+  { id: 'contact', label: 'Contact', anchor: '#contact' },
+];
 
 type Args = SiteHeader & { resume: () => void; themeChange: (t: string) => void };
 
@@ -20,7 +28,7 @@ const meta: Meta<Args> = {
   parameters: { layout: 'fullscreen' },
   args: { current: 'home', resume: fn(), themeChange: fn() },
   render: (args, { globals }) => ({
-    props: { ...args, nav: site.nav, theme: globals['theme'] === 'dark' ? 'dark' : 'light' },
+    props: { ...args, nav, theme: globals['theme'] === 'dark' ? 'dark' : 'light' },
     template: `
       <fm-site-header [nav]="nav" [current]="current" [theme]="theme" [active]="active"
         (openResume)="resume()" (themeChange)="themeChange($event)" />
