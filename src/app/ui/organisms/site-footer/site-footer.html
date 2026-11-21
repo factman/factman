@@ -1,0 +1,66 @@
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-panel">
+      <div class="site-footer-columns">
+        <div class="site-footer-about">
+          <fm-logo type="odunayo" [size]="44" [theme]="theme()" />
+          <p class="site-footer-tagline">{{ tagline() }}</p>
+          <fm-availability-badge [status]="availability()" [label]="availabilityLabel()" />
+        </div>
+
+        <nav class="site-footer-column" aria-labelledby="site-footer-explore">
+          <h2 id="site-footer-explore" class="site-footer-heading">Explore</h2>
+          @for (link of nav(); track link.href) {
+            <a class="site-footer-link" [routerLink]="link.href">{{ link.label }}</a>
+          }
+        </nav>
+
+        <div class="site-footer-column">
+          <h2 class="site-footer-heading">Résumés</h2>
+          @for (resume of resumes(); track resume.id) {
+            <fm-button
+              variant="link"
+              size="sm"
+              ariaHaspopup="dialog"
+              (pressed)="openResume.emit(resume.id)"
+              >{{ resume.title }}</fm-button
+            >
+          }
+        </div>
+
+        <div class="site-footer-column site-footer-connect">
+          <h2 class="site-footer-heading">Connect</h2>
+          <a class="site-footer-email" [attr.href]="mailto()">{{ email() }}</a>
+          @if (location()) {
+            <span class="site-footer-location">{{ location() }}</span>
+          }
+          <fm-social-links [links]="socials()" />
+        </div>
+      </div>
+
+      <fm-divider />
+
+      <div class="site-footer-bottom">
+        <div class="site-footer-sign-off"><fm-terminal-sign-off /></div>
+        <div class="site-footer-meta">
+          <span class="site-footer-copyright">© {{ copyrightYear() }} {{ name() }}</span>
+          <fm-button
+            variant="tertiary"
+            size="sm"
+            [leadingIcon]="icons.terminal"
+            ariaHaspopup="dialog"
+            (pressed)="cookies.emit()"
+            >cookie settings</fm-button
+          >
+          <fm-button
+            variant="secondary"
+            size="sm"
+            [trailingIcon]="icons.arrowUp"
+            (pressed)="backToTop()"
+            >Back to top</fm-button
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
