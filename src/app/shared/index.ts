@@ -3,7 +3,8 @@
 export type * from './models/generated';
 export { prefersReducedMotion, REDUCED_MOTION_QUERY } from './motion/reduced-motion';
 export { Reveal } from './motion/reveal.directive';
-export { ScrollSpy } from './navigation/scroll-spy';
+export { AnchorScroller } from './navigation/anchor-scroller';
+export { SCROLL_SPY_ENABLED, ScrollSpy } from './navigation/scroll-spy';
 export { SharedModule } from './shared.module';
 export * from './site/resolve-site';
 export * from './time/clock';

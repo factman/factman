@@ -1,3 +1,4 @@
+import { ViewportScroller } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
@@ -52,5 +53,16 @@ describe('App focus management', () => {
     app.focusAfterNavigation('/#contact');
     expect(document.activeElement).toBe(target);
     expect(target.getAttribute('tabindex')).toBe('-1');
+  });
+
+  it('jumps to the fragment of a deep link, and does nothing without one', async () => {
+    const { app } = await setup();
+    const scrollToAnchor = vi
+      .spyOn(TestBed.inject(ViewportScroller), 'scrollToAnchor')
+      .mockImplementation(() => undefined);
+    app.scrollToFragment('/#contact');
+    expect(scrollToAnchor).toHaveBeenCalledWith('contact', { behavior: 'instant' });
+    app.scrollToFragment('/services');
+    expect(scrollToAnchor).toHaveBeenCalledOnce();
   });
 });

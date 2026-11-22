@@ -93,6 +93,12 @@ All of these are instant (or static) under reduced motion. Endless ones stop: th
 
 In-page anchors (`#about`, `#contact` …) scroll smoothly; targets clear the sticky navbar with `scroll-margin-top: var(--navbar-height)`. Reduced motion jumps instead.
 
+How it works (FR-37, ETE-87):
+
+- **Scrolling:** `AnchorScroller` replaces the router's `ViewportScroller`. It scrolls anchors with `scrollIntoView`, so `scroll-margin-top` applies; Angular's own scroller ignores it. A new page and back or forward stay instant, as the router asks. There is no global `scroll-behavior: smooth`, which would animate those too.
+- **Deep links:** a link opened from outside (`/#contact`) jumps straight to its section once the page has rendered. The router doesn't scroll while a prerendered page hydrates.
+- **Scroll-spy:** behind the `features.scrollSpy` flag (P1, off in v1.0), the header marks the section in view (`aria-current="location"`). The URL hash follows it with `replaceState`: no jump, no history entry. Scrolling above the first section clears the hash.
+
 ## Reduced motion, per component
 
 | Component                                                                            | Normally                       | With reduced motion                     |
