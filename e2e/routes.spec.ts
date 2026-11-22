@@ -10,7 +10,7 @@ const pages = [
   ['/projects/graphui', 'GraphUI', 'GraphUI · Odunayo Mohammed'],
   ['/blog', 'Blog', 'Blog · Odunayo Mohammed'],
   ['/privacy', 'Privacy', 'Privacy · Odunayo Mohammed'],
-  ['/404', 'Page not found', 'Page not found · Odunayo Mohammed'],
+  ['/404', 'command not found', 'Page not found · Odunayo Mohammed'],
 ] as const;
 
 for (const [path, h1, title] of pages) {
@@ -18,7 +18,7 @@ for (const [path, h1, title] of pages) {
     const res = await request.get(path);
     expect(res.status()).toBe(200);
     const html = await res.text();
-    expect(html).toContain(`<h1>${h1}</h1>`);
+    expect(html).toMatch(new RegExp(`<h1[^>]*>${h1}</h1>`));
     expect(html).toContain(`<title>${title}</title>`);
 
     await page.goto(path);
@@ -45,6 +45,22 @@ test('the not-found page is never indexed', async ({ request }) => {
   const html = await (await request.get('/404')).text();
   expect(html).toContain('<meta name="robots" content="noindex">');
 });
+
+// ETE-88 (FR-05): any address with no page, including unknown slugs on the detail routes, gets
+// the prerendered 404.html with a 404 status, keeps its address and shows the missing path.
+for (const path of ['/no-such-page', '/projects/does-not-exist', '/services/does-not-exist']) {
+  test(`${path} shows the not-found page with a 404 status`, async ({ page }) => {
+    const response = await page.goto(path);
+    expect(response?.status()).toBe(404);
+    await expect(page).toHaveURL(new RegExp(`${path}$`));
+    await expect(page).toHaveTitle('Page not found · Odunayo Mohammed');
+    await expect(page.getByRole('heading', { level: 1, name: 'command not found' })).toBeVisible();
+    await expect(page.getByText(`cd ${path}`)).toBeVisible();
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
+    await page.getByRole('link', { name: 'Go home' }).click();
+    await expect(page).toHaveURL(/\/$/);
+  });
+}
 
 test('home sections are anchors, and /#contact scrolls to and focuses its section', async ({
   page,

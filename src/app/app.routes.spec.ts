@@ -34,10 +34,10 @@ describe('routes (PRD §4 site map)', () => {
     ['/projects/graphui', 'GraphUI', 'GraphUI · Odunayo Mohammed'],
     ['/blog', 'Blog', 'Blog · Odunayo Mohammed'],
     ['/privacy', 'Privacy', 'Privacy · Odunayo Mohammed'],
-    ['/404', 'Page not found', 'Page not found · Odunayo Mohammed'],
-    ['/no/such/page', 'Page not found', 'Page not found · Odunayo Mohammed'],
-    ['/services/no-such-service', 'Page not found', 'Page not found · Odunayo Mohammed'],
-    ['/projects/no-such-project', 'Page not found', 'Page not found · Odunayo Mohammed'],
+    ['/404', 'command not found', 'Page not found · Odunayo Mohammed'],
+    ['/no/such/page', 'command not found', 'Page not found · Odunayo Mohammed'],
+    ['/services/no-such-service', 'command not found', 'Page not found · Odunayo Mohammed'],
+    ['/projects/no-such-project', 'command not found', 'Page not found · Odunayo Mohammed'],
   ])('%s renders "%s"', async (url, h1, title) => {
     expect(await visit(url)).toEqual({ h1, title });
   });

@@ -81,6 +81,10 @@
       "$ref": "#/$defs/photo",
       "description": "Contact section photo (ContactPhoto)."
     },
+    "notFoundPhoto": {
+      "$ref": "#/$defs/photo",
+      "description": "Not-found page photo (NotFoundSection), the thinking pose."
+    },
     "careerStart": {
       "type": "string",
       "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
