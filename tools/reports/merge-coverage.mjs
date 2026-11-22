@@ -1,6 +1,13 @@
 // pnpm test:coverage, last step (ETE-237): one coverage report for the unit tests (ng test) and
 // the Storybook story tests (Vitest browser mode), written to coverage/ as HTML, json-summary and
-// a text summary.
+// a text summary, plus coverage/deploy/: the same HTML report for /coverage on preview deployments.
+//
+// Why a second HTML report: Vercel serves this site with clean URLs and no trailing slash
+// (vercel.json), so coverage/app/index.html is at /coverage/app and app.ts.html at
+// /coverage/app/app.ts. The standard report's relative links (`base.css`, `app/index.html`,
+// `../index.html`) then resolve one folder too high: no styles and dead links. The deploy copy links
+// every page and asset by its absolute clean URL instead, and names the page of a `.html` source
+// `<name>.page.html`, because `app.html.html` would lose both extensions to clean URLs.
 //
 // The two runners transform the sources differently (Angular's esbuild build and Vite), so the
 // same file comes back with different statement maps, and Istanbul's own merge would add up the
@@ -16,6 +23,33 @@ import reports from 'istanbul-reports';
 
 export const RAW = { unit: 'coverage-raw/unit', storybook: 'coverage-raw/storybook' };
 export const OUT = 'coverage';
+/** The deployable HTML report, and the URL path it is served under (tools/reports/add-reports.mjs). */
+export const DEPLOY = { dir: join(OUT, 'deploy'), base: '/coverage' };
+
+/**
+ * An Istanbul HTML `linkMapper` for a report served with clean URLs under `base`: files keep the
+ * standard layout (folder `index.html`, `<file>.html`), and every link is the page's absolute clean
+ * URL (`/coverage/app`, `/coverage/app/app.ts`, `/coverage/base.css`).
+ */
+export function cleanUrlLinkMapper(base) {
+  const getPath = (node) => {
+    if (typeof node === 'string') return node;
+    const name = node.getQualifiedName();
+    if (node.isSummary()) return name ? `${name}/index.html` : 'index.html';
+    return name.endsWith('.html') ? `${name}.page.html` : `${name}.html`;
+  };
+  const url = (node) => {
+    const page = getPath(node)
+      .replace(/(^|\/)index\.html$/, '')
+      .replace(/\.html$/, '');
+    return page ? `${base}/${page}` : base;
+  };
+  return {
+    getPath,
+    relativePath: (_source, target) => url(target),
+    assetPath: (_node, name) => `${base}/${name}`,
+  };
+}
 
 const read = (dir) => {
   const file = join(dir, 'coverage-final.json');
@@ -84,5 +118,16 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   for (const reporter of ['html', 'json-summary', 'text-summary']) {
     reports.create(reporter).execute(context);
   }
-  console.log(`merge-coverage: ${Object.keys(map.data).length} files → ${OUT}/index.html`);
+  const deploy = libReport.createContext({
+    dir: DEPLOY.dir,
+    coverageMap: map,
+    defaultSummarizer: 'nested',
+    sourceFinder: (path) => readFileSync(path, 'utf8'),
+  });
+  reports.create('html', { linkMapper: cleanUrlLinkMapper(DEPLOY.base) }).execute(deploy);
+  reports.create('json-summary').execute(deploy);
+  console.log(
+    `merge-coverage: ${Object.keys(map.data).length} files → ${OUT}/index.html` +
+      ` (deployable: ${DEPLOY.dir}, served at ${DEPLOY.base})`,
+  );
 }
