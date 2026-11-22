@@ -1,5 +1,5 @@
 import { type ModuleWithProviders, NgModule, inject } from '@angular/core';
-import { resolveSite, type SiteEnvironment } from '@shared';
+import { resolveSite, SCROLL_SPY_ENABLED, type SiteEnvironment } from '@shared';
 import { site } from '@data/site';
 
 import { AnalyticsModule } from './analytics/analytics.module';
@@ -29,9 +29,14 @@ export class CoreModule {
   }
 
   static forRoot(options: CoreOptions): ModuleWithProviders<CoreModule> {
+    const resolved = resolveSite(site, options.environment);
     return {
       ngModule: CoreModule,
-      providers: [{ provide: SITE, useValue: resolveSite(site, options.environment) }],
+      providers: [
+        { provide: SITE, useValue: resolved },
+        // FR-37 is a P1 item: the section highlight and hash follow only when the flag is on.
+        { provide: SCROLL_SPY_ENABLED, useValue: resolved.features.scrollSpy },
+      ],
     };
   }
 }
