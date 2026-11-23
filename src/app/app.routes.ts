@@ -1,4 +1,12 @@
 import type { Routes } from '@angular/router';
+import type { PageSeo } from '@core/seo';
+
+/** The not-found page's head: never indexed, and no canonical URL (ETE-112). */
+const NOT_FOUND_SEO: PageSeo = {
+  description:
+    'This page does not exist. Find projects, services and articles by Odunayo Mohammed from here.',
+  robots: 'noindex',
+};
 
 /**
  * Site map (PRD §4): home, three lists, two details, privacy and not-found. Every page is lazy;
@@ -6,7 +14,7 @@ import type { Routes } from '@angular/router';
  */
 export const routes: Routes = [
   {
-    // No title: the home page is titled with the site name alone (SiteTitleStrategy).
+    // No title or seo: the home page has the site name and description (SiteTitleStrategy).
     path: '',
     loadComponent: () => import('@features/home').then((m) => m.Home),
   },
@@ -21,21 +29,35 @@ export const routes: Routes = [
   {
     path: 'blog',
     title: 'Blog',
+    data: {
+      seo: {
+        description:
+          'Articles by Odunayo Mohammed on software engineering, technical leadership and building products, published on Medium.',
+      } satisfies PageSeo,
+    },
     loadComponent: () => import('@features/blog').then((m) => m.BlogPage),
   },
   {
     path: 'privacy',
     title: 'Privacy',
+    data: {
+      seo: {
+        description:
+          'How factman.dev handles your data: the cookies it sets, the analytics it runs only with your consent, and how to change your choice.',
+      } satisfies PageSeo,
+    },
     loadComponent: () => import('@features/legal').then((m) => m.PrivacyPage),
   },
   {
     path: '404',
     title: 'Page not found',
+    data: { seo: NOT_FOUND_SEO },
     loadComponent: () => import('@features/not-found').then((m) => m.NotFoundPage),
   },
   {
     path: '**',
     title: 'Page not found',
+    data: { seo: NOT_FOUND_SEO },
     loadComponent: () => import('@features/not-found').then((m) => m.NotFoundPage),
   },
 ];

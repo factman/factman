@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import { Component, importProvidersFrom } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Meta, Title } from '@angular/platform-browser';
@@ -35,5 +36,19 @@ describe('SeoModule', () => {
     const meta = TestBed.inject(Meta);
     expect(meta.getTag('name="robots"')?.content).toBe('noindex');
     expect(meta.getTag('name="description"')?.content).toMatch(/^Fullstack Software Engineer/);
+  });
+
+  it('replaces the tags and canonical link on each navigation, never adding a second', async () => {
+    const router = setup('production');
+    await router.navigateByUrl('/');
+    await router.navigateByUrl('/services');
+    const meta = TestBed.inject(Meta);
+    const doc = TestBed.inject(DOCUMENT);
+    expect(meta.getTags('property="og:title"').map((t) => t.content)).toEqual([
+      'Services · Odunayo Mohammed',
+    ]);
+    expect(
+      [...doc.head.querySelectorAll('link[rel="canonical"]')].map((l) => l.getAttribute('href')),
+    ).toEqual(['https://www.factman.dev/services']);
   });
 });

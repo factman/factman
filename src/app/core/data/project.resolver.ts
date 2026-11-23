@@ -1,5 +1,6 @@
 import { inject } from '@angular/core';
 import { RedirectCommand, type ResolveFn, Router } from '@angular/router';
+import type { PageSeo } from '@core/seo';
 import type { Project } from '@shared';
 
 import { ProjectsRepository } from './projects.repository';
@@ -20,3 +21,9 @@ export const projectResolver: ResolveFn<Project> = (route) => {
 /** Page title for /projects/:slug: the project's title (an unknown slug is redirected anyway). */
 export const projectTitleResolver: ResolveFn<string> = (route) =>
   inject(ProjectsRepository).bySlug(route.paramMap.get('slug') ?? '')?.title ?? 'Page not found';
+
+/** Search and link-preview tags for /projects/:slug, from the project (ETE-112). */
+export const projectSeoResolver: ResolveFn<PageSeo | undefined> = (route) => {
+  const project = inject(ProjectsRepository).bySlug(route.paramMap.get('slug') ?? '');
+  return project && { description: project.summary, type: 'article' };
+};

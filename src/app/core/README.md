@@ -7,7 +7,7 @@ App-wide services and providers, one NgModule per concern (ADR-002). Components 
 | `config`    | (part of `CoreModule`) | `SITE`: `site.json` for this build's environment                                        |
 | `data`      | `DataModule`      | Typed repositories and route resolvers (`providedIn: 'root'`, loaded with the pages that use them) |
 | `theme`     | `ThemeModule`     | Light and Dark theme (FR-04)                                                                  |
-| `seo`       | `SeoModule`       | Page titles (`site.titleTemplate`), site-wide description and robots meta                    |
+| `seo`       | `SeoModule`       | `SeoService`: per-page title, description, robots, canonical, Open Graph and Twitter tags (route `data.seo` or a `seo` resolver) |
 | `analytics` | `AnalyticsModule` | `ANALYTICS`: GTM and GA4 settings (off on previews)                                          |
 | `consent`   | `ConsentModule`   | `CONSENT`: cookie name, version and categories                                                |
 

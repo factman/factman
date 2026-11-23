@@ -1,7 +1,6 @@
 import { Location } from '@angular/common';
 import { provideLocationMocks } from '@angular/common/testing';
 import { TestBed } from '@angular/core/testing';
-import { Meta } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 
 import { NotFoundPage } from './not-found';
@@ -18,10 +17,9 @@ describe('NotFoundPage', () => {
   const linkHref = (el: HTMLElement, name: string) =>
     [...el.querySelectorAll('a')].find((a) => a.textContent?.trim() === name)?.getAttribute('href');
 
-  it('shows the address that was not found, and is never indexed', () => {
+  it('shows the address that was not found', () => {
     const el = setup('/projects/does-not-exist');
     expect(el.textContent).toContain('cd /projects/does-not-exist');
-    expect(TestBed.inject(Meta).getTag('name="robots"')?.content).toBe('noindex');
   });
 
   it('offers home, Projects, Services and Blog, with the thinking portrait', () => {
