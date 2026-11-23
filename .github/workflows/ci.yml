@@ -210,13 +210,19 @@ jobs:
   # factman.vercel.app. Fork pull requests get no secrets, so no preview.
   preview:
     name: Preview deployment
-    needs: [build, test, e2e]
+    # Every job, so the pull request comment can report them all (ETE-240).
+    needs: [static, test, build, vr, e2e]
     if: >-
       always() && needs.build.result == 'success' &&
       (github.event_name == 'push' && github.ref == 'refs/heads/dev' ||
        github.event_name == 'pull_request' && !github.event.pull_request.head.repo.fork)
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # The workflow's read-only permissions, plus writing the preview comment on the pull request.
+    permissions:
+      actions: read
+      contents: read
+      pull-requests: write
     environment:
       name: preview
       url: ${{ steps.deploy.outputs.url }}
@@ -300,3 +306,33 @@ jobs:
           id=$(api "https://api.vercel.com/v13/deployments/${URL#https://}?teamId=$VERCEL_ORG_ID" | jq -r .id)
           api -X POST -d '{"alias":"factman.vercel.app"}' \
             "https://api.vercel.com/v2/deployments/$id/aliases?teamId=$VERCEL_ORG_ID" | jq -r '"aliased " + .alias'
+      # One comment per pull request, updated in place on every push (ETE-240). It is public, so it
+      # holds links, job results and coverage only: tools/reports/preview-comment.mjs.
+      - name: Comment the preview on the pull request
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          PREVIEW_URL: ${{ steps.deploy.outputs.url }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+          REPOSITORY: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          RUN_NUMBER: ${{ github.run_number }}
+          RESULT_STATIC: ${{ needs.static.result }}
+          RESULT_TEST: ${{ needs.test.result }}
+          RESULT_BUILD: ${{ needs.build.result }}
+          RESULT_VR: ${{ needs.vr.result }}
+          RESULT_E2E: ${{ needs.e2e.result }}
+        run: |
+          body="$RUNNER_TEMP/preview-comment.md"
+          node tools/reports/preview-comment.mjs > "$body"
+          marker='<!-- fm-preview-deployment -->'
+          id=$(gh api "repos/$REPOSITORY/issues/$PR/comments" --paginate \
+            --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | startswith(\"$marker\"))) | .id" |
+            head -n 1)
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$REPOSITORY/issues/comments/$id" -F "body=@$body" > /dev/null
+            echo "Updated the preview comment ($id)"
+          else
+            gh pr comment "$PR" --repo "$REPOSITORY" --body-file "$body"
+          fi
