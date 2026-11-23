@@ -1,5 +1,11 @@
-<h1>Odunayo Mohammed</h1>
-<p>Site under construction.</p>
+<fm-profile-hero
+  [profile]="profile"
+  [photo]="photo"
+  [socials]="socials"
+  [stats]="stats"
+  [timezone]="timezone"
+  (openResume)="openResume()"
+/>
 @for (section of sections; track section.id) {
   <section fmReveal [id]="section.id" [attr.aria-labelledby]="section.id + '-title'" tabindex="-1">
     <h2 [id]="section.id + '-title'">{{ section.label }}</h2>
