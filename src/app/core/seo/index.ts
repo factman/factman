@@ -1,3 +1,12 @@
 // Public API of the SEO concern. Import via `@core/seo`.
-export { SeoModule, applySiteMeta } from './seo.module';
+export {
+  canonicalPath,
+  OG_IMAGE_SIZE,
+  type PageSeo,
+  type SeoHead,
+  type SeoTag,
+  seoHead,
+} from './page-seo';
+export { SeoModule } from './seo.module';
+export { SeoService } from './seo.service';
 export { SiteTitleStrategy } from './site-title.strategy';
