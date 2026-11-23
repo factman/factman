@@ -97,7 +97,7 @@ jobs:
       # Production (www.factman.dev) builds without Storybook; previews ship it at /storybook (ETE-236).
       - run: pnpm build
       - name: Check the home route was prerendered
-        run: grep -q '<h1>Odunayo Mohammed</h1>' dist/factman/browser/index.html
+        run: grep -Eq '<h1( [^>]*)?>Odunayo Mohammed</h1>' dist/factman/browser/index.html
       - name: Check the production build (no Storybook, bundle contents, CSP hashes)
         run: pnpm test:build-production
       - name: Build the preview variant (preview settings, Storybook at /storybook)
