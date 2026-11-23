@@ -20,7 +20,7 @@ const csp = vercel.headers
 for (const [path, h1] of [
   ['/', 'Odunayo Mohammed'],
   ['/services/devops', 'DevOps'],
-  ['/404', 'Page not found'],
+  ['/404', 'command not found'],
 ] as const) {
   test(`${path} works under the production Content-Security-Policy`, async ({ page }) => {
     expect(csp).toBeTruthy();

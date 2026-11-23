@@ -32,11 +32,12 @@
         "production",
         {
           "dependentTasksOutputFiles": "**/*"
-        }
+        },
+        "{projectRoot}/tools/build/not-found-page.mjs"
       ],
       "outputs": ["{projectRoot}/dist/factman"],
       "options": {
-        "command": "ng build"
+        "command": "ng build && node tools/build/not-found-page.mjs"
       }
     },
     "build-preview": {
@@ -48,11 +49,12 @@
         {
           "dependentTasksOutputFiles": "**/*"
         },
-        "{projectRoot}/tools/build/add-storybook.mjs"
+        "{projectRoot}/tools/build/add-storybook.mjs",
+        "{projectRoot}/tools/build/not-found-page.mjs"
       ],
       "outputs": ["{projectRoot}/dist/factman"],
       "options": {
-        "command": "ng build --configuration production,preview && node tools/build/add-storybook.mjs"
+        "command": "ng build --configuration production,preview && node tools/build/not-found-page.mjs && node tools/build/add-storybook.mjs"
       }
     },
     "watch": {

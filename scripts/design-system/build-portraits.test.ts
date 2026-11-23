@@ -11,7 +11,8 @@ describe('ds:portraits (ETE-198)', () => {
 
   test('plans AVIF and WebP for each profile photo, keeping the aspect ratio', () => {
     const exports = plannedExports(process.cwd());
-    assert.equal(exports.length, 18);
+    // 4 photos (hero, About, contact, not-found) × 3 widths × 2 formats.
+    assert.equal(exports.length, 24);
     const hero = exports.find((e) => e.path === 'src/assets/profile/odunayo-hero-360.avif');
     assert.deepEqual(hero && { width: hero.width, height: hero.height }, {
       width: 360,

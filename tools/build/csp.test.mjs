@@ -104,3 +104,13 @@ if (BUILD_VARIANT === 'preview') {
     }
   });
 }
+
+// ETE-88: the host serves 404.html for every address with no page, so it must be the prerendered
+// not-found page (tools/build/not-found-page.mjs), never a bare placeholder.
+test('404.html is the prerendered not-found page, never indexed', () => {
+  const page = readFileSync(join(DIST, '404.html'), 'utf8');
+  assert.equal(page, readFileSync(join(DIST, '404', 'index.html'), 'utf8'));
+  assert.match(page, /<h1[^>]*>command not found<\/h1>/);
+  assert.match(page, /<meta name="robots" content="noindex">/);
+  assert.match(page, /<script src="main-[\w-]+\.js"/);
+});

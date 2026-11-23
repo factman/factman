@@ -1,6 +1,7 @@
 // Public API of shared utilities. Import via `@shared`.
 // Data models are generated from src/data/schemas by `pnpm data:types`.
 export type * from './models/generated';
+export * from './media/portrait-sources';
 export { prefersReducedMotion, REDUCED_MOTION_QUERY } from './motion/reduced-motion';
 export { Reveal } from './motion/reveal.directive';
 export { AnchorScroller } from './navigation/anchor-scroller';

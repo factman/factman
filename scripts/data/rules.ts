@@ -504,8 +504,8 @@ export function clientEntries(data: DataSet): Issue[] {
   return issues;
 }
 
-/** The profile's photos (hero, About, contact); each one is checked by DS-17. */
-export const PROFILE_PHOTOS = ['photo', 'aboutPhoto', 'contactPhoto'] as const;
+/** The profile's photos (hero, About, contact, not-found); each one is checked by DS-17. */
+export const PROFILE_PHOTOS = ['photo', 'aboutPhoto', 'contactPhoto', 'notFoundPhoto'] as const;
 
 /** DS-17: every profile photo has alt text, and its width and height match the image file. */
 export function profilePhoto(data: DataSet, ctx: RuleContext): Issue[] {

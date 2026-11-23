@@ -35,6 +35,12 @@
     "width": 900,
     "height": 507
   },
+  "notFoundPhoto": {
+    "src": "profile/odunayo-thinking.webp",
+    "alt": "Odunayo Mohammed with a hand on his chin in a thinking pose",
+    "width": 720,
+    "height": 900
+  },
   "careerStart": "2013-01",
   "availability": {
     "status": "available",

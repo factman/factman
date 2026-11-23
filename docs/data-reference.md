@@ -45,6 +45,11 @@ One object:
 | `contactPhoto.alt`           | yes      | string         |                                                          |                                                                                     |
 | `contactPhoto.width`         | yes      | integer        | ≥ 1                                                      | Pixel width of the file (DS-17).                                                    |
 | `contactPhoto.height`        | yes      | integer        | ≥ 1                                                      | Pixel height of the file (DS-17).                                                   |
+| `notFoundPhoto`              |          | object         |                                                          | Not-found page photo (NotFoundSection), the thinking pose.                          |
+| `notFoundPhoto.src`          | yes      | string         | pattern `^profile/[a-z0-9-]+\.(webp\|jpe?g\|png\|avif)$` | Under src/assets (DS-17: must exist).                                               |
+| `notFoundPhoto.alt`          | yes      | string         |                                                          |                                                                                     |
+| `notFoundPhoto.width`        | yes      | integer        | ≥ 1                                                      | Pixel width of the file (DS-17).                                                    |
+| `notFoundPhoto.height`       | yes      | integer        | ≥ 1                                                      | Pixel height of the file (DS-17).                                                   |
 | `careerStart`                | yes      | string         | pattern `^\d{4}-(0[1-9]\|1[0-2])$`                       | First month of professional work; years of experience are computed from it (FR-11). |
 | `availability`               | yes      | object         |                                                          |                                                                                     |
 | `availability.status`        | yes      | one of         | `available`, `limited`, `unavailable`                    |                                                                                     |
