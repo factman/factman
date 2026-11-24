@@ -97,6 +97,11 @@ export class ExperienceTimeline {
     return this.open().has(roleId);
   }
 
+  /** Find-in-page matched a collapsed highlight: open that role's list. */
+  protected reveal(roleId: string): void {
+    if (!this.isOpen(roleId)) this.toggle(roleId);
+  }
+
   protected toggle(roleId: string): void {
     this.open.update((ids) => {
       const next = new Set(ids);
