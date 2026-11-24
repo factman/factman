@@ -1,0 +1,42 @@
+// The canvas's StatsSection: the counter cards in a grid of three (two below 768px), then the
+// career strip on a glass panel.
+
+.stats-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.stats-panel-counters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap-xl) var(--gap-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (width < 768px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gap-md);
+  }
+
+  > li {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.stats-panel-career {
+  box-sizing: border-box;
+  padding: var(--padding-xl);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  background: var(--glass-fill-strong);
+  box-shadow: var(--shadow-glass-panel);
+
+  @media (width < 768px) {
+    padding: var(--padding-lg);
+  }
+}
