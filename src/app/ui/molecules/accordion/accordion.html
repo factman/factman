@@ -8,7 +8,6 @@
           class="fm-acc-item__head"
           [id]="prefix + '-' + item.id"
           [attr.aria-expanded]="isOpen"
-          [attr.aria-controls]="prefix + '-' + item.id + '-panel'"
           (click)="toggle(item.id)"
         >
           <span class="fm-acc-item__text"
@@ -17,12 +16,12 @@
           <span class="fm-acc-item__chev"><fm-icon [icon]="chevron" [size]="20" /></span>
         </button>
       </div>
+      <!-- until-found: find-in-page can reach a closed answer and opens it (beforematch). -->
       <div
-        class="fm-acc-item__body"
-        role="region"
+        class="fm-acc-item__body acc-body"
         [id]="prefix + '-' + item.id + '-panel'"
-        [attr.aria-labelledby]="prefix + '-' + item.id"
-        [hidden]="!isOpen"
+        [attr.hidden]="isOpen ? null : 'until-found'"
+        (beforematch)="reveal(item.id)"
       >
         {{ item.content }}
       </div>

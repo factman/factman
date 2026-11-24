@@ -130,15 +130,15 @@ describe('UI-01 Atoms', () => {
   });
 
   describe('Switch', () => {
-    it('toggles with Space and reports aria-checked', async () => {
+    it('toggles with Space and reports its checked state', async () => {
       await render(Switch, { inputs: { label: 'Analytics cookies' } });
       const sw = screen.getByRole('switch', { name: 'Analytics cookies' });
       await userEvent.tab();
       expect(sw).toBe(document.activeElement);
       await userEvent.keyboard(' ');
-      expect(sw.getAttribute('aria-checked')).toBe('true');
+      expect((sw as HTMLInputElement).checked).toBe(true);
       await userEvent.keyboard(' ');
-      expect(sw.getAttribute('aria-checked')).toBe('false');
+      expect((sw as HTMLInputElement).checked).toBe(false);
     });
   });
 

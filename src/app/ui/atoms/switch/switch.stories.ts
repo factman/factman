@@ -18,7 +18,7 @@ export const Default: Story = {
   play: async ({ canvas }) => {
     const sw = canvas.getByRole('switch', { name: 'Analytics cookies' });
     await userEvent.click(sw);
-    await expect(sw).toHaveAttribute('aria-checked', 'true');
+    await expect(sw).toBeChecked();
   },
 };
 

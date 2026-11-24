@@ -47,9 +47,16 @@ export class ThemeService {
     this.stored.set(theme);
   }
 
-  /** Switches to the other theme and remembers it (the theme toggle). */
+  /**
+   * Switches to the other theme (the theme toggle). The choice is remembered only when it differs
+   * from what the page shows with no choice (the system preference, else the site default);
+   * switching back to that forgets it, so the page follows the system again instead of being
+   * pinned to it (ETE-254, dark-mode-toggle).
+   */
   toggle(): void {
-    this.set(this.theme() === 'dark' ? 'light' : 'dark');
+    const target: Theme = this.theme() === 'dark' ? 'light' : 'dark';
+    const unpinned = resolveTheme(null, this.systemPrefersDark(), this.fallback);
+    this.set(target === unpinned ? 'system' : target);
   }
 
   /**
