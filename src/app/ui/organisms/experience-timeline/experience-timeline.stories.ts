@@ -1,4 +1,5 @@
-import { type Meta, type StoryObj } from '@storybook/angular-vite';
+import { provideRouter } from '@angular/router';
+import { applicationConfig, type Meta, type StoryObj } from '@storybook/angular-vite';
 import { expect, userEvent } from 'storybook/test';
 
 import { ExperienceTimeline, type TimelineEntry, type TimelineGlance } from './experience-timeline';
@@ -103,6 +104,7 @@ const GLANCE: TimelineGlance = {
 const meta: Meta<ExperienceTimeline> = {
   title: 'Organisms/ExperienceTimeline',
   component: ExperienceTimeline,
+  decorators: [applicationConfig({ providers: [provideRouter([])] })],
   parameters: { layout: 'padded' },
   args: { entries: ENTRIES, glance: GLANCE },
 };
