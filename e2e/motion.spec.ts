@@ -11,7 +11,8 @@ test('sections below the fold reveal as they scroll into view', async ({ page })
   await expect(contact).not.toHaveClass(/is-in/);
   await expect(contact).not.toHaveCSS('opacity', '1');
   await contact.scrollIntoViewIfNeeded();
-  await page.mouse.wheel(0, 2000); // to the foot of the page, past the reveal range
+  // To the foot of the page, past the reveal range (no mouse wheel on mobile WebKit).
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
   await expect(contact).toHaveCSS('opacity', '1');
 });
 
