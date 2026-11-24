@@ -53,11 +53,68 @@ export function decodeEntities(text: string): string {
   });
 }
 
+/** Elements whose text is never article prose. */
+const NOT_PROSE = 'script, style, noscript, template, iframe, object, svg';
+
+/**
+ * The Trusted Types policy for parsing feed HTML (listed in the CSP's `trusted-types`). It only
+ * feeds DOMParser, whose document is inert and is read for text and one image URL; nothing from
+ * it is ever put in the page, so it passes the string through.
+ */
+export const FEED_HTML_POLICY = 'fm-feed-html';
+
+interface HtmlPolicy {
+  createHTML(input: string): unknown;
+}
+interface TrustedTypesFactory {
+  createPolicy(name: string, rules: { createHTML(input: string): string }): HtmlPolicy;
+}
+
+/** null: no Trusted Types; false: the CSP refused the policy; else the policy (one per window). */
+const policies = new WeakMap<TrustedTypesFactory, HtmlPolicy | false>();
+
+function feedHtml(html: string): string | false {
+  const factory = (globalThis as { trustedTypes?: TrustedTypesFactory }).trustedTypes;
+  if (!factory) return html;
+  if (!policies.has(factory)) {
+    try {
+      policies.set(factory, factory.createPolicy(FEED_HTML_POLICY, { createHTML: (s) => s }));
+    } catch {
+      policies.set(factory, false);
+    }
+  }
+  const policy = policies.get(factory);
+  return policy ? (policy.createHTML(html) as string) : false;
+}
+
+/**
+ * The fragment as an inert document (ETE-270): the platform's HTML parser, so attributes that
+ * contain `>`, comments and odd quoting are read correctly, and nothing in it runs or loads.
+ * Null without DOMParser (or when Trusted Types refuses the parse); callers then fall back to
+ * string handling.
+ */
+function parseHtml(html: string): Document | null {
+  if (typeof DOMParser === 'undefined') return null;
+  const trusted = feedHtml(html);
+  if (trusted === false) return null;
+  let doc: Document;
+  try {
+    doc = new DOMParser().parseFromString(trusted, 'text/html');
+  } catch {
+    return null;
+  }
+  doc.querySelectorAll(NOT_PROSE).forEach((el) => el.remove());
+  return doc;
+}
+
+const collapse = (text: string): string => text.replace(/\s+/g, ' ').trim();
+
 /** Text of an HTML fragment: tags removed, entities decoded, whitespace collapsed. */
-export const htmlToText = (html: string): string =>
-  decodeEntities(html.replace(/<[^>]+>/g, ' '))
-    .replace(/\s+/g, ' ')
-    .trim();
+export function htmlToText(html: string): string {
+  const doc = parseHtml(html);
+  if (doc) return collapse(doc.body.textContent ?? '');
+  return collapse(decodeEntities(html.replace(/<[^>]+>/g, ' ')));
+}
 
 /** A tag's text, unwrapping CDATA; empty when the tag is missing. */
 function tagText(xml: string, tag: string): string {
@@ -91,7 +148,10 @@ export function postId(link: string): string {
 
 /** The first paragraph's text, cut at a word to at most `max` characters with an ellipsis. */
 export function excerptOf(html: string, max = EXCERPT_MAX): string {
-  const paragraphs = [...html.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/g)].map(([, p]) => htmlToText(p));
+  const doc = parseHtml(html);
+  const paragraphs = doc
+    ? [...doc.querySelectorAll('p')].map((p) => collapse(p.textContent ?? ''))
+    : [...html.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/g)].map(([, p]) => htmlToText(p));
   const text = paragraphs.find((p) => p.length > 0) ?? htmlToText(html);
   if (text.length <= max) return text;
   const cut = text.slice(0, max - 1);
@@ -103,9 +163,14 @@ export function excerptOf(html: string, max = EXCERPT_MAX): string {
 export const readingMinutesOf = (html: string): number =>
   Math.max(1, Math.ceil(htmlToText(html).split(' ').filter(Boolean).length / WORDS_PER_MINUTE));
 
-/** The first image in the content, the cover Medium shows. */
-export const coverUrlOf = (html: string): string | undefined =>
-  /<img[^>]+src="([^"]+)"/.exec(html)?.[1];
+/** The first image in the content, the cover Medium shows; only an https URL is used. */
+export function coverUrlOf(html: string): string | undefined {
+  const doc = parseHtml(html);
+  const src = doc
+    ? doc.querySelector('img[src]')?.getAttribute('src')
+    : /<img[^>]+src=["']([^"']+)["']/.exec(html)?.[1];
+  return src && /^https:\/\//i.test(src.trim()) ? src.trim() : undefined;
+}
 
 /** Tags as kebab-case slugs (Medium's categories already are), without repeats. */
 const toTags = (categories: string[]): string[] => [
