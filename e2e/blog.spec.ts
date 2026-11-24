@@ -78,9 +78,11 @@ test('when Medium is unreachable and nothing is cached, readers get a link to Me
 }) => {
   await mock(page, 503);
   await page.goto('/blog');
-  await expect(page.getByText("Articles couldn't load right now.")).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Medium' })).toHaveAttribute(
+  const alert = page.getByRole('alert');
+  await expect(alert).toContainText("Articles couldn't load right now.");
+  await expect(alert.getByRole('link', { name: /Medium/ })).toHaveAttribute(
     'href',
     'https://medium.com/@factman60',
   );
+  await expect(alert.getByRole('button', { name: /Try again/ })).toBeVisible();
 });

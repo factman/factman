@@ -1,0 +1,7 @@
+// The articles on the page's container and section rhythm.
+@use 'ui/layout';
+
+.blog-all {
+  @include layout.container;
+  @include layout.section-tight;
+}

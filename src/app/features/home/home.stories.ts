@@ -1,5 +1,8 @@
 import { provideRouter } from '@angular/router';
 import { applicationConfig, type Meta, type StoryObj } from '@storybook/angular-vite';
+import { SITE } from '@core/config';
+import { site } from '@data/site';
+import { resolveSite } from '@shared';
 import { expect } from 'storybook/test';
 
 import { Home } from './home';
@@ -9,7 +12,11 @@ const meta: Meta<Home> = {
   title: 'Pages/Home',
   component: Home,
   // The page links to other routes.
-  decorators: [applicationConfig({ providers: [provideRouter([])] })],
+  decorators: [
+    applicationConfig({
+      providers: [provideRouter([]), { provide: SITE, useValue: resolveSite(site, 'production') }],
+    }),
+  ],
 };
 export default meta;
 

@@ -1,6 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { ClientsRepository, ProjectsRepository, ServicesRepository } from '@core/data';
+import {
+  BlogRepository,
+  ClientsRepository,
+  ProjectsRepository,
+  ServicesRepository,
+} from '@core/data';
 import { contact } from '@data/contact';
 import { experience } from '@data/experience';
 import { heroCodeFile } from '@data/generated/hero-code';
@@ -8,10 +13,11 @@ import { profile } from '@data/profile';
 import { skills } from '@data/skills';
 import { ThemeService } from '@core/theme';
 import { CLOCK, countWord, portraitSources, SharedModule, yearsSince } from '@shared';
-import { IconRegistry, iconArrowRight, iconGithub } from '@ui/atoms';
+import { Button, IconRegistry, iconArrowRight, iconGithub } from '@ui/atoms';
 import { CodeEditor, SERVICE_ICONS } from '@ui/molecules';
 import {
   AboutSection,
+  BlogFeed,
   ClientLogoStrip,
   ExperienceTimeline,
   type HeroAction,
@@ -29,7 +35,15 @@ import { HOME_SECTIONS } from './home-sections';
 import { stackGroups } from './stack-groups';
 
 /** Sections this page renders itself; the rest are shells until their organisms are built. */
-const BUILT = new Set<string>(['about', 'resume', 'stack', 'experience', 'services', 'projects']);
+const BUILT = new Set<string>([
+  'about',
+  'resume',
+  'stack',
+  'experience',
+  'services',
+  'projects',
+  'blog',
+]);
 
 /** The networks the hero links to, in contact.json's order (ETeam has its own place). */
 const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
@@ -44,6 +58,8 @@ const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     AboutSection,
+    BlogFeed,
+    Button,
     ClientLogoStrip,
     CodeEditor,
     ExperienceTimeline,
@@ -105,8 +121,14 @@ export class Home {
       .map((l) => ({ label: 'GitHub profile', href: l.url, leadingIcon: iconGithub })),
   ];
 
+  /** Blog (FR-24): the newest three articles, read live from Medium after the page renders. */
+  protected readonly blog = inject(BlogRepository);
+  protected readonly blogTitle = `Lessons from ${yearsSince(profile.careerStart, this.now)} years of shipping software`;
+  protected readonly blogArrow = iconArrowRight;
+
   constructor() {
     inject(IconRegistry).register(SERVICE_ICONS);
+    afterNextRender(() => void this.blog.load());
   }
 
   /** A private project's "Request a walkthrough" goes to the contact section. */

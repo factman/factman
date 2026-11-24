@@ -1,0 +1,62 @@
+<div class="blog-feed">
+  @switch (status()) {
+    @case ('ready') {
+      @if (posts().length) {
+        @if (filterable() && tags().length > 2) {
+          <div class="blog-feed-filters">
+            <div class="blog-feed-tags" role="group" aria-label="Filter articles by tag">
+              @for (t of tags(); track t) {
+                <fm-chip size="sm" [selected]="tag() === t" [value]="t" (toggled)="tag.set(t)">{{
+                  t
+                }}</fm-chip>
+              }
+            </div>
+            <p class="blog-feed-count" aria-live="polite">{{ count() }}</p>
+          </div>
+        }
+        <ul class="blog-feed-list">
+          @for (post of shown(); track post.id) {
+            <li><fm-blog-post-card [post]="post" [headingLevel]="headingLevel()" /></li>
+          }
+        </ul>
+      } @else {
+        <p class="blog-feed-note">
+          No articles yet. New posts publish on
+          <a [href]="profileUrl()" target="_blank" rel="noopener noreferrer"
+            >Medium<span class="fm-sr"> (opens in a new tab)</span></a
+          >.
+        </p>
+      }
+    }
+    @case ('error') {
+      <div class="blog-feed-note" role="alert">
+        <p>
+          Articles couldn't load right now. Read them on
+          <a [href]="profileUrl()" target="_blank" rel="noopener noreferrer"
+            >Medium<span class="fm-sr"> (opens in a new tab)</span></a
+          >.
+        </p>
+        <fm-button variant="secondary" size="sm" [leadingIcon]="refresh" (pressed)="retry.emit()"
+          >Try again</fm-button
+        >
+      </div>
+    }
+    @default {
+      <p class="blog-feed-note" aria-live="polite">
+        Loading articles from
+        <a [href]="profileUrl()" target="_blank" rel="noopener noreferrer"
+          >Medium<span class="fm-sr"> (opens in a new tab)</span></a
+        >…
+      </p>
+      <ul class="blog-feed-list" aria-hidden="true">
+        @for (n of placeholders; track n) {
+          <li class="blog-feed-placeholder">
+            <fm-skeleton shape="rect" height="180px" />
+            <fm-skeleton width="80%" />
+            <fm-skeleton width="60%" />
+          </li>
+        }
+      </ul>
+    }
+  }
+</div>
