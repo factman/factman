@@ -5,6 +5,8 @@ import { Meta, Title } from '@angular/platform-browser';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { CoreModule } from '@core';
+import { projects } from '@data/projects';
+import { services } from '@data/services';
 
 import { routes } from './app.routes';
 
@@ -41,6 +43,14 @@ describe('routes (PRD §4 site map)', () => {
     ['/projects/no-such-project', 'command not found', 'Page not found · Odunayo Mohammed'],
   ])('%s renders "%s"', async (url, h1, title) => {
     expect(await visit(url)).toEqual({ h1, title });
+  });
+
+  // ETE-115: every detail page in the data, not just one sample each.
+  it.each([
+    ...services.map((s) => [`/services/${s.slug}`, s.title] as const),
+    ...projects.map((p) => [`/projects/${p.slug}`, p.title] as const),
+  ])('%s renders its own title', async (url, name) => {
+    expect(await visit(url)).toEqual({ h1: name, title: `${name} · Odunayo Mohammed` });
   });
 
   /** The head SeoService wrote for `url`. */
