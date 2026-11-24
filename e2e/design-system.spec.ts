@@ -45,8 +45,9 @@ test.describe('design system', () => {
     // global.css: backdrop, icons and shared tones and glass
     expect(selectors.some((s) => s.includes('.fm-backdrop'))).toBe(true);
     expect(selectors.some((s) => s.includes('.fm-glass'))).toBe(true);
-    // per-component sections are not shipped to a page that doesn't render them
-    expect(selectors.some((s) => s.includes('.fm-btn'))).toBe(false);
+    // per-component sections ship with the components a page renders: the hero's buttons
+    // (ETE-89), but not the scheduler's calendar
+    expect(selectors.some((s) => s.includes('.fm-btn'))).toBe(true);
     expect(selectors.some((s) => s.includes('.fm-cal'))).toBe(false);
   });
 });

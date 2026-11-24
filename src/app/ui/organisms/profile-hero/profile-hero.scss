@@ -1,0 +1,169 @@
+// The canvas's HeroSection: the copy beside the portrait (with the code editor overlapping its foot)
+// from 1024px, stacked below (docs/interaction-and-motion.md, splits). The portrait fades out at
+// the bottom into the editor, as in the design.
+@use 'ui/layout';
+
+.profile-hero {
+  padding-block: var(--gap-4xl) var(--gap-5xl);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.profile-hero-grid {
+  @include layout.container;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--gap-5xl);
+  align-items: center;
+
+  @media (width >= 1024px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.profile-hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-xl);
+}
+
+.profile-hero-intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+// The design system's eyebrow (.fm-eyebrow), copied with our own class name (as SectionHeader does).
+.profile-hero-eyebrow {
+  margin: 0;
+  font: 500 12px/16px var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-default);
+}
+
+.profile-hero-title {
+  margin: 0;
+  font: 800 64px/1.05 var(--font-sans);
+  letter-spacing: -0.02em;
+
+  @media (width < 1280px) {
+    font: 800 56px/1.05 var(--font-sans);
+  }
+
+  @media (width < 768px) {
+    font: 800 40px/1.05 var(--font-sans);
+  }
+}
+
+// One line, always: the words change length as they are typed, and the line must not grow or
+// shrink with them (no layout shift).
+.profile-hero-roles {
+  margin: 0;
+  min-height: 1.5em;
+  overflow: hidden;
+  font: 600 20px/1.5 var(--font-mono);
+  white-space: nowrap;
+  color: var(--accent-default);
+
+  @media (width < 768px) {
+    font: 600 16px/1.5 var(--font-mono);
+  }
+}
+
+.profile-hero-lead {
+  margin: 0;
+  max-width: 560px;
+  font: 400 20px/1.6 var(--font-sans);
+  color: var(--text-secondary);
+
+  @media (width < 768px) {
+    font: 400 16px/1.6 var(--font-sans);
+  }
+}
+
+.profile-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs) var(--gap-xl);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: 500 12px/16px var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-2xs);
+  }
+}
+
+.profile-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+}
+
+.profile-hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-3xl);
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: var(--padding-xl);
+  border-top: var(--border-width-sm) solid var(--glass-stroke);
+}
+
+.profile-hero-media {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-hero-photo {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 440px);
+  margin: 0 0 calc(var(--gap-5xl) * -1.75);
+  pointer-events: none;
+
+  @media (width < 1024px) {
+    width: min(100%, 360px);
+    margin-bottom: calc(var(--gap-5xl) * -1.25);
+  }
+
+  @media (width < 768px) {
+    width: min(80%, 300px);
+    margin-bottom: calc(var(--gap-5xl) * -1);
+  }
+}
+
+.profile-hero-portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  object-position: center bottom;
+  mask-image: linear-gradient(
+    to bottom,
+    var(--neutral-1000) 0%,
+    var(--neutral-1000) 58%,
+    transparent 92%
+  );
+}
+
+.profile-hero-editor {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+
+  &:empty {
+    display: none;
+  }
+}
