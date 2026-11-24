@@ -5,10 +5,13 @@ test('sections below the fold reveal as they scroll into view', async ({ page })
   await page.setViewportSize({ width: 1280, height: 500 });
   await page.goto('/');
   const contact = page.locator('#contact .section-layout-body');
-  await expect(contact).toHaveClass(/fm-reveal/);
+  // Scroll-driven where the browser has view timelines (.fm-reveal-scroll, ETE-269), else the
+  // IntersectionObserver path (.fm-reveal, then .is-in).
+  await expect(contact).toHaveClass(/fm-reveal(-scroll)?\b/);
   await expect(contact).not.toHaveClass(/is-in/);
+  await expect(contact).not.toHaveCSS('opacity', '1');
   await contact.scrollIntoViewIfNeeded();
-  await expect(contact).toHaveClass(/is-in/);
+  await page.mouse.wheel(0, 2000); // to the foot of the page, past the reveal range
   await expect(contact).toHaveCSS('opacity', '1');
 });
 
