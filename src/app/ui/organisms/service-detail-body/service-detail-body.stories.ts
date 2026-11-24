@@ -1,4 +1,5 @@
-import { type Meta, type StoryObj } from '@storybook/angular-vite';
+import { provideRouter } from '@angular/router';
+import { applicationConfig, type Meta, type StoryObj } from '@storybook/angular-vite';
 import { expect } from 'storybook/test';
 
 import { type DetailService, ServiceDetailBody } from './service-detail-body';
@@ -50,6 +51,7 @@ const SERVICE: DetailService = {
 const meta: Meta<ServiceDetailBody> = {
   title: 'Organisms/ServiceDetailBody',
   component: ServiceDetailBody,
+  decorators: [applicationConfig({ providers: [provideRouter([])] })],
   parameters: { layout: 'padded' },
   args: {
     service: SERVICE,
