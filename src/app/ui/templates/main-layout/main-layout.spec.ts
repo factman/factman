@@ -1,14 +1,13 @@
-import { render, screen } from '@testing-library/angular';
-import userEvent from '@testing-library/user-event';
+import { render } from '@testing-library/angular';
 
 import { MainLayout } from './main-layout';
 
 describe('MainLayout', () => {
-  it('puts the skip link first, then header, main, footer and overlays in order', async () => {
+  it('puts the header, the page, the footer and the overlays in order', async () => {
     const { container } = await render(
       `<fm-main-layout>
          <header layoutHeader>Header</header>
-         <h1>Page</h1>
+         <main id="main" tabindex="-1"><h1>Page</h1></main>
          <footer layoutFooter>Footer</footer>
          <div layoutOverlays>Consent</div>
        </fm-main-layout>`,
@@ -17,19 +16,14 @@ describe('MainLayout', () => {
     const order = [...container.querySelectorAll('.site > *')].map((el) =>
       el.tagName.toLowerCase(),
     );
-    expect(order).toEqual(['a', 'header', 'main', 'footer', 'div']);
-    const main = screen.getByRole('main');
-    expect(main.id).toBe('main');
-    expect(main.getAttribute('tabindex')).toBe('-1');
-    expect(main.textContent).toContain('Page');
+    expect(order).toEqual(['header', 'div', 'footer', 'div']);
+    expect(container.querySelector('.site-main > main h1')?.textContent).toBe('Page');
   });
 
-  it('moves focus to main from the skip link without changing the URL', async () => {
-    await render(`<fm-main-layout><p>Page</p></fm-main-layout>`, { imports: [MainLayout] });
-    const before = location.href;
-    Element.prototype.scrollIntoView = vi.fn();
-    await userEvent.click(screen.getByRole('link', { name: 'Skip to content' }));
-    expect(document.activeElement).toBe(screen.getByRole('main'));
-    expect(location.href).toBe(before);
+  it('adds no skip link or main landmark of its own: the app shell owns them (ETE-262)', async () => {
+    const { container } = await render(`<fm-main-layout><p>Page</p></fm-main-layout>`, {
+      imports: [MainLayout],
+    });
+    expect(container.querySelector('main, [role="main"], .skip-link, #main')).toBeNull();
   });
 });

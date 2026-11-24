@@ -1,21 +1,18 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DOCUMENT,
-  ViewEncapsulation,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 /**
- * The page frame every route uses (canvas TemplateMain): a skip link first, then the header,
- * `<main id="main">` with the page, the footer, and fixed layers (the consent banner, the
- * scheduler and résumé dialogs). The header, footer and layers are projected, so the template
- * holds no organisms itself:
+ * The page frame (canvas TemplateMain): the header, the page, the footer, and fixed layers (the
+ * consent banner, the scheduler and résumé dialogs). Everything is projected, so the template
+ * holds no organisms itself.
+ *
+ * It has no skip link and no `<main>` of its own: the app shell (`app.html`) owns the page's one
+ * skip link and `<main id="main">`, which takes focus after every navigation. Project that
+ * `<main>` as the content, so a page never has two (ETE-262):
  *
  * ```html
  * <fm-main-layout>
  *   <fm-site-header layoutHeader />
- *   …page content…
+ *   <main id="main" tabindex="-1"><router-outlet /></main>
  *   <fm-site-footer layoutFooter />
  *   <fm-cookie-consent layoutOverlays />
  * </fm-main-layout>
@@ -32,17 +29,4 @@ import {
   host: { style: 'display: contents' },
   templateUrl: './main-layout.html',
 })
-export class MainLayout {
-  private readonly document = inject(DOCUMENT);
-
-  /**
-   * The skip link's `href="#main"` would resolve against `<base href="/">` and leave the page,
-   * so it focuses `<main>` itself and keeps the URL as it is.
-   */
-  protected skipToMain(event: Event): void {
-    event.preventDefault();
-    const main = this.document.getElementById('main');
-    main?.focus();
-    main?.scrollIntoView();
-  }
-}
+export class MainLayout {}

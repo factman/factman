@@ -131,7 +131,7 @@ Section names follow the canvas titles, which are the PRD names (the artboard fi
 
 | Artboard        | Angular component | Selector            | Inputs                                                                                                                                                                                             | Outputs | Issue  |
 | --------------- | ----------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------ |
-| TemplateMain    | `MainLayout`      | `fm-main-layout`    | slots: `[layoutHeader]`, main (default), `[layoutFooter]`, `[layoutOverlays]`; the header gets the current nav item itself                                                                         |         | ETE-79 |
+| TemplateMain    | `MainLayout`      | `fm-main-layout`    | slots: `[layoutHeader]`, content (default: the app shell's `<main>`), `[layoutFooter]`, `[layoutOverlays]`; no skip link or `<main>` of its own (ETE-262)                                          |         | ETE-79 |
 | (every section) | `SectionLayout`   | `fm-section-layout` | `sectionId` (anchor and scroll-spy key; not `id`, which would repeat on the host), `index`, `eyebrow`, `title`, `description`, `level`, `align`, `tight`; slots: `[sectionAction]`, body (default) |         | ETE-80 |
 | TemplateDetail  | `DetailLayout`    | `fm-detail-layout`  | `crumbs`; slots: `[detailHero]`, `[detailGallery]`, `[detailBody]`, `[detailAside]` (sticky), `[detailCta]`, `[detailRelated]` (empty slots collapse)                                              |         | ETE-81 |
 
