@@ -39,6 +39,11 @@ export class Dialog {
   readonly label = input.required<string>();
   readonly description = input<string>();
   readonly size = input<'sm' | 'md' | 'lg'>('md');
+  /**
+   * Bare: no title bar, body or footer of its own; the content projected with `[dialogBare]`
+   * fills the panel (a window-framed viewer, ResumePreviewModal). `label` names the dialog.
+   */
+  readonly bare = input(false);
 
   readonly closed = output<void>();
 

@@ -24,3 +24,9 @@
 .home-deferred {
   min-block-size: 50vh;
 }
+
+// The résumé block under About's two columns (the canvas's #resume).
+.home-resume {
+  margin-top: calc(var(--gap-5xl) * 1.25);
+  scroll-margin-top: var(--navbar-height, 0);
+}

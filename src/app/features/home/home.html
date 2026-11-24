@@ -5,7 +5,7 @@
   [stats]="stats"
   [timezone]="timezone"
   [terminal]="terminalEnabled"
-  (openResume)="openResume()"
+  (openResume)="openResume($event)"
   (openTerminal)="terminal.show()"
 >
   <fm-code-editor heroEditor [files]="editorFiles" [glow]="true" [decorative]="true" />
@@ -24,9 +24,13 @@
     [facts]="aboutFacts"
     [theme]="theme()"
   >
-    <!-- The résumé block (ResumeSection, ETE-109) goes here, as #resume inside About. -->
+    <!-- The résumé block, as #resume inside About (FR-43). -->
     <div id="resume" class="home-resume" tabindex="-1">
-      <h3>Résumé</h3>
+      <fm-resume-section
+        [resumes]="resumes"
+        (preview)="openResume($event)"
+        (download)="downloadResume($event)"
+      />
     </div>
   </fm-about-section>
 </fm-section-layout>
@@ -135,3 +139,11 @@
     <div class="home-deferred" aria-hidden="true"></div>
   }
 </fm-section-layout>
+<fm-resume-preview-modal
+  [open]="resumeOpen()"
+  [resumes]="resumes"
+  [variant]="resumeVariant()"
+  (variantChange)="resumeVariant.set($event)"
+  (closed)="resumeOpen.set(false)"
+  (download)="downloadResume($event)"
+/>

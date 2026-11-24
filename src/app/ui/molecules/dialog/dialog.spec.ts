@@ -31,4 +31,19 @@ describe('Dialog', () => {
     expect(document.documentElement.classList).not.toContain('dialog-scroll-lock');
     expect(document.activeElement).toBe(opener);
   });
+
+  it('bare: shows only the projected panel, named by its label', async () => {
+    await render(
+      `<fm-dialog [open]="true" [bare]="true" label="Fullstack résumé preview">
+         <div dialogBare><p>Window</p></div><p>Not shown</p>
+       </fm-dialog>`,
+      { imports: [Dialog] },
+    );
+    const dialog = screen.getByRole('dialog', { name: 'Fullstack résumé preview' });
+    expect(dialog.classList).toContain('is-bare');
+    expect(dialog.textContent).toContain('Window');
+    expect(dialog.textContent).not.toContain('Not shown');
+    expect(screen.queryByRole('button', { name: 'Close' })).toBeNull();
+    expect(dialog.querySelector('h2')).toBeNull();
+  });
 });

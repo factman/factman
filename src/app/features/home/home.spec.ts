@@ -1,5 +1,6 @@
 import { DeferBlockState } from '@angular/core/testing';
 import { render, type RenderComponentOptions, screen } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
 
 import { SITE } from '@core/config';
 import { ClientsRepository } from '@core/data';
@@ -181,5 +182,37 @@ describe('Home assembly (ETE-114)', () => {
     const about = container.querySelector('section#about')!;
     expect(hero.compareDocumentPosition(strip) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(strip.compareDocumentPosition(about) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+});
+
+describe('Home résumés (FR-43 to FR-47)', () => {
+  it('has a card per committed résumé inside #about, at #resume', async () => {
+    const { container } = await renderHome();
+    const { resumeDownloads } = await import('@data/resume-downloads');
+    const block = container.querySelector('section#about #resume')!;
+    expect(block.querySelectorAll('fm-resume-card')).toHaveLength(resumeDownloads.length);
+    expect(resumeDownloads.length).toBe(3);
+  });
+
+  it('opens the preview from a card, and the hero opens the fullstack résumé', async () => {
+    await renderHome();
+    await userEvent.click(screen.getByRole('button', { name: 'Preview Mobile Developer résumé' }));
+    expect(screen.getByRole('dialog', { name: 'Mobile Developer résumé preview' })).toBeTruthy();
+    expect(screen.getByRole('tab', { name: /Mobile Developer/, selected: true })).toBeTruthy();
+  });
+
+  it('downloads under the manifest file name', async () => {
+    await renderHome();
+    const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (
+      this: HTMLAnchorElement,
+    ) {
+      expect(this.getAttribute('href')).toBe('/resumes/odunayo-mohammed-devops.pdf');
+      expect(this.download).toBe('odunayo-mohammed-devops.pdf');
+    });
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Download DevOps / Cloud Engineer résumé (PDF)' }),
+    );
+    expect(click).toHaveBeenCalledOnce();
+    click.mockRestore();
   });
 });

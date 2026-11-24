@@ -49,4 +49,21 @@ test.describe('home', () => {
     await expect(form.getByText('Enter your name')).toBeVisible();
     expect(errors).toEqual([]);
   });
+
+  test("a #resume=<slug> link opens that résumé's preview; Escape closes it (FR-47)", async ({
+    page,
+  }) => {
+    await page.goto('/#resume=devops');
+    const dialog = page.getByRole('dialog', { name: 'DevOps / Cloud Engineer résumé preview' });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole('img', { name: /Page 1 of 2 of the DevOps/ })).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(dialog).toBeHidden();
+  });
+
+  test('the résumé PDFs are served', async ({ request }) => {
+    const res = await request.get('/resumes/odunayo-mohammed-fullstack.pdf');
+    expect(res.status()).toBe(200);
+    expect((await res.body()).subarray(0, 5).toString()).toBe('%PDF-');
+  });
 });

@@ -28,7 +28,7 @@ export { formatPhone, maskPhone } from './phone-reveal/phone';
 export { PhoneReveal } from './phone-reveal/phone-reveal';
 export { type FramedImage, PhotoFrame } from './photo-frame/photo-frame';
 export { ProjectCard } from './project-card/project-card';
-export { ResumeCard, type ResumeSummary } from './resume-card/resume-card';
+export { RESUME_ICONS, ResumeCard, type ResumeSummary } from './resume-card/resume-card';
 export { ScheduleCallButton } from './schedule-call-button/schedule-call-button';
 export { SectionHeader } from './section-header/section-header';
 export { SelectableCard } from './selectable-card/selectable-card';
