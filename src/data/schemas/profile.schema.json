@@ -226,7 +226,7 @@
         "src": {
           "type": "string",
           "pattern": "^profile/[a-z0-9-]+\\.(webp|jpe?g|png|avif)$",
-          "description": "Under src/assets (DS-17: must exist)."
+          "description": "Under src/assets (DS-17: it and its AVIF and WebP exports from pnpm ds:portraits must exist)."
         },
         "alt": {
           "type": "string",
