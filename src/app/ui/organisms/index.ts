@@ -13,6 +13,7 @@ export { type FaqItem, faqId, FaqSection } from './faq-section/faq-section';
 export { NotFoundSection, type NotFoundSuggestion } from './not-found-section/not-found-section';
 export { type HeroAction, type HeroMedia, type HeroTag, PageHero } from './page-hero/page-hero';
 export { ProcessSection } from './process-section/process-section';
+export { type NextProject, ProjectCaseStudy } from './project-case-study/project-case-study';
 export {
   filterProjects,
   fromQueryParams,

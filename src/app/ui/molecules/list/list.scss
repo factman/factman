@@ -29,3 +29,9 @@
 .fm-list .list-row {
   color: var(--text-primary);
 }
+
+// An inset list stacks a second glass layer, so in the dark theme its values (secondary text)
+// drop to about 4.4:1 on a glass card; they use the primary text colour there.
+:root[data-theme='dark'] .list-inset .list-value {
+  color: var(--text-primary);
+}
