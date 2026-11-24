@@ -35,6 +35,9 @@
       "executor": "nx:run-commands",
       "dependsOn": ["data:validate", "data:types"],
       "inputs": [
+        "{projectRoot}/scripts/resume/**/*",
+        "{projectRoot}/public/resumes/**/*",
+        { "env": "VERCEL_ENV" },
         "production",
         {
           "dependentTasksOutputFiles": "**/*"
@@ -44,7 +47,7 @@
       ],
       "outputs": ["{projectRoot}/dist/factman"],
       "options": {
-        "command": "ng build && node tools/build/not-found-page.mjs && BUILD_VARIANT=production node tools/build/seo-files.mjs"
+        "command": "tsx scripts/resume/check-resumes.ts && ng build && node tools/build/not-found-page.mjs && BUILD_VARIANT=production node tools/build/seo-files.mjs"
       }
     },
     "build-preview": {
@@ -52,6 +55,9 @@
       "cache": true,
       "dependsOn": ["data:validate", "data:types", "build-storybook"],
       "inputs": [
+        "{projectRoot}/scripts/resume/**/*",
+        "{projectRoot}/public/resumes/**/*",
+        { "env": "VERCEL_ENV" },
         "production",
         {
           "dependentTasksOutputFiles": "**/*"
@@ -62,7 +68,7 @@
       ],
       "outputs": ["{projectRoot}/dist/factman"],
       "options": {
-        "command": "ng build --configuration production,preview && node tools/build/not-found-page.mjs && BUILD_VARIANT=preview node tools/build/seo-files.mjs && node tools/build/add-storybook.mjs"
+        "command": "tsx scripts/resume/check-resumes.ts && ng build --configuration production,preview && node tools/build/not-found-page.mjs && BUILD_VARIANT=preview node tools/build/seo-files.mjs && node tools/build/add-storybook.mjs"
       }
     },
     "watch": {
@@ -268,6 +274,12 @@
       "command": "playwright test -c playwright.vr.config.ts --update-snapshots",
       "dependsOn": ["build-preview"],
       "cache": false
+    },
+    "build:resumes": {
+      "command": "tsx scripts/resume/build-resumes.ts"
+    },
+    "resume:check": {
+      "command": "tsx scripts/resume/check-resumes.ts"
     },
     "resume:html": {
       "executor": "nx:run-commands",

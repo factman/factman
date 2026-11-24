@@ -42,6 +42,8 @@ export {
   type ProfileHeroProfile,
   type ProfileHeroStats,
 } from './profile-hero/profile-hero';
+export { ResumePreviewModal } from './resume-preview-modal/resume-preview-modal';
+export { ResumeSection } from './resume-section/resume-section';
 export { SchedulerModal } from './scheduler-modal/scheduler-modal';
 export {
   type DetailService,

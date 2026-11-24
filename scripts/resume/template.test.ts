@@ -4,7 +4,17 @@ import { describe, test } from 'node:test';
 import { buildResumeViewModel, resumeIds } from '../../src/app/shared/resume/resume-view-model';
 
 import { loadResumeSources } from './sources';
-import { escapeHtml, HEADINGS, RESUME_CSS, renderResume, rich } from './template';
+import { fontFile, RESUME_FONTS, resumeFontCss } from './fonts';
+import {
+  cssString,
+  escapeHtml,
+  HEADINGS,
+  pageCss,
+  RESUME_CSS,
+  renderResume,
+  rich,
+} from './template';
+import { existsSync } from 'node:fs';
 
 // A fixed clock: the snapshots are the same on any day.
 const NOW = new Date('2026-11-10T12:00:00Z');
@@ -71,7 +81,7 @@ describe('the résumé stylesheet', () => {
   const css = RESUME_CSS.replace(/\s+/g, ' ');
 
   test('is A4 with 15 / 17 / 16 mm margins, and drops the placeholder highlight in print', () => {
-    assert.match(css, /@page \{ size: a4; margin: 15mm 17mm 16mm; \}/i);
+    assert.match(css, /@page \{ size: a4; margin: 15mm 17mm 16mm;/i);
     assert.match(css, /@media print \{.*\.cv-ph \{ padding: 0; background: none;/);
   });
 
@@ -84,5 +94,54 @@ describe('the résumé stylesheet', () => {
   test('uses Carlito for text and Caladea for headings, with fallbacks', () => {
     assert.match(css, /['"]?Carlito['"]?,\s*['"]?Calibri['"]?/);
     assert.match(css, /['"]?Caladea['"]?,\s*['"]?Cambria['"]?/);
+  });
+});
+
+describe('the print page boxes (FR-40)', () => {
+  const vm = buildResumeViewModel(resumeIds(sources.resumes)[0], sources, NOW);
+  const css = RESUME_CSS.replace(/\s+/g, ' ');
+
+  test('number every page "Page x of y" at the bottom right', () => {
+    assert.match(css, /@bottom-right \{ content: 'Page ' counter\(page\) ' of ' counter\(pages\);/);
+  });
+
+  test('put the footer on every page and the running header from page 2', () => {
+    const page = pageCss(vm);
+    assert.ok(page.includes(`@bottom-left{content:${cssString(vm.footer)}}`), page);
+    assert.ok(
+      page.includes(`@top-left{content:${cssString(`${vm.header.name} · ${vm.title} résumé`)}}`),
+    );
+    assert.ok(page.endsWith('@page:first{@top-left{content:none}}'));
+    assert.ok(renderResume(vm).includes(page));
+  });
+
+  test('escape quotes, backslashes and line breaks in the page text', () => {
+    assert.equal(cssString('a "b" \\ c\nd'), '"a \\"b\\" \\\\ c\\a d"');
+  });
+});
+
+describe('the résumé fonts (ETE-223)', () => {
+  test('every face is in its package, for both subsets', () => {
+    for (const { family, pkg, faces } of RESUME_FONTS) {
+      for (const face of faces) {
+        for (const subset of ['latin', 'latin-ext']) {
+          assert.ok(existsSync(fontFile(pkg, family, subset, face)), `${family} ${subset} ${face}`);
+        }
+      }
+    }
+  });
+
+  test('inlines each face as a woff2 @font-face, so nothing is fetched', () => {
+    const css = resumeFontCss(() => Buffer.from('woff2'));
+    const faces = css.split('\n');
+    assert.equal(faces.length, 10); // Carlito 4 faces and Caladea 1, in latin and latin-ext
+    for (const face of faces) {
+      assert.match(face, /^@font-face\{font-family:(Carlito|Caladea);/);
+      assert.ok(
+        face.includes(`src:url(data:font/woff2;base64,${Buffer.from('woff2').toString('base64')})`),
+      );
+    }
+    assert.ok(css.includes('font-family:Caladea;font-style:normal;font-weight:700'));
+    assert.ok(css.includes('font-family:Carlito;font-style:italic;font-weight:700'));
   });
 });

@@ -1,0 +1,91 @@
+// The canvas's ResumeModal: a code window as tall as the viewport allows, the page on a sunken
+// stage, the pager and the actions in the window's chrome colour.
+.resume-modal {
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
+}
+
+// Real tabs (the design system's are display-only labels): the inactive ones need text contrast.
+.resume-modal-tabs .fm-etab {
+  display: inline-flex;
+  gap: var(--gap-2xs);
+  align-items: center;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.resume-modal-tabs .fm-etab:not(.is-active) {
+  color: var(--text-secondary);
+}
+
+.resume-modal-body {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  max-height: calc(100dvh - 220px);
+  padding: var(--padding-xl);
+  overflow: auto;
+  background: var(--bg-sunken);
+}
+
+.resume-modal-page {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-window);
+}
+
+// While the image loads it takes no room; the skeleton page shows instead.
+.resume-modal-page.is-loading {
+  position: absolute;
+  opacity: 0;
+}
+
+.resume-modal-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 1 / 1.414;
+  padding: var(--padding-3xl);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+}
+
+.resume-modal-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  align-items: center;
+  padding: var(--padding-md) var(--padding-lg);
+  border-top: var(--border-width-sm) solid var(--code-border);
+  background: var(--code-chrome);
+}
+
+.resume-modal-pager {
+  display: flex;
+  gap: var(--gap-2xs);
+  align-items: center;
+}
+
+.resume-modal-meta {
+  font: 500 12px/18px var(--font-mono);
+  color: var(--code-fg);
+}
+
+.resume-modal-meta.is-faint {
+  color: var(--text-secondary);
+}
+
+.resume-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+  margin-left: auto;
+}

@@ -2,10 +2,46 @@
    A4, 15 / 17 / 16 mm margins. Carlito (metric-compatible with Calibri) for text, Caladea
    (metric-compatible with Cambria) for headings; both self-hosted, with system fallbacks.
    Fixed colours: a résumé always prints light. One column of real text, so it extracts in reading
-   order. The PDF build (ETE-108) adds the running header and "Page x of y" footer from page 2. */
+   order. In print, the page boxes carry the footer (name, role, "Page x of y") on every page and
+   the running header from page 2; the template writes their text (pageCss in template.ts). */
 @page {
   size: a4;
   margin: 15mm 17mm 16mm;
+
+  @top-left {
+    vertical-align: middle;
+    font:
+      400 8pt/1 Carlito,
+      Calibri,
+      sans-serif;
+    color: #64768f;
+  }
+
+  @bottom-left {
+    vertical-align: middle;
+    font:
+      400 8pt/1 Carlito,
+      Calibri,
+      sans-serif;
+    color: #64768f;
+  }
+
+  @bottom-right {
+    content: 'Page ' counter(page) ' of ' counter(pages);
+    vertical-align: middle;
+    font:
+      400 8pt/1 Carlito,
+      Calibri,
+      sans-serif;
+    color: #64768f;
+  }
+}
+
+/* The first page opens with the name in full; the running header starts on page 2. */
+@page :first {
+  @top-left {
+    content: none;
+  }
 }
 
 :root {
@@ -326,6 +362,11 @@ body {
   color: #784708;
   font-weight: 700;
   white-space: nowrap;
+}
+
+/* "Experience, continued" (pnpm build:resumes): starts the page an Experience section runs onto. */
+.cv-continued {
+  break-before: page;
 }
 
 @media print {

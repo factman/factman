@@ -41,4 +41,15 @@ describe('parseHref', () => {
       opensNewTab: false,
     });
   });
+
+  it('treats a file this site serves as a plain link, not a route', () => {
+    expect(parseHref('/resumes/odunayo-mohammed-fullstack.pdf')).toEqual({
+      kind: 'external',
+      url: '/resumes/odunayo-mohammed-fullstack.pdf',
+      opensNewTab: false,
+    });
+    expect(parseHref('/sitemap.xml?x=1').kind).toBe('external');
+    expect(parseHref('/services/devops').kind).toBe('router');
+    expect(parseHref('/projects/graph.ui').kind).toBe('external');
+  });
 });

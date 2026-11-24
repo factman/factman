@@ -18,6 +18,15 @@ dialog.dialog::backdrop {
   backdrop-filter: blur(4px);
 }
 
+// Bare: the projected window is the panel, so the modal's own glass, border and width go.
+dialog.dialog.is-bare {
+  width: min(1040px, calc(100vw - 2 * var(--padding-md)));
+  border: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
 // The panel fills the dialog, so a click on the dialog element itself is a click on the backdrop
 // only when the panel is smaller; the panel catches every click inside.
 .dialog .dialog-panel {

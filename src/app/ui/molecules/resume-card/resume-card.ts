@@ -7,7 +7,20 @@ import {
 } from '@angular/core';
 
 import type { Resume } from '@shared';
-import { Button, Icon, Image, iconDownload, iconEye } from '@ui/atoms';
+import {
+  Button,
+  Icon,
+  type IconDef,
+  Image,
+  iconCloud,
+  iconDownload,
+  iconEye,
+  iconLayout,
+  iconMobile,
+} from '@ui/atoms';
+
+/** The icons resumes.json chooses from (`icon`); a page showing résumé cards registers them. */
+export const RESUME_ICONS: readonly IconDef[] = [iconLayout, iconMobile, iconCloud];
 
 export type ResumeSummary = Pick<Resume, 'slug' | 'title' | 'scope' | 'icon' | 'fileName'>;
 
