@@ -9,3 +9,9 @@
 .fm-acc .acc-item {
   transition: none;
 }
+
+// A closed answer is hidden="until-found" (content-visibility, not display: none), so its box
+// still renders: drop the bottom padding so a closed item looks as before (ETE-255).
+.accordion .acc-body[hidden] {
+  padding-block-end: 0;
+}

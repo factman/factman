@@ -18,7 +18,9 @@ export interface AccordionItem {
 
 /**
  * Questions and answers (the FAQ): each title is a button with `aria-expanded` that shows or
- * hides its answer, a region named by the title. One open at a time unless `multiple`.
+ * hides its answer. One open at a time unless `multiple`. A closed answer is
+ * `hidden="until-found"`, so the browser's find-in-page reaches it and opens it; answers aren't
+ * landmark regions, which would add one per question to the landmarks list (ETE-255).
  * `expanded` sets which are open; `expandedChange` reports the open ids.
  * @level molecule
  */
@@ -44,6 +46,11 @@ export class Accordion {
   protected readonly chevron = iconChevronDown;
   protected readonly prefix = fieldId('fm-accordion');
   protected readonly open = linkedSignal(() => [...this.expanded()]);
+
+  /** Find-in-page matched text in a closed answer: open it (and close the others, unless multiple). */
+  protected reveal(id: string): void {
+    if (!this.open().includes(id)) this.toggle(id);
+  }
 
   protected toggle(id: string): void {
     const isOpen = this.open().includes(id);
