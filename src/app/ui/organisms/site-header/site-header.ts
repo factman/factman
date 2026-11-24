@@ -46,8 +46,10 @@ const DESKTOP_QUERY = '(min-width: 1024px)';
 /**
  * The site header (FR-02, FR-03): a fixed glass bar with the logo (back to the top), the primary
  * navigation from site.json, the Résumé button, the theme toggle and "Book a service". Below
- * 1024px the links and buttons move into a menu panel: focus moves into it on open and stays
- * between the menu button and the panel, Escape closes it and returns focus to the button.
+ * 1024px the links and buttons move into a menu panel right after the menu button: focus moves
+ * into it on open, Tab carries on through it to the page (no focus trap: it isn't modal, ETE-257),
+ * and it closes when focus or a click leaves the header. Escape closes it and returns focus to
+ * the button.
  *
  * On the home page links jump to sections (`/#about`) and the section in view is highlighted
  * (scroll-spy, FR-37); elsewhere links open their page (`/services`) or the home section.
@@ -116,12 +118,14 @@ export class SiteHeader {
     };
     media?.addEventListener?.('change', onChange);
     inject(DestroyRef).onDestroy(() => media?.removeEventListener?.('change', onChange));
-    // Keyboard and link handling for the whole header, attached once rather than as template
-    // bindings on non-interactive elements: Escape and Tab while the panel is open, and closing
-    // the panel when one of its links is followed (by mouse or keyboard, both fire `click`).
+    // Keyboard, focus and link handling for the whole header, attached once rather than as
+    // template bindings on non-interactive elements: Escape while the panel is open, closing it
+    // when focus leaves the header, and when one of its links is followed (by mouse or keyboard,
+    // both fire `click`).
     afterNextRender(() => {
       const root = this.root().nativeElement;
       root.addEventListener('keydown', (e) => this.keydown(e));
+      root.addEventListener('focusout', (e) => this.focusOut(e, root));
       root.addEventListener('click', (e) => this.panelClick(e));
     });
   }
@@ -168,30 +172,18 @@ export class SiteHeader {
     if (panel && link && panel.contains(link)) this.closeMenu();
   }
 
-  /** Escape closes the panel; Tab and Shift+Tab stay between the menu button and the panel. */
+  /** Escape closes the panel and puts focus back on the menu button. */
   private keydown(event: KeyboardEvent): void {
-    if (!this.menuOpen()) return;
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      this.closeMenu(true);
-      return;
-    }
-    if (event.key !== 'Tab') return;
-    const items = this.focusables();
-    const button = this.menuButtonElement();
-    if (!button || !items.length) return;
-    const first = items[0];
-    const last = items[items.length - 1];
-    const focused = this.document.activeElement;
-    let next: HTMLElement | null = null;
-    if (event.shiftKey && focused === first) next = button;
-    else if (event.shiftKey && focused === button) next = last;
-    else if (!event.shiftKey && focused === last) next = button;
-    else if (!event.shiftKey && focused === button) next = first;
-    if (next) {
-      event.preventDefault();
-      next.focus();
-    }
+    if (!this.menuOpen() || event.key !== 'Escape') return;
+    event.preventDefault();
+    this.closeMenu(true);
+  }
+
+  /** Focus left the header (Tab past the panel's last item): close the panel where focus went. */
+  private focusOut(event: FocusEvent, root: HTMLElement): void {
+    const next = event.relatedTarget as Node | null;
+    if (next && root.contains(next)) return;
+    this.closeMenu();
   }
 
   /** A click anywhere outside the header closes the panel. */

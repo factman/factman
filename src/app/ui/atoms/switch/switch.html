@@ -1,11 +1,11 @@
 <label [class]="classes()" [for]="controlId()">
   <input
     type="checkbox"
+    switch
     role="switch"
     class="fm-switch__input"
     [id]="controlId()"
     [checked]="value()"
-    [attr.aria-checked]="value()"
     [attr.name]="name()"
     [attr.aria-describedby]="describedBy()"
     [attr.aria-invalid]="isInvalid() || null"

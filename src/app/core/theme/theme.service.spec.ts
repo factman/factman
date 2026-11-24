@@ -41,14 +41,32 @@ describe('ThemeService', () => {
     expect(html.getAttribute('data-theme')).toBe('dark');
     expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe('dark');
 
+    // Back to the theme the page shows with no choice: the choice is forgotten (ETE-254).
     theme.toggle();
     TestBed.tick();
     expect(theme.theme()).toBe('light');
-    expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe('light');
+    expect(theme.preference()).toBe('system');
+    expect(localStorage.getItem(THEME_STORAGE_KEY)).toBeNull();
 
     theme.set('system');
     expect(theme.preference()).toBe('system');
     expect(localStorage.getItem(THEME_STORAGE_KEY)).toBeNull();
+  });
+
+  it('toggling away from the system theme stores it; toggling back forgets it', () => {
+    // jsdom has no matchMedia: stand in for a system that prefers dark.
+    const media = { matches: true, addEventListener: vi.fn() };
+    const win = window as { matchMedia?: unknown };
+    win.matchMedia = () => media;
+    const theme = setup(); // the system prefers dark
+    expect(theme.theme()).toBe('dark');
+    theme.toggle();
+    expect(theme.theme()).toBe('light');
+    expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe('light');
+    theme.toggle();
+    expect(theme.theme()).toBe('dark');
+    expect(localStorage.getItem(THEME_STORAGE_KEY)).toBeNull();
+    delete win.matchMedia;
   });
 
   it('still switches theme when storage is blocked', () => {

@@ -12,7 +12,9 @@ import { ValueControl, fieldId } from '../form-control/value-control';
 
 /**
  * An on/off switch with its label beside it, for settings that apply at once (such as a cookie
- * category). It is a checkbox with `role="switch"` and `aria-checked`. Works with Angular forms.
+ * category). It is a checkbox with the native `switch` attribute (`role="switch"` where the browser
+ * has no native switch); its on/off state is the checkbox's own, not a hand-set `aria-checked`
+ * (ETE-248). Works with Angular forms.
  * @level atom
  */
 @Component({

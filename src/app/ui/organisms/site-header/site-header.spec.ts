@@ -94,7 +94,7 @@ describe('SiteHeader', () => {
     scrollTo.mockRestore();
   });
 
-  it('opens the menu, moves focus in, keeps Tab inside and closes on Escape', async () => {
+  it('opens the menu, moves focus in, lets Tab leave (no trap) and closes on Escape', async () => {
     await renderHeader();
     const button = menuButton();
     expect(button.getAttribute('aria-expanded')).toBe('false');
@@ -105,23 +105,25 @@ describe('SiteHeader', () => {
     const menu = within(menuNav()!);
     expect(button.getAttribute('aria-controls')).toBe(menuNav()!.id);
     const first = menu.getByRole('link', { name: 'About' });
-    const last = menu.getByRole('link', { name: 'Book a service' });
     expect(document.activeElement).toBe(first);
 
+    // The panel follows the menu button in the tab order.
     await userEvent.tab({ shift: true });
     expect(document.activeElement).toBe(button);
     await userEvent.tab();
     expect(document.activeElement).toBe(first);
-    last.focus();
-    await userEvent.tab();
-    expect(document.activeElement).toBe(button);
-    await userEvent.tab({ shift: true });
-    expect(document.activeElement).toBe(last);
 
     await userEvent.keyboard('{Escape}');
     expect(menuNav()).toBeNull();
     expect(button.getAttribute('aria-expanded')).toBe('false');
     expect(document.activeElement).toBe(button);
+
+    // Not modal: Tab past the last item leaves the header, and the panel closes (ETE-257).
+    await userEvent.click(button);
+    within(menuNav()!).getByRole('link', { name: 'Book a service' }).focus();
+    await userEvent.tab();
+    expect(menuNav()).toBeNull();
+    expect(button.getAttribute('aria-expanded')).toBe('false');
   });
 
   it('closes the menu when a link is followed or on a click outside', async () => {
