@@ -1,13 +1,17 @@
 // Public API of the organisms level. Export every organism from here; import it only via `@ui/organisms`.
 export { type AboutFact, AboutSection } from './about-section/about-section';
 export { ClientLogoStrip, type StripClient } from './client-logo-strip/client-logo-strip';
+export { CtaBanner } from './cta-banner/cta-banner';
 export {
   ExperienceTimeline,
   type TimelineEntry,
   type TimelineGlance,
   type TimelineRole,
 } from './experience-timeline/experience-timeline';
+export { type FaqItem, faqId, FaqSection } from './faq-section/faq-section';
 export { NotFoundSection, type NotFoundSuggestion } from './not-found-section/not-found-section';
+export { type HeroAction, type HeroMedia, type HeroTag, PageHero } from './page-hero/page-hero';
+export { ProcessSection } from './process-section/process-section';
 export {
   ProfileHero,
   type ProfileHeroProfile,

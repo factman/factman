@@ -1,0 +1,19 @@
+@if (items().length) {
+  <section class="faq-section" [id]="sectionId()" [attr.aria-labelledby]="sectionId() + '-title'">
+    <div class="faq-section-container">
+      <div class="faq-section-grid">
+        <div fmReveal>
+          <fm-section-header
+            [eyebrow]="eyebrow()"
+            [title]="title()"
+            [description]="description()"
+            [headingId]="sectionId() + '-title'"
+          />
+        </div>
+        <div fmReveal>
+          <fm-accordion [items]="accordion()" [expanded]="firstOpen()" />
+        </div>
+      </div>
+    </div>
+  </section>
+}

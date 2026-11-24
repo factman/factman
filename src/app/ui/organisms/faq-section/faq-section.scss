@@ -1,0 +1,26 @@
+// The canvas's FaqSection: the header beside the accordion (1:1 from 1024px), stacked below.
+@use 'ui/layout';
+
+.faq-section {
+  @include layout.section;
+
+  scroll-margin-top: var(--navbar-height);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.faq-section-container {
+  @include layout.container;
+}
+
+.faq-section-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-5xl);
+  align-items: start;
+
+  @media (width < 1024px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-4xl);
+  }
+}

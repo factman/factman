@@ -77,7 +77,7 @@ describe('Home Services (#services)', () => {
   });
 
   it('starts its intro with the number of services as a word', async () => {
-    const { countWord } = await import('./home');
+    const { countWord } = await import('@shared');
     expect(countWord(8)).toBe('Eight');
     expect(countWord(12)).toBe('12');
   });

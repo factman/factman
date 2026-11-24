@@ -1,0 +1,81 @@
+<section class="page-hero" [class.is-flush]="flush()" aria-labelledby="page-hero-title">
+  <div class="page-hero-container">
+    <div class="page-hero-grid" [class.has-media]="!!media()">
+      <div class="page-hero-copy">
+        @if (crumbs().length) {
+          <fm-breadcrumbs [crumbs]="crumbs()" />
+        }
+        @if (icon(); as icon) {
+          <span class="page-hero-icon" aria-hidden="true"
+            ><fm-icon [icon]="icon" [size]="24"
+          /></span>
+        }
+        @if (eyebrow(); as eyebrow) {
+          <p class="page-hero-eyebrow">{{ eyebrow }}</p>
+        }
+        @if (tags().length) {
+          <div class="page-hero-row">
+            @for (tag of tags(); track tag.label) {
+              <fm-tag [tone]="tag.tone ?? 'neutral'" [dot]="!!tag.dot" [leadingIcon]="tag.icon">{{
+                tag.label
+              }}</fm-tag>
+            }
+          </div>
+        }
+        <h1 id="page-hero-title" class="page-hero-title">{{ title() }}</h1>
+        @if (lead(); as lead) {
+          <p class="page-hero-lead">{{ lead }}</p>
+        }
+        @if (meta().length) {
+          <ul class="page-hero-meta">
+            @for (item of meta(); track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        }
+        @if (note(); as note) {
+          <p class="page-hero-note">{{ note }}</p>
+        }
+        @if (actions().length) {
+          <div class="page-hero-row page-hero-actions">
+            @for (action of actions(); track action.label; let i = $index) {
+              @if (action.schedule) {
+                <fm-schedule-call-button
+                  [label]="action.label"
+                  [variant]="variant(action, i)"
+                  [service]="action.service"
+                  [leadingIcon]="action.leadingIcon"
+                  [trailingIcon]="action.trailingIcon"
+                  (schedule)="schedule.emit($event)"
+                />
+              } @else {
+                <fm-button
+                  size="lg"
+                  [variant]="variant(action, i)"
+                  [href]="action.href"
+                  [leadingIcon]="action.leadingIcon"
+                  [trailingIcon]="action.trailingIcon"
+                  >{{ action.label }}</fm-button
+                >
+              }
+            }
+          </div>
+        }
+      </div>
+      @if (media(); as m) {
+        <figure class="page-hero-media" [class.is-framed]="m.framed">
+          <fm-image
+            [src]="m.src"
+            [alt]="m.alt"
+            [width]="m.width"
+            [height]="m.height"
+            [sources]="m.sources ?? {}"
+            [sizes]="m.sizes"
+            [priority]="true"
+            imgClass="page-hero-picture"
+          />
+        </figure>
+      }
+    </div>
+  </div>
+</section>

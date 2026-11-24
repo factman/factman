@@ -1,0 +1,18 @@
+// The Services page's own blocks: the catalogue grid and the closing banner, on the page's
+// container and section rhythm (the other sections bring their own).
+@use 'ui/layout';
+
+.services-catalogue,
+.services-cta {
+  @include layout.container;
+
+  scroll-margin-top: var(--navbar-height);
+}
+
+.services-catalogue {
+  @include layout.section-tight;
+}
+
+.services-cta {
+  padding-bottom: var(--gap-5xl);
+}

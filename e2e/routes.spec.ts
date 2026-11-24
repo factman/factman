@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 // ETE-43: every route of the site map is prerendered (FR-01), lazy-loaded and titled.
 const pages = [
   ['/', 'Odunayo Mohammed', 'Odunayo Mohammed'],
-  ['/services', 'Services', 'Services · Odunayo Mohammed'],
+  ['/services', 'Senior help for the work that matters most', 'Services · Odunayo Mohammed'],
   ['/services/consultancy', 'Consultancy', 'Consultancy · Odunayo Mohammed'],
   ['/services/devops', 'DevOps', 'DevOps · Odunayo Mohammed'],
   ['/projects', 'Projects', 'Projects · Odunayo Mohammed'],
@@ -88,7 +88,9 @@ test('in-app navigation moves focus to the new page', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'All services' }).click();
   await expect(page).toHaveURL(/\/services$/);
-  await expect(page.getByRole('heading', { level: 1, name: 'Services' })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Senior help for the work that matters most' }),
+  ).toBeVisible();
   await expect(page.locator('main')).toBeFocused();
 
   await page.getByRole('link', { name: 'DevOps' }).click();
