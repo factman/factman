@@ -14,6 +14,15 @@ export { NotFoundSection, type NotFoundSuggestion } from './not-found-section/no
 export { type HeroAction, type HeroMedia, type HeroTag, PageHero } from './page-hero/page-hero';
 export { ProcessSection } from './process-section/process-section';
 export {
+  filterProjects,
+  fromQueryParams,
+  isEmptyFilter,
+  NO_FILTER,
+  type ProjectFilter,
+  toQueryParams,
+} from './project-gallery/project-filter';
+export { ProjectGallery } from './project-gallery/project-gallery';
+export {
   ProfileHero,
   type ProfileHeroProfile,
   type ProfileHeroStats,

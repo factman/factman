@@ -1,0 +1,15 @@
+// The projects gallery and the closing banner, on the page's container and section rhythm.
+@use 'ui/layout';
+
+.projects-all,
+.projects-cta {
+  @include layout.container;
+}
+
+.projects-all {
+  @include layout.section-tight;
+}
+
+.projects-cta {
+  padding-bottom: var(--gap-5xl);
+}

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { ClientsRepository, ServicesRepository } from '@core/data';
+import { ClientsRepository, ProjectsRepository, ServicesRepository } from '@core/data';
 import { contact } from '@data/contact';
 import { experience } from '@data/experience';
 import { heroCodeFile } from '@data/generated/hero-code';
@@ -8,13 +8,15 @@ import { profile } from '@data/profile';
 import { skills } from '@data/skills';
 import { ThemeService } from '@core/theme';
 import { CLOCK, countWord, portraitSources, SharedModule, yearsSince } from '@shared';
-import { IconRegistry } from '@ui/atoms';
+import { IconRegistry, iconArrowRight, iconGithub } from '@ui/atoms';
 import { CodeEditor, SERVICE_ICONS } from '@ui/molecules';
 import {
   AboutSection,
   ClientLogoStrip,
   ExperienceTimeline,
+  type HeroAction,
   ProfileHero,
+  ProjectGallery,
   type ProfileHeroStats,
   ServicesGrid,
   TechStack,
@@ -27,7 +29,7 @@ import { HOME_SECTIONS } from './home-sections';
 import { stackGroups } from './stack-groups';
 
 /** Sections this page renders itself; the rest are shells until their organisms are built. */
-const BUILT = new Set<string>(['about', 'resume', 'stack', 'experience', 'services']);
+const BUILT = new Set<string>(['about', 'resume', 'stack', 'experience', 'services', 'projects']);
 
 /** The networks the hero links to, in contact.json's order (ETeam has its own place). */
 const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
@@ -46,6 +48,7 @@ const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
     CodeEditor,
     ExperienceTimeline,
     ProfileHero,
+    ProjectGallery,
     RouterLink,
     SectionLayout,
     ServicesGrid,
@@ -93,8 +96,22 @@ export class Home {
   protected readonly services = inject(ServicesRepository).all();
   protected readonly servicesIntro = `${countWord(this.services.length)} services, from a one-off architecture review to a fractional CTO. Every engagement starts with a short call and a written quote.`;
 
+  /** Projects (FR-20): at most six featured, newest first. */
+  protected readonly projects = inject(ProjectsRepository).featured();
+  protected readonly projectLinks: HeroAction[] = [
+    { label: 'See all projects', href: '/projects', trailingIcon: iconArrowRight },
+    ...contact.links
+      .filter((l) => l.id === 'github')
+      .map((l) => ({ label: 'GitHub profile', href: l.url, leadingIcon: iconGithub })),
+  ];
+
   constructor() {
     inject(IconRegistry).register(SERVICE_ICONS);
+  }
+
+  /** A private project's "Request a walkthrough" goes to the contact section. */
+  protected engage(): void {
+    void this.router.navigate([], { fragment: 'contact' });
   }
   protected readonly profile = profile;
   protected readonly photo = portraitSources(profile.photo);
