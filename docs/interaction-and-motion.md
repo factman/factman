@@ -57,8 +57,9 @@ How things move and respond on the site, for the developers building the [compon
 - **Where:** `ClientLogoStrip`.
 - **Motion:** one endless right-to-left loop of two copies of the logo group (`translateX(0)` to `-50%`), linear. Length: `--duration-reveal` × 80 (48 s) at 768px and up, × 60 (36 s) below.
 - **Edges:** a gradient mask fades the strip out over the outer 8% on each side.
-- **Control:** pauses on hover and while anything inside has focus. The cloned group is `aria-hidden` and its links are `tabindex="-1"`, so each client is announced and focused once.
-- **Reduced motion:** no animation and no mask; the clone is removed and the logos wrap and centre as a static grid.
+- **Control:** pauses on hover, while anything inside has focus, and with its pause button (WCAG 2.2.2: hover alone leaves touch and keyboard users without a way to stop it).
+- **Copies:** a short list repeats until a group has at least 16 logos, so the loop never shows a gap; the second group makes it seamless. The repeats and the second group are `aria-hidden` and `inert`, so each client is announced and focused once.
+- **Reduced motion:** no animation, no mask and no pause button; the copies are removed and the logos wrap and centre as a static grid.
 
 ### Modals (résumé preview, scheduler)
 

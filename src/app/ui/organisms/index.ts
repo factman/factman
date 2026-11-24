@@ -1,4 +1,5 @@
 // Public API of the organisms level. Export every organism from here; import it only via `@ui/organisms`.
+export { ClientLogoStrip, type StripClient } from './client-logo-strip/client-logo-strip';
 export { NotFoundSection, type NotFoundSuggestion } from './not-found-section/not-found-section';
 export {
   ProfileHero,

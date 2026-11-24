@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { ClientsRepository } from '@core/data';
 import { contact } from '@data/contact';
 import { experience } from '@data/experience';
 import { heroCodeFile } from '@data/generated/hero-code';
@@ -7,7 +8,7 @@ import { profile } from '@data/profile';
 import { skills } from '@data/skills';
 import { portraitSources, SharedModule } from '@shared';
 import { CodeEditor } from '@ui/molecules';
-import { ProfileHero, type ProfileHeroStats } from '@ui/organisms';
+import { ClientLogoStrip, ProfileHero, type ProfileHeroStats } from '@ui/organisms';
 
 import { HOME_SECTIONS } from './home-sections';
 
@@ -22,11 +23,14 @@ const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
 @Component({
   selector: 'fm-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CodeEditor, ProfileHero, RouterLink, SharedModule],
+  imports: [ClientLogoStrip, CodeEditor, ProfileHero, RouterLink, SharedModule],
   templateUrl: './home.html',
 })
 export class Home {
   private readonly router = inject(Router);
+
+  /** "Worked with", in display order; an empty list omits the strip (FR-52). */
+  protected readonly clients = inject(ClientsRepository).all();
 
   protected readonly sections = HOME_SECTIONS;
   protected readonly profile = profile;

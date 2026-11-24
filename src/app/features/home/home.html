@@ -8,6 +8,7 @@
 >
   <fm-code-editor heroEditor [files]="editorFiles" [glow]="true" [decorative]="true" />
 </fm-profile-hero>
+<fm-client-logo-strip [clients]="clients" />
 @for (section of sections; track section.id) {
   <section fmReveal [id]="section.id" [attr.aria-labelledby]="section.id + '-title'" tabindex="-1">
     <h2 [id]="section.id + '-title'">{{ section.label }}</h2>
