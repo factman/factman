@@ -124,7 +124,7 @@ Section names follow the canvas titles, which are the PRD names (the artboard fi
 | ProjectCaseStudy        | `ProjectCaseStudy`      | `fm-project-case-study`      | `project`, `stack` (names), `facts` (EngageCard), `next`, `similarHref`; screenshots, role, stack, outcome, links (public only) and "All projects" / "Next project"                                                                            | `requestAccess`                       | ETE-100 (built) |
 | PrivacyPolicySection    | `PrivacyPolicySection`  | `fm-privacy-policy-section`  | `storage` (from site.json consent categories), `email`, `analytics`; the ConsentStatusCard beside the policy                                                                                                                                   | `changeSettings`                      | ETE-116 (built) |
 | NotFoundSection         | `NotFoundSection`       | `fm-not-found-section`       | `path`, `sections` (for `ls ~`), `suggestions` (`{label, href}`), `photo`                                                                                                                                                                      |                                       | ETE-88          |
-| DS:Terminal             | `Terminal`              | `fm-terminal`                | `commands`, `prompt`                                                                                                                                                                                                                           | `run`                                 | ETE-111         |
+| DS:Terminal             | `Terminal`              | `fm-terminal`                | `open`, `commands` (`{name, summary, usage?, run}`, built by the page from the data), `user`, `path`, `greeting`; `help` and `clear` built in, history on ArrowUp/ArrowDown, a `role="log"` scrollback in the shared Dialog                    | `closed`, `run` (command name)        | ETE-111 (built) |
 
 ## Templates (level 4)
 
@@ -140,7 +140,7 @@ Already scaffolded; each fills a template with data from `@core/data` and owns t
 
 | Artboard      | Angular component   | Selector                 | Route             | Issue           |
 | ------------- | ------------------- | ------------------------ | ----------------- | --------------- |
-| Main          | `Home`              | `fm-home`                | `/`               | ETE-114         |
+| Main          | `Home`              | `fm-home`                | `/`               | ETE-114 (built) |
 | Services      | `ServicesPage`      | `fm-services-page`       | `/services`       | ETE-115         |
 | ServiceDetail | `ServiceDetailPage` | `fm-service-detail-page` | `/services/:slug` | ETE-98 (built)  |
 | Projects      | `ProjectsPage`      | `fm-projects-page`       | `/projects`       | ETE-115         |
@@ -148,6 +148,7 @@ Already scaffolded; each fills a template with data from `@core/data` and owns t
 | Blog          | `BlogPage`          | `fm-blog-page`           | `/blog`           | ETE-101         |
 | Privacy       | `PrivacyPage`       | `fm-privacy-page`        | `/privacy`        | ETE-116         |
 | NotFound      | `NotFoundPage`      | `fm-not-found-page`      | `**`              | ETE-88          |
+| Terminal      | `TerminalHost`      | `fm-terminal-host`       | (app shell, lazy) | ETE-111 (built) |
 
 ## Not Angular components
 

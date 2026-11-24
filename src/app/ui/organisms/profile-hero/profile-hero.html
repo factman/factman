@@ -34,6 +34,16 @@
           (pressed)="openResume.emit('fullstack')"
           >Résumé</fm-button
         >
+        @if (terminal()) {
+          <fm-button
+            variant="tertiary"
+            size="lg"
+            [leadingIcon]="icons.terminal"
+            ariaHaspopup="dialog"
+            (pressed)="openTerminal.emit()"
+            >Terminal</fm-button
+          >
+        }
       </div>
       <fm-social-links [links]="socials()" />
       <div class="profile-hero-stats">

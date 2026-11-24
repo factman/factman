@@ -7,6 +7,7 @@ export { Reveal } from './motion/reveal.directive';
 export { AnchorScroller } from './navigation/anchor-scroller';
 export { SCROLL_SPY_ENABLED, ScrollSpy } from './navigation/scroll-spy';
 export { SharedModule } from './shared.module';
+export * from './terminal/terminal';
 export * from './site/resolve-site';
 export * from './time/clock';
 export * from './time/year-month';

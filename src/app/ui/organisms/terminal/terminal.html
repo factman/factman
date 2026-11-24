@@ -1,0 +1,48 @@
+<fm-dialog [open]="open()" label="Terminal" size="md" (closed)="closed.emit()">
+  <fm-window-frame variant="terminal" title="bash · factman.dev">
+    <!-- A click puts the caret back in the prompt; the keyboard is already there. -->
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
+    <div #body class="fm-term__body terminal-body" (click)="focusPrompt()">
+      <p class="fm-term__line fm-term__out is-info">{{ greeting() }}</p>
+      <div class="terminal-log" role="log" aria-live="polite" aria-label="Terminal output">
+        @for (line of lines(); track line.id) {
+          @if (line.kind === 'input') {
+            <p class="fm-term__line">
+              <span class="fm-term__user">{{ user() }}</span
+              ><span class="fm-term__sep">:</span><span class="fm-term__path">{{ path() }}</span
+              ><span class="fm-term__sep">$ </span><span class="fm-term__cmd">{{ line.text }}</span>
+            </p>
+          } @else {
+            <p
+              class="fm-term__line fm-term__out"
+              [class.is-error]="line.kind === 'error'"
+              [class.is-default]="line.kind === 'out'"
+            >
+              {{ line.text }}
+            </p>
+          }
+        }
+      </div>
+      <form class="fm-term__form terminal-form" (submit)="submit($event)">
+        <label class="fm-sr" for="fm-terminal-input">Command</label>
+        <span class="fm-term__user" aria-hidden="true">{{ user() }}</span
+        ><span class="fm-term__sep" aria-hidden="true">:</span
+        ><span class="fm-term__path" aria-hidden="true">{{ path() }}</span
+        ><span class="fm-term__sep" aria-hidden="true">$&nbsp;</span>
+        <input
+          #field
+          id="fm-terminal-input"
+          class="fm-term__input"
+          type="text"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          enterkeyhint="send"
+          [value]="draft()"
+          (input)="draft.set(field.value)"
+          (keydown)="recall($event)"
+        />
+      </form>
+    </div>
+  </fm-window-frame>
+</fm-dialog>

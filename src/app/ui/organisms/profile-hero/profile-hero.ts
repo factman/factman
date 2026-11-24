@@ -20,6 +20,7 @@ import {
   iconDownload,
   iconLayout,
   iconPin,
+  iconTerminal,
 } from '@ui/atoms';
 import { type Availability, AvailabilityBadge, SocialLinks, StatCounter } from '@ui/molecules';
 
@@ -76,8 +77,13 @@ export class ProfileHero {
   /** Where "View projects" goes: the projects section of the home page. */
   readonly projectsHref = input('/#projects');
 
+  /** Show the "Terminal" button (site.json `features.terminal`, FR-36, P1). */
+  readonly terminal = input(false);
+
   /** The résumé to open: the fullstack one, as in the design. */
   readonly openResume = output<string>();
+  /** "Terminal": open the interactive terminal. */
+  readonly openTerminal = output<void>();
 
   protected readonly icons = {
     arrowRight: iconArrowRight,
@@ -86,6 +92,7 @@ export class ProfileHero {
     download: iconDownload,
     layout: iconLayout,
     pin: iconPin,
+    terminal: iconTerminal,
   };
 
   private readonly clock = inject(CLOCK);
