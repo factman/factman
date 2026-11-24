@@ -7,10 +7,14 @@
  *     NOT loaded globally. Each Angular component adds its section to its own styles,
  *     so a page only loads CSS for the components it renders (see docs/design-tokens.md).
  * Sections are the bundle's `/* ---------- Name ---------- *\/` and `/* ===== Name ===== *\/` headers.
+ * Type sizes come out in rem (rem-type.ts, ETE-263), so text follows the visitor's text size;
+ * bundle.css itself stays as the design system ships it.
  */
 import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { remType } from './rem-type';
 
 export const BUNDLE = 'src/styles/factman/bundle.css';
 export const GLOBAL = 'src/styles/factman/global.css';
@@ -77,9 +81,12 @@ const isMain = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(imp
 if (isMain) {
   const root = process.cwd();
   const { global, sections } = splitBundle(readFileSync(join(root, BUNDLE), 'utf8'));
-  const expected = new Map<string, string>([[GLOBAL, BANNER('global styles') + global]]);
+  const expected = new Map<string, string>([[GLOBAL, BANNER('global styles') + remType(global)]]);
   for (const [name, css] of sections)
-    expected.set(`${COMPONENTS_DIR}/${name}.css`, BANNER(`"${name}" component styles`) + css);
+    expected.set(
+      `${COMPONENTS_DIR}/${name}.css`,
+      BANNER(`"${name}" component styles`) + remType(css),
+    );
 
   if (process.argv.includes('--check')) {
     const stale: string[] = [];

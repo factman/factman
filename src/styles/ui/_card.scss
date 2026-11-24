@@ -86,7 +86,7 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  font: 500 15px/1 var(--font-mono);
+  font: 500 0.9375rem/1 var(--font-mono);
   color: var(--syntax-function);
   background-color: var(--code-bg);
   background-image:
@@ -104,19 +104,19 @@
 
 @mixin title {
   margin: 0;
-  font: 600 18px/1.35 var(--font-sans);
+  font: 600 1.125rem/1.35 var(--font-sans);
   color: var(--text-primary);
 }
 
 @mixin text {
   margin: 0;
-  font: 400 14px/1.65 var(--font-sans);
+  font: 400 0.875rem/1.65 var(--font-sans);
   color: var(--text-secondary);
 }
 
 // The DS's meta line uses --text-tertiary, under 4.5:1 at 11px; secondary meets it.
 @mixin meta {
-  font: 500 11px/16px var(--font-sans);
+  font: 500 0.6875rem/1rem var(--font-sans);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-secondary);

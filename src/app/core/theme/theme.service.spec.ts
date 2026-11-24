@@ -53,6 +53,19 @@ describe('ThemeService', () => {
     expect(localStorage.getItem(THEME_STORAGE_KEY)).toBeNull();
   });
 
+  it('keeps <meta name="color-scheme"> on the theme shown (ETE-261)', () => {
+    const meta = document.createElement('meta');
+    meta.name = 'color-scheme';
+    meta.content = 'light dark';
+    document.head.append(meta);
+    const theme = setup();
+    expect(meta.content).toBe('light');
+    theme.set('dark');
+    TestBed.tick();
+    expect(meta.content).toBe('dark');
+    meta.remove();
+  });
+
   it('toggling away from the system theme stores it; toggling back forgets it', () => {
     // jsdom has no matchMedia: stand in for a system that prefers dark.
     const media = { matches: true, addEventListener: vi.fn() };

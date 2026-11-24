@@ -14,17 +14,17 @@
   background: transparent;
   color: var(--text-primary);
   font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   font-weight: 500;
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 150ms ease-out, box-shadow 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out;
 }
-.fm-btn--sm { --fm-h: 32px; --fm-px: var(--padding-sm); border-radius: var(--radius-sm); font-size: 12px; line-height: 16px; }
-.fm-btn--lg { --fm-h: 48px; --fm-px: var(--padding-lg); font-size: 16px; line-height: 24px; }
-.fm-btn--xl { --fm-h: 56px; --fm-px: var(--padding-xl); font-size: 16px; line-height: 24px; }
+.fm-btn--sm { --fm-h: 32px; --fm-px: var(--padding-sm); border-radius: var(--radius-sm); font-size: 0.75rem; line-height: 1rem; }
+.fm-btn--lg { --fm-h: 48px; --fm-px: var(--padding-lg); font-size: 1rem; line-height: 1.5rem; }
+.fm-btn--xl { --fm-h: 56px; --fm-px: var(--padding-xl); font-size: 1rem; line-height: 1.5rem; }
 .fm-btn--icon { padding: 0; width: var(--fm-h); }
 .fm-btn:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: 2px; }
 

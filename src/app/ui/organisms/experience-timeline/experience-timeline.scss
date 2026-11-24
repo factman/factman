@@ -79,7 +79,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font: 600 15px/1 var(--font-mono);
+  font: 600 0.9375rem/1 var(--font-mono);
 
   // --accent-default alone is under 4.5:1 on the glass in the dark theme; mix in text colour.
   color: color-mix(in srgb, var(--accent-default) 60%, var(--text-primary));
@@ -113,7 +113,7 @@
 
   h3 {
     margin: 0;
-    font: 700 20px/1.3 var(--font-sans);
+    font: 700 1.25rem/1.3 var(--font-sans);
     color: var(--text-primary);
   }
 
@@ -138,7 +138,7 @@
 
 // --text-tertiary (the DS's colour) is under 4.5:1 at 12px.
 .experience-timeline-total {
-  font: 400 12px/1 var(--font-mono);
+  font: 400 0.75rem/1 var(--font-mono);
   color: var(--text-secondary);
 }
 
@@ -167,7 +167,7 @@
   align-items: center;
   gap: var(--gap-xs);
   margin: 0;
-  font: 600 16px/1.4 var(--font-sans);
+  font: 600 1rem/1.4 var(--font-sans);
   color: var(--text-primary);
 }
 
@@ -176,18 +176,18 @@
   flex-wrap: wrap;
   gap: var(--gap-2xs) var(--gap-xs);
   margin: var(--gap-3xs) 0 0;
-  font: 400 13px/20px var(--font-sans);
+  font: 400 0.8125rem/1.25rem var(--font-sans);
   color: var(--text-secondary);
 }
 
 .experience-timeline-period {
-  font: 400 12px/20px var(--font-mono);
+  font: 400 0.75rem/1.25rem var(--font-mono);
   color: var(--text-primary);
 }
 
 .experience-timeline-summary {
   margin: var(--gap-2xs) 0 0;
-  font: 400 14px/1.7 var(--font-sans);
+  font: 400 0.875rem/1.7 var(--font-sans);
   color: var(--text-secondary);
 }
 
@@ -198,7 +198,7 @@
   margin: var(--gap-2xs) 0 0;
   padding: 0;
   list-style: none;
-  font: 400 14px/1.6 var(--font-sans);
+  font: 400 0.875rem/1.6 var(--font-sans);
   color: var(--text-secondary);
 
   // A collapsed highlight is hidden="until-found" (content-visibility, not display: none), so it
@@ -229,7 +229,7 @@
   padding: 0;
   border: 0;
   background: none;
-  font: 500 13px/20px var(--font-sans);
+  font: 500 0.8125rem/1.25rem var(--font-sans);
   color: var(--accent-default);
   cursor: pointer;
 

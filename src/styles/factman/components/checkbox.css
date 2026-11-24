@@ -31,6 +31,6 @@
 .fm-check.is-disabled { cursor: not-allowed; }
 .fm-check.is-disabled .fm-check__box { opacity: var(--opacity-disabled-control); background: var(--glass-fill-subtle); border-color: var(--glass-stroke-subtle); box-shadow: none; }
 .fm-check.is-disabled .fm-check__text { color: var(--text-disabled); }
-.fm-check__text { display: flex; flex-direction: column; font-size: 14px; line-height: 20px; }
-.fm-check--16 .fm-check__text { font-size: 12px; line-height: 16px; }
-.fm-check__desc { font-size: 12px; line-height: 18px; color: var(--text-secondary); }
+.fm-check__text { display: flex; flex-direction: column; font-size: 0.875rem; line-height: 1.25rem; }
+.fm-check--16 .fm-check__text { font-size: 0.75rem; line-height: 1rem; }
+.fm-check__desc { font-size: 0.75rem; line-height: 1.125rem; color: var(--text-secondary); }

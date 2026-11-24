@@ -1,6 +1,6 @@
 /* Factman "social-button" component styles, split from bundle.css by scripts/design-system/split-components.ts. Do not edit. */
 /* ---------- Social button ---------- */
-.fm-social { display: inline-flex; align-items: center; justify-content: center; gap: var(--gap-sm); width: 100%; max-width: 320px; height: 48px; padding: 0 var(--padding-lg); box-sizing: border-box; border-radius: var(--radius-md); border: var(--border-width-sm) solid var(--glass-stroke); background: var(--glass-fill-strong); box-shadow: var(--shadow-glass-regular); color: var(--text-primary); font: 500 15px/1 var(--font-sans); cursor: pointer; transition: background-color 150ms ease-out; }
+.fm-social { display: inline-flex; align-items: center; justify-content: center; gap: var(--gap-sm); width: 100%; max-width: 320px; height: 48px; padding: 0 var(--padding-lg); box-sizing: border-box; border-radius: var(--radius-md); border: var(--border-width-sm) solid var(--glass-stroke); background: var(--glass-fill-strong); box-shadow: var(--shadow-glass-regular); color: var(--text-primary); font: 500 0.9375rem/1 var(--font-sans); cursor: pointer; transition: background-color 150ms ease-out; }
 .fm-social:hover { background: var(--glass-fill-elevated); border-color: var(--glass-stroke-strong); }
 .fm-social:active { background: var(--glass-fill); box-shadow: var(--shadow-button-pressed-light); }
 .fm-social:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: 2px; }

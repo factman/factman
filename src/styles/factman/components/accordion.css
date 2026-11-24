@@ -16,15 +16,15 @@
 .fm-acc--xl .fm-acc-item__head { padding: var(--padding-md) var(--padding-lg); }
 .fm-acc-item__head:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: 2px; }
 .fm-acc-item__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.fm-acc-item__title { font-size: 12px; line-height: 18px; }
-.fm-acc--md .fm-acc-item__title { font-size: 14px; line-height: 20px; }
-.fm-acc--lg .fm-acc-item__title, .fm-acc--xl .fm-acc-item__title { font-size: 16px; line-height: 24px; font-weight: 500; }
-.fm-acc-item__desc { font-size: 12px; line-height: 18px; color: var(--text-secondary); }
+.fm-acc-item__title { font-size: 0.75rem; line-height: 1.125rem; }
+.fm-acc--md .fm-acc-item__title { font-size: 0.875rem; line-height: 1.25rem; }
+.fm-acc--lg .fm-acc-item__title, .fm-acc--xl .fm-acc-item__title { font-size: 1rem; line-height: 1.5rem; font-weight: 500; }
+.fm-acc-item__desc { font-size: 0.75rem; line-height: 1.125rem; color: var(--text-secondary); }
 .fm-acc-item__icon, .fm-acc-item__chev { color: var(--icon-secondary); flex: none; }
 .fm-acc-item__chev { transition: transform 200ms ease-out; }
 .fm-acc-item.is-open .fm-acc-item__chev { transform: rotate(180deg); }
-.fm-acc-item__body { padding: 0 var(--padding-sm) var(--padding-sm); font-size: 12px; line-height: 18px; color: var(--text-secondary); }
-.fm-acc--md .fm-acc-item__body { padding: 0 var(--padding-md) var(--padding-md); font-size: 14px; line-height: 22px; }
-.fm-acc--lg .fm-acc-item__body, .fm-acc--xl .fm-acc-item__body { padding: 0 var(--padding-lg) var(--padding-lg); font-size: 14px; line-height: 24px; }
+.fm-acc-item__body { padding: 0 var(--padding-sm) var(--padding-sm); font-size: 0.75rem; line-height: 1.125rem; color: var(--text-secondary); }
+.fm-acc--md .fm-acc-item__body { padding: 0 var(--padding-md) var(--padding-md); font-size: 0.875rem; line-height: 1.375rem; }
+.fm-acc--lg .fm-acc-item__body, .fm-acc--xl .fm-acc-item__body { padding: 0 var(--padding-lg) var(--padding-lg); font-size: 0.875rem; line-height: 1.5rem; }
 .fm-acc-item.is-disabled { opacity: .5; }
 .fm-acc-item.is-disabled .fm-acc-item__head { cursor: not-allowed; }

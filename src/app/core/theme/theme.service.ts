@@ -37,7 +37,12 @@ export class ThemeService {
   constructor() {
     this.media?.addEventListener('change', (e) => this.systemPrefersDark.set(e.matches));
     this.window?.addEventListener('storage', () => this.stored.set(readStoredTheme(this.storage)));
-    effect(() => this.document.documentElement.setAttribute('data-theme', this.theme()));
+    effect(() => {
+      const theme = this.theme();
+      this.document.documentElement.setAttribute('data-theme', theme);
+      // Browser-drawn UI follows the theme shown, as the pre-paint script set it (ETE-261).
+      this.document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', theme);
+    });
   }
 
   /** Chooses a theme and remembers it; `system` forgets the choice and follows the system again. */

@@ -11,9 +11,9 @@
 .fm-carousel { display: flex; flex-direction: column; gap: var(--gap-md); align-items: flex-start; font-family: var(--font-sans); color: var(--text-primary); width: 100%; }
 .fm-carousel__head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--gap-sm); align-self: stretch; }
 .fm-carousel__heading { display: flex; flex-direction: column; gap: 2px; }
-.fm-carousel__title { display: flex; align-items: center; gap: var(--gap-xs); font-size: 16px; line-height: 24px; font-weight: 600; }
+.fm-carousel__title { display: flex; align-items: center; gap: var(--gap-xs); font-size: 1rem; line-height: 1.5rem; font-weight: 600; }
 .fm-carousel__title .fm-icon { color: var(--icon-secondary); }
-.fm-carousel__desc { font-size: 12px; line-height: 18px; color: var(--text-tertiary); }
+.fm-carousel__desc { font-size: 0.75rem; line-height: 1.125rem; color: var(--text-tertiary); }
 .fm-carousel__actions { display: flex; align-items: center; gap: var(--gap-2xs); }
 .fm-carousel__track { --per: 1; display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - (var(--per) - 1) * var(--gap-sm)) / var(--per)); gap: var(--gap-sm); align-self: stretch; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .fm-carousel__track::-webkit-scrollbar { display: none; }

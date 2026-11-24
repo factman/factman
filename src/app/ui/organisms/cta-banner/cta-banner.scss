@@ -47,16 +47,16 @@
 
   p {
     margin: 0;
-    font: 400 16px/1.75 var(--font-sans);
+    font: 400 1rem/1.75 var(--font-sans);
     color: var(--text-secondary);
   }
 }
 
 .cta-banner-title {
-  font: 700 32px/1.3 var(--font-sans);
+  font: 700 2rem/1.3 var(--font-sans);
 
   @media (width < 768px) {
-    font: 700 24px/1.3 var(--font-sans);
+    font: 700 1.5rem/1.3 var(--font-sans);
   }
 }
 

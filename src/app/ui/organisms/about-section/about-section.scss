@@ -51,7 +51,7 @@
 // The canvas's .prose.
 .about-section-story p {
   margin: 0 0 var(--gap-md);
-  font: 400 16px/1.75 var(--font-sans);
+  font: 400 1rem/1.75 var(--font-sans);
   color: var(--text-secondary);
 }
 
@@ -80,6 +80,6 @@
 }
 
 .about-section-facts .fm-cmethod .cmethod-value {
-  font: 600 14px/1.5 var(--font-sans);
+  font: 600 0.875rem/1.5 var(--font-sans);
   white-space: normal;
 }

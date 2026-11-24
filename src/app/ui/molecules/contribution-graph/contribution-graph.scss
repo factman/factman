@@ -21,11 +21,11 @@
 }
 
 .contribution-graph-title {
-  font: 600 16px/24px var(--font-sans);
+  font: 600 1rem/1.5rem var(--font-sans);
 }
 
 .contribution-graph-desc {
-  font: 400 12px/18px var(--font-sans);
+  font: 400 0.75rem/1.125rem var(--font-sans);
   color: var(--text-secondary);
 }
 
@@ -42,7 +42,7 @@
 }
 
 .contribution-graph-month {
-  font: 400 9px var(--font-sans);
+  font: 400 0.5625rem var(--font-sans);
   fill: var(--text-secondary);
 }
 
@@ -52,7 +52,7 @@
   gap: var(--gap-sm);
   align-items: center;
   justify-content: space-between;
-  font: 400 12px/18px var(--font-sans);
+  font: 400 0.75rem/1.125rem var(--font-sans);
   color: var(--text-secondary);
 }
 

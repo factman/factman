@@ -9,8 +9,12 @@ import { resolveTheme, THEME_STORAGE_KEY } from '../../src/app/core/theme/resolv
 const html = readFileSync('src/index.html', 'utf8');
 const script = /<script>([\s\S]*?)<\/script>/.exec(html)?.[1];
 
-function run(stored: string | null | 'throws', dark: boolean | null): string | null {
+function run(
+  stored: string | null | 'throws',
+  dark: boolean | null,
+): { theme: string | null; scheme: string | null } {
   let theme: string | null = null;
+  let scheme: string | null = 'light dark';
   const localStorage = {
     getItem: (k: string) => {
       if (stored === 'throws') throw new Error('SecurityError');
@@ -18,8 +22,11 @@ function run(stored: string | null | 'throws', dark: boolean | null): string | n
     },
   };
   const matchMedia = dark === null ? undefined : () => ({ matches: dark });
+  const meta = { setAttribute: (_: string, v: string) => (scheme = v) };
   const document = {
     documentElement: { setAttribute: (_: string, v: string) => (theme = v) },
+    // <meta name="color-scheme"> follows the theme (ETE-261).
+    querySelector: (selector: string) => (selector === 'meta[name="color-scheme"]' ? meta : null),
   };
   new Function('localStorage', 'window', 'matchMedia', 'document', script!)(
     localStorage,
@@ -27,7 +34,7 @@ function run(stored: string | null | 'throws', dark: boolean | null): string | n
     matchMedia,
     document,
   );
-  return theme;
+  return { theme, scheme };
 }
 
 test('index.html has the inline theme pre-paint script', () => {
@@ -45,6 +52,8 @@ for (const [stored, dark] of [
 ] as const) {
   test(`stored ${stored}, system dark ${dark}: same theme as resolveTheme()`, () => {
     const expected = resolveTheme(stored === 'throws' ? null : stored, dark, 'system');
-    assert.equal(run(stored, dark), expected);
+    const { theme, scheme } = run(stored, dark);
+    assert.equal(theme, expected);
+    assert.equal(scheme, expected, 'meta color-scheme matches the theme');
   });
 }
