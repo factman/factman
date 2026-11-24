@@ -95,3 +95,26 @@ section[id] {
     transform: translateY(var(--gap-md));
   }
 }
+
+/*
+ * Text wrapping (ETE-264): headings balance their lines, so a two-line title doesn't leave one
+ * word alone on the second line; body copy avoids a lone last word (pretty). Browsers without
+ * text-wrap wrap as before.
+ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+[role='heading'] {
+  text-wrap: balance;
+}
+
+p,
+li,
+dd,
+figcaption,
+blockquote {
+  text-wrap: pretty;
+}
