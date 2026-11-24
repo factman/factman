@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 
-import { STRUCTURED_DATA_ID, StructuredData } from './structured-data';
+import { JSON_LD_POLICY, STRUCTURED_DATA_ID, StructuredData } from './structured-data';
 
 describe('StructuredData', () => {
   const setup = () => {
@@ -37,5 +37,47 @@ describe('StructuredData', () => {
     data.set({ '@type': 'WebSite' });
     await TestBed.inject(Router).navigateByUrl('/elsewhere');
     expect(block(doc)).toBeNull();
+  });
+
+  describe('under Trusted Types (ETE-267)', () => {
+    // Angular makes its own policies ("angular", …) through the same factory: pass those through.
+    const passThrough = {
+      createHTML: (s: string) => s,
+      createScript: (s: string) => s,
+      createScriptURL: (s: string) => s,
+    };
+    afterEach(() => delete (window as { trustedTypes?: unknown }).trustedTypes);
+
+    it('writes the block through the fm-json-ld policy, created once, which accepts only JSON', () => {
+      let rules: { createScript(input: string): string } | undefined;
+      const createScript = vi.fn((input: string) => rules!.createScript(input));
+      const ours = vi.fn();
+      const createPolicy = (name: string, r: { createScript(input: string): string }) => {
+        if (name !== JSON_LD_POLICY) return passThrough;
+        ours(name);
+        rules = r;
+        return { createScript };
+      };
+      (window as { trustedTypes?: unknown }).trustedTypes = { createPolicy };
+      const { data, doc } = setup();
+      data.set({ '@type': 'Person', name: 'Ada' });
+      data.set({ '@type': 'Person', name: 'Grace' });
+      expect(ours).toHaveBeenCalledOnce();
+      expect(createScript).toHaveBeenCalledTimes(2);
+      expect(JSON.parse(block(doc)!.textContent!).name).toBe('Grace');
+      expect(() => rules!.createScript('alert(1)')).toThrow();
+    });
+
+    it('falls back to the plain string when the CSP refuses the policy', () => {
+      (window as { trustedTypes?: unknown }).trustedTypes = {
+        createPolicy: (name: string) => {
+          if (name !== JSON_LD_POLICY) return passThrough;
+          throw new TypeError('Policy "fm-json-ld" disallowed.');
+        },
+      };
+      const { data, doc } = setup();
+      data.set({ '@type': 'WebSite' });
+      expect(JSON.parse(block(doc)!.textContent!)['@type']).toBe('WebSite');
+    });
   });
 });

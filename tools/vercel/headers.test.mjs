@@ -79,6 +79,13 @@ test('CSP blocks inline and third-party scripts and framing', () => {
   assert.match(csp, /object-src 'none'/);
 });
 
+test("CSP enforces Trusted Types, with only Angular's policies and the JSON-LD one (ETE-267)", () => {
+  const csp = value(APP, 'Content-Security-Policy');
+  assert.equal(directive(csp, 'require-trusted-types-for'), "require-trusted-types-for 'script'");
+  assert.equal(directive(csp, 'trusted-types'), 'trusted-types angular angular#bundler fm-json-ld');
+  assert.doesNotMatch(csp, /'allow-duplicates'/);
+});
+
 test('CSP lets only the Google Calendar scheduler load in a frame (ETE-214)', () => {
   const csp = value(APP, 'Content-Security-Policy');
   assert.equal(directive(csp, 'frame-src'), 'frame-src https://calendar.google.com');
