@@ -13,6 +13,7 @@ export {
   type ProfileHeroProfile,
   type ProfileHeroStats,
 } from './profile-hero/profile-hero';
+export { type GridService, relatedServices, ServicesGrid } from './services-grid/services-grid';
 export { SiteFooter, type SiteFooterLink, type SiteFooterResume } from './site-footer/site-footer';
 export { SiteHeader, type SiteHeaderLink, type SiteHeaderPage } from './site-header/site-header';
 export { ALL, type StackGroup, type StackItem, TechStack } from './tech-stack/tech-stack';
