@@ -60,12 +60,17 @@
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  gap: var(--gap-3xl);
+  gap: var(--gap-5xl);
   margin: 0;
 
   // The same space after the last logo as between logos, so the loop has an even rhythm.
-  padding: var(--padding-xs) var(--gap-3xl) var(--padding-xs) 0;
+  padding: var(--padding-xs) var(--gap-5xl) var(--padding-xs) 0;
   list-style: none;
+
+  @media (width < 768px) {
+    gap: var(--gap-4xl);
+    padding-right: var(--gap-4xl);
+  }
 }
 
 @keyframes client-logo-strip-scroll {
@@ -93,7 +98,7 @@
     flex-wrap: wrap;
     justify-content: center;
     flex-shrink: 1;
-    gap: var(--gap-xl) var(--gap-3xl);
+    gap: var(--gap-md) var(--gap-4xl);
     padding: 0;
   }
 
