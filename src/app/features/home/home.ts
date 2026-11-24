@@ -7,7 +7,7 @@ import { heroCodeFile } from '@data/generated/hero-code';
 import { profile } from '@data/profile';
 import { skills } from '@data/skills';
 import { ThemeService } from '@core/theme';
-import { CLOCK, portraitSources, SharedModule, yearsSince } from '@shared';
+import { CLOCK, countWord, portraitSources, SharedModule, yearsSince } from '@shared';
 import { IconRegistry } from '@ui/atoms';
 import { CodeEditor, SERVICE_ICONS } from '@ui/molecules';
 import {
@@ -25,11 +25,6 @@ import { aboutFacts } from './about-facts';
 import { careerGlance, darkLogos, timelineEntries } from './experience-view';
 import { HOME_SECTIONS } from './home-sections';
 import { stackGroups } from './stack-groups';
-
-const WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
-
-/** "Eight" for 8, as a sentence starts; digits past ten. */
-export const countWord = (n: number): string => WORDS[n] ?? String(n);
 
 /** Sections this page renders itself; the rest are shells until their organisms are built. */
 const BUILT = new Set<string>(['about', 'resume', 'stack', 'experience', 'services']);

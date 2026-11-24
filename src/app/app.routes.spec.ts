@@ -29,7 +29,7 @@ describe('routes (PRD §4 site map)', () => {
 
   it.each([
     ['/', 'Odunayo Mohammed', 'Odunayo Mohammed'],
-    ['/services', 'Services', 'Services · Odunayo Mohammed'],
+    ['/services', 'Senior help for the work that matters most', 'Services · Odunayo Mohammed'],
     ['/services/devops', 'DevOps', 'DevOps · Odunayo Mohammed'],
     ['/projects', 'Projects', 'Projects · Odunayo Mohammed'],
     ['/projects/graphui', 'GraphUI', 'GraphUI · Odunayo Mohammed'],
