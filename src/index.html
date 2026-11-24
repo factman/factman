@@ -5,6 +5,9 @@
     <title>Odunayo Mohammed</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Browser UI (canvas, scrollbars, form controls) in the page's scheme before CSS loads; the
+         pre-paint script and ThemeService narrow it to the theme shown (ETE-261). -->
+    <meta name="color-scheme" content="light dark" />
     <!-- Theme pre-paint (FR-04): same order as resolveTheme(): stored choice, system, light.
          Its CSP hash is in vercel.json (pnpm csp:hashes). -->
     <script>
@@ -20,6 +23,8 @@
               : 'light';
         }
         document.documentElement.setAttribute('data-theme', t);
+        var scheme = document.querySelector('meta[name="color-scheme"]');
+        if (scheme) scheme.setAttribute('content', t);
       })();
     </script>
     <meta name="theme-color" content="#07203f" />

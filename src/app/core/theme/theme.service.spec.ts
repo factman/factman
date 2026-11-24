@@ -51,6 +51,19 @@ describe('ThemeService', () => {
     expect(localStorage.getItem(THEME_STORAGE_KEY)).toBeNull();
   });
 
+  it('keeps <meta name="color-scheme"> on the theme shown (ETE-261)', () => {
+    const meta = document.createElement('meta');
+    meta.name = 'color-scheme';
+    meta.content = 'light dark';
+    document.head.append(meta);
+    const theme = setup();
+    expect(meta.content).toBe('light');
+    theme.set('dark');
+    TestBed.tick();
+    expect(meta.content).toBe('dark');
+    meta.remove();
+  });
+
   it('still switches theme when storage is blocked', () => {
     const theme = setup();
     vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
