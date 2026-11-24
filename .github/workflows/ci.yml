@@ -94,6 +94,16 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # The résumé PDFs are committed (public/resumes/, ETE-108); every build checks they match the
+      # data. Here the generator prints them again with Chromium and compares pages and source.
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - run: pnpm exec playwright install --with-deps chromium
+      - name: Print the résumés and compare with the committed ones
+        run: pnpm exec tsx scripts/resume/build-resumes.ts --out dist/resumes-ci --compare
       # Production (www.factman.dev) builds without Storybook; previews ship it at /storybook (ETE-236).
       - run: pnpm build
       - name: Check the home route was prerendered

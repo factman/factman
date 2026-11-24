@@ -45,7 +45,9 @@
     "ds:og": "nx run factman:ds:og",
     "ds:icons": "nx run factman:ds:icons",
     "lint:eslint": "nx run factman:lint:eslint",
-    "resume:html": "nx run factman:resume:html"
+    "resume:html": "nx run factman:resume:html",
+    "build:resumes": "nx run factman:build:resumes",
+    "resume:check": "nx run factman:resume:check"
   },
   "private": true,
   "packageManager": "pnpm@10.34.9",
