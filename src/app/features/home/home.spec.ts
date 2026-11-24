@@ -90,6 +90,19 @@ describe('Home Services (#services)', () => {
   });
 });
 
+describe('Home Projects (FR-20)', () => {
+  it('shows at most six featured projects, newest first, with "See all projects"', async () => {
+    const { container } = await render(Home);
+    const section = container.querySelector('section#projects')!;
+    const cards = section.querySelectorAll('.project-gallery-list > li');
+    const { projects } = await import('@data/projects');
+    expect(cards.length).toBe(Math.min(6, projects.filter((p) => p.featured).length));
+    expect(screen.getByRole('link', { name: /See all projects/ }).getAttribute('href')).toBe(
+      '/projects',
+    );
+  });
+});
+
 describe('Home sections', () => {
   it('has an anchor for every home link in the site navigation', async () => {
     const { site } = await import('@data/site');

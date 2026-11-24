@@ -55,6 +55,15 @@
 >
   <fm-services-grid [services]="services" ctaLabel="Compare all services" />
 </fm-section-layout>
+<fm-section-layout
+  sectionId="projects"
+  index="05"
+  eyebrow="Projects"
+  title="Things I have built"
+  description="Open-source tools, client platforms and side projects. Private work shows the role and stack, and you can ask for a walkthrough."
+>
+  <fm-project-gallery [projects]="projects" [actions]="projectLinks" (engage)="engage()" />
+</fm-section-layout>
 @for (section of sections; track section.id) {
   <section fmReveal [id]="section.id" [attr.aria-labelledby]="section.id + '-title'" tabindex="-1">
     <h2 [id]="section.id + '-title'">{{ section.label }}</h2>
