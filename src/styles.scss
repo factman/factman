@@ -5,6 +5,7 @@
  * Use tokens only: stylelint rejects raw colours, sizes and spacing (see docs/design-tokens.md).
  */
 @use 'reduced-motion';
+@use 'forced-colors';
 
 html {
   background: var(--bg-canvas);
