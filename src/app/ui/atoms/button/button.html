@@ -47,7 +47,7 @@
   <button
     [class]="classes()"
     [attr.type]="type()"
-    [disabled]="disabled() || loading()"
+    [disabled]="disabled()"
     [attr.aria-busy]="loading() || null"
     [attr.aria-pressed]="toggled() ?? null"
     [attr.aria-label]="ariaLabel() || null"

@@ -84,7 +84,8 @@ describe('UI-01 Atoms', () => {
         },
       );
       const button = screen.getByRole('button', { name: /Send/ });
-      expect(button).toHaveProperty('disabled', true);
+      // Disabled is a real disabled button; loading stays enabled so focus stays put (ETE-250).
+      expect(button).toHaveProperty('disabled', 'disabled' in state);
       await userEvent.click(button);
       expect(pressed).not.toHaveBeenCalled();
       if ('loading' in state) expect(button.getAttribute('aria-busy')).toBe('true');
