@@ -9,3 +9,4 @@ export {
 } from './profile-hero/profile-hero';
 export { SiteFooter, type SiteFooterLink, type SiteFooterResume } from './site-footer/site-footer';
 export { SiteHeader, type SiteHeaderLink, type SiteHeaderPage } from './site-header/site-header';
+export { ALL, type StackGroup, type StackItem, TechStack } from './tech-stack/tech-stack';

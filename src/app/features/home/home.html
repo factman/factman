@@ -28,6 +28,15 @@
     </div>
   </fm-about-section>
 </fm-section-layout>
+<fm-section-layout
+  sectionId="stack"
+  index="02"
+  eyebrow="Stack"
+  title="The tools I reach for"
+  description="Grouped by area. Years are counted from the year I started using each one, so they never go stale."
+>
+  <fm-tech-stack [groups]="stack" />
+</fm-section-layout>
 @for (section of sections; track section.id) {
   <section fmReveal [id]="section.id" [attr.aria-labelledby]="section.id + '-title'" tabindex="-1">
     <h2 [id]="section.id + '-title'">{{ section.label }}</h2>

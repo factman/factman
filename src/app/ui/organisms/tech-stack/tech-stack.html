@@ -1,0 +1,41 @@
+<div class="tech-stack">
+  @if (filter() && groups().length > 1) {
+    <div class="tech-stack-filters" role="group" aria-label="Filter skills by category">
+      @for (category of categories(); track category) {
+        <fm-chip
+          [selected]="selected() === category"
+          [value]="category"
+          (toggled)="select(category)"
+          >{{ category }}</fm-chip
+        >
+      }
+    </div>
+  }
+  <div class="tech-stack-panel">
+    <div class="tech-stack-grid">
+      @for (group of shown(); track group.category) {
+        <div class="tech-stack-group">
+          <h3 class="tech-stack-title">{{ group.category }}</h3>
+          <ul class="tech-stack-list">
+            @for (item of group.items; track item.id) {
+              <li class="tech-stack-item" [class.is-featured]="item.featured">
+                @if (item.icon; as icon) {
+                  <fm-icon [icon]="icon" [size]="16" />
+                }
+                <span>{{ item.name }}</span>
+                @if (item.years; as years) {
+                  <span class="tech-stack-years" aria-hidden="true">{{ years }}y</span>
+                  <span class="fm-sr">, {{ years }} {{ years === 1 ? 'year' : 'years' }}</span>
+                }
+                @if (item.featured) {
+                  <span class="fm-sr">, featured</span>
+                }
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+  </div>
+  <p class="tech-stack-summary" aria-live="polite">{{ summary() }}</p>
+</div>

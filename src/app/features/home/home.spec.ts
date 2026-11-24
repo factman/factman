@@ -38,6 +38,18 @@ describe('Home About (FR-10)', () => {
   });
 });
 
+describe('Home Stack (FR-11, FR-12)', () => {
+  it('has the #stack section with every area from skills.json', async () => {
+    const { container } = await render(Home);
+    const stack = container.querySelector('section#stack')!;
+    expect(stack).toBeTruthy();
+    const { skills } = await import('@data/skills');
+    const areas = new Set(skills.map((s) => s.category));
+    expect(stack.querySelectorAll('h3')).toHaveLength(areas.size);
+    expect(stack.querySelectorAll('li')).toHaveLength(skills.length);
+  });
+});
+
 describe('Home sections', () => {
   it('has an anchor for every home link in the site navigation', async () => {
     const { site } = await import('@data/site');
