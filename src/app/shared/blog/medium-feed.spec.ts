@@ -2,6 +2,7 @@ import {
   coverUrlOf,
   decodeEntities,
   excerptOf,
+  htmlToText,
   parseFeed,
   postId,
   postsFromFeed,
@@ -49,5 +50,25 @@ describe('Medium feed (ETE-32)', () => {
     expect(readingMinutesOf('<p>one</p>')).toBe(1);
     expect(readingMinutesOf(`<p>${'w '.repeat(239)}</p>`)).toBe(2);
     expect(coverUrlOf('<p>none</p>')).toBeUndefined();
+  });
+
+  it('reads the HTML with a parser, not string patterns (ETE-270)', () => {
+    const tricky = `
+      <style>p { color: red }</style>
+      <script>alert('x')</script>
+      <figure><img alt="a > b" src='https://cdn-images-1.medium.com/max/1024/cover.png'></figure>
+      <p title="1 > 0">First <b>real</b> paragraph &amp; more.</p>
+      <!-- <p>commented out</p> -->`;
+    expect(excerptOf(tricky)).toBe('First real paragraph & more.');
+    expect(htmlToText(tricky)).not.toMatch(/color|alert|commented/);
+    expect(coverUrlOf(tricky)).toBe('https://cdn-images-1.medium.com/max/1024/cover.png');
+  });
+
+  it('uses only an https cover', () => {
+    expect(coverUrlOf('<img src="http://example.com/a.png">')).toBeUndefined();
+    expect(coverUrlOf('<img src="javascript:alert(1)">')).toBeUndefined();
+    expect(coverUrlOf('<img src="https://miro.medium.com/a.png">')).toBe(
+      'https://miro.medium.com/a.png',
+    );
   });
 });
