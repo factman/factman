@@ -1,0 +1,36 @@
+@if (clients().length) {
+  <section
+    class="client-logo-strip"
+    [class.is-paused]="paused()"
+    aria-labelledby="client-logo-strip-title"
+  >
+    <div class="client-logo-strip-head">
+      <h2 id="client-logo-strip-title" class="client-logo-strip-title">{{ title() }}</h2>
+      <span class="client-logo-strip-toggle">
+        <fm-icon-button
+          size="sm"
+          [icon]="toggleIcon()"
+          [label]="toggleLabel()"
+          [toggled]="paused()"
+          (pressed)="toggle()"
+        />
+      </span>
+    </div>
+    <div class="client-logo-strip-viewport">
+      <div class="client-logo-strip-track">
+        <ul class="client-logo-strip-group">
+          @for (client of clients(); track client.id) {
+            <li><fm-client-logo [client]="client" [assetBase]="assetBase()" /></li>
+          }
+        </ul>
+        <ul class="client-logo-strip-group is-copy" aria-hidden="true">
+          @for (client of clients(); track client.id) {
+            <li>
+              <fm-client-logo [client]="client" [assetBase]="assetBase()" [tabbable]="false" />
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+}

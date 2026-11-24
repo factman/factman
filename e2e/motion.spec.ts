@@ -38,3 +38,28 @@ test.describe('with reduced motion', () => {
     for (const d of durations) expect(parseFloat(d)).toBeLessThan(0.001);
   });
 });
+
+// ETE-93: the "Worked with" marquee.
+test.describe('the "Worked with" strip', () => {
+  test('loops, and pauses on hover', async ({ page, isMobile }) => {
+    await page.goto('/');
+    const track = page.locator('.client-logo-strip-track');
+    await expect(track).toHaveCSS('animation-name', 'client-logo-strip-scroll');
+    await expect(track).toHaveCSS('animation-play-state', 'running');
+    test.skip(isMobile, 'hover needs a mouse');
+    await page.locator('.client-logo-strip-viewport').hover();
+    await expect(track).toHaveCSS('animation-play-state', 'paused');
+  });
+
+  test.describe('with reduced motion', () => {
+    test.use({ reducedMotion: 'reduce' });
+
+    test('is a static grid with no copy and no pause button', async ({ page }) => {
+      await page.goto('/');
+      await expect(page.locator('.client-logo-strip-track')).toHaveCSS('animation-name', 'none');
+      await expect(page.locator('.client-logo-strip-group.is-copy')).toBeHidden();
+      await expect(page.getByRole('button', { name: /logo animation/ })).toBeHidden();
+      await expect(page.locator('.client-logo-strip-group').first()).toHaveCSS('flex-wrap', 'wrap');
+    });
+  });
+});
