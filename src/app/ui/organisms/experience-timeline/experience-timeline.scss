@@ -201,6 +201,12 @@
   font: 400 14px/1.6 var(--font-sans);
   color: var(--text-secondary);
 
+  // A collapsed highlight is hidden="until-found" (content-visibility, not display: none), so it
+  // stays a zero-height flex item: cancel the gap it would add (ETE-258).
+  li[hidden] {
+    margin-block-start: calc(var(--gap-2xs) * -1);
+  }
+
   li {
     position: relative;
     padding-left: var(--padding-md);

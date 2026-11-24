@@ -107,6 +107,20 @@ describe('ExperienceTimeline', () => {
     expect(within(list).getAllByRole('listitem')).toHaveLength(2);
   });
 
+  it('keeps collapsed highlights in the page for find-in-page, and opens on a match (ETE-258)', async () => {
+    await renderTimeline();
+    const list = document.getElementById('sf-cto-highlights')!;
+    const items = list.querySelectorAll('li');
+    expect(items).toHaveLength(4);
+    expect(items[2].getAttribute('hidden')).toBe('until-found');
+    expect(items[2].textContent).toContain('Three');
+    items[3].dispatchEvent(new Event('beforematch'));
+    await vi.waitFor(() => expect(items[3].hasAttribute('hidden')).toBe(false));
+    expect(screen.getByRole('button', { name: /Show less/ }).getAttribute('aria-expanded')).toBe(
+      'true',
+    );
+  });
+
   it('has no "Show more" when every highlight fits the preview', async () => {
     await renderTimeline();
     const mazadat = screen.getAllByRole('article')[2];

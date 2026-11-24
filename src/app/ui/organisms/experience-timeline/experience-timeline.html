@@ -66,10 +66,15 @@
               @if (role.highlights.length) {
                 @let opened = isOpen(role.id);
                 <ul class="experience-timeline-highlights" [id]="role.id + '-highlights'">
+                  <!-- Every highlight is in the page; the extra ones are hidden="until-found" while
+                       collapsed, so find-in-page reaches them and opens the role (ETE-258). -->
                   @for (highlight of role.highlights; track $index; let i = $index) {
-                    @if (opened || i < preview()) {
-                      <li>{{ highlight }}</li>
-                    }
+                    <li
+                      [attr.hidden]="opened || i < preview() ? null : 'until-found'"
+                      (beforematch)="reveal(role.id)"
+                    >
+                      {{ highlight }}
+                    </li>
                   }
                 </ul>
                 @if (role.highlights.length > preview()) {
