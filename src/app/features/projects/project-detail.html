@@ -1,0 +1,18 @@
+<fm-page-hero
+  [crumbs]="crumbs()"
+  [eyebrow]="project().category"
+  [tags]="tags()"
+  [title]="project().title"
+  [lead]="project().summary"
+  [meta]="meta()"
+  [media]="media()"
+/>
+<div class="project-detail-content">
+  <fm-project-case-study
+    [project]="project()"
+    [stack]="stack()"
+    [facts]="facts()"
+    [next]="next()"
+    (requestAccess)="requestAccess()"
+  />
+</div>
