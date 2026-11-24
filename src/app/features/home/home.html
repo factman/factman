@@ -64,6 +64,26 @@
 >
   <fm-project-gallery [projects]="projects" [actions]="projectLinks" (engage)="engage()" />
 </fm-section-layout>
+<fm-section-layout
+  sectionId="blog"
+  index="07"
+  eyebrow="Blog"
+  [title]="blogTitle"
+  description="Practical write-ups on fullstack engineering, fintech, cloud and leading teams, drawn from real products and the decisions behind them. New posts publish on Medium."
+>
+  <fm-blog-feed
+    [posts]="blog.posts()"
+    [status]="blog.status()"
+    [profileUrl]="blog.profileUrl"
+    [limit]="3"
+    (retry)="blog.retry()"
+  />
+  <div style="display: flex; justify-content: center; margin-top: var(--gap-3xl)">
+    <fm-button variant="secondary" size="lg" href="/blog" [trailingIcon]="blogArrow"
+      >Read the blog</fm-button
+    >
+  </div>
+</fm-section-layout>
 @for (section of sections; track section.id) {
   <section fmReveal [id]="section.id" [attr.aria-labelledby]="section.id + '-title'" tabindex="-1">
     <h2 [id]="section.id + '-title'">{{ section.label }}</h2>

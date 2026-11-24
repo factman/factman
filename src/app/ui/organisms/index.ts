@@ -1,5 +1,6 @@
 // Public API of the organisms level. Export every organism from here; import it only via `@ui/organisms`.
 export { type AboutFact, AboutSection } from './about-section/about-section';
+export { ALL_TAGS, BlogFeed, type FeedStatus, postTags } from './blog-feed/blog-feed';
 export { BookingChannels } from './booking-channels/booking-channels';
 export { ClientLogoStrip, type StripClient } from './client-logo-strip/client-logo-strip';
 export { CtaBanner } from './cta-banner/cta-banner';
