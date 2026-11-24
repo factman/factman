@@ -1,5 +1,6 @@
 // Public API of the organisms level. Export every organism from here; import it only via `@ui/organisms`.
 export { type AboutFact, AboutSection } from './about-section/about-section';
+export { BookingChannels } from './booking-channels/booking-channels';
 export { ClientLogoStrip, type StripClient } from './client-logo-strip/client-logo-strip';
 export { CtaBanner } from './cta-banner/cta-banner';
 export {
@@ -17,6 +18,12 @@ export {
   type ProfileHeroProfile,
   type ProfileHeroStats,
 } from './profile-hero/profile-hero';
+export { SchedulerModal } from './scheduler-modal/scheduler-modal';
+export {
+  type DetailService,
+  priceLabel,
+  ServiceDetailBody,
+} from './service-detail-body/service-detail-body';
 export { type GridService, relatedServices, ServicesGrid } from './services-grid/services-grid';
 export { SiteFooter, type SiteFooterLink, type SiteFooterResume } from './site-footer/site-footer';
 export { SiteHeader, type SiteHeaderLink, type SiteHeaderPage } from './site-header/site-header';

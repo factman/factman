@@ -1,0 +1,61 @@
+<div class="service-detail-body">
+  <div class="service-detail-body-main">
+    <section class="service-detail-body-block" aria-labelledby="service-audience">
+      <h2 id="service-audience">Who it is for</h2>
+      <p class="service-detail-body-prose">{{ service().audience }}</p>
+    </section>
+
+    <section class="service-detail-body-block" aria-labelledby="service-deliverables">
+      <h2 id="service-deliverables">Deliverables</h2>
+      <ul class="service-detail-body-tiles is-two">
+        @for (item of service().deliverables; track item; let i = $index) {
+          <li>
+            <fm-contact-method
+              variant="tile"
+              [icon]="icons.deliverable"
+              [label]="'Deliverable ' + (i + 1)"
+              [value]="item"
+            />
+          </li>
+        }
+      </ul>
+    </section>
+
+    <section class="service-detail-body-block" aria-labelledby="service-process">
+      <h2 id="service-process">How I work</h2>
+      <fm-stepper [steps]="steps()" orientation="vertical" />
+    </section>
+
+    <section class="service-detail-body-block" aria-labelledby="service-engagement">
+      <h2 id="service-engagement">Engagement models</h2>
+      <ul class="service-detail-body-tiles is-three">
+        @for (model of service().engagement; track model.id) {
+          <li>
+            <fm-contact-method
+              variant="tile"
+              [icon]="icons.model"
+              [label]="model.title"
+              [value]="model.description"
+            />
+          </li>
+        }
+      </ul>
+    </section>
+
+    @if (faq().length) {
+      <section class="service-detail-body-block" aria-labelledby="service-faq">
+        <h2 id="service-faq">FAQ</h2>
+        <fm-accordion [items]="faq()" [expanded]="firstFaq()" />
+      </section>
+    }
+  </div>
+  <div class="service-detail-body-aside">
+    <fm-booking-card
+      [service]="service().title"
+      [price]="price()"
+      [booking]="service().booking"
+      [person]="person()"
+      (channel)="channel.emit($event)"
+    />
+  </div>
+</div>

@@ -124,7 +124,18 @@
       "additionalProperties": false,
       "required": ["schedulerUrl", "email", "whatsapp", "phone"],
       "properties": {
-        "schedulerUrl": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "schedulerUrl": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://",
+          "description": "The booking calendar's link; \"Open in a new tab\" and the fallback without JavaScript."
+        },
+        "schedulerEmbedUrl": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://calendar\\.google\\.com/calendar/appointments/schedules/[\\w-]+\\?gv=true$",
+          "description": "The Google Calendar appointment schedule's embed URL, framed in the SchedulerModal (the only frame source the CSP allows)."
+        },
         "email": { "type": "string", "pattern": "^mailto:[^@\\s]+@[^@\\s]+\\.[^@\\s]+" },
         "whatsapp": { "type": "string", "format": "uri", "pattern": "^https://wa\\.me/\\d+" },
         "phone": { "type": "string", "pattern": "^tel:\\+\\d{7,15}$" }

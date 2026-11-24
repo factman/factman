@@ -1,11 +1,14 @@
 import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
 
 import { ServicesPage } from './services';
 
+const renderPage = () => render(ServicesPage, { providers: [provideRouter([])] });
+
 describe('ServicesPage (/services)', () => {
-  it('has the hero, every service, the process, the call to action and the FAQ', async () => {
-    const { container } = await render(ServicesPage, { providers: [provideRouter([])] });
+  it('has the hero, every service, the process, the booking channels and the FAQ', async () => {
+    const { container } = await renderPage();
     const { services } = await import('@data/services');
 
     expect(
@@ -14,12 +17,12 @@ describe('ServicesPage (/services)', () => {
     expect(screen.getByRole('navigation', { name: 'Breadcrumb' })).toBeTruthy();
     expect(container.querySelectorAll('#catalogue .service-card')).toHaveLength(services.length);
     expect(container.querySelector('section#process .fm-stepper')).toBeTruthy();
-    expect(screen.getByText('Not sure which service fits?')).toBeTruthy();
+    expect(screen.getByRole('region', { name: 'Pick the channel that suits you' })).toBeTruthy();
     expect(screen.getByRole('region', { name: 'Questions clients ask first' })).toBeTruthy();
   });
 
   it('counts the services in the lead and links "Browse services" to the catalogue', async () => {
-    await render(ServicesPage, { providers: [provideRouter([])] });
+    await renderPage();
     expect(screen.getByText(/^Eight ways to work together/)).toBeTruthy();
     // `#catalogue` stays on the current page (Button's parseHref).
     expect(screen.getByRole('link', { name: /Browse services/ }).getAttribute('href')).toMatch(
@@ -27,10 +30,24 @@ describe('ServicesPage (/services)', () => {
     );
   });
 
-  it('opens the booking calendar from "Schedule a call", in a new tab', async () => {
-    await render(ServicesPage, { providers: [provideRouter([])] });
-    const [schedule] = screen.getAllByRole('link', { name: /Schedule a call/ });
-    expect(schedule.getAttribute('href')).toMatch(/^https:\/\//);
-    expect(schedule.getAttribute('target')).toBe('_blank');
+  it('offers email, WhatsApp and a phone call, each prefilled or dialable', async () => {
+    await renderPage();
+    const hrefs = screen
+      .getAllByRole('link')
+      .map((a) => a.getAttribute('href') ?? '')
+      .filter((h) => /^(mailto:|tel:|https:\/\/wa\.me)/.test(h));
+    expect(hrefs.some((h) => h.startsWith('mailto:') && h.includes('subject='))).toBe(true);
+    expect(hrefs.some((h) => h.startsWith('https://wa.me/') && h.includes('text='))).toBe(true);
+    expect(hrefs.some((h) => h.startsWith('tel:+'))).toBe(true);
+  });
+
+  it('opens the scheduler from the hero\'s "Schedule a call" (FR-19)', async () => {
+    const { container } = await renderPage();
+    expect(container.querySelector('iframe')).toBeNull();
+    await userEvent.click(screen.getAllByRole('button', { name: /Schedule a call/ })[0]);
+    const frame = container.querySelector('iframe')!;
+    expect(frame.getAttribute('src')).toMatch(
+      /^https:\/\/calendar\.google\.com\/calendar\/appointments\//,
+    );
   });
 });

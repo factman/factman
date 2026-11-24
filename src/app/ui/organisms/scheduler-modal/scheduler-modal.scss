@@ -1,0 +1,45 @@
+// The canvas's SchedulerModal: the calendar fills a tall stage inside the large dialog, with a
+// loading state over it until the frame has loaded.
+
+.scheduler-modal-stage {
+  position: relative;
+  height: min(70vh, 720px);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--neutral-0);
+}
+
+.scheduler-modal-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.scheduler-modal-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-sm);
+  font: 500 14px/20px var(--font-sans);
+
+  // The stage is white in both themes (the calendar's own page), so the text uses dark ink.
+  color: var(--neutral-800);
+}
+
+.scheduler-modal-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+  width: 100%;
+}
+
+.scheduler-modal-note {
+  font: 400 13px/20px var(--font-sans);
+  color: var(--text-secondary);
+}

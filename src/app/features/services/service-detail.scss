@@ -1,0 +1,8 @@
+// The service's body on the page's container, right under the hero.
+@use 'ui/layout';
+
+.service-detail-content {
+  @include layout.container;
+
+  padding-block: var(--gap-xl) var(--gap-5xl);
+}
