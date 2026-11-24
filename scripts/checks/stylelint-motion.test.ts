@@ -1,5 +1,7 @@
 // ETE-26: only transform and opacity may animate. The stylelint config enforces it on transitions;
-// this test pins the rule so a config change can't drop it silently.
+// this test pins the rule so a config change can't drop it silently. transition-property may also
+// list display and overlay: discrete, they keep a top-layer element (dialog, popover) on screen
+// while its opacity and transform animate out (ETE-252).
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import stylelint from 'stylelint';
@@ -18,6 +20,13 @@ test('transitions of transform and opacity are allowed', async () => {
     await lint(
       '.a { transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out); }\n.b { transition-property: transform; }\n.c { transition: none; }\n',
     ),
+    [],
+  );
+});
+
+test('display and overlay may join a transition-property list, for top-layer exits', async () => {
+  assert.deepEqual(
+    await lint('.a { transition-property: opacity, transform, display, overlay; }\n'),
     [],
   );
 });

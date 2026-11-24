@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   DOCUMENT,
-  DestroyRef,
   ElementRef,
   ViewEncapsulation,
   afterNextRender,
@@ -17,10 +16,12 @@ import { IconButton, fieldId, iconClose } from '@ui/atoms';
 
 /**
  * A modal dialog over the page, the shell for the résumé preview and the scheduler. It is a native
- * `<dialog>` opened with `showModal()`, so the rest of the page is inert (focus stays inside) and
- * Escape closes it. While it is open the page doesn't scroll, and on close focus goes back to
- * whatever opened it. The parent owns `open`; `closed` asks it to close (Escape, the close button,
- * a click on the backdrop). Projected content is the body; put buttons in `[dialogFooter]`.
+ * `<dialog>` opened with `showModal()`, so the rest of the page is inert (focus stays inside),
+ * Escape closes it and, on close, the browser puts focus back on whatever opened it. A click on
+ * the backdrop closes it (`closedby="any"`, with a click fallback where that is missing), and
+ * scrolling inside it or over the backdrop doesn't scroll the page (CSS `overscroll-behavior`, no
+ * root `overflow` lock: ETE-252). The parent owns `open`; `closed` asks it to close. Projected
+ * content is the body; put buttons in `[dialogFooter]`.
  * @level molecule
  */
 @Component({
@@ -51,6 +52,7 @@ export class Dialog {
   protected readonly titleId = fieldId('fm-dialog');
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
   private readonly doc = inject(DOCUMENT);
+  /** Only for browsers without `showModal()`, which don't restore focus themselves. */
   private opener: HTMLElement | null = null;
 
   constructor() {
@@ -59,18 +61,24 @@ export class Dialog {
       if (this.open()) this.show(el);
       else this.hide(el);
     });
-    // A click on the backdrop closes it: a pointer convenience (keyboards use Escape), so it is
-    // attached here rather than as a template (click) binding.
-    afterNextRender(() =>
-      this.dialog().nativeElement.addEventListener('click', (e) => this.backdrop(e)),
-    );
-    inject(DestroyRef).onDestroy(() => this.unlockScroll());
+    // Light dismiss: closedby="any" where supported; elsewhere a click on the backdrop. A pointer
+    // convenience (keyboards use Escape), so the fallback is attached here, not as a (click)
+    // binding.
+    afterNextRender(() => {
+      const el: HTMLElement = this.dialog().nativeElement;
+      if (!('closedBy' in el)) el.addEventListener('click', (e: MouseEvent) => this.backdrop(e));
+    });
   }
 
   /** Escape: the browser would close it; let the parent decide instead. */
   protected cancel(event: Event): void {
     event.preventDefault();
     this.closed.emit();
+  }
+
+  /** The browser closed it itself (light dismiss it would not let us cancel): tell the parent. */
+  protected nativeClose(): void {
+    if (this.open()) this.closed.emit();
   }
 
   /** A click on the backdrop (the dialog element itself, outside the panel) closes it. */
@@ -80,22 +88,22 @@ export class Dialog {
 
   private show(el: HTMLDialogElement): void {
     if (el.open) return;
-    this.opener = this.doc.activeElement as HTMLElement | null;
-    if (typeof el.showModal === 'function') el.showModal();
-    else el.setAttribute('open', '');
-    this.doc.documentElement.classList.add('dialog-scroll-lock');
+    if (typeof el.showModal === 'function') {
+      el.showModal();
+    } else {
+      this.opener = this.doc.activeElement as HTMLElement | null;
+      el.setAttribute('open', '');
+    }
   }
 
   private hide(el: HTMLDialogElement): void {
     if (!el.open && !el.hasAttribute('open')) return;
-    if (typeof el.close === 'function') el.close();
-    else el.removeAttribute('open');
-    this.unlockScroll();
-    this.opener?.focus?.();
+    if (typeof el.close === 'function') {
+      el.close(); // restores focus to the opener
+    } else {
+      el.removeAttribute('open');
+      this.opener?.focus?.();
+    }
     this.opener = null;
-  }
-
-  private unlockScroll(): void {
-    this.doc.documentElement.classList.remove('dialog-scroll-lock');
   }
 }
