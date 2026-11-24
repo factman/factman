@@ -178,7 +178,19 @@ export function resumeBody(vm: ResumeViewModel): string {
     .join('\n');
 }
 
-/** The whole document: self-contained HTML with the stylesheet inlined. */
+/** A CSS string literal: quotes, backslashes and line breaks escaped. */
+export const cssString = (text: string): string =>
+  `"${text.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\a ')}"`;
+
+/**
+ * The print page boxes' text for this résumé: the footer (name and role) on every page, and from
+ * page 2 the running header naming the résumé. "Page x of y" is in resume.css.
+ */
+export function pageCss(vm: ResumeViewModel): string {
+  return `@page{@top-left{content:${cssString(`${vm.header.name} · ${vm.title} résumé`)}}@bottom-left{content:${cssString(vm.footer)}}}@page:first{@top-left{content:none}}`;
+}
+
+/** The whole document: self-contained HTML with the stylesheet and page boxes inlined. */
 export function renderResume(vm: ResumeViewModel, fontCss = ''): string {
   return `<!doctype html>
 <html lang="en">
@@ -187,7 +199,7 @@ export function renderResume(vm: ResumeViewModel, fontCss = ''): string {
 <title>${escapeHtml(vm.header.name)} · ${escapeHtml(vm.title)}</title>
 <meta name="author" content="${escapeHtml(vm.header.name)}">
 <meta name="robots" content="noindex">
-<style>${fontCss}${RESUME_CSS}</style>
+<style>${fontCss}${RESUME_CSS}${pageCss(vm)}</style>
 </head>
 <body>
 <article class="cv-doc" aria-label="${escapeHtml(vm.title)} résumé">
