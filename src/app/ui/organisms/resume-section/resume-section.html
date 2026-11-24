@@ -1,0 +1,15 @@
+<div class="resume-section">
+  <fm-section-header eyebrow="Résumé" [level]="3" [title]="title()" [description]="description()" />
+  <ul class="resume-section-grid">
+    @for (resume of resumes(); track resume.slug) {
+      <li>
+        <fm-resume-card
+          [resume]="resume"
+          [thumbnail]="resume.previews[0]"
+          (preview)="preview.emit(resume.slug)"
+          (download)="download.emit(resume.slug)"
+        />
+      </li>
+    }
+  </ul>
+</div>

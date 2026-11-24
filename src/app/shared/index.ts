@@ -16,5 +16,6 @@ export * from './experience/years';
 export * from './experience/counters';
 export * from './resume/resume-text';
 export * from './resume/resume-view-model';
+export * from './resume/resume-download';
 export * from './blog/medium-feed';
 export { countWord } from './text/count-word';

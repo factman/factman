@@ -1,6 +1,7 @@
 import {
   afterNextRender,
   ChangeDetectionStrategy,
+  DOCUMENT,
   Component,
   computed,
   inject,
@@ -17,6 +18,7 @@ import { StructuredData } from '@core/seo';
 import { contact } from '@data/contact';
 import { experience } from '@data/experience';
 import { heroCodeFile } from '@data/generated/hero-code';
+import { resumeDownloads } from '@data/resume-downloads';
 import { profile } from '@data/profile';
 import { site } from '@data/site';
 import { skills } from '@data/skills';
@@ -31,7 +33,7 @@ import {
   yearsSince,
 } from '@shared';
 import { Button, IconRegistry, iconArrowRight, iconGithub } from '@ui/atoms';
-import { CodeEditor, SERVICE_ICONS } from '@ui/molecules';
+import { CodeEditor, RESUME_ICONS, SERVICE_ICONS } from '@ui/molecules';
 import {
   AboutSection,
   BlogFeed,
@@ -45,6 +47,8 @@ import {
   ProfileHero,
   ProjectGallery,
   type ProfileHeroStats,
+  ResumePreviewModal,
+  ResumeSection,
   ServicesGrid,
   StatsPanel,
   TechStack,
@@ -80,6 +84,8 @@ const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
     ExperienceTimeline,
     ProfileHero,
     ProjectGallery,
+    ResumePreviewModal,
+    ResumeSection,
     SectionLayout,
     ServicesGrid,
     SharedModule,
@@ -182,9 +188,12 @@ export class Home {
   };
 
   constructor() {
-    inject(IconRegistry).register(SERVICE_ICONS);
+    inject(IconRegistry).register([...SERVICE_ICONS, ...RESUME_ICONS]);
     inject(StructuredData).set(homeStructuredData(site, profile, contact));
-    afterNextRender(() => void this.blog.load());
+    afterNextRender(() => {
+      void this.blog.load();
+      this.openResumeFromLink();
+    });
   }
 
   /** A private project's "Request a walkthrough" goes to the contact section. */
@@ -209,8 +218,31 @@ export class Home {
   protected readonly terminalEnabled = inject(TERMINAL_ENABLED);
   protected readonly terminal = inject(TerminalLauncher);
 
-  /** The résumé modal comes with ETE-109; until then the hero's Résumé goes to the section. */
-  protected openResume(): void {
-    void this.router.navigate([], { fragment: 'resume' });
+  /** Résumés (FR-43 to FR-47): resumes.json with the PDFs committed by `pnpm build:resumes`. */
+  protected readonly resumes = resumeDownloads;
+  protected readonly resumeOpen = signal(false);
+  protected readonly resumeVariant = signal(this.resumes[0]?.slug ?? '');
+  private readonly document = inject(DOCUMENT);
+
+  /** Preview a résumé: the hero's Résumé button (fullstack) or a card's Preview. */
+  protected openResume(slug: string): void {
+    this.resumeVariant.set(slug);
+    this.resumeOpen.set(true);
+  }
+
+  /** Download a résumé's PDF under the manifest's file name. */
+  protected downloadResume(slug: string): void {
+    const resume = this.resumes.find((r) => r.slug === slug);
+    if (!resume) return;
+    const link = this.document.createElement('a');
+    link.href = resume.file;
+    link.download = resume.fileName;
+    link.click();
+  }
+
+  /** A deep link `/#resume=<slug>` opens that résumé's preview on load (FR-47). */
+  private openResumeFromLink(): void {
+    const slug = /^#resume=([\w-]+)$/.exec(this.document.location?.hash ?? '')?.[1];
+    if (slug && this.resumes.some((r) => r.slug === slug)) this.openResume(slug);
   }
 }
