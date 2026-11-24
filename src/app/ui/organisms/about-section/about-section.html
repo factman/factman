@@ -1,0 +1,32 @@
+<div class="about-section" [class.no-photo]="!photo()">
+  @if (photo(); as image) {
+    <div class="about-section-media">
+      <fm-photo-frame [image]="image" variant="plate">
+        <fm-logo type="odunayo" [size]="40" [theme]="theme()" />
+      </fm-photo-frame>
+    </div>
+  }
+  <div class="about-section-text">
+    <div class="about-section-story">
+      @for (paragraph of story(); track $index) {
+        <p>{{ paragraph }}</p>
+      }
+    </div>
+    @if (facts().length) {
+      <ul class="about-section-facts">
+        @for (fact of facts(); track fact.label) {
+          <li>
+            <fm-contact-method
+              variant="tile"
+              [icon]="fact.icon"
+              [label]="fact.label"
+              [value]="fact.title"
+              [meta]="fact.meta"
+            />
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</div>
+<ng-content />

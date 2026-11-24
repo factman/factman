@@ -25,6 +25,19 @@ describe('Home "Worked with" strip (FR-52)', () => {
   });
 });
 
+describe('Home About (FR-10)', () => {
+  it('has the #about section with the story and the #resume anchor inside it', async () => {
+    const { container } = await render(Home);
+    const about = container.querySelector('section#about')!;
+    expect(about.getAttribute('aria-labelledby')).toBeTruthy();
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'Engineer first, leader by practice' }),
+    ).toBeTruthy();
+    expect(about.querySelector('#resume')).toBeTruthy();
+    expect(about.textContent).toContain('I started writing software professionally in 2013');
+  });
+});
+
 describe('Home sections', () => {
   it('has an anchor for every home link in the site navigation', async () => {
     const { site } = await import('@data/site');

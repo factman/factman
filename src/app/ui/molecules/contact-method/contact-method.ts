@@ -36,6 +36,8 @@ export class ContactMethod {
   /** Adds a button that copies the value. */
   readonly copy = input(false);
   readonly variant = input<'row' | 'tile'>('row');
+  /** A small mono line under the value ("2013 – 2015"); tiles only. */
+  readonly meta = input<string>();
 
   readonly copied = output<string>();
 

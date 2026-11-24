@@ -1,0 +1,85 @@
+// The canvas's AboutSection body: the framed portrait beside the story and the fact tiles (two
+// columns from 1024px, stacked and centred below), then whatever the page projects (the résumé).
+
+.about-section {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-5xl);
+  align-items: start;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+
+  @media (width < 1024px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-4xl);
+  }
+}
+
+.about-section.no-photo {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+// Room on the right for the plate, which overhangs the frame.
+.about-section-media {
+  max-width: 480px;
+  padding-right: var(--gap-xl);
+
+  @media (width < 1024px) {
+    margin-inline: auto;
+  }
+
+  @media (width < 768px) {
+    max-width: 360px;
+    padding-right: 0;
+  }
+}
+
+// Below 768px the plate sits inside the frame's corner, as in the canvas.
+@media (width < 768px) {
+  .about-section-media .photo-frame.is-plate .photo-frame-over {
+    right: var(--gap-md);
+    bottom: var(--gap-md);
+  }
+}
+
+.about-section-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-3xl);
+}
+
+// The canvas's .prose.
+.about-section-story p {
+  margin: 0 0 var(--gap-md);
+  font: 400 16px/1.75 var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.about-section-story p:last-child {
+  margin-bottom: 0;
+}
+
+.about-section-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (width < 1440px) and (width >= 1024px), (width < 768px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+// The canvas's InfoTile: full height in its row, and a title that wraps instead of truncating.
+.about-section-facts .fm-cmethod {
+  box-sizing: border-box;
+  height: 100%;
+  padding: var(--padding-lg);
+}
+
+.about-section-facts .fm-cmethod .cmethod-value {
+  font: 600 14px/1.5 var(--font-sans);
+  white-space: normal;
+}

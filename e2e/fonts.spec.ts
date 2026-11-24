@@ -17,11 +17,13 @@ test('fonts load from our origin only, and only the ones the page uses', async (
   expect(fontRequests.length).toBeGreaterThan(0);
   for (const u of fontRequests) expect(u.startsWith(`${baseURL}/assets/fonts/`)).toBe(true);
 
-  // Body text uses Plus Jakarta Sans (preloaded) and the hero's roles and meta JetBrains Mono
-  // (ETE-89); the home page renders no logo wordmark, so Jost is never fetched.
+  // Body text uses Plus Jakarta Sans (preloaded), the hero's roles and meta JetBrains Mono
+  // (ETE-89), and the ODUNAYO wordmark on the About plate Jost (ETE-92). The wordmark is Latin
+  // only, so Jost's latin-ext subset is never fetched.
   expect(fontRequests.some((u) => u.includes('plus-jakarta-sans-latin-v'))).toBe(true);
   expect(fontRequests.some((u) => u.includes('/jetbrains-mono-'))).toBe(true);
-  expect(fontRequests.some((u) => u.includes('/jost-'))).toBe(false);
+  expect(fontRequests.some((u) => u.includes('/jost-latin-v'))).toBe(true);
+  expect(fontRequests.some((u) => u.includes('/jost-latin-ext-'))).toBe(false);
 
   expect(await page.evaluate(() => document.fonts.check('16px "Plus Jakarta Sans"'))).toBe(true);
 });
