@@ -109,6 +109,17 @@ describe('Home Projects (FR-20)', () => {
   });
 });
 
+describe('Home Contact (FR-27)', () => {
+  it('has the #contact section with the form and every topic', async () => {
+    const { container } = await render(Home, { providers: [SITE_PROVIDER] });
+    const section = container.querySelector('section#contact')!;
+    expect(section.querySelector('form')).toBeTruthy();
+    const { services } = await import('@data/services');
+    const options = [...section.querySelectorAll('option')].map((o) => o.textContent?.trim());
+    for (const s of services) expect(options).toContain(s.title);
+  });
+});
+
 describe('Home sections', () => {
   it('has an anchor for every home link in the site navigation', async () => {
     const { site } = await import('@data/site');

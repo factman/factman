@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 test('sections below the fold reveal as they scroll into view', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 500 });
   await page.goto('/');
-  const contact = page.locator('section#contact');
+  const contact = page.locator('#contact .section-layout-body');
   await expect(contact).toHaveClass(/fm-reveal/);
   await expect(contact).not.toHaveClass(/is-in/);
   await contact.scrollIntoViewIfNeeded();
@@ -16,8 +16,8 @@ test('the prerendered page is never hidden, even without JavaScript', async ({ b
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto('/');
-  await expect(page.locator('section#contact')).not.toHaveClass(/fm-reveal/);
-  await expect(page.locator('section#contact')).toHaveCSS('opacity', '1');
+  await expect(page.locator('#contact .section-layout-body')).not.toHaveClass(/fm-reveal/);
+  await expect(page.locator('#contact .section-layout-body')).toHaveCSS('opacity', '1');
   await context.close();
 });
 
@@ -27,7 +27,7 @@ test.describe('with reduced motion', () => {
   test('nothing is hidden or animated', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 500 });
     await page.goto('/');
-    const contact = page.locator('section#contact');
+    const contact = page.locator('#contact .section-layout-body');
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await expect(contact).not.toHaveClass(/fm-reveal/);
     await expect(contact).toHaveCSS('opacity', '1');

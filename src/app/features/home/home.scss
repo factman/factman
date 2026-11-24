@@ -1,0 +1,13 @@
+// The home page's own layout: the contact form beside the contact channels (1:1 from 1024px).
+
+.home-contact {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-5xl);
+  align-items: start;
+
+  @media (width < 1024px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-4xl);
+  }
+}

@@ -3,6 +3,14 @@ export { type AboutFact, AboutSection } from './about-section/about-section';
 export { ALL_TAGS, BlogFeed, type FeedStatus, postTags } from './blog-feed/blog-feed';
 export { BookingChannels } from './booking-channels/booking-channels';
 export { ClientLogoStrip, type StripClient } from './client-logo-strip/client-logo-strip';
+export {
+  type ComposedMessage,
+  composeMessage,
+  contactTopics,
+  type ContactValues,
+  validateContact,
+} from './contact-form/contact-message';
+export { ContactForm } from './contact-form/contact-form';
 export { CtaBanner } from './cta-banner/cta-banner';
 export {
   ExperienceTimeline,

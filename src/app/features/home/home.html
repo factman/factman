@@ -84,6 +84,18 @@
     >
   </div>
 </fm-section-layout>
+<fm-section-layout
+  sectionId="contact"
+  index="08"
+  eyebrow="Contact"
+  title="Let's build something"
+  description="Have a product to build, a team to lead or a system to fix? Tell me about it. The form opens your own mail app; nothing is sent from this site."
+>
+  <div class="home-contact">
+    <fm-contact-form [email]="contactEmail" [topics]="topics" />
+    <!-- The contact channels (ETE-104) go beside the form. -->
+  </div>
+</fm-section-layout>
 @for (section of sections; track section.id) {
   <section fmReveal [id]="section.id" [attr.aria-labelledby]="section.id + '-title'" tabindex="-1">
     <h2 [id]="section.id + '-title'">{{ section.label }}</h2>

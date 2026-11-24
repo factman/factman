@@ -19,6 +19,8 @@ import {
   AboutSection,
   BlogFeed,
   ClientLogoStrip,
+  ContactForm,
+  contactTopics,
   ExperienceTimeline,
   type HeroAction,
   ProfileHero,
@@ -43,6 +45,7 @@ const BUILT = new Set<string>([
   'services',
   'projects',
   'blog',
+  'contact',
 ]);
 
 /** The networks the hero links to, in contact.json's order (ETeam has its own place). */
@@ -62,6 +65,7 @@ const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
     Button,
     ClientLogoStrip,
     CodeEditor,
+    ContactForm,
     ExperienceTimeline,
     ProfileHero,
     ProjectGallery,
@@ -72,6 +76,7 @@ const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
     TechStack,
   ],
   templateUrl: './home.html',
+  styleUrl: './home.scss',
 })
 export class Home {
   private readonly router = inject(Router);
@@ -125,6 +130,10 @@ export class Home {
   protected readonly blog = inject(BlogRepository);
   protected readonly blogTitle = `Lessons from ${yearsSince(profile.careerStart, this.now)} years of shipping software`;
   protected readonly blogArrow = iconArrowRight;
+
+  /** Contact (FR-27): the form drafts an email to contact.json's address; nothing is sent. */
+  protected readonly contactEmail = contact.email;
+  protected readonly topics = contactTopics(this.services.map((s) => s.title));
 
   constructor() {
     inject(IconRegistry).register(SERVICE_ICONS);
