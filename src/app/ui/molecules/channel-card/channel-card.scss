@@ -16,14 +16,20 @@
   text-decoration: none;
   cursor: pointer;
   background: var(--fill-on-inverse);
-  transition: transform var(--duration-fast) var(--ease-out);
+
+  // Hover lifts 2px, only when motion is allowed (ETE-259); the fill changes at once.
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
 }
 
-// Hover lifts 2px; the fill changes at once (only transform animates).
 .channel-card:hover,
 .channel-card:focus-visible {
   background: var(--fill-on-inverse-hover);
-  transform: translateY(-2px);
+
+  @media (prefers-reduced-motion: no-preference) {
+    transform: translateY(-2px);
+  }
 }
 
 .channel-card:focus-visible {
