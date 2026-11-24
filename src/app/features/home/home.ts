@@ -13,10 +13,12 @@ import {
   ProjectsRepository,
   ServicesRepository,
 } from '@core/data';
+import { StructuredData } from '@core/seo';
 import { contact } from '@data/contact';
 import { experience } from '@data/experience';
 import { heroCodeFile } from '@data/generated/hero-code';
 import { profile } from '@data/profile';
+import { site } from '@data/site';
 import { skills } from '@data/skills';
 import { ThemeService } from '@core/theme';
 import { CLOCK, countWord, portraitSources, SharedModule, yearsSince } from '@shared';
@@ -44,6 +46,7 @@ import { SectionLayout } from '@ui/templates';
 import { aboutFacts } from './about-facts';
 import { careerGlance, darkLogos, timelineEntries } from './experience-view';
 import { stackGroups } from './stack-groups';
+import { homeStructuredData } from './structured-data';
 import { careerStrip, statCounters } from './stats-view';
 
 /** The networks the hero links to, in contact.json's order (ETeam has its own place). */
@@ -172,6 +175,7 @@ export class Home {
 
   constructor() {
     inject(IconRegistry).register(SERVICE_ICONS);
+    inject(StructuredData).set(homeStructuredData(site, profile, contact));
     afterNextRender(() => void this.blog.load());
   }
 

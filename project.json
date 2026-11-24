@@ -36,11 +36,12 @@
         {
           "dependentTasksOutputFiles": "**/*"
         },
-        "{projectRoot}/tools/build/not-found-page.mjs"
+        "{projectRoot}/tools/build/not-found-page.mjs",
+        "{projectRoot}/tools/build/seo-files.mjs"
       ],
       "outputs": ["{projectRoot}/dist/factman"],
       "options": {
-        "command": "ng build && node tools/build/not-found-page.mjs"
+        "command": "ng build && node tools/build/not-found-page.mjs && BUILD_VARIANT=production node tools/build/seo-files.mjs"
       }
     },
     "build-preview": {
@@ -53,11 +54,12 @@
           "dependentTasksOutputFiles": "**/*"
         },
         "{projectRoot}/tools/build/add-storybook.mjs",
-        "{projectRoot}/tools/build/not-found-page.mjs"
+        "{projectRoot}/tools/build/not-found-page.mjs",
+        "{projectRoot}/tools/build/seo-files.mjs"
       ],
       "outputs": ["{projectRoot}/dist/factman"],
       "options": {
-        "command": "ng build --configuration production,preview && node tools/build/not-found-page.mjs && node tools/build/add-storybook.mjs"
+        "command": "ng build --configuration production,preview && node tools/build/not-found-page.mjs && BUILD_VARIANT=preview node tools/build/seo-files.mjs && node tools/build/add-storybook.mjs"
       }
     },
     "watch": {
