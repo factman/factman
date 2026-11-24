@@ -51,7 +51,10 @@ test('every story is titled after its Atomic level', () => {
     const path = relative(ROOT, file);
     const section = expectedSection(path);
     assert.ok(section, `${path}: stories belong in src/app/ui/<level> or src/app/features`);
-    const title = readFileSync(file, 'utf8').match(/title:\s*'([^']+)'/)?.[1];
+    // The story's own title, in its `meta` object: fixtures above it may have `title:` keys too.
+    const source = readFileSync(file, 'utf8');
+    const meta = source.slice(Math.max(0, source.search(/const meta\b/)));
+    const title = meta.match(/title:\s*'([^']+)'/)?.[1];
     assert.ok(title, `${path}: set an explicit title`);
     assert.match(
       title,

@@ -283,8 +283,11 @@ jobs:
           FM_PREBUILT=1 pnpm dlx "$VERCEL_CLI" build --token="$VERCEL_TOKEN"
       - name: Deploy
         id: deploy
+        # --archive=tgz uploads the output as one archive: the preview carries the site, Storybook,
+        # coverage and the Playwright report (thousands of files), and the free plan allows 5,000
+        # file uploads a day.
         run: |
-          url=$(pnpm dlx "$VERCEL_CLI" deploy --prebuilt --token="$VERCEL_TOKEN" \
+          url=$(pnpm dlx "$VERCEL_CLI" deploy --prebuilt --archive=tgz --token="$VERCEL_TOKEN" \
             --meta githubCommitRef="$BRANCH" --meta githubCommitSha="$GITHUB_SHA")
           echo "url=$url" >> "$GITHUB_OUTPUT"
           {
