@@ -16,4 +16,14 @@
       <fm-career-strip [rows]="career()" [ticks]="ticks()" />
     </div>
   }
+  @if (contributions(); as c) {
+    <div class="stats-panel-contributions">
+      <fm-contribution-graph
+        [levels]="c.levels"
+        [months]="c.months"
+        [summary]="c.summary"
+        [profileUrl]="c.profileUrl"
+      />
+    </div>
+  }
 </div>

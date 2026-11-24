@@ -17,6 +17,7 @@ export { type CodeLanguage, highlight, type Token, type TokenKind } from './code
 export { type ConsentChoice, ConsentStatusCard } from './consent-status-card/consent-status-card';
 export { ContactMethod } from './contact-method/contact-method';
 export { copyText } from './copy-button/clipboard';
+export { type ContributionMonth, ContributionGraph } from './contribution-graph/contribution-graph';
 export { COPIED_FOR, CopyButton } from './copy-button/copy-button';
 export { Dialog } from './dialog/dialog';
 export { EmptyState } from './empty-state/empty-state';

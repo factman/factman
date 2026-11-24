@@ -94,7 +94,12 @@
   description="Every figure here is counted from the same data files as the rest of the site. Nothing is typed in by hand."
 >
   @defer (on viewport; hydrate on viewport) {
-    <fm-stats-panel [counters]="statsCounters()" [career]="strip.rows" [ticks]="strip.ticks" />
+    <fm-stats-panel
+      [counters]="statsCounters()"
+      [career]="strip.rows"
+      [ticks]="strip.ticks"
+      [contributions]="contributions"
+    />
   } @placeholder {
     <div class="home-deferred" aria-hidden="true"></div>
   }

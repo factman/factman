@@ -35,6 +35,7 @@
     "data:types": "nx run factman:data:types",
     "data:docs": "nx run factman:data:docs",
     "data:hero-code": "nx run factman:data:hero-code",
+    "sync:github": "nx run factman:sync:github",
     "ds:tokens": "nx run factman:ds:tokens",
     "lint:styles": "nx run factman:lint:styles",
     "test:scripts": "nx run factman:test:scripts",

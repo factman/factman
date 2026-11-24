@@ -1,0 +1,117 @@
+// The contribution graph: a glass card like CareerStrip, squares shaded with the accent.
+.contribution-graph {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--padding-xl);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--glass-fill-strong);
+  box-shadow: var(--shadow-glass-regular);
+}
+
+.contribution-graph-caption {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-3xs);
+}
+
+.contribution-graph-title {
+  font: 600 16px/24px var(--font-sans);
+}
+
+.contribution-graph-desc {
+  font: 400 12px/18px var(--font-sans);
+  color: var(--text-secondary);
+}
+
+// A year is wide: on phones the squares keep their size and the graph scrolls sideways.
+.contribution-graph-scroll {
+  overflow-x: auto;
+}
+
+.contribution-graph-svg {
+  display: block;
+  width: 100%;
+  min-width: 640px;
+  height: auto;
+}
+
+.contribution-graph-month {
+  font: 400 9px var(--font-sans);
+  fill: var(--text-secondary);
+}
+
+.contribution-graph-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  align-items: center;
+  justify-content: space-between;
+  font: 400 12px/18px var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.contribution-graph-link {
+  display: inline-flex;
+  gap: var(--gap-3xs);
+  align-items: center;
+  color: var(--accent-default);
+}
+
+.contribution-graph-legend {
+  display: inline-flex;
+  gap: var(--gap-3xs);
+  align-items: center;
+}
+
+.contribution-graph-key {
+  width: 11px;
+  height: 11px;
+  border-radius: var(--radius-xs);
+}
+
+// Level 0 is the empty track; 1–4 mix more of the accent in.
+.contribution-graph-day.is-level-0 {
+  fill: var(--bg-track);
+}
+
+.contribution-graph-key.is-level-0 {
+  background: var(--bg-track);
+}
+
+.contribution-graph-day.is-level-1 {
+  fill: color-mix(in srgb, var(--accent-default) 30%, var(--bg-track));
+}
+
+.contribution-graph-key.is-level-1 {
+  background: color-mix(in srgb, var(--accent-default) 30%, var(--bg-track));
+}
+
+.contribution-graph-day.is-level-2 {
+  fill: color-mix(in srgb, var(--accent-default) 55%, var(--bg-track));
+}
+
+.contribution-graph-key.is-level-2 {
+  background: color-mix(in srgb, var(--accent-default) 55%, var(--bg-track));
+}
+
+.contribution-graph-day.is-level-3 {
+  fill: color-mix(in srgb, var(--accent-default) 80%, var(--bg-track));
+}
+
+.contribution-graph-key.is-level-3 {
+  background: color-mix(in srgb, var(--accent-default) 80%, var(--bg-track));
+}
+
+.contribution-graph-day.is-level-4 {
+  fill: var(--accent-default);
+}
+
+.contribution-graph-key.is-level-4 {
+  background: var(--accent-default);
+}

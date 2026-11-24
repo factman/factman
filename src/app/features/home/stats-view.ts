@@ -1,14 +1,18 @@
 import {
+  contributionLevels,
+  type ContributionSnapshot,
   formatPeriod,
   isCurrent,
   monthIndex,
   type Organization,
   parseYearMonth,
   sortExperience,
+  summarizeContributions,
   yearMonthOf,
   yearsSince,
 } from '@shared';
 import type { CareerRow, GlanceStat } from '@ui/molecules';
+import type { StatsContributions } from '@ui/organisms';
 
 /** What the counters are counted from (FR-31): each list is the parsed content file. */
 export interface StatSources {
@@ -79,4 +83,47 @@ export function careerStrip(
   for (let y = first; y <= last - 2; y += 3) ticks.push(String(y));
   ticks.push('now');
   return { rows, ticks };
+}
+
+const MONTH = new Intl.DateTimeFormat('en-GB', { month: 'short', timeZone: 'UTC' });
+const DAY = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+const NUMBER = new Intl.NumberFormat('en-GB');
+
+/**
+ * The GitHub contribution graph's inputs (FR-33) from the build-time snapshot: each day's shade,
+ * a label at each month's first week, and the sentence that is its text alternative. Undefined
+ * (the graph hides) when there is no snapshot.
+ */
+export function contributionGraph(
+  snapshot: ContributionSnapshot | null | undefined,
+): StatsContributions | undefined {
+  if (!snapshot || snapshot.weeks.length === 0) return undefined;
+  const start = Date.parse(`${snapshot.start}T00:00:00Z`);
+  const months: { label: string; week: number }[] = [];
+  snapshot.weeks.forEach((_, week) => {
+    const label = MONTH.format(start + week * 7 * 86_400_000);
+    if (months.at(-1)?.label !== label) months.push({ label, week });
+  });
+  // A label squeezed in before the first full month would overlap the next one.
+  if (months.length > 1 && months[1].week - months[0].week < 2) months.shift();
+
+  const s = summarizeContributions(snapshot);
+  const plural = (n: number, one: string) => `${NUMBER.format(n)} ${one}${n === 1 ? '' : 's'}`;
+  const summary =
+    s.total === 0
+      ? 'No contributions in the last year.'
+      : [
+          `${plural(s.total, 'contribution')} in the last year, on ${plural(s.activeDays, 'day')}.`,
+          s.busiestDay &&
+            `Busiest day: ${NUMBER.format(s.busiestDay.count)} on ${DAY.format(Date.parse(`${s.busiestDay.date}T00:00:00Z`))}.`,
+          `Longest streak: ${plural(s.longestStreak, 'day')}.`,
+        ]
+          .filter(Boolean)
+          .join(' ');
+  return { levels: contributionLevels(snapshot.weeks), months, summary, profileUrl: snapshot.url };
 }
