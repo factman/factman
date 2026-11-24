@@ -5,6 +5,7 @@ export * from './media/portrait-sources';
 export { prefersReducedMotion, REDUCED_MOTION_QUERY } from './motion/reduced-motion';
 export { Reveal } from './motion/reveal.directive';
 export { AnchorScroller } from './navigation/anchor-scroller';
+export { pageTransition, samePage } from './navigation/page-transition';
 export { SCROLL_SPY_ENABLED, ScrollSpy } from './navigation/scroll-spy';
 export { SharedModule } from './shared.module';
 export * from './terminal/terminal';

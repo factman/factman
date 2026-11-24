@@ -9,9 +9,14 @@ import {
   withEventReplay,
   withIncrementalHydration,
 } from '@angular/platform-browser';
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
+import {
+  provideRouter,
+  withComponentInputBinding,
+  withInMemoryScrolling,
+  withViewTransitions,
+} from '@angular/router';
 import { CoreModule } from '@core';
-import { AnchorScroller } from '@shared';
+import { AnchorScroller, pageTransition } from '@shared';
 
 import { routes } from './app.routes';
 
@@ -23,6 +28,9 @@ export const appConfig: ApplicationConfig = {
       withComponentInputBinding(),
       // Back and forward restore the scroll position; /#about scrolls to its section.
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
+      // Pages crossfade (View Transitions API, ETE-266); not on the first load, for query- or
+      // fragment-only changes, or under reduced motion.
+      withViewTransitions({ skipInitialTransition: true, onViewTransitionCreated: pageTransition }),
     ),
     // Anchors scroll smoothly (instantly with reduced motion) and clear the fixed header (FR-37).
     { provide: ViewportScroller, useClass: AnchorScroller },
