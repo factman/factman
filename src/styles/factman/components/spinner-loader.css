@@ -22,10 +22,10 @@
 @keyframes fm-dots { 0%, 100% { opacity: .3; } 40% { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .fm-spinner__ring { animation-duration: 2.4s; } }
 .fm-loader { font-family: var(--font-sans); color: var(--text-secondary); }
-.fm-loader--inline { display: inline-flex; align-items: center; gap: var(--gap-xs); font-size: 13px; line-height: 16px; }
+.fm-loader--inline { display: inline-flex; align-items: center; gap: var(--gap-xs); font-size: 0.8125rem; line-height: 1rem; }
 .fm-loader--refresh { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: var(--radius-full); background: var(--glass-fill-elevated); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-chip); }
 .fm-loader--overlay { position: relative; display: block; min-height: 160px; border-radius: var(--radius-lg); overflow: hidden; background: var(--glass-fill-strong); border: var(--border-width-sm) solid var(--glass-stroke); box-shadow: var(--shadow-glass-regular); }
-.fm-loader__veil { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--gap-xs); background: var(--glass-fill); -webkit-backdrop-filter: blur(var(--blur-glass-chip)); backdrop-filter: blur(var(--blur-glass-chip)); font-size: 13px; }
+.fm-loader__veil { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--gap-xs); background: var(--glass-fill); -webkit-backdrop-filter: blur(var(--blur-glass-chip)); backdrop-filter: blur(var(--blur-glass-chip)); font-size: 0.8125rem; }
 .fm-loader--page { display: flex; flex-direction: column; align-items: center; gap: var(--gap-sm); padding: var(--padding-4xl) var(--padding-xl); text-align: center; }
-.fm-loader__title { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--text-primary); }
-.fm-loader__desc { font-size: 13px; line-height: 20px; }
+.fm-loader__title { font-size: 1rem; line-height: 1.5rem; font-weight: 600; color: var(--text-primary); }
+.fm-loader__desc { font-size: 0.8125rem; line-height: 1.25rem; }

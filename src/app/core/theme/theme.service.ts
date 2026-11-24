@@ -37,7 +37,12 @@ export class ThemeService {
   constructor() {
     this.media?.addEventListener('change', (e) => this.systemPrefersDark.set(e.matches));
     this.window?.addEventListener('storage', () => this.stored.set(readStoredTheme(this.storage)));
-    effect(() => this.document.documentElement.setAttribute('data-theme', this.theme()));
+    effect(() => {
+      const theme = this.theme();
+      this.document.documentElement.setAttribute('data-theme', theme);
+      // Browser-drawn UI follows the theme shown, as the pre-paint script set it (ETE-261).
+      this.document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', theme);
+    });
   }
 
   /** Chooses a theme and remembers it; `system` forgets the choice and follows the system again. */
@@ -47,9 +52,16 @@ export class ThemeService {
     this.stored.set(theme);
   }
 
-  /** Switches to the other theme and remembers it (the theme toggle). */
+  /**
+   * Switches to the other theme (the theme toggle). The choice is remembered only when it differs
+   * from what the page shows with no choice (the system preference, else the site default);
+   * switching back to that forgets it, so the page follows the system again instead of being
+   * pinned to it (ETE-254, dark-mode-toggle).
+   */
   toggle(): void {
-    this.set(this.theme() === 'dark' ? 'light' : 'dark');
+    const target: Theme = this.theme() === 'dark' ? 'light' : 'dark';
+    const unpinned = resolveTheme(null, this.systemPrefersDark(), this.fallback);
+    this.set(target === unpinned ? 'system' : target);
   }
 
   /**

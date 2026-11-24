@@ -54,7 +54,7 @@
           "currentColor"
         ],
         "disableFix": true,
-        "message": "Use a design token (var(--\u2026)) for \"${property}\", not \"${value}\". See docs/design-tokens.md."
+        "message": "Use a design token (var(--…)) for \"${property}\", not \"${value}\". See docs/design-tokens.md."
       }
     ],
     "declaration-property-value-allowed-list": {
@@ -62,7 +62,24 @@
         "/^(none|(opacity|transform|display|overlay)(\\s*,\\s*(opacity|transform|display|overlay))*)$/"
       ],
       "transition": ["/^(none|(opacity|transform)\\s[^,]+(,\\s*(opacity|transform)\\s[^,]+)*)$/"]
-    }
+    },
+    "declaration-property-unit-disallowed-list": [
+      {
+        "font-size": ["px"],
+        "line-height": ["px"]
+      },
+      {
+        "message": "Type sizes are rem, so text follows the visitor's text size (ETE-263): px / 16."
+      }
+    ],
+    "declaration-property-value-disallowed-list": [
+      {
+        "font": ["/\\b\\d*\\.?\\d+px\\b/"]
+      },
+      {
+        "message": "Type sizes are rem, so text follows the visitor's text size (ETE-263): px / 16."
+      }
+    ]
   },
   "overrides": [
     {

@@ -87,8 +87,8 @@ export function terminalCommands(src: TerminalSources): TerminalCommand[] {
       summary: 'What Odunayo has built',
       run: () =>
         columns(
-          [...src.projects]
-            .sort((a, b) => b.startedAt.localeCompare(a.startedAt))
+          src.projects
+            .toSorted((a, b) => b.startedAt.localeCompare(a.startedAt))
             .map((p) => [
               p.title,
               `${STATUS[p.status] ?? p.status}${p.visibility === 'private' ? ' · private' : ''} · /projects/${p.slug}`,

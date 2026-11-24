@@ -28,7 +28,8 @@ dialog.dialog::backdrop {
 
 // Bare: the projected window is the panel, so the modal's own glass, border and width go.
 dialog.dialog.is-bare {
-  width: min(1040px, calc(100vw - 2 * var(--padding-md)));
+  // 100% of the viewport the top layer sits in, without the scrollbar (100vw would include it).
+  width: min(1040px, calc(100% - 2 * var(--padding-md)));
   border: 0;
   background: none;
   box-shadow: none;

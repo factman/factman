@@ -16,7 +16,6 @@
               [id]="tabPrefix + '-' + tab.slug"
               [class.is-active]="tab.slug === r.slug"
               [attr.aria-selected]="tab.slug === r.slug"
-              [attr.aria-controls]="panelId"
               [tabIndex]="tab.slug === r.slug ? 0 : -1"
               (click)="pick(tab.slug)"
               (keydown)="arrow($event)"

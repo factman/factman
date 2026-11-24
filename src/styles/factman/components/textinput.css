@@ -2,7 +2,7 @@
 /* ---------- TextInput ---------- */
 .fm-field { display: flex; flex-direction: column; gap: var(--gap-xs); width: 100%; max-width: 320px; font-family: var(--font-sans); }
 .fm-field--fluid, .fm-fluid .fm-field { max-width: none; }
-.fm-field__label { padding: 0 var(--padding-md); font-size: 12px; line-height: 18px; color: var(--text-primary); }
+.fm-field__label { padding: 0 var(--padding-md); font-size: 0.75rem; line-height: 1.125rem; color: var(--text-primary); }
 .fm-field__control {
   --fm-h: 40px;
   display: flex;
@@ -32,18 +32,18 @@
   background: transparent;
   color: var(--text-primary);
   font: inherit;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
-.fm-field--sm .fm-field__input { font-size: 12px; line-height: 16px; }
-.fm-field--lg .fm-field__input, .fm-field--xl .fm-field__input { font-size: 16px; line-height: 24px; }
+.fm-field--sm .fm-field__input { font-size: 0.75rem; line-height: 1rem; }
+.fm-field--lg .fm-field__input, .fm-field--xl .fm-field__input { font-size: 1rem; line-height: 1.5rem; }
 .fm-field__input::placeholder { color: var(--text-tertiary); opacity: 1; }
-.fm-field__affix { font-size: 14px; line-height: 20px; color: var(--text-tertiary); flex: none; }
+.fm-field__affix { font-size: 0.875rem; line-height: 1.25rem; color: var(--text-tertiary); flex: none; }
 .fm-field__clear { display: inline-flex; padding: 0; border: 0; background: transparent; color: var(--icon-secondary); cursor: pointer; border-radius: var(--radius-xs); }
 .fm-field__clear:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); }
 .fm-field__status { display: inline-flex; color: var(--icon-secondary); }
 .fm-field__status--success { color: var(--icon-success); }
-.fm-field__help { display: flex; justify-content: space-between; align-items: center; gap: var(--gap-xs); padding: 0 var(--padding-md); font-size: 12px; line-height: 18px; color: var(--text-secondary); }
+.fm-field__help { display: flex; justify-content: space-between; align-items: center; gap: var(--gap-xs); padding: 0 var(--padding-md); font-size: 0.75rem; line-height: 1.125rem; color: var(--text-secondary); }
 .fm-field__helper { display: inline-flex; align-items: center; gap: var(--gap-2xs); }
 .fm-field__helper .fm-icon { color: var(--icon-secondary); }
 .fm-field__counter { color: var(--text-tertiary); flex: none; font-variant-numeric: tabular-nums; }

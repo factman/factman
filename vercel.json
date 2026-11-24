@@ -59,7 +59,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'sha256-7OOl5ds3IjSnASvO/sHVPYyIOLI/z6EsRaoH/cSlIag=' 'sha256-8sGKvDKC8crv9OBcqEMvqrNDWlm1/80h7NJpJzqOnLI=' 'sha256-VM2mZqyEQZoLzoTrp5EigFvzQ0+f1wSeBuoOn95WHCg=' 'sha256-po5pyNPwHCnPItlrYXeMmtdRLp5JAKXzvX60XU2YzT4=' 'sha256-tHrMhRf5hWXWZLtw+DCDLIwW4Tci+yuaqGmGBiGHcw8=' 'sha256-xe7VvcGkQBhiV7PLaGvf6/scktlA69la9xwV+kcNjDM='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://cdn-images-1.medium.com https://miro.medium.com; font-src 'self'; connect-src 'self'; frame-src https://calendar.google.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; require-trusted-types-for 'script'; trusted-types angular angular#bundler fm-json-ld; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'sha256-8sGKvDKC8crv9OBcqEMvqrNDWlm1/80h7NJpJzqOnLI=' 'sha256-VM2mZqyEQZoLzoTrp5EigFvzQ0+f1wSeBuoOn95WHCg=' 'sha256-n1JwiNASFbjOQNeAir2X6pzhUQNl7s0Ucb1IxSZt52Q=' 'sha256-uaODjqTh5JFYfeOcYGhy/cW6TY6jBLU4iPGVudA4Bm8=' 'sha256-vZevQn0+wlpWa0tXRiLzfS2gc7qYc74I60dnNL1Zkok=' 'sha256-vl0fCtBTmRrtD+EVWov2yVMuU7QHyKPV/ze3YwQzRIg=' 'sha256-xe7VvcGkQBhiV7PLaGvf6/scktlA69la9xwV+kcNjDM='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://cdn-images-1.medium.com https://miro.medium.com; font-src 'self'; connect-src 'self'; frame-src https://calendar.google.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; require-trusted-types-for 'script'; trusted-types angular angular#bundler fm-json-ld fm-feed-html; upgrade-insecure-requests"
         },
         {
           "key": "X-Frame-Options",
@@ -138,7 +138,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'sha256-7OOl5ds3IjSnASvO/sHVPYyIOLI/z6EsRaoH/cSlIag=' 'sha256-8sGKvDKC8crv9OBcqEMvqrNDWlm1/80h7NJpJzqOnLI=' 'sha256-VM2mZqyEQZoLzoTrp5EigFvzQ0+f1wSeBuoOn95WHCg=' 'sha256-po5pyNPwHCnPItlrYXeMmtdRLp5JAKXzvX60XU2YzT4=' 'sha256-tHrMhRf5hWXWZLtw+DCDLIwW4Tci+yuaqGmGBiGHcw8=' 'sha256-xe7VvcGkQBhiV7PLaGvf6/scktlA69la9xwV+kcNjDM='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://cdn-images-1.medium.com https://miro.medium.com; font-src 'self'; connect-src 'self'; frame-src https://calendar.google.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; require-trusted-types-for 'script'; trusted-types angular angular#bundler fm-json-ld; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'sha256-8sGKvDKC8crv9OBcqEMvqrNDWlm1/80h7NJpJzqOnLI=' 'sha256-VM2mZqyEQZoLzoTrp5EigFvzQ0+f1wSeBuoOn95WHCg=' 'sha256-n1JwiNASFbjOQNeAir2X6pzhUQNl7s0Ucb1IxSZt52Q=' 'sha256-uaODjqTh5JFYfeOcYGhy/cW6TY6jBLU4iPGVudA4Bm8=' 'sha256-vZevQn0+wlpWa0tXRiLzfS2gc7qYc74I60dnNL1Zkok=' 'sha256-vl0fCtBTmRrtD+EVWov2yVMuU7QHyKPV/ze3YwQzRIg=' 'sha256-xe7VvcGkQBhiV7PLaGvf6/scktlA69la9xwV+kcNjDM='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://cdn-images-1.medium.com https://miro.medium.com; font-src 'self'; connect-src 'self'; frame-src https://calendar.google.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; require-trusted-types-for 'script'; trusted-types angular angular#bundler fm-json-ld fm-feed-html; upgrade-insecure-requests"
         },
         {
           "key": "X-Frame-Options",

@@ -3,6 +3,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { test } from 'node:test';
 
 import { BUNDLE, COMPONENTS_DIR, GLOBAL, slug, splitBundle } from './split-components';
+import { remType } from './rem-type';
 
 const sample = [
   '/* intro */',
@@ -56,16 +57,17 @@ test('rejects duplicate sections', () => {
   );
 });
 
-test('committed split matches bundle.css and keeps every line', () => {
+test('committed split matches bundle.css (type sizes in rem) and keeps every line', () => {
   const { global, sections } = splitBundle(readFileSync(BUNDLE, 'utf8'));
+  // ds:split writes type sizes in rem (ETE-263).
   const strip = (css: string) => css.replace(/^\/\* Factman .*Do not edit\. \*\/\n/, '');
-  assert.equal(strip(readFileSync(GLOBAL, 'utf8')), global, 'run pnpm ds:split');
+  assert.equal(strip(readFileSync(GLOBAL, 'utf8')), remType(global), 'run pnpm ds:split');
   assert.deepEqual(
     readdirSync(COMPONENTS_DIR).sort(),
     [...sections.keys()].map((n) => `${n}.css`).sort(),
   );
   for (const [name, css] of sections)
-    assert.equal(strip(readFileSync(`${COMPONENTS_DIR}/${name}.css`, 'utf8')), css, name);
+    assert.equal(strip(readFileSync(`${COMPONENTS_DIR}/${name}.css`, 'utf8')), remType(css), name);
   const lines = (s: string) =>
     s
       .split('\n')
@@ -74,5 +76,15 @@ test('committed split matches bundle.css and keeps every line', () => {
   assert.deepEqual(
     lines([global, ...sections.values()].join('\n')),
     lines(readFileSync(BUNDLE, 'utf8')),
+  );
+});
+
+test('the committed split has no px type sizes (ETE-263)', () => {
+  const files = [GLOBAL, ...readdirSync(COMPONENTS_DIR).map((f) => `${COMPONENTS_DIR}/${f}`)];
+  const px = /(?:^|[\s;{])(?:font-size|line-height|font)\s*:[^;}]*\d+px/;
+  assert.deepEqual(
+    files.filter((f) => px.test(readFileSync(f, 'utf8'))),
+    [],
+    'run pnpm ds:split',
   );
 });
