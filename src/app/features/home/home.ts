@@ -19,6 +19,8 @@ import {
   AboutSection,
   BlogFeed,
   ClientLogoStrip,
+  ContactChannels,
+  type ContactDetails,
   ContactForm,
   contactTopics,
   ExperienceTimeline,
@@ -65,6 +67,7 @@ const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
     Button,
     ClientLogoStrip,
     CodeEditor,
+    ContactChannels,
     ContactForm,
     ExperienceTimeline,
     ProfileHero,
@@ -134,6 +137,25 @@ export class Home {
   /** Contact (FR-27): the form drafts an email to contact.json's address; nothing is sent. */
   protected readonly contactEmail = contact.email;
   protected readonly topics = contactTopics(this.services.map((s) => s.title));
+  /** The channels beside the form (FR-29, FR-30): city and country only, never a street. */
+  protected readonly contactDetails: ContactDetails = {
+    email: contact.email,
+    phone: contact.phone,
+    whatsapp: `https://wa.me/${contact.whatsapp.number}?text=${encodeURIComponent(contact.whatsapp.message)}`,
+    company: contact.links
+      .filter((l) => l.id === 'eteam')
+      .map((l) => ({ label: l.label, url: l.url }))[0],
+    city: contact.city,
+    country: contact.country,
+    responseTime: contact.responseTime,
+    timezone: 'WAT, UTC+1',
+    availability: profile.availability.status === 'available' ? 'available' : 'busy',
+    socials: contact.links.filter((link) => HERO_SOCIALS.has(link.id)),
+  };
+  protected readonly contactPhoto = profile.contactPhoto && {
+    ...portraitSources(profile.contactPhoto),
+    sizes: '(min-width: 1024px) 560px, 100vw',
+  };
 
   constructor() {
     inject(IconRegistry).register(SERVICE_ICONS);

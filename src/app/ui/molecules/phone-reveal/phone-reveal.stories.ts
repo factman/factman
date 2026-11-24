@@ -17,7 +17,7 @@ export default meta;
 
 export const Reveal: StoryObj<PhoneReveal> = {
   play: async ({ args, canvas }) => {
-    await userEvent.click(canvas.getByRole('button', { name: 'Show phone number' }));
+    await userEvent.click(canvas.getByRole('button', { name: 'Show number' }));
     await expect(await canvas.findByRole('link', { name: '+234 706 678 0373' })).toBeVisible();
     await expect(args.revealed).toHaveBeenCalled();
   },

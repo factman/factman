@@ -93,7 +93,7 @@
 >
   <div class="home-contact">
     <fm-contact-form [email]="contactEmail" [topics]="topics" />
-    <!-- The contact channels (ETE-104) go beside the form. -->
+    <fm-contact-channels [details]="contactDetails" [photo]="contactPhoto" />
   </div>
 </fm-section-layout>
 @for (section of sections; track section.id) {
