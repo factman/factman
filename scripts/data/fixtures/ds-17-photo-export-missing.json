@@ -1,0 +1,25 @@
+{
+  "rule": "DS-17",
+  "case": "a photo whose 540px AVIF export is missing",
+  "data": {
+    "profile": {
+      "photo": {
+        "src": "profile/photo.webp",
+        "alt": "Odunayo Mohammed",
+        "width": 720,
+        "height": 900
+      }
+    }
+  },
+  "assets": [
+    "profile/photo.webp",
+    "profile/photo-360.avif",
+    "profile/photo-360.webp",
+    "profile/photo-540.webp",
+    "profile/photo-720.avif",
+    "profile/photo-720.webp"
+  ],
+  "images": {
+    "profile/photo.webp": [720, 900]
+  }
+}

@@ -48,7 +48,7 @@ The site's content, one JSON file per data type (PRD section 7, ADR-001). Each f
 | DS-14 | Generated TypeScript models are reproducible, so regenerating never changes them                                                        | `ds.test.ts`              |
 | DS-15 | One deliberately broken file per case in `scripts/data/fixtures/`, each failing for that case only                                     | `ds.test.ts`              |
 | DS-16 | `clients.json`: unique ids, type is `client` or `company`, https website, a name, and a logo under `src/assets/clients` that exists     | `clientEntries`, schema   |
-| DS-17 | `profile.json` photos (hero, About, contact): the file exists, alt text is not empty, width and height match the file (PNG, JPEG or WebP) | `profilePhoto`            |
+| DS-17 | `profile.json` photos (hero, About, contact, not-found): the file and its AVIF and WebP exports (`pnpm ds:portraits`) exist, alt text is not empty, width and height match the file (PNG, JPEG or WebP) | `profilePhoto`            |
 | RS-01 | `resumes.json` passes its schema; highlight `tracks`, roles, organizations, projects, skills, contact links and `{since:…}` exist; a role is listed once; every `[placeholder]` is declared and every declared one is used | `trackReferences`, `resumeChecks`, schema |
 | RS-02 | At least 1 role and 5 skills per résumé; `limits`; unique id, slug and file name; summary at most 500 and scope at most 90 characters | `resumeChecks`, `uniqueIds`, schema |
 | RS-03 | `showPhone: true` needs a phone in `contact.json`                                                                                      | `resumeChecks`            |
