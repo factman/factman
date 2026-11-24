@@ -4,7 +4,11 @@ import {
   importProvidersFrom,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import {
+  provideClientHydration,
+  withEventReplay,
+  withIncrementalHydration,
+} from '@angular/platform-browser';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 import { CoreModule } from '@core';
 import { AnchorScroller } from '@shared';
@@ -22,7 +26,9 @@ export const appConfig: ApplicationConfig = {
     ),
     // Anchors scroll smoothly (instantly with reduced motion) and clear the fixed header (FR-37).
     { provide: ViewportScroller, useClass: AnchorScroller },
-    provideClientHydration(withEventReplay()),
+    // Incremental hydration: the home page's below-the-fold sections are prerendered in full and
+    // hydrate when they scroll into view (`@defer (hydrate on viewport)`, ETE-114).
+    provideClientHydration(withEventReplay(), withIncrementalHydration()),
     // Site settings for the deployment chosen at build time (angular.json `define`).
     importProvidersFrom(CoreModule.forRoot({ environment: FM_SITE_ENV })),
   ],
