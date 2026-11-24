@@ -76,7 +76,7 @@
 
 .booking-channels-eyebrow {
   margin: 0;
-  font: 500 12px/16px var(--font-mono);
+  font: 500 0.75rem/1rem var(--font-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-inverse);
@@ -84,16 +84,16 @@
 
 .booking-channels-title {
   margin: 0;
-  font: 700 40px/1.15 var(--font-sans);
+  font: 700 2.5rem/1.15 var(--font-sans);
 
   @media (width < 768px) {
-    font: 700 28px/1.2 var(--font-sans);
+    font: 700 1.75rem/1.2 var(--font-sans);
   }
 }
 
 .booking-channels-text {
   margin: 0;
-  font: 400 16px/1.75 var(--font-sans);
+  font: 400 1rem/1.75 var(--font-sans);
   color: var(--text-inverse);
 }
 

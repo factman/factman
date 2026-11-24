@@ -9,14 +9,14 @@
 
 // Tabular figures, so the width doesn't jump while it counts.
 .stat-counter-value {
-  font: 700 40px/1.1 var(--font-sans);
+  font: 700 2.5rem/1.1 var(--font-sans);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
 .stat-counter-label {
-  font: 500 14px/20px var(--font-sans);
+  font: 500 0.875rem/1.25rem var(--font-sans);
   color: var(--text-secondary);
 }
 

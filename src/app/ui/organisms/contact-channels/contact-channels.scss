@@ -12,12 +12,12 @@
 
 .contact-channels-note-title {
   margin: 0;
-  font: 600 18px/1.35 var(--font-sans);
+  font: 600 1.125rem/1.35 var(--font-sans);
 }
 
 .contact-channels-note-text {
   margin: 0;
-  font: 400 13px/1.6 var(--font-sans);
+  font: 400 0.8125rem/1.6 var(--font-sans);
   color: var(--text-secondary);
 }
 
@@ -37,7 +37,7 @@
   align-items: center;
   gap: var(--gap-2xs);
   margin: 0;
-  font: 500 12px/16px var(--font-mono);
+  font: 500 0.75rem/1rem var(--font-mono);
   letter-spacing: 0.04em;
   color: var(--text-secondary);
 }

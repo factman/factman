@@ -63,7 +63,7 @@
 // name so the footer doesn't load that whole file (as SectionHeader does). Keep it in step.
 .site-footer-heading {
   margin: 0;
-  font: 500 12px/16px var(--font-mono);
+  font: 500 0.75rem/1rem var(--font-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent-default);
@@ -71,7 +71,7 @@
 
 .site-footer-tagline {
   margin: 0;
-  font: 400 14px/1.8 var(--font-sans);
+  font: 400 0.875rem/1.8 var(--font-sans);
   color: var(--text-secondary);
 }
 
@@ -92,15 +92,15 @@
 }
 
 .site-footer-link {
-  font: 500 14px/28px var(--font-sans);
+  font: 500 0.875rem/1.75rem var(--font-sans);
 }
 
 .site-footer-email {
-  font: 600 14px/20px var(--font-sans);
+  font: 600 0.875rem/1.25rem var(--font-sans);
 }
 
 .site-footer-location {
-  font: 400 14px/20px var(--font-sans);
+  font: 400 0.875rem/1.25rem var(--font-sans);
   color: var(--text-secondary);
 }
 
@@ -125,7 +125,7 @@
 }
 
 .site-footer-copyright {
-  font: 500 12px/16px var(--font-mono);
+  font: 500 0.75rem/1rem var(--font-mono);
   letter-spacing: 0.04em;
   color: var(--text-secondary);
 }

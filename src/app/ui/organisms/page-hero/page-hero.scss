@@ -56,7 +56,7 @@
 // The design system's eyebrow.
 .page-hero-eyebrow {
   margin: 0;
-  font: 500 12px/16px var(--font-mono);
+  font: 500 0.75rem/1rem var(--font-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent-default);
@@ -74,23 +74,23 @@
 
 .page-hero-title {
   margin: 0;
-  font: 700 56px/1.15 var(--font-sans);
+  font: 700 3.5rem/1.15 var(--font-sans);
   letter-spacing: -0.01em;
   color: var(--text-primary);
 
   @media (width < 768px) {
-    font: 700 40px/1.15 var(--font-sans);
+    font: 700 2.5rem/1.15 var(--font-sans);
   }
 }
 
 .page-hero-lead {
   margin: 0;
   max-width: 560px;
-  font: 400 20px/1.6 var(--font-sans);
+  font: 400 1.25rem/1.6 var(--font-sans);
   color: var(--text-secondary);
 
   @media (width < 768px) {
-    font: 400 16px/1.6 var(--font-sans);
+    font: 400 1rem/1.6 var(--font-sans);
   }
 }
 
@@ -98,7 +98,7 @@
 .page-hero-meta,
 .page-hero-note {
   margin: 0;
-  font: 500 12px/16px var(--font-mono);
+  font: 500 0.75rem/1rem var(--font-mono);
   letter-spacing: 0.04em;
   color: var(--text-secondary);
 }

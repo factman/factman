@@ -6,6 +6,6 @@
 .fm-alert__icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: var(--radius-sm); color: var(--tone-ic); flex: none; }
 .fm-alert--glass .fm-alert__icon { background: var(--tone-bg); }
 .fm-alert__content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--gap-3xs); padding: 5px 0; }
-.fm-alert__title { font-size: 14px; line-height: 22px; font-weight: 500; }
-.fm-alert__desc { font-size: 13px; line-height: 20px; color: var(--text-secondary); }
+.fm-alert__title { font-size: 0.875rem; line-height: 1.375rem; font-weight: 500; }
+.fm-alert__desc { font-size: 0.8125rem; line-height: 1.25rem; color: var(--text-secondary); }
 .fm-alert__actions { display: flex; gap: var(--gap-xs); margin-top: var(--gap-xs); }
