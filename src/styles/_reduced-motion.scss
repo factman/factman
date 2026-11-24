@@ -1,0 +1,40 @@
+// Reduced motion for the design system's vendored CSS (ETE-259). src/styles/factman/ is generated
+// from the design system and not edited, so its moving rules are turned off here, one by one, when
+// the visitor asks for less motion. State changes (a turned chevron, a moved switch knob, a filled
+// progress bar) still happen, just at once; hover zooms and slides don't happen. Fades, blinks and
+// pulses that only change opacity are left alone, and the DS already handles its spinners,
+// skeletons, terminal and section hovers. :root raises specificity, because components load
+// their DS stylesheet after this file.
+
+/* stylelint-disable selector-class-pattern -- these are the vendored DS's own BEM classes */
+@media (prefers-reduced-motion: reduce) {
+  // State indicators and width bars: the new state shows at once.
+  :root .fm-acc-item__chev,
+  :root .fm-select__chev,
+  :root .fm-switch__knob,
+  :root .fm-progress__fill,
+  :root .fm-dots__dot,
+  :root .fm-stepper--dots i,
+  :root .fm-side {
+    transition: none;
+  }
+
+  // Hover zooms: no zoom.
+  :root .fm-rating__btn:hover,
+  :root .fm-image:hover .fm-image__media {
+    transform: none;
+  }
+
+  // The social link tip fades in place instead of sliding up 4px.
+  :root .fm-social-tip {
+    transform: translate(-50%, 0);
+  }
+
+  // Reveals: the directive doesn't hide anything under reduced motion; if the preference changes
+  // after it did, show the content as it is.
+  :root .fm-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

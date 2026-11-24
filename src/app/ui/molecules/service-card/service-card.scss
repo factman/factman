@@ -56,14 +56,16 @@
   color: var(--accent-default);
 }
 
-// The arrow nudges 3px right with the card's hover lift.
-.service-card-more svg {
-  transition: transform var(--duration-fast) var(--ease-out);
-}
+// The arrow nudges 3px right with the card's hover lift, only when motion is allowed (ETE-259).
+@media (prefers-reduced-motion: no-preference) {
+  .service-card-more svg {
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
 
-.service-card:hover .service-card-more svg,
-.service-card:focus-within .service-card-more svg {
-  transform: translateX(3px);
+  .service-card:hover .service-card-more svg,
+  .service-card:focus-within .service-card-more svg {
+    transform: translateX(3px);
+  }
 }
 
 .service-card-cta {

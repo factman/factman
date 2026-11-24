@@ -4,6 +4,8 @@
  *   2. src/styles/factman/components.css  fm-* component classes (the design system's bundle.css)
  * Use tokens only: stylelint rejects raw colours, sizes and spacing (see docs/design-tokens.md).
  */
+@use 'reduced-motion';
+
 html {
   background: var(--bg-canvas);
 }
@@ -62,19 +64,10 @@ section[id] {
 }
 
 /*
- * Reduced motion (ETE-26): when the visitor asks for less motion, every animation and transition
- * finishes at once (reveals appear, hovers snap) and smooth scrolling is off. Components also check
- * prefersReducedMotion() to skip work: counters show their final value, typing shows the first role in full.
+ * Reduced motion (ETE-26, ETE-259). There is no global reset: each component opts in to its
+ * movement with @media (prefers-reduced-motion: no-preference), or turns it off under `reduce`,
+ * and colour and opacity changes keep their timing (docs/interaction-and-motion.md). Components
+ * also check prefersReducedMotion() to skip work: counters show their final value, typing shows
+ * the first role in full. The design system's vendored CSS can't be edited, so its moving rules
+ * are handled in styles/_reduced-motion.scss (loaded at the top of this file).
  */
-@media (prefers-reduced-motion: reduce) {
-  /* stylelint-disable scale-unlimited/declaration-strict-value -- near-zero, not a design duration */
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-  /* stylelint-enable scale-unlimited/declaration-strict-value */
-}

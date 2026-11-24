@@ -31,11 +31,21 @@ test.describe('with reduced motion', () => {
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await expect(contact).not.toHaveClass(/fm-reveal/);
     await expect(contact).toHaveCSS('opacity', '1');
-    const durations = await contact.evaluate((el) => {
-      const s = getComputedStyle(el);
-      return [s.transitionDuration, s.animationDuration];
-    });
-    for (const d of durations) expect(parseFloat(d)).toBeLessThan(0.001);
+    // No global reset (ETE-259): the section simply has no animation and no transition.
+    await expect(contact).toHaveCSS('animation-name', 'none');
+    await expect(contact).toHaveCSS('transition-duration', '0s');
+  });
+});
+
+test.describe('cards with reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+
+  test('a hovered card does not lift (ETE-259)', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'hover needs a mouse');
+    await page.goto('/services');
+    const card = page.locator('.service-card').first();
+    await card.hover();
+    await expect(card).toHaveCSS('transform', 'none');
   });
 });
 

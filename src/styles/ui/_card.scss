@@ -2,7 +2,8 @@
 // glass card (.fm-proj, .fm-post, .fm-service in portfolio-sections.css) and the stretched-link
 // pattern that makes the whole card one click target. Use: `@use 'ui/card'; .x { @include card.surface; }`.
 
-/// The glass card. Hover lifts it 2px (docs/interaction-and-motion.md); only transform animates.
+/// The glass card. Hover lifts it 2px when motion is allowed (docs/interaction-and-motion.md,
+/// ETE-259); only transform animates. The border and shadow change either way.
 @mixin surface {
   position: relative;
   display: flex;
@@ -18,13 +19,19 @@
   background: var(--glass-fill-strong);
   box-shadow: var(--shadow-glass-regular);
   backdrop-filter: blur(var(--blur-glass-regular));
-  transition: transform var(--duration-fast) var(--ease-out);
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
 
   &:hover,
   &:focus-within {
     border-color: var(--glass-stroke-strong);
     box-shadow: var(--shadow-card-lift);
-    transform: translateY(-2px);
+
+    @media (prefers-reduced-motion: no-preference) {
+      transform: translateY(-2px);
+    }
   }
 }
 
