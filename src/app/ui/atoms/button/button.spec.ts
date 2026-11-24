@@ -66,10 +66,25 @@ describe('Button', () => {
     const button = screen.getByRole('button', { name: 'Saving' }) as HTMLButtonElement;
     expect(button.getAttribute('aria-busy')).toBe('true');
     expect(button.classList).toContain('is-loading');
-    expect(button.disabled).toBe(true);
+    // Not disabled: a disabled button would drop keyboard focus (ETE-250).
+    expect(button.disabled).toBe(false);
     expect(button.querySelector('.fm-spinner')?.getAttribute('aria-hidden')).toBe('true');
     expect(button.querySelector('svg.fm-icon')).toBeNull();
     await userEvent.setup().click(button);
+    expect(pressed).not.toHaveBeenCalled();
+  });
+
+  it('keeps focus when it starts loading, and blocks Enter while loading', async () => {
+    const pressed = vi.fn();
+    const { rerender } = await render(
+      `<fm-button [loading]="loading" (pressed)="pressed()">Send</fm-button>`,
+      { imports: [Button], componentProperties: { pressed, loading: false } },
+    );
+    const button = screen.getByRole('button', { name: 'Send' });
+    button.focus();
+    await rerender({ componentProperties: { pressed, loading: true } });
+    expect(document.activeElement).toBe(button);
+    await userEvent.setup().keyboard('{Enter}');
     expect(pressed).not.toHaveBeenCalled();
   });
 

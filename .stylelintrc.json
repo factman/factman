@@ -58,7 +58,9 @@
       }
     ],
     "declaration-property-value-allowed-list": {
-      "transition-property": ["/^(none|(opacity|transform)(\\s*,\\s*(opacity|transform))*)$/"],
+      "transition-property": [
+        "/^(none|(opacity|transform|display|overlay)(\\s*,\\s*(opacity|transform|display|overlay))*)$/"
+      ],
       "transition": ["/^(none|(opacity|transform)\\s[^,]+(,\\s*(opacity|transform)\\s[^,]+)*)$/"]
     }
   },

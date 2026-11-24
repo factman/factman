@@ -6,7 +6,9 @@
   [class.is-bare]="bare()"
   [attr.aria-labelledby]="bare() ? null : titleId"
   [attr.aria-label]="bare() ? label() : null"
+  closedby="any"
   (cancel)="cancel($event)"
+  (close)="nativeClose()"
 >
   <div class="dialog-panel" [class.is-bare]="bare()">
     @if (bare()) {
