@@ -4,7 +4,9 @@
   [socials]="socials"
   [stats]="stats"
   [timezone]="timezone"
+  [terminal]="terminalEnabled"
   (openResume)="openResume()"
+  (openTerminal)="terminal.show()"
 >
   <fm-code-editor heroEditor [files]="editorFiles" [glow]="true" [decorative]="true" />
 </fm-profile-hero>

@@ -2,3 +2,9 @@
 <main id="main" tabindex="-1">
   <router-outlet />
 </main>
+@if (terminalEnabled) {
+  <!-- FR-36: the terminal's chunk (and the data it reads) loads the first time it opens. -->
+  @defer (when terminal.requested()) {
+    <fm-terminal-host />
+  }
+}

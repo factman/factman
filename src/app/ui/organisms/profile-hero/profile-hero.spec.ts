@@ -106,4 +106,28 @@ describe('ProfileHero', () => {
     await renderHero('<pre heroEditor>const profile</pre>');
     expect(document.querySelector('.profile-hero-editor pre')?.textContent).toBe('const profile');
   });
+
+  it('shows "Terminal" only when the terminal ships, and asks to open it (FR-36)', async () => {
+    await renderHero();
+    expect(screen.queryByRole('button', { name: /Terminal/ })).toBeNull();
+  });
+
+  it('asks to open the terminal from its button', async () => {
+    const openTerminal = vi.fn();
+    await render(
+      `<fm-profile-hero [profile]="profile" [socials]="[]" [stats]="stats" [terminal]="true"
+         (openTerminal)="openTerminal()" />`,
+      {
+        imports: [ProfileHero],
+        providers: [provideRouter([])],
+        componentProperties: {
+          profile,
+          stats: { organizations: 1, technologies: 1 },
+          openTerminal,
+        },
+      },
+    );
+    await userEvent.click(screen.getByRole('button', { name: /Terminal/ }));
+    expect(openTerminal).toHaveBeenCalled();
+  });
 });

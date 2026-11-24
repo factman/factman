@@ -94,3 +94,14 @@ test('the home page prerenders its deferred sections in full (ETE-114)', () => {
     assert.ok(home.includes(marker), `${marker} is missing from the prerendered home page`);
   }
 });
+
+test('the terminal host and its commands are a lazy chunk, not in the initial bundle (FR-36)', () => {
+  // The commands' text (terminal-commands.ts): the host, its commands and the data they read load
+  // with the terminal. The Terminal organism itself is in the shared UI kit chunk with the others.
+  const marker = 'Preview and download them in the';
+  for (const f of initial) assert.ok(!read(f).includes(marker), `the terminal is in ${f}`);
+  assert.ok(
+    js.some((f) => !initial.has(f) && read(f).includes(marker)),
+    'no lazy chunk holds the terminal',
+  );
+});

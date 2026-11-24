@@ -1,6 +1,9 @@
 import { ViewportScroller } from '@angular/common';
+import { importProvidersFrom } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { CoreModule } from '@core';
+import { TERMINAL_ENABLED, TerminalLauncher } from '@shared';
 
 import { App } from './app';
 
@@ -64,5 +67,51 @@ describe('App focus management', () => {
     expect(scrollToAnchor).toHaveBeenCalledWith('contact', { behavior: 'instant' });
     app.scrollToFragment('/services');
     expect(scrollToAnchor).toHaveBeenCalledOnce();
+  });
+});
+
+describe('App terminal shortcut (FR-36)', () => {
+  const setup = async (enabled: boolean) => {
+    await TestBed.configureTestingModule({
+      imports: [App],
+      providers: [
+        provideRouter([]),
+        // The terminal's commands read the theme (ThemeService comes with CoreModule).
+        importProvidersFrom(CoreModule.forRoot({ environment: 'production' })),
+        { provide: TERMINAL_ENABLED, useValue: enabled },
+      ],
+    });
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    return { fixture, launcher: TestBed.inject(TerminalLauncher) };
+  };
+  const press = (init: KeyboardEventInit) => {
+    const event = new KeyboardEvent('keydown', { key: 'k', cancelable: true, ...init });
+    document.dispatchEvent(event);
+    return event;
+  };
+
+  it('toggles the terminal with Ctrl+K or Cmd+K, and loads it the first time', async () => {
+    const { fixture, launcher } = await setup(true);
+    expect(press({ ctrlKey: true }).defaultPrevented).toBe(true);
+    expect(launcher.open()).toBe(true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(fixture.nativeElement.querySelector('fm-terminal-host')).not.toBeNull();
+    press({ metaKey: true });
+    expect(launcher.open()).toBe(false);
+  });
+
+  it('leaves other keys alone, and does nothing while the terminal is off', async () => {
+    const { launcher } = await setup(false);
+    expect(press({ ctrlKey: true }).defaultPrevented).toBe(false);
+    expect(launcher.requested()).toBe(false);
+  });
+
+  it('ignores K without Ctrl or Cmd, or with Shift', async () => {
+    const { launcher } = await setup(true);
+    press({});
+    press({ ctrlKey: true, shiftKey: true });
+    expect(launcher.requested()).toBe(false);
   });
 });

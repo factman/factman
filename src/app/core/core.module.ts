@@ -1,5 +1,5 @@
 import { type ModuleWithProviders, NgModule, inject } from '@angular/core';
-import { resolveSite, SCROLL_SPY_ENABLED, type SiteEnvironment } from '@shared';
+import { resolveSite, SCROLL_SPY_ENABLED, type SiteEnvironment, TERMINAL_ENABLED } from '@shared';
 import { site } from '@data/site';
 
 import { AnalyticsModule } from './analytics/analytics.module';
@@ -36,6 +36,8 @@ export class CoreModule {
         { provide: SITE, useValue: resolved },
         // FR-37 is a P1 item: the section highlight and hash follow only when the flag is on.
         { provide: SCROLL_SPY_ENABLED, useValue: resolved.features.scrollSpy },
+        // FR-36, also P1: Ctrl/Cmd+K and the hero's button open the terminal only when it is on.
+        { provide: TERMINAL_ENABLED, useValue: resolved.features.terminal },
       ],
     };
   }

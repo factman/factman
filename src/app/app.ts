@@ -10,11 +10,14 @@ import {
 import { isPlatformBrowser, ViewportScroller } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { TerminalHost } from '@features/terminal';
+import { TERMINAL_ENABLED, TerminalLauncher } from '@shared';
 import { filter, skip, take } from 'rxjs';
 
 @Component({
   selector: 'fm-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, TerminalHost],
+  host: { '(document:keydown)': 'shortcut($event)' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './app.scss',
   templateUrl: './app.html',
@@ -23,6 +26,8 @@ export class App {
   private readonly document = inject(DOCUMENT);
   private readonly router = inject(Router);
   private readonly scroller = inject(ViewportScroller);
+  protected readonly terminalEnabled = inject(TERMINAL_ENABLED);
+  protected readonly terminal = inject(TerminalLauncher);
 
   constructor() {
     if (!isPlatformBrowser(inject(PLATFORM_ID))) return;
@@ -73,6 +78,14 @@ export class App {
     const main = this.main();
     main?.focus();
     main?.scrollIntoView();
+  }
+
+  /** Ctrl+K (Cmd+K on a Mac) opens and closes the terminal, when it ships (FR-36). */
+  shortcut(event: KeyboardEvent): void {
+    if (!this.terminalEnabled || event.key.toLowerCase() !== 'k') return;
+    if (!(event.ctrlKey || event.metaKey) || event.altKey || event.shiftKey) return;
+    event.preventDefault();
+    this.terminal.toggle();
   }
 
   private main(): HTMLElement | null {

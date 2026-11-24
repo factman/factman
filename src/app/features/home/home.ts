@@ -21,7 +21,15 @@ import { profile } from '@data/profile';
 import { site } from '@data/site';
 import { skills } from '@data/skills';
 import { ThemeService } from '@core/theme';
-import { CLOCK, countWord, portraitSources, SharedModule, yearsSince } from '@shared';
+import {
+  CLOCK,
+  countWord,
+  portraitSources,
+  SharedModule,
+  TERMINAL_ENABLED,
+  TerminalLauncher,
+  yearsSince,
+} from '@shared';
 import { Button, IconRegistry, iconArrowRight, iconGithub } from '@ui/atoms';
 import { CodeEditor, SERVICE_ICONS } from '@ui/molecules';
 import {
@@ -196,6 +204,10 @@ export class Home {
   };
   /** contact.json's time zone (Africa/Lagos) as people say it. */
   protected readonly timezone = 'WAT · UTC+1';
+
+  /** The hero's "Terminal" button, when the P1 terminal ships (FR-36). */
+  protected readonly terminalEnabled = inject(TERMINAL_ENABLED);
+  protected readonly terminal = inject(TerminalLauncher);
 
   /** The résumé modal comes with ETE-109; until then the hero's Résumé goes to the section. */
   protected openResume(): void {
