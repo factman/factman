@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import { ClientLogoStrip, type StripClient } from './client-logo-strip';
+import { ClientLogoStrip, loopItems, MIN_LOOP, type StripClient } from './client-logo-strip';
 
 const clients: StripClient[] = [
   {
@@ -17,6 +17,22 @@ const clients: StripClient[] = [
 
 const renderStrip = (list: readonly StripClient[]) =>
   render(ClientLogoStrip, { inputs: { clients: list } });
+
+describe('loopItems', () => {
+  it('repeats a short list until the loop has MIN_LOOP logos, marking the repeats', () => {
+    const items = loopItems(clients);
+    expect(items.length).toBeGreaterThanOrEqual(MIN_LOOP);
+    expect(items.slice(0, 2).map((i) => i.repeat)).toEqual([false, false]);
+    expect(items.slice(2).every((i) => i.repeat)).toBe(true);
+    expect(new Set(items.map((i) => i.key)).size).toBe(items.length);
+  });
+
+  it('keeps a long list as it is', () => {
+    const many = Array.from({ length: 20 }, (_, i) => ({ ...clients[0], id: i + 1 }));
+    expect(loopItems(many)).toHaveLength(20);
+    expect(loopItems([])).toEqual([]);
+  });
+});
 
 describe('ClientLogoStrip', () => {
   it('renders nothing with no clients', async () => {
@@ -43,7 +59,14 @@ describe('ClientLogoStrip', () => {
     expect(link.getAttribute('rel')).toBe('noopener noreferrer');
     const copy = container.querySelector('.client-logo-strip-group.is-copy')!;
     expect(copy.getAttribute('aria-hidden')).toBe('true');
-    expect(copy.querySelector('a')!.getAttribute('tabindex')).toBe('-1');
+    expect(copy.hasAttribute('inert')).toBe(true);
+    // Short lists repeat to fill the loop; the repeats are hidden and inert too.
+    const repeats = container.querySelectorAll('.client-logo-strip-group:not(.is-copy) .is-repeat');
+    expect(repeats.length).toBeGreaterThan(0);
+    for (const li of repeats) {
+      expect(li.getAttribute('aria-hidden')).toBe('true');
+      expect(li.hasAttribute('inert')).toBe(true);
+    }
   });
 
   it('pauses and plays with its button', async () => {

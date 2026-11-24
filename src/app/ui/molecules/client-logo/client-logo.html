@@ -14,12 +14,7 @@
   }
 </ng-template>
 @if (link(); as href) {
-  <a
-    class="client-logo"
-    [href]="href"
-    target="_blank"
-    rel="noopener noreferrer"
-    [attr.tabindex]="tabbable() ? null : -1"
+  <a class="client-logo" [href]="href" target="_blank" rel="noopener noreferrer"
     ><ng-container [ngTemplateOutlet]="content" /><span class="fm-sr">
       (opens in a new tab)</span
     ></a

@@ -1,15 +1,30 @@
-// The canvas's WorkedWith strip: a small heading, then the logos in an endless marquee
-// (docs/interaction-and-motion.md, "Logo marquee"). The track holds two equal groups and moves
-// by half its width, so the copy takes the first group's place without a jump.
+// The canvas's WorkedWith strip: a glass card with a small heading over the logos in an endless
+// marquee (docs/interaction-and-motion.md, "Logo marquee"). The track holds two equal groups and
+// moves by half its width, so the copy takes the first group's place without a jump.
 @use 'ui/layout';
 
 .client-logo-strip {
   @include layout.container;
 
+  padding-block: var(--gap-3xl);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.client-logo-strip-card {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-xl);
-  padding-block: var(--gap-3xl);
+  gap: var(--gap-lg);
+  align-items: stretch;
+  box-sizing: border-box;
+  padding: var(--padding-xl) var(--padding-3xl);
+  border: var(--border-width-sm) solid var(--glass-stroke-subtle);
+  border-radius: var(--radius-xl);
+  background: var(--glass-fill);
+
+  @media (width < 768px) {
+    padding: var(--padding-lg) var(--padding-md);
+  }
 }
 
 .client-logo-strip-head {
@@ -103,6 +118,7 @@
   }
 
   .client-logo-strip-group.is-copy,
+  .client-logo-strip-group .is-repeat,
   .client-logo-strip-toggle {
     display: none;
   }

@@ -33,8 +33,6 @@ export class ClientLogo {
   readonly client = input.required<Pick<Client, 'name' | 'logo' | 'plate' | 'ratio' | 'website'>>();
   /** Shows the name under the logo. */
   readonly showName = input(false);
-  /** False takes the link out of the tab order (the marquee's hidden copy). */
-  readonly tabbable = input(true);
   /** Where src/assets is served from. */
   readonly assetBase = input('/assets/');
 
