@@ -26,7 +26,7 @@ const distinct = <T>(values: readonly T[]): T[] => [...new Set(values)];
 export function aboutFacts(profile: AboutData): AboutFact[] {
   const facts: AboutFact[] = [];
 
-  const education = [...profile.education].sort((a, b) => b.start - a.start)[0];
+  const education = profile.education.toSorted((a, b) => b.start - a.start)[0];
   if (education) {
     facts.push({
       icon: iconGraduationCap,

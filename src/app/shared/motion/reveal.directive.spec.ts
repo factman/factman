@@ -25,8 +25,12 @@ describe('Reveal', () => {
   const observe = vi.fn();
   const disconnect = vi.fn();
 
-  const setup = async ({ reduced = false, top = 2000 } = {}) => {
+  const setup = async ({ reduced = false, top = 2000, scrollDriven = false } = {}) => {
     callback = undefined;
+    // jsdom's CSS.supports says yes to anything: pin whether view timelines exist.
+    vi.stubGlobal('CSS', {
+      supports: (q: string) => scrollDriven && q === 'animation-timeline: view()',
+    });
     vi.stubGlobal(
       'IntersectionObserver',
       vi.fn(function (this: unknown, cb: IntersectionObserverCallback) {
@@ -69,5 +73,17 @@ describe('Reveal', () => {
     const section = await setup({ reduced: true });
     expect(section.classList).not.toContain('fm-reveal');
     expect(callback).toBeUndefined();
+  });
+
+  it('leaves the reveal to CSS where scroll-driven animations exist (ETE-269)', async () => {
+    const section = await setup({ scrollDriven: true });
+    expect(section.classList).toContain('fm-reveal-scroll');
+    expect(section.classList).not.toContain('fm-reveal');
+    expect(callback).toBeUndefined();
+  });
+
+  it('never hides an on-screen element on the scroll-driven path either', async () => {
+    const section = await setup({ top: 100, scrollDriven: true });
+    expect(section.classList).not.toContain('fm-reveal-scroll');
   });
 });

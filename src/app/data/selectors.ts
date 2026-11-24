@@ -4,7 +4,7 @@ import type { Client, Project, Service, Skill } from '@shared';
 
 /** Orders records by their `order` field, lowest first; the input is not modified. */
 export const byOrder = <T extends { order: number }>(items: readonly T[]): T[] =>
-  [...items].sort((a, b) => a.order - b.order);
+  items.toSorted((a, b) => a.order - b.order);
 
 /** Services in display order (catalogue, home grid). */
 export const servicesByOrder = (services: readonly Service[]): Service[] => byOrder(services);
@@ -33,7 +33,7 @@ export const MAX_FEATURED_PROJECTS = 6;
  * dates keep their file order. The input is not modified.
  */
 export const projectsByRecency = (projects: readonly Project[]): Project[] =>
-  [...projects].sort((a, b) => b.startedAt.localeCompare(a.startedAt));
+  projects.toSorted((a, b) => b.startedAt.localeCompare(a.startedAt));
 
 /** The home grid: featured projects, newest first, at most `limit` (FR-20). */
 export const featuredProjects = (
@@ -88,4 +88,4 @@ export interface Dated {
 
 /** The newest `limit` posts for the home "Writing" section (FR-24). The input is not modified. */
 export const newestPosts = <T extends Dated>(posts: readonly T[], limit = 3): T[] =>
-  [...posts].sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt)).slice(0, limit);
+  posts.toSorted((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt)).slice(0, limit);

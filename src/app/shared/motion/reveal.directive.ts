@@ -6,9 +6,13 @@ import { prefersReducedMotion } from './reduced-motion';
  * Reveal on scroll (ETE-26): fades and lifts an element in the first time it scrolls into view,
  * using the design system's `.fm-reveal` / `.is-in` classes (global.css).
  *
- * The prerendered HTML is never hidden: the element only becomes `.fm-reveal` in the browser, and
- * only if it starts below the fold. With reduced motion, or without IntersectionObserver, nothing
- * is hidden at all. Only opacity and transform animate.
+ * Where the browser has scroll-driven animations (`animation-timeline: view()`), the element
+ * gets `.fm-reveal-scroll` instead and CSS fades it in as it enters the viewport, with no observer
+ * or script per element (ETE-269, styles.scss). Elsewhere an IntersectionObserver adds `.is-in`.
+ *
+ * The prerendered HTML is never hidden: the element only gets a reveal class in the browser, and
+ * only if it starts below the fold. With reduced motion, or with neither scroll-driven animations
+ * nor IntersectionObserver, nothing is hidden at all. Only opacity and transform animate.
  *
  * ```html
  * <section fmReveal [fmRevealDelay]="120">…</section>
@@ -27,10 +31,15 @@ export class Reveal {
     const destroyRef = inject(DestroyRef);
     afterNextRender(() => {
       const win = el.ownerDocument.defaultView;
-      if (!win || prefersReducedMotion(win) || typeof win.IntersectionObserver !== 'function')
-        return;
+      if (!win || prefersReducedMotion(win)) return;
+      const scrollDriven = !!win.CSS?.supports?.('animation-timeline: view()');
+      if (!scrollDriven && typeof win.IntersectionObserver !== 'function') return;
       const { top, bottom } = el.getBoundingClientRect();
       if (top < win.innerHeight && bottom > 0) return; // on screen at load: never hide it
+      if (scrollDriven) {
+        el.classList.add('fm-reveal-scroll'); // CSS does the rest, on the compositor
+        return;
+      }
       el.classList.add('fm-reveal');
       // No negative root margin: an element at the very foot of the page can never scroll above
       // one, and would stay hidden.

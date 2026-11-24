@@ -79,10 +79,13 @@ test('CSP blocks inline and third-party scripts and framing', () => {
   assert.match(csp, /object-src 'none'/);
 });
 
-test("CSP enforces Trusted Types, with only Angular's policies and the JSON-LD one (ETE-267)", () => {
+test("CSP enforces Trusted Types, with only Angular's policies, JSON-LD and feed parsing (ETE-267, ETE-270)", () => {
   const csp = value(APP, 'Content-Security-Policy');
   assert.equal(directive(csp, 'require-trusted-types-for'), "require-trusted-types-for 'script'");
-  assert.equal(directive(csp, 'trusted-types'), 'trusted-types angular angular#bundler fm-json-ld');
+  assert.equal(
+    directive(csp, 'trusted-types'),
+    'trusted-types angular angular#bundler fm-json-ld fm-feed-html',
+  );
   assert.doesNotMatch(csp, /'allow-duplicates'/);
 });
 

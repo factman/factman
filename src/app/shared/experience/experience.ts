@@ -32,7 +32,7 @@ export const compareRecency = (a: Period, b: Period): number =>
  * Equal keys keep their input order (Array.prototype.sort is stable). The input is not modified.
  */
 export const sortByRecency = <T extends Period>(items: readonly T[]): T[] =>
-  [...items].sort(compareRecency);
+  items.toSorted(compareRecency);
 
 /**
  * Orders the experience timeline: roles within each organization by recency, then organizations
