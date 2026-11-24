@@ -37,6 +37,15 @@
 >
   <fm-tech-stack [groups]="stack" />
 </fm-section-layout>
+<fm-section-layout
+  sectionId="experience"
+  index="03"
+  eyebrow="Experience"
+  title="Where I have worked"
+  description="Current roles first, then everything else from newest to oldest. Open a role to see what I shipped and the stack behind it."
+>
+  <fm-experience-timeline [entries]="timeline" [glance]="glance" />
+</fm-section-layout>
 @for (section of sections; track section.id) {
   <section fmReveal [id]="section.id" [attr.aria-labelledby]="section.id + '-title'" tabindex="-1">
     <h2 [id]="section.id + '-title'">{{ section.label }}</h2>

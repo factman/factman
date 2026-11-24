@@ -1,0 +1,244 @@
+// The canvas's ExperienceSection body and the design system's ExperienceTimeline (.fm-xp and
+// .fm-xrole in portfolio-sections.css), copied with our own class names so the section doesn't
+// load that file. The timeline and CareerGlance sit side by side (8:4) from 1024px.
+
+.experience-timeline {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.experience-timeline.has-glance {
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: var(--gap-5xl);
+  align-items: start;
+
+  @media (width < 1024px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-4xl);
+  }
+}
+
+.experience-timeline-aside {
+  position: sticky;
+  top: calc(var(--navbar-height) + var(--gap-xl));
+
+  @media (width < 1024px) {
+    position: static;
+  }
+}
+
+.experience-timeline-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.experience-timeline-item {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: var(--gap-lg);
+
+  @media (width < 768px) {
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: var(--gap-sm);
+  }
+}
+
+.experience-timeline-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.experience-timeline-logo {
+  flex: none;
+  box-sizing: border-box;
+  width: 48px;
+  height: 48px;
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-md);
+  object-fit: contain;
+  background: var(--neutral-0);
+  box-shadow: var(--shadow-glass-chip);
+
+  @media (width < 768px) {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+// White artwork sits on a dark plate in either theme.
+.experience-timeline-logo.is-dark {
+  background: var(--neutral-950);
+}
+
+.experience-timeline-logo.is-initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: 600 15px/1 var(--font-mono);
+
+  // --accent-default alone is under 4.5:1 on the glass in the dark theme; mix in text colour.
+  color: color-mix(in srgb, var(--accent-default) 60%, var(--text-primary));
+  background: var(--glass-fill-strong);
+}
+
+.experience-timeline-line {
+  flex: 1;
+  width: 2px;
+  margin: var(--gap-xs) 0;
+  border-radius: var(--radius-xs);
+  background: linear-gradient(var(--accent-default), var(--border-subtle));
+  opacity: 0.5;
+}
+
+.experience-timeline-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  min-width: 0;
+  padding-bottom: var(--gap-2xl);
+}
+
+.experience-timeline-company {
+  display: flex;
+  flex-wrap: wrap;
+  place-content: center space-between;
+  align-items: baseline;
+  gap: var(--gap-sm);
+  min-height: 48px;
+
+  h3 {
+    margin: 0;
+    font: 700 20px/1.3 var(--font-sans);
+    color: var(--text-primary);
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-2xs);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--accent-default);
+  }
+
+  a:focus-visible {
+    border-radius: var(--radius-xs);
+    outline: var(--border-width-lg) solid var(--border-focus);
+    outline-offset: 2px;
+  }
+}
+
+// --text-tertiary (the DS's colour) is under 4.5:1 at 12px.
+.experience-timeline-total {
+  font: 400 12px/1 var(--font-mono);
+  color: var(--text-secondary);
+}
+
+.experience-timeline-role {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  padding: var(--padding-lg);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-lg);
+  background: var(--glass-fill);
+  box-shadow: var(--shadow-glass-regular);
+
+  @media (width < 768px) {
+    padding: var(--padding-md);
+  }
+}
+
+.experience-timeline-role.is-current {
+  border-color: var(--glass-stroke-strong);
+}
+
+.experience-timeline-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-xs);
+  margin: 0;
+  font: 600 16px/1.4 var(--font-sans);
+  color: var(--text-primary);
+}
+
+.experience-timeline-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-2xs) var(--gap-xs);
+  margin: var(--gap-3xs) 0 0;
+  font: 400 13px/20px var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.experience-timeline-period {
+  font: 400 12px/20px var(--font-mono);
+  color: var(--text-primary);
+}
+
+.experience-timeline-summary {
+  margin: var(--gap-2xs) 0 0;
+  font: 400 14px/1.7 var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.experience-timeline-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-2xs);
+  margin: var(--gap-2xs) 0 0;
+  padding: 0;
+  list-style: none;
+  font: 400 14px/1.6 var(--font-sans);
+  color: var(--text-secondary);
+
+  li {
+    position: relative;
+    padding-left: var(--padding-md);
+  }
+
+  li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: var(--accent-default);
+  }
+}
+
+.experience-timeline-more {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: var(--gap-2xs);
+  min-height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: 500 13px/20px var(--font-sans);
+  color: var(--accent-default);
+  cursor: pointer;
+
+  &:focus-visible {
+    border-radius: var(--radius-xs);
+    outline: var(--border-width-lg) solid var(--border-focus);
+    outline-offset: 2px;
+  }
+}
+
+.experience-timeline-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-2xs);
+  margin: var(--gap-2xs) 0 0;
+  padding: 0;
+  list-style: none;
+}
