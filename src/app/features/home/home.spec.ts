@@ -60,6 +60,36 @@ describe('Home Experience (FR-13 to FR-16)', () => {
   });
 });
 
+describe('Home Services (#services)', () => {
+  it('shows every service as a tile, in order, with "Compare all services"', async () => {
+    const { container } = await render(Home);
+    const section = container.querySelector('section#services')!;
+    const { services } = await import('@data/services');
+    const hrefs = [...section.querySelectorAll('.service-card-link')].map((a) =>
+      a.getAttribute('href'),
+    );
+    expect(hrefs).toEqual(
+      [...services].sort((a, b) => a.order - b.order).map((s) => `/services/${s.slug}`),
+    );
+    expect(screen.getByRole('link', { name: /Compare all services/ }).getAttribute('href')).toBe(
+      '/services',
+    );
+  });
+
+  it('starts its intro with the number of services as a word', async () => {
+    const { countWord } = await import('./home');
+    expect(countWord(8)).toBe('Eight');
+    expect(countWord(12)).toBe('12');
+  });
+
+  it('registers an icon for every service in services.json', async () => {
+    const { SERVICE_ICONS } = await import('@ui/molecules');
+    const { services } = await import('@data/services');
+    const names = new Set(SERVICE_ICONS.map((i) => i.name));
+    for (const s of services) expect(names.has(s.icon), `${s.slug}: ${s.icon}`).toBe(true);
+  });
+});
+
 describe('Home sections', () => {
   it('has an anchor for every home link in the site navigation', async () => {
     const { site } = await import('@data/site');

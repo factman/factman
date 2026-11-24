@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { ClientsRepository } from '@core/data';
+import { ClientsRepository, ServicesRepository } from '@core/data';
 import { contact } from '@data/contact';
 import { experience } from '@data/experience';
 import { heroCodeFile } from '@data/generated/hero-code';
@@ -8,13 +8,15 @@ import { profile } from '@data/profile';
 import { skills } from '@data/skills';
 import { ThemeService } from '@core/theme';
 import { CLOCK, portraitSources, SharedModule, yearsSince } from '@shared';
-import { CodeEditor } from '@ui/molecules';
+import { IconRegistry } from '@ui/atoms';
+import { CodeEditor, SERVICE_ICONS } from '@ui/molecules';
 import {
   AboutSection,
   ClientLogoStrip,
   ExperienceTimeline,
   ProfileHero,
   type ProfileHeroStats,
+  ServicesGrid,
   TechStack,
 } from '@ui/organisms';
 import { SectionLayout } from '@ui/templates';
@@ -24,8 +26,13 @@ import { careerGlance, darkLogos, timelineEntries } from './experience-view';
 import { HOME_SECTIONS } from './home-sections';
 import { stackGroups } from './stack-groups';
 
+const WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+
+/** "Eight" for 8, as a sentence starts; digits past ten. */
+export const countWord = (n: number): string => WORDS[n] ?? String(n);
+
 /** Sections this page renders itself; the rest are shells until their organisms are built. */
-const BUILT = new Set<string>(['about', 'resume', 'stack', 'experience']);
+const BUILT = new Set<string>(['about', 'resume', 'stack', 'experience', 'services']);
 
 /** The networks the hero links to, in contact.json's order (ETeam has its own place). */
 const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
@@ -46,6 +53,7 @@ const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
     ProfileHero,
     RouterLink,
     SectionLayout,
+    ServicesGrid,
     SharedModule,
     TechStack,
   ],
@@ -85,6 +93,14 @@ export class Home {
     darkLogos(this.clients),
   );
   protected readonly glance = careerGlance(experience, profile.careerStart, this.now);
+
+  /** Services in services.json `order`; their icons are chosen by the data (ADR-004). */
+  protected readonly services = inject(ServicesRepository).all();
+  protected readonly servicesIntro = `${countWord(this.services.length)} services, from a one-off architecture review to a fractional CTO. Every engagement starts with a short call and a written quote.`;
+
+  constructor() {
+    inject(IconRegistry).register(SERVICE_ICONS);
+  }
   protected readonly profile = profile;
   protected readonly photo = portraitSources(profile.photo);
   /** The hero's profile.ts, highlighted at build time (pnpm data:hero-code); it repeats the hero's

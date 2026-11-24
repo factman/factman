@@ -33,6 +33,7 @@ export { ScheduleCallButton } from './schedule-call-button/schedule-call-button'
 export { SectionHeader } from './section-header/section-header';
 export { SelectableCard } from './selectable-card/selectable-card';
 export { ServiceCard } from './service-card/service-card';
+export { SERVICE_ICONS } from './service-card/service-icons';
 export { SocialLinks, socialIcon } from './social-links/social-links';
 export { COUNT_DURATION, countAt, easeOutQuart } from './stat-counter/count-up';
 export { StatCounter } from './stat-counter/stat-counter';

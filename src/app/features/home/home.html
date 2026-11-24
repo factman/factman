@@ -46,6 +46,15 @@
 >
   <fm-experience-timeline [entries]="timeline" [glance]="glance" />
 </fm-section-layout>
+<fm-section-layout
+  sectionId="services"
+  index="04"
+  eyebrow="Services"
+  title="How I can help"
+  [description]="servicesIntro"
+>
+  <fm-services-grid [services]="services" ctaLabel="Compare all services" />
+</fm-section-layout>
 @for (section of sections; track section.id) {
   <section fmReveal [id]="section.id" [attr.aria-labelledby]="section.id + '-title'" tabindex="-1">
     <h2 [id]="section.id + '-title'">{{ section.label }}</h2>
