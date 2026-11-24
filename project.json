@@ -265,6 +265,18 @@
       "command": "playwright test -c playwright.vr.config.ts --update-snapshots",
       "dependsOn": ["build-preview"],
       "cache": false
+    },
+    "resume:html": {
+      "executor": "nx:run-commands",
+      "inputs": [
+        "{projectRoot}/src/data/**/*",
+        "{projectRoot}/scripts/resume/**/*",
+        "{projectRoot}/src/app/shared/resume/**/*"
+      ],
+      "outputs": ["{projectRoot}/dist/resumes"],
+      "options": {
+        "command": "node --import tsx scripts/resume/render-html.ts"
+      }
     }
   }
 }
