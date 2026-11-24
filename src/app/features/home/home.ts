@@ -9,14 +9,21 @@ import { skills } from '@data/skills';
 import { ThemeService } from '@core/theme';
 import { CLOCK, portraitSources, SharedModule, yearsSince } from '@shared';
 import { CodeEditor } from '@ui/molecules';
-import { AboutSection, ClientLogoStrip, ProfileHero, type ProfileHeroStats } from '@ui/organisms';
+import {
+  AboutSection,
+  ClientLogoStrip,
+  ProfileHero,
+  type ProfileHeroStats,
+  TechStack,
+} from '@ui/organisms';
 import { SectionLayout } from '@ui/templates';
 
 import { aboutFacts } from './about-facts';
 import { HOME_SECTIONS } from './home-sections';
+import { stackGroups } from './stack-groups';
 
 /** Sections this page renders itself; the rest are shells until their organisms are built. */
-const BUILT = new Set<string>(['about', 'resume']);
+const BUILT = new Set<string>(['about', 'resume', 'stack']);
 
 /** The networks the hero links to, in contact.json's order (ETeam has its own place). */
 const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
@@ -37,11 +44,14 @@ const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
     RouterLink,
     SectionLayout,
     SharedModule,
+    TechStack,
   ],
   templateUrl: './home.html',
 })
 export class Home {
   private readonly router = inject(Router);
+  /** The build's clock: every count on the page is fixed at prerender time. */
+  private readonly now = inject(CLOCK)();
 
   /** "Worked with", in display order; an empty list omits the strip (FR-52). */
   protected readonly clients = inject(ClientsRepository).all();
@@ -53,13 +63,16 @@ export class Home {
   /** About (FR-10): the years are counted from careerStart at build time. */
   protected readonly about = {
     title: 'Engineer first, leader by practice',
-    description: `${yearsSince(profile.careerStart, inject(CLOCK)())} years of shipping software, from the first commit to the team that maintains it.`,
+    description: `${yearsSince(profile.careerStart, this.now)} years of shipping software, from the first commit to the team that maintains it.`,
   };
   protected readonly aboutPhoto = profile.aboutPhoto && {
     ...portraitSources(profile.aboutPhoto),
     sizes: '(min-width: 768px) 480px, 360px',
   };
   protected readonly aboutFacts = aboutFacts(profile);
+
+  /** Stack (FR-11, FR-12): years of use are counted from each skill's `since` at build time. */
+  protected readonly stack = stackGroups(skills, this.now);
   protected readonly profile = profile;
   protected readonly photo = portraitSources(profile.photo);
   /** The hero's profile.ts, highlighted at build time (pnpm data:hero-code); it repeats the hero's
