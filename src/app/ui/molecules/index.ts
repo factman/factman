@@ -12,6 +12,7 @@ export { type CareerBar, type CareerRow, CareerStrip } from './career-strip/care
 export { type Channel, ChannelCard } from './channel-card/channel-card';
 export { ClientLogo, LOGO_HEIGHT } from './client-logo/client-logo';
 export { CodeBlock } from './code-block/code-block';
+export { CodeEditor, type EditorFile } from './code-editor/code-editor';
 export { type CodeLanguage, highlight, type Token, type TokenKind } from './code-block/highlight';
 export { type ConsentChoice, ConsentStatusCard } from './consent-status-card/consent-status-card';
 export { ContactMethod } from './contact-method/contact-method';

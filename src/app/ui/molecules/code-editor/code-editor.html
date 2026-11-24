@@ -1,0 +1,48 @@
+<div
+  class="fm-editor code-editor"
+  [attr.aria-hidden]="decorative() || null"
+  [attr.inert]="decorative() || null"
+>
+  <fm-window-frame [title]="tabbed() ? undefined : file().name" [glow]="glow()">
+    @if (!decorative()) {
+      <fm-copy-button
+        windowActions
+        [value]="code()"
+        label="Copy"
+        [ariaLabel]="'Copy ' + file().name"
+        variant="tertiary"
+      />
+    }
+    @if (tabbed()) {
+      <div class="fm-window__tabs code-editor-tabs" role="tablist" aria-label="Files">
+        @for (f of files(); track f.name; let i = $index) {
+          <button
+            type="button"
+            role="tab"
+            class="fm-etab window-tab"
+            [class.is-active]="i === activeFile()"
+            [attr.aria-selected]="i === activeFile()"
+            [attr.tabindex]="i === activeFile() ? 0 : -1"
+            (click)="select(i)"
+            (keydown)="onTabKey($event, i)"
+          >
+            {{ f.name }}
+          </button>
+        }
+      </div>
+    }
+    <pre
+      class="fm-code code-editor-code"
+      [attr.tabindex]="decorative() ? null : 0"
+      [attr.role]="decorative() ? null : 'region'"
+      [attr.aria-label]="decorative() ? null : file().name + ' source'"
+    ><code>@for (line of file().lines; track $index; let n = $index) {<span class="fm-code__line code-editor-line" [class.is-hl]="isHighlighted(n + 1)"><span class="fm-code__num code-editor-num" aria-hidden="true">{{ n + 1 }}</span>@for (tok of line; track $index) {@if (tok.kind) {<span [class]="'tok-' + tok.kind">{{ tok.text }}</span>} @else {{{ tok.text }}}}</span>}</code></pre>
+    @if (statusBar()) {
+      <div class="fm-window__status code-editor-status">
+        <span>{{ branch() }}</span>
+        <span>{{ cursor() }}</span>
+        <span>{{ file().language.toUpperCase() }}</span>
+      </div>
+    }
+  </fm-window-frame>
+</div>

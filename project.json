@@ -19,6 +19,9 @@
       ],
       "outputs": ["{projectRoot}/src/app/shared/models/generated"]
     },
+    "data:hero-code": {
+      "command": "tsx scripts/data/generate-hero-code.ts"
+    },
     "data:docs": {
       "command": "tsx scripts/data/generate-docs.ts",
       "inputs": ["{projectRoot}/src/data/schemas/**/*", "{projectRoot}/scripts/data/**/*.ts"],
