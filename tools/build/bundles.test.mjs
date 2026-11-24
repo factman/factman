@@ -67,3 +67,10 @@ for (const [file, pages] of [
     assert.ok(lazy.length > 0, `no lazy chunk contains ${file}`);
   });
 }
+
+test('the home page ships no syntax highlighter: its code editor is highlighted at build time', () => {
+  // highlight.ts's keyword list (ETE-90): only CodeBlock, on pages that show code samples, has it.
+  for (const f of loads('index.html')) {
+    assert.ok(!read(f).includes('abstract|as|async|await'), `the highlighter is in ${f}`);
+  }
+});

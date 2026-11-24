@@ -15,29 +15,32 @@ export interface Token {
 
 type Rule = [RegExp, TokenKind | ((match: string, rest: string) => TokenKind | undefined)];
 
-const TS_KEYWORDS =
-  'abstract|as|async|await|break|case|catch|class|const|continue|default|delete|do|else|enum|export|extends|false|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|private|protected|public|readonly|return|set|static|super|switch|this|throw|true|try|type|typeof|undefined|var|void|while|yield';
+// A regex literal, not `new RegExp`, so bundles that never highlight (the home page, whose code
+// editor is highlighted at build time, ETE-90) can drop this module.
+// prettier-ignore
+const word = /(?:abstract|as|async|await|break|case|catch|class|const|continue|default|delete|do|else|enum|export|extends|false|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|private|protected|public|readonly|return|set|static|super|switch|this|throw|true|try|type|typeof|undefined|var|void|while|yield)\b/y;
 
-const word = new RegExp(`(?:${TS_KEYWORDS})\\b`, 'y');
-
-const RULES: Record<Exclude<CodeLanguage, 'text'>, Rule[]> = {
-  ts: [
-    [/\/\/[^\n]*/y, 'comment'],
-    [/\/\*[\s\S]*?\*\//y, 'comment'],
-    [/(["'`])(?:\\.|(?!\1)[^\\\n])*\1/y, 'string'],
-    [/\b\d[\d_]*(?:\.\d+)?\b/y, 'number'],
-    [word, 'keyword'],
-    [
-      /@?[A-Za-z_$][\w$]*/y,
-      (m, rest) => {
-        // Decorators and capitalised names are types, even when called (`@Component(`).
-        if (m.startsWith('@') || /^[A-Z]/.test(m)) return 'type';
-        return /^\s*\(/.test(rest) ? 'function' : undefined;
-      },
-    ],
-    [/[{}()[\];,.:=<>+\-*/!?&|]/y, 'punctuation'],
+const TS_RULES: Rule[] = [
+  [/\/\/[^\n]*/y, 'comment'],
+  [/\/\*[\s\S]*?\*\//y, 'comment'],
+  [/(["'`])(?:\\.|(?!\1)[^\\\n])*\1/y, 'string'],
+  [/\b\d[\d_]*(?:\.\d+)?\b/y, 'number'],
+  [word, 'keyword'],
+  [
+    /@?[A-Za-z_$][\w$]*/y,
+    (m, rest) => {
+      // Decorators and capitalised names are types, even when called (`@Component(`).
+      if (m.startsWith('@') || /^[A-Z]/.test(m)) return 'type';
+      return /^\s*\(/.test(rest) ? 'function' : undefined;
+    },
   ],
-  js: [],
+  [/[{}()[\];,.:=<>+\-*/!?&|]/y, 'punctuation'],
+];
+
+// No statements after the table (`RULES.js = …`): an assignment would keep it in every bundle.
+const RULES: Record<Exclude<CodeLanguage, 'text'>, Rule[]> = {
+  ts: TS_RULES,
+  js: TS_RULES,
   json: [
     [/"(?:\\.|[^"\\\n])*"(?=\s*:)/y, 'tag'],
     [/"(?:\\.|[^"\\\n])*"/y, 'string'],
@@ -61,7 +64,6 @@ const RULES: Record<Exclude<CodeLanguage, 'text'>, Rule[]> = {
     [/=/y, 'punctuation'],
   ],
 };
-RULES.js = RULES.ts;
 
 /** The code as lines of tokens; text no rule matches comes through as plain tokens. */
 export function highlight(code: string, language: CodeLanguage): Token[][] {

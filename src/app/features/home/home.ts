@@ -2,9 +2,11 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { contact } from '@data/contact';
 import { experience } from '@data/experience';
+import { heroCodeFile } from '@data/generated/hero-code';
 import { profile } from '@data/profile';
 import { skills } from '@data/skills';
 import { portraitSources, SharedModule } from '@shared';
+import { CodeEditor } from '@ui/molecules';
 import { ProfileHero, type ProfileHeroStats } from '@ui/organisms';
 
 import { HOME_SECTIONS } from './home-sections';
@@ -20,7 +22,7 @@ const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
 @Component({
   selector: 'fm-home',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ProfileHero, RouterLink, SharedModule],
+  imports: [CodeEditor, ProfileHero, RouterLink, SharedModule],
   templateUrl: './home.html',
 })
 export class Home {
@@ -29,6 +31,9 @@ export class Home {
   protected readonly sections = HOME_SECTIONS;
   protected readonly profile = profile;
   protected readonly photo = portraitSources(profile.photo);
+  /** The hero's profile.ts, highlighted at build time (pnpm data:hero-code); it repeats the hero's
+   * text, so the editor is decorative. */
+  protected readonly editorFiles = [heroCodeFile];
   protected readonly socials = contact.links.filter((link) => HERO_SOCIALS.has(link.id));
   /** Counted from the data (FR-11), like the stats strip. */
   protected readonly stats: ProfileHeroStats = {

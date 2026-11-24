@@ -1,8 +1,14 @@
 import { provideRouter } from '@angular/router';
-import { applicationConfig, type Meta, type StoryObj } from '@storybook/angular-vite';
+import {
+  applicationConfig,
+  moduleMetadata,
+  type Meta,
+  type StoryObj,
+} from '@storybook/angular-vite';
 import { expect, fn, userEvent } from 'storybook/test';
 
 import { CLOCK } from '@shared';
+import { CodeEditor, highlight } from '@ui/molecules';
 
 import { ProfileHero } from './profile-hero';
 
@@ -91,3 +97,29 @@ export const Tablet: Story = { globals: { viewport: { value: 'tablet' } } };
 export const Mobile: Story = { globals: { viewport: { value: 'mobile' } } };
 
 export const Dark: Story = { globals: { theme: 'dark' } };
+
+/** With the code editor (ETE-90) in `[heroEditor]`, as on the home page. */
+export const WithEditor: Story = {
+  decorators: [moduleMetadata({ imports: [CodeEditor] })],
+  render: (args) => ({
+    props: {
+      ...args,
+      files: [
+        {
+          name: 'profile.ts',
+          language: 'ts',
+          lines: highlight(
+            'const profile = {\n  name: "Odunayo Mohammed",\n  since: 2013,\n  stack: ["Angular", "Node.js", "TypeScript"],\n};',
+            'ts',
+          ),
+          highlightLines: [4],
+        },
+      ],
+    },
+    template: `
+      <fm-profile-hero [profile]="profile" [photo]="photo" [socials]="socials" [stats]="stats"
+        [timezone]="timezone" (openResume)="resume($event)">
+        <fm-code-editor heroEditor [files]="files" [glow]="true" [decorative]="true" />
+      </fm-profile-hero>`,
+  }),
+};
