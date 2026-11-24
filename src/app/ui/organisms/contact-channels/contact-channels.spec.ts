@@ -37,7 +37,7 @@ describe('ContactChannels', () => {
   it('shows the phone number only after it is asked for (FR-29)', async () => {
     const { container } = await render(ContactChannels, { inputs: { details } });
     expect(container.textContent).not.toContain('706 678 0373');
-    await userEvent.click(screen.getByRole('button', { name: /phone/i }));
+    await userEvent.click(screen.getByRole('button', { name: 'Show number' }));
     expect(container.textContent).toContain('706 678 0373');
   });
 
