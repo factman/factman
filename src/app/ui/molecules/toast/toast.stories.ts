@@ -17,6 +17,8 @@ const meta: Meta<Toast> = {
     description: 'hello@example.com is on your clipboard.',
     variant: 'dark',
     duration: 0,
+    // In the flow, so the stories show the toast in place (the app floats it in the top layer).
+    floating: false,
     closed: fn(),
   },
 };

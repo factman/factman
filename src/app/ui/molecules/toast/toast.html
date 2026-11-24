@@ -1,6 +1,9 @@
 <div
+  #panel
   [class]="classes()"
-  role="status"
+  [class.toast-floating]="floating()"
+  [attr.popover]="popover()"
+  [hidden]="!shown()"
   (mouseenter)="pause(true)"
   (mouseleave)="pause(false)"
   (focusin)="pause(true)"
@@ -33,3 +36,5 @@
     </div>
   }
 </div>
+<!-- In the page before its text arrives, so screen readers announce the change (ETE-253). -->
+<span class="fm-sr" role="status">{{ announcement() }}</span>
