@@ -11,3 +11,16 @@
     gap: var(--gap-4xl);
   }
 }
+
+// "Read the blog" under the newest posts.
+.home-blog-more {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--gap-3xl);
+}
+
+// A deferred section before it renders (client-side navigation only: the prerendered page has
+// every section in full). Its height keeps the sections below from all entering the viewport.
+.home-deferred {
+  min-block-size: 50vh;
+}

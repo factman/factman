@@ -35,7 +35,11 @@
   title="The tools I reach for"
   description="Grouped by area. Years are counted from the year I started using each one, so they never go stale."
 >
-  <fm-tech-stack [groups]="stack" />
+  @defer (on viewport; hydrate on viewport) {
+    <fm-tech-stack [groups]="stack" />
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
 </fm-section-layout>
 <fm-section-layout
   sectionId="experience"
@@ -44,7 +48,11 @@
   title="Where I have worked"
   description="Current roles first, then everything else from newest to oldest. Open a role to see what I shipped and the stack behind it."
 >
-  <fm-experience-timeline [entries]="timeline" [glance]="glance" />
+  @defer (on viewport; hydrate on viewport) {
+    <fm-experience-timeline [entries]="timeline" [glance]="glance" />
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
 </fm-section-layout>
 <fm-section-layout
   sectionId="services"
@@ -53,7 +61,11 @@
   title="How I can help"
   [description]="servicesIntro"
 >
-  <fm-services-grid [services]="services" ctaLabel="Compare all services" />
+  @defer (on viewport; hydrate on viewport) {
+    <fm-services-grid [services]="services" ctaLabel="Compare all services" />
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
 </fm-section-layout>
 <fm-section-layout
   sectionId="projects"
@@ -62,7 +74,11 @@
   title="Things I have built"
   description="Open-source tools, client platforms and side projects. Private work shows the role and stack, and you can ask for a walkthrough."
 >
-  <fm-project-gallery [projects]="projects" [actions]="projectLinks" (engage)="engage()" />
+  @defer (on viewport; hydrate on viewport) {
+    <fm-project-gallery [projects]="projects" [actions]="projectLinks" (engage)="engage()" />
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
 </fm-section-layout>
 <fm-section-layout
   sectionId="stats"
@@ -71,7 +87,11 @@
   title="By the numbers"
   description="Every figure here is counted from the same data files as the rest of the site. Nothing is typed in by hand."
 >
-  <fm-stats-panel [counters]="statsCounters()" [career]="strip.rows" [ticks]="strip.ticks" />
+  @defer (on viewport; hydrate on viewport) {
+    <fm-stats-panel [counters]="statsCounters()" [career]="strip.rows" [ticks]="strip.ticks" />
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
 </fm-section-layout>
 <fm-section-layout
   sectionId="blog"
@@ -80,18 +100,22 @@
   [title]="blogTitle"
   description="Practical write-ups on fullstack engineering, fintech, cloud and leading teams, drawn from real products and the decisions behind them. New posts publish on Medium."
 >
-  <fm-blog-feed
-    [posts]="blog.posts()"
-    [status]="blog.status()"
-    [profileUrl]="blog.profileUrl"
-    [limit]="3"
-    (retry)="blog.retry()"
-  />
-  <div style="display: flex; justify-content: center; margin-top: var(--gap-3xl)">
-    <fm-button variant="secondary" size="lg" href="/blog" [trailingIcon]="blogArrow"
-      >Read the blog</fm-button
-    >
-  </div>
+  @defer (on viewport; hydrate on viewport) {
+    <fm-blog-feed
+      [posts]="blog.posts()"
+      [status]="blog.status()"
+      [profileUrl]="blog.profileUrl"
+      [limit]="3"
+      (retry)="blog.retry()"
+    />
+    <div class="home-blog-more">
+      <fm-button variant="secondary" size="lg" href="/blog" [trailingIcon]="blogArrow"
+        >Read the blog</fm-button
+      >
+    </div>
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
 </fm-section-layout>
 <fm-section-layout
   sectionId="contact"
@@ -100,8 +124,12 @@
   title="Let's build something"
   description="Have a product to build, a team to lead or a system to fix? Tell me about it. The form opens your own mail app; nothing is sent from this site."
 >
-  <div class="home-contact">
-    <fm-contact-form [email]="contactEmail" [topics]="topics" />
-    <fm-contact-channels [details]="contactDetails" [photo]="contactPhoto" />
-  </div>
+  @defer (on viewport; hydrate on viewport) {
+    <div class="home-contact">
+      <fm-contact-form [email]="contactEmail" [topics]="topics" />
+      <fm-contact-channels [details]="contactDetails" [photo]="contactPhoto" />
+    </div>
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
 </fm-section-layout>

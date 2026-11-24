@@ -74,3 +74,23 @@ test('the home page ships no syntax highlighter: its code editor is highlighted 
     assert.ok(!read(f).includes('abstract|as|async|await'), `the highlighter is in ${f}`);
   }
 });
+
+test('the home page prerenders its deferred sections in full (ETE-114)', () => {
+  // Stack to Contact are `@defer (hydrate on viewport)`: the HTML has their content, not placeholders.
+  const home = read('index.html');
+  assert.ok(
+    !home.includes('class="home-deferred"'),
+    'a deferred section prerendered as a placeholder',
+  );
+  for (const marker of [
+    'fm-tech-stack',
+    'experience-timeline-item',
+    'service-card-link',
+    'project-gallery-list',
+    'stats-panel-counters',
+    'fm-blog-feed',
+    'fm-contact-form',
+  ]) {
+    assert.ok(home.includes(marker), `${marker} is missing from the prerendered home page`);
+  }
+});
