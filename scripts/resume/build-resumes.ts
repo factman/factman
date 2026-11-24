@@ -85,7 +85,8 @@ async function printResume(
   await page.setContent(html, { waitUntil: 'load' });
   await page.evaluate(() => document.fonts.ready);
   const continued = await markContinuedExperience(page);
-  const pdf = await page.pdf({ preferCSSPageSize: true, printBackground: true });
+  // tagged: a structure tree, so screen readers and ATS read it in order (RS-10).
+  const pdf = await page.pdf({ preferCSSPageSize: true, printBackground: true, tagged: true });
   return { pdf, continued };
 }
 
@@ -148,9 +149,13 @@ export function compareManifests(committed: ResumeManifest, fresh: ResumeManifes
   });
 }
 
-async function main(): Promise<void> {
-  const outAt = process.argv.indexOf('--out');
-  const outDir = outAt > 0 ? process.argv[outAt + 1] : RESUMES_DIR;
+/**
+ * Prints every résumé into `outDir`: PDF, previews and manifest. Returns the manifest, and whether
+ * a résumé went over its page maximum.
+ */
+export async function printResumes(
+  outDir: string,
+): Promise<{ manifest: ResumeManifest; failed: boolean }> {
   rmSync(outDir, { recursive: true, force: true });
   mkdirSync(outDir, { recursive: true });
 
@@ -193,9 +198,17 @@ async function main(): Promise<void> {
   const manifestPath =
     outDir === RESUMES_DIR ? MANIFEST_FILE : join(outDir, 'resumes.manifest.json');
   writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+  return { manifest, failed };
+}
+
+async function main(): Promise<void> {
+  const outAt = process.argv.indexOf('--out');
+  const outDir = outAt > 0 ? process.argv[outAt + 1] : RESUMES_DIR;
+  const printed = await printResumes(outDir);
+  let failed = printed.failed;
   if (process.argv.includes('--compare')) {
     const committed: ResumeManifest = JSON.parse(readFileSync(MANIFEST_FILE, 'utf8'));
-    for (const problem of compareManifests(committed, manifest)) {
+    for (const problem of compareManifests(committed, printed.manifest)) {
       console.error(`build:resumes: ${problem}`);
       failed = true;
     }

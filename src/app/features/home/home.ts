@@ -237,7 +237,11 @@ export class Home {
     const link = this.document.createElement('a');
     link.href = resume.file;
     link.download = resume.fileName;
+    // In the document while it is clicked: WebKit doesn't always download from a detached link.
+    link.hidden = true;
+    this.document.body.append(link);
     link.click();
+    link.remove();
   }
 
   /** A deep link `/#resume=<slug>` opens that résumé's preview on load (FR-47). */
