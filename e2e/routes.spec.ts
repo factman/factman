@@ -77,7 +77,8 @@ test('home sections are anchors, and /#contact scrolls to and focuses its sectio
     'blog',
     'contact',
   ]) {
-    await expect(page.locator(`section#${id}`)).toHaveCount(1);
+    // #resume sits inside the About section (ETE-92), so match any element with the id.
+    await expect(page.locator(`#${id}`)).toHaveCount(1);
   }
   await page.goto('/#contact');
   await expect(page.locator('section#contact')).toBeInViewport();

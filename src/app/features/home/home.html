@@ -9,6 +9,25 @@
   <fm-code-editor heroEditor [files]="editorFiles" [glow]="true" [decorative]="true" />
 </fm-profile-hero>
 <fm-client-logo-strip [clients]="clients" />
+<fm-section-layout
+  sectionId="about"
+  index="01"
+  eyebrow="About"
+  [title]="about.title"
+  [description]="about.description"
+>
+  <fm-about-section
+    [story]="profile.about"
+    [photo]="aboutPhoto"
+    [facts]="aboutFacts"
+    [theme]="theme()"
+  >
+    <!-- The résumé block (ResumeSection, ETE-109) goes here, as #resume inside About. -->
+    <div id="resume" class="home-resume" tabindex="-1">
+      <h3>Résumé</h3>
+    </div>
+  </fm-about-section>
+</fm-section-layout>
 @for (section of sections; track section.id) {
   <section fmReveal [id]="section.id" [attr.aria-labelledby]="section.id + '-title'" tabindex="-1">
     <h2 [id]="section.id + '-title'">{{ section.label }}</h2>

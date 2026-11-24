@@ -16,6 +16,9 @@
     } @else {
       <span class="fm-cmethod__value cmethod-value">{{ value() }}</span>
     }
+    @if (variant() === 'tile' && meta(); as meta) {
+      <span class="cmethod-meta">{{ meta }}</span>
+    }
   </div>
   @if (copy()) {
     <fm-copy-button
