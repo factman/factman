@@ -12,6 +12,7 @@ import { CodeEditor } from '@ui/molecules';
 import {
   AboutSection,
   ClientLogoStrip,
+  ExperienceTimeline,
   ProfileHero,
   type ProfileHeroStats,
   TechStack,
@@ -19,11 +20,12 @@ import {
 import { SectionLayout } from '@ui/templates';
 
 import { aboutFacts } from './about-facts';
+import { careerGlance, darkLogos, timelineEntries } from './experience-view';
 import { HOME_SECTIONS } from './home-sections';
 import { stackGroups } from './stack-groups';
 
 /** Sections this page renders itself; the rest are shells until their organisms are built. */
-const BUILT = new Set<string>(['about', 'resume', 'stack']);
+const BUILT = new Set<string>(['about', 'resume', 'stack', 'experience']);
 
 /** The networks the hero links to, in contact.json's order (ETeam has its own place). */
 const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
@@ -40,6 +42,7 @@ const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
     AboutSection,
     ClientLogoStrip,
     CodeEditor,
+    ExperienceTimeline,
     ProfileHero,
     RouterLink,
     SectionLayout,
@@ -73,6 +76,15 @@ export class Home {
 
   /** Stack (FR-11, FR-12): years of use are counted from each skill's `since` at build time. */
   protected readonly stack = stackGroups(skills, this.now);
+
+  /** Experience (FR-13 to FR-16) and CareerGlance, from experience.json. */
+  protected readonly timeline = timelineEntries(
+    experience,
+    skills,
+    this.now,
+    darkLogos(this.clients),
+  );
+  protected readonly glance = careerGlance(experience, profile.careerStart, this.now);
   protected readonly profile = profile;
   protected readonly photo = portraitSources(profile.photo);
   /** The hero's profile.ts, highlighted at build time (pnpm data:hero-code); it repeats the hero's

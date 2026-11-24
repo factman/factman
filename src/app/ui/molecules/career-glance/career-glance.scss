@@ -22,6 +22,11 @@
   color: var(--accent-default);
 }
 
+// In the dark theme --accent-default is under 4.5:1 on the panel at 12px; mix in text colour.
+:root[data-theme='dark'] .glance-title {
+  color: color-mix(in srgb, var(--accent-default) 60%, var(--text-primary));
+}
+
 .glance-roles {
   display: flex;
   flex-direction: column;

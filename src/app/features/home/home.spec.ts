@@ -50,6 +50,16 @@ describe('Home Stack (FR-11, FR-12)', () => {
   });
 });
 
+describe('Home Experience (FR-13 to FR-16)', () => {
+  it('has the #experience section with every organization and CareerGlance', async () => {
+    const { container } = await render(Home);
+    const section = container.querySelector('section#experience')!;
+    const { experience } = await import('@data/experience');
+    expect(section.querySelectorAll('.experience-timeline-item')).toHaveLength(experience.length);
+    expect(section.querySelector('aside.glance')).toBeTruthy();
+  });
+});
+
 describe('Home sections', () => {
   it('has an anchor for every home link in the site navigation', async () => {
     const { site } = await import('@data/site');
