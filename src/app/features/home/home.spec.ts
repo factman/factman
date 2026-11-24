@@ -120,6 +120,17 @@ describe('Home Contact (FR-27)', () => {
   });
 });
 
+describe('Home contact channels (FR-29, FR-30)', () => {
+  it('shows the email, WhatsApp and the city and country beside the form', async () => {
+    const { container } = await render(Home, { providers: [SITE_PROVIDER] });
+    const section = container.querySelector('section#contact')!;
+    const { contact } = await import('@data/contact');
+    expect(section.querySelector(`a[href="mailto:${contact.email}"]`)).toBeTruthy();
+    expect(section.querySelector('a[href^="https://wa.me/"]')).toBeTruthy();
+    expect(section.textContent).toContain(`${contact.city}, ${contact.country}`);
+  });
+});
+
 describe('Home sections', () => {
   it('has an anchor for every home link in the site navigation', async () => {
     const { site } = await import('@data/site');

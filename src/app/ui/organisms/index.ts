@@ -3,6 +3,7 @@ export { type AboutFact, AboutSection } from './about-section/about-section';
 export { ALL_TAGS, BlogFeed, type FeedStatus, postTags } from './blog-feed/blog-feed';
 export { BookingChannels } from './booking-channels/booking-channels';
 export { ClientLogoStrip, type StripClient } from './client-logo-strip/client-logo-strip';
+export { ContactChannels, type ContactDetails, hostOf } from './contact-channels/contact-channels';
 export {
   type ComposedMessage,
   composeMessage,
