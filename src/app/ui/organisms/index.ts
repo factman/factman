@@ -12,6 +12,10 @@ export {
 export { type FaqItem, faqId, FaqSection } from './faq-section/faq-section';
 export { NotFoundSection, type NotFoundSuggestion } from './not-found-section/not-found-section';
 export { type HeroAction, type HeroMedia, type HeroTag, PageHero } from './page-hero/page-hero';
+export {
+  PrivacyPolicySection,
+  type StorageItem,
+} from './privacy-policy-section/privacy-policy-section';
 export { ProcessSection } from './process-section/process-section';
 export {
   ProfileHero,

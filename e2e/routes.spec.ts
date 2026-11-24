@@ -9,7 +9,7 @@ const pages = [
   ['/projects', 'Projects', 'Projects · Odunayo Mohammed'],
   ['/projects/graphui', 'GraphUI', 'GraphUI · Odunayo Mohammed'],
   ['/blog', 'Blog', 'Blog · Odunayo Mohammed'],
-  ['/privacy', 'Privacy', 'Privacy · Odunayo Mohammed'],
+  ['/privacy', 'Privacy and cookies', 'Privacy · Odunayo Mohammed'],
   ['/404', 'command not found', 'Page not found · Odunayo Mohammed'],
 ] as const;
 

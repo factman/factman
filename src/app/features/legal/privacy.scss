@@ -1,0 +1,8 @@
+// The policy on the page's container, right under the hero.
+@use 'ui/layout';
+
+.privacy-content {
+  @include layout.container;
+
+  padding-block: var(--gap-xl) var(--gap-5xl);
+}

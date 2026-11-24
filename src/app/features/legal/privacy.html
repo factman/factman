@@ -1,0 +1,15 @@
+<fm-page-hero
+  [crumbs]="crumbs"
+  eyebrow="Privacy"
+  title="Privacy and cookies"
+  lead="This site counts visits only if you allow it, never shows ads, and never sends what you type in the contact form anywhere."
+  [note]="note"
+  [flush]="true"
+/>
+<div class="privacy-content">
+  <fm-privacy-policy-section
+    [storage]="storage"
+    [email]="email"
+    (changeSettings)="openSettings()"
+  />
+</div>
