@@ -1,7 +1,8 @@
 // The design system's Tooltip styles, loaded only with the tooltip (docs/design-tokens.md).
 @use 'factman/components/tooltip';
 
-// The panel floats over the page next to its element; the directive sets top and left.
+// The panel floats over the page next to its element. As a popover it is in the top layer (no
+// z-index needed); without popovers the fixed box sits above the page content.
 .tooltip-panel {
   position: fixed;
   z-index: 1100;
@@ -11,4 +12,40 @@
 
 .tooltip-panel[hidden] {
   display: none;
+}
+
+// Clear the UA popover box (margin, padding, border, background, inset), so only the DS
+// tooltip shows.
+.tooltip-panel[popover] {
+  overflow: visible;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: none;
+}
+
+// CSS anchor positioning (ETE-249): placed on its side of the element, flipped to the other
+// side when it would leave the viewport, and kept there while the page scrolls.
+.tooltip-panel.is-anchored {
+  inset: auto;
+  position-area: top;
+  position-try-fallbacks: flip-block;
+  margin-block: var(--gap-xs);
+
+  &[data-placement='bottom'] {
+    position-area: bottom;
+  }
+
+  &[data-placement='left'],
+  &[data-placement='right'] {
+    position-area: left;
+    position-try-fallbacks: flip-inline;
+    margin-block: 0;
+    margin-inline: var(--gap-xs);
+  }
+
+  &[data-placement='right'] {
+    position-area: right;
+  }
 }

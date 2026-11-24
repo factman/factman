@@ -31,7 +31,11 @@ export const OnFocus: Story = {
     await userEvent.tab();
     await expect(canvas.getByRole('button', { name: 'Copy' })).toHaveFocus();
     const body = within(document.body);
-    await expect(await body.findByRole('tooltip')).toHaveTextContent('Copy email');
+    const tip = await body.findByRole('tooltip');
+    await expect(tip).toHaveTextContent('Copy email');
+    // In the top layer as a popover where the browser has them (ETE-249).
+    if (typeof tip.showPopover === 'function')
+      await expect(tip.matches(':popover-open')).toBe(true);
     await userEvent.keyboard('{Escape}');
     await expect(body.queryByRole('tooltip')).toBeNull();
   },

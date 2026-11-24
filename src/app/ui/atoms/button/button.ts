@@ -48,7 +48,10 @@ export class Button {
   readonly newTab = input<boolean>();
   readonly leadingIcon = input<IconDef | string>();
   readonly trailingIcon = input<IconDef | string>();
-  /** Shows a spinner in place of the leading icon and blocks activation. */
+  /**
+   * Shows a spinner in place of the leading icon and blocks activation. The button stays enabled
+   * and focusable (`aria-busy`), so a keyboard user who pressed it keeps their place (ETE-250).
+   */
   readonly loading = input(false);
   readonly disabled = input(false);
   /** A toggle's state (`aria-pressed`); leave unset for ordinary buttons. */

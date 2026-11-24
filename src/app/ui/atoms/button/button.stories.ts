@@ -69,7 +69,9 @@ export const Loading: Story = {
   play: async ({ args, canvas }) => {
     const button = canvas.getByRole('button', { name: 'Saving' });
     await expect(button).toHaveAttribute('aria-busy', 'true');
-    await expect(button).toBeDisabled();
+    // Busy, not disabled: it stays focusable, and a press does nothing (ETE-250).
+    await expect(button).toBeEnabled();
+    await userEvent.click(button);
     await expect(args.pressed).not.toHaveBeenCalled();
   },
 };
