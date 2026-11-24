@@ -364,6 +364,11 @@ body {
   white-space: nowrap;
 }
 
+/* "Experience, continued" (pnpm build:resumes): starts the page an Experience section runs onto. */
+.cv-continued {
+  break-before: page;
+}
+
 @media print {
   html {
     background: none;
