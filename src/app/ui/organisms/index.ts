@@ -47,4 +47,5 @@ export {
 export { type GridService, relatedServices, ServicesGrid } from './services-grid/services-grid';
 export { SiteFooter, type SiteFooterLink, type SiteFooterResume } from './site-footer/site-footer';
 export { SiteHeader, type SiteHeaderLink, type SiteHeaderPage } from './site-header/site-header';
+export { StatsPanel } from './stats-panel/stats-panel';
 export { ALL, type StackGroup, type StackItem, TechStack } from './tech-stack/tech-stack';

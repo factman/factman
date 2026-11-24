@@ -65,6 +65,15 @@
   <fm-project-gallery [projects]="projects" [actions]="projectLinks" (engage)="engage()" />
 </fm-section-layout>
 <fm-section-layout
+  sectionId="stats"
+  index="06"
+  eyebrow="Stats"
+  title="By the numbers"
+  description="Every figure here is counted from the same data files as the rest of the site. Nothing is typed in by hand."
+>
+  <fm-stats-panel [counters]="statsCounters()" [career]="strip.rows" [ticks]="strip.ticks" />
+</fm-section-layout>
+<fm-section-layout
   sectionId="blog"
   index="07"
   eyebrow="Blog"
@@ -96,13 +105,3 @@
     <fm-contact-channels [details]="contactDetails" [photo]="contactPhoto" />
   </div>
 </fm-section-layout>
-@for (section of sections; track section.id) {
-  <section fmReveal [id]="section.id" [attr.aria-labelledby]="section.id + '-title'" tabindex="-1">
-    <h2 [id]="section.id + '-title'">{{ section.label }}</h2>
-    @if ('route' in section) {
-      <p>
-        <a [routerLink]="section.route">All {{ section.label.toLowerCase() }}</a>
-      </p>
-    }
-  </section>
-}

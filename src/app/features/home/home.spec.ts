@@ -131,6 +131,17 @@ describe('Home contact channels (FR-29, FR-30)', () => {
   });
 });
 
+describe('Home Stats (FR-31)', () => {
+  it('has the #stats section with counters counted from the data', async () => {
+    const { container } = await render(Home, { providers: [SITE_PROVIDER] });
+    const section = container.querySelector('section#stats')!;
+    const { experience } = await import('@data/experience');
+    expect(section.querySelectorAll('.stats-panel-counters > li').length).toBeGreaterThanOrEqual(5);
+    expect(section.textContent).toContain(String(experience.length));
+    expect(section.querySelector('figure')).toBeTruthy();
+  });
+});
+
 describe('Home sections', () => {
   it('has an anchor for every home link in the site navigation', async () => {
     const { site } = await import('@data/site');

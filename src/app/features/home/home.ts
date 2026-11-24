@@ -1,5 +1,12 @@
-import { afterNextRender, ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
+import { Router } from '@angular/router';
 import {
   BlogRepository,
   ClientsRepository,
@@ -29,33 +36,23 @@ import {
   ProjectGallery,
   type ProfileHeroStats,
   ServicesGrid,
+  StatsPanel,
   TechStack,
 } from '@ui/organisms';
 import { SectionLayout } from '@ui/templates';
 
 import { aboutFacts } from './about-facts';
 import { careerGlance, darkLogos, timelineEntries } from './experience-view';
-import { HOME_SECTIONS } from './home-sections';
 import { stackGroups } from './stack-groups';
-
-/** Sections this page renders itself; the rest are shells until their organisms are built. */
-const BUILT = new Set<string>([
-  'about',
-  'resume',
-  'stack',
-  'experience',
-  'services',
-  'projects',
-  'blog',
-  'contact',
-]);
+import { careerStrip, statCounters } from './stats-view';
 
 /** The networks the hero links to, in contact.json's order (ETeam has its own place). */
 const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
 
 /**
- * Home page (/): the profile hero (#top), "Worked with", About (#about, with #resume inside it),
- * then one section per anchor. The remaining sections are shells until their organisms are built.
+ * Home page (/), in canvas order: the profile hero (#top), "Worked with", About (#about, with
+ * #resume inside it), Stack, Experience, Services, Projects, Stats, Blog and Contact, each at the
+ * anchor the site navigation links to (home-sections.ts).
  * @level page
  */
 @Component({
@@ -72,10 +69,10 @@ const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
     ExperienceTimeline,
     ProfileHero,
     ProjectGallery,
-    RouterLink,
     SectionLayout,
     ServicesGrid,
     SharedModule,
+    StatsPanel,
     TechStack,
   ],
   templateUrl: './home.html',
@@ -89,7 +86,6 @@ export class Home {
   /** "Worked with", in display order; an empty list omits the strip (FR-52). */
   protected readonly clients = inject(ClientsRepository).all();
 
-  protected readonly sections = HOME_SECTIONS.filter((s) => !BUILT.has(s.id));
   /** The Logo plate on the About portrait follows the theme. */
   protected readonly theme = inject(ThemeService, { optional: true })?.theme ?? signal('light');
 
@@ -128,6 +124,23 @@ export class Home {
       .filter((l) => l.id === 'github')
       .map((l) => ({ label: 'GitHub profile', href: l.url, leadingIcon: iconGithub })),
   ];
+
+  private readonly allProjects = inject(ProjectsRepository).all();
+
+  /** Stats (FR-31, FR-32): every figure counted from the data; articles once Medium has loaded. */
+  protected readonly statsCounters = computed(() =>
+    statCounters(
+      {
+        experience,
+        projects: this.allProjects,
+        skills,
+        articles: this.blog.posts().length,
+      },
+      profile.careerStart,
+      this.now,
+    ),
+  );
+  protected readonly strip = careerStrip(experience, profile.careerStart, this.now);
 
   /** Blog (FR-24): the newest three articles, read live from Medium after the page renders. */
   protected readonly blog = inject(BlogRepository);
