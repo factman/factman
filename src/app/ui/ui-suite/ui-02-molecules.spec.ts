@@ -186,7 +186,6 @@ describe('UI-02 Molecules', () => {
       const dialog = screen.getByRole('dialog', { name: 'Résumé' });
       dialog.dispatchEvent(new Event('cancel', { cancelable: true }));
       expect(closed).toHaveBeenCalledOnce();
-      document.documentElement.classList.remove('dialog-scroll-lock');
     });
   });
 });
