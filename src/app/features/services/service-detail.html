@@ -1,0 +1,29 @@
+<fm-page-hero
+  [crumbs]="crumbs()"
+  eyebrow="Service"
+  [icon]="service().icon"
+  [tags]="tags()"
+  [title]="service().title"
+  [lead]="service().summary"
+  [actions]="actions()"
+  [media]="photo"
+  (schedule)="schedulerOpen.set(true)"
+/>
+<div class="service-detail-content">
+  <fm-service-detail-body [service]="service()" [person]="person" (channel)="onChannel($event)" />
+</div>
+<fm-section-layout sectionId="related" eyebrow="More services" title="Often booked together">
+  <fm-button sectionAction variant="secondary" href="/services" [trailingIcon]="arrow"
+    >All services</fm-button
+  >
+  <fm-services-grid [services]="all" [current]="service().slug" [limit]="4" />
+</fm-section-layout>
+@if (service().booking.schedulerEmbedUrl; as embed) {
+  <fm-scheduler-modal
+    [open]="schedulerOpen()"
+    [service]="service().title"
+    [src]="embed"
+    [fallbackUrl]="service().booking.schedulerUrl"
+    (closed)="schedulerOpen.set(false)"
+  />
+}

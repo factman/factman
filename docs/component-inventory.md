@@ -113,13 +113,13 @@ Section names follow the canvas titles, which are the PRD names (the artboard fi
 | ContactSection         | `ContactSection`        | `fm-contact-section`         | `contact`, `topics`, `defaultTopic`, `photo`                                                                                                                                                                                          | `send`                                | ETE-103        |
 | CookieConsent          | `CookieConsentTerminal` | `fm-cookie-consent-terminal` | `categories`, `copy`                                                                                                                                                                                                                  | `decide`                              | ETE-119        |
 | ResumeModal            | `ResumePreviewModal`    | `fm-resume-preview-modal`    | `resumes`, `variant` (fullstack, mobile, devops), `open`                                                                                                                                                                              | `closed`, `variantChange`, `download` | ETE-109        |
-| SchedulerModal         | `SchedulerModal`        | `fm-scheduler-modal`         | `open`, `service`, `src`, `fallbackUrl`                                                                                                                                                                                               | `closed`                              | ETE-98         |
+| SchedulerModal         | `SchedulerModal`        | `fm-scheduler-modal`         | `open`, `service`, `src` (the Google Calendar appointment embed URL; nothing else is framed), `fallbackUrl` ("Open in a new tab"); the frame exists only while open                                                                   | `closed`                              | ETE-98 (built) |
 | PageHero               | `PageHero`              | `fm-page-hero`               | `crumbs`, `eyebrow`, `icon`, `tags`, `title` (the h1), `lead`, `meta`, `note`, `actions` (`{label, href?, schedule?, service?, variant?, leadingIcon?, trailingIcon?}`; the first is primary), `media` (cutout, or `framed`), `flush` | `schedule`                            | ETE-97 (built) |
 | CtaBanner              | `CtaBanner`             | `fm-cta-banner`              | `title`, `text`, `actions`, `photo` (optional cutout, hidden on phones), `headingLevel`                                                                                                                                               |                                       | ETE-97 (built) |
 | ProcessSection         | `ProcessSection`        | `fm-process-section`         | `steps` (Stepper on a glass panel that scrolls sideways on phones), `label`                                                                                                                                                           |                                       | ETE-97 (built) |
 | FaqSection             | `FaqSection`            | `fm-faq-section`             | `items` (`{question, answer}`), `eyebrow`, `title`, `description`, `sectionId`; the first question is open                                                                                                                            |                                       | ETE-97 (built) |
-| BookingChannelsSection | `BookingChannels`       | `fm-booking-channels`        | `channels`, `photo`                                                                                                                                                                                                                   | `schedule`                            | ETE-98         |
-| ServiceDetailBody      | `ServiceDetailBody`     | `fm-service-detail-body`     | `service`, `booking`                                                                                                                                                                                                                  | `schedule`, `channel`                 | ETE-98         |
+| BookingChannelsSection | `BookingChannels`       | `fm-booking-channels`        | `channels` (ChannelCard data), `photo`, `eyebrow`, `title`, `text`, `sectionId` (`#book`)                                                                                                                                             | `schedule`                            | ETE-98 (built) |
+| ServiceDetailBody      | `ServiceDetailBody`     | `fm-service-detail-body`     | `service` (audience, deliverables, process, engagement, FAQ, booking, pricing), `person` (the BookingCard); "Get a quote" from `priceLabel`                                                                                           | `channel`                             | ETE-98 (built) |
 | ProjectCaseStudy       | `ProjectCaseStudy`      | `fm-project-case-study`      | `project`, `facts`, `next`                                                                                                                                                                                                            |                                       | ETE-100        |
 | PrivacyPolicySection   | `PrivacyPolicy`         | `fm-privacy-policy`          | `policy`, `analytics`                                                                                                                                                                                                                 | `consent`                             | ETE-116        |
 | NotFoundSection        | `NotFoundSection`       | `fm-not-found-section`       | `path`, `sections` (for `ls ~`), `suggestions` (`{label, href}`), `photo`                                                                                                                                                             |                                       | ETE-88         |
@@ -137,16 +137,16 @@ Section names follow the canvas titles, which are the PRD names (the artboard fi
 
 Already scaffolded; each fills a template with data from `@core/data` and owns the overlays (résumé modal, scheduler, cookie banner) that its sections open through outputs.
 
-| Artboard      | Angular component   | Selector                 | Route             | Issue   |
-| ------------- | ------------------- | ------------------------ | ----------------- | ------- |
-| Main          | `Home`              | `fm-home`                | `/`               | ETE-114 |
-| Services      | `ServicesPage`      | `fm-services-page`       | `/services`       | ETE-115 |
-| ServiceDetail | `ServiceDetailPage` | `fm-service-detail-page` | `/services/:slug` | ETE-98  |
-| Projects      | `ProjectsPage`      | `fm-projects-page`       | `/projects`       | ETE-115 |
-| ProjectDetail | `ProjectDetailPage` | `fm-project-detail-page` | `/projects/:slug` | ETE-100 |
-| Blog          | `BlogPage`          | `fm-blog-page`           | `/blog`           | ETE-101 |
-| Privacy       | `PrivacyPage`       | `fm-privacy-page`        | `/privacy`        | ETE-116 |
-| NotFound      | `NotFoundPage`      | `fm-not-found-page`      | `**`              | ETE-88  |
+| Artboard      | Angular component   | Selector                 | Route             | Issue          |
+| ------------- | ------------------- | ------------------------ | ----------------- | -------------- |
+| Main          | `Home`              | `fm-home`                | `/`               | ETE-114        |
+| Services      | `ServicesPage`      | `fm-services-page`       | `/services`       | ETE-115        |
+| ServiceDetail | `ServiceDetailPage` | `fm-service-detail-page` | `/services/:slug` | ETE-98 (built) |
+| Projects      | `ProjectsPage`      | `fm-projects-page`       | `/projects`       | ETE-115        |
+| ProjectDetail | `ProjectDetailPage` | `fm-project-detail-page` | `/projects/:slug` | ETE-100        |
+| Blog          | `BlogPage`          | `fm-blog-page`           | `/blog`           | ETE-101        |
+| Privacy       | `PrivacyPage`       | `fm-privacy-page`        | `/privacy`        | ETE-116        |
+| NotFound      | `NotFoundPage`      | `fm-not-found-page`      | `**`              | ETE-88         |
 
 ## Not Angular components
 

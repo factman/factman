@@ -1,47 +1,66 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ServicesRepository } from '@core/data';
-import { contact } from '@data/contact';
 import { profile } from '@data/profile';
 import { countWord, portraitSources } from '@shared';
-import { IconRegistry, iconCalendar, iconGrid, iconMail } from '@ui/atoms';
+import { IconRegistry, iconCalendar, iconGrid } from '@ui/atoms';
 import { SERVICE_ICONS } from '@ui/molecules';
 import {
-  CtaBanner,
+  BookingChannels,
   FaqSection,
   type HeroAction,
   PageHero,
   ProcessSection,
+  SchedulerModal,
   ServicesGrid,
 } from '@ui/organisms';
 import { SectionLayout } from '@ui/templates';
 
+import { bookingChannels } from './booking';
 import { ENGAGEMENT_STEPS, SERVICES_FAQ } from './services-content';
 
 /**
  * Services catalogue (/services), as in the canvas's Services page: PageHero, every service as a
- * tile (#catalogue), how an engagement runs, a closing call to action and the FAQ. "Schedule a
- * call" opens the booking calendar in a new tab until the SchedulerModal (ETE-98).
+ * tile (#catalogue), how an engagement runs, the booking channels (#book) and the FAQ. Every
+ * "Schedule a call" opens the one SchedulerModal (FR-19); without an embed URL the calendar opens
+ * in a new tab.
  * @level page
  */
 @Component({
   selector: 'fm-services-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CtaBanner, FaqSection, PageHero, ProcessSection, SectionLayout, ServicesGrid],
+  imports: [
+    BookingChannels,
+    FaqSection,
+    PageHero,
+    ProcessSection,
+    SchedulerModal,
+    SectionLayout,
+    ServicesGrid,
+  ],
   templateUrl: './services.html',
   styleUrl: './services.scss',
 })
 export class ServicesPage {
   protected readonly services = inject(ServicesRepository).all();
 
-  /** Every service books through the same calendar (services.json `booking.schedulerUrl`). */
-  private readonly scheduler = this.services[0]?.booking.schedulerUrl;
+  /** Every service books through the same calendar (services.json `booking`). */
+  protected readonly booking = this.services[0]?.booking;
+  protected readonly schedulerOpen = signal(false);
 
   protected readonly crumbs = [{ label: 'Home', href: '/' }, { label: 'Services' }];
   protected readonly lead = `${countWord(this.services.length)} ways to work together, from a one-off architecture review to a fractional CTO who sits with your team. Every service is quoted per engagement after a short discovery call.`;
   protected readonly heroActions: HeroAction[] = [
-    ...(this.scheduler
-      ? [{ label: 'Schedule a call', href: this.scheduler, trailingIcon: iconCalendar }]
-      : []),
+    ...(this.booking?.schedulerEmbedUrl
+      ? [{ label: 'Schedule a call', schedule: true, trailingIcon: iconCalendar }]
+      : this.booking
+        ? [
+            {
+              label: 'Schedule a call',
+              href: this.booking.schedulerUrl,
+              trailingIcon: iconCalendar,
+            },
+          ]
+        : []),
     { label: 'Browse services', href: '#catalogue', leadingIcon: iconGrid, variant: 'secondary' },
   ];
   protected readonly photo = profile.aboutPhoto && {
@@ -51,12 +70,17 @@ export class ServicesPage {
 
   protected readonly steps = ENGAGEMENT_STEPS;
   protected readonly faq = SERVICES_FAQ;
-  protected readonly ctaActions: HeroAction[] = [
-    ...(this.scheduler
-      ? [{ label: 'Schedule a call', href: this.scheduler, trailingIcon: iconCalendar }]
-      : []),
-    { label: 'Email me', href: `mailto:${contact.email}`, leadingIcon: iconMail },
-  ];
+  protected readonly channels = bookingChannels();
+  protected readonly bookingPhoto = profile.contactPhoto && {
+    ...portraitSources(profile.contactPhoto),
+    sizes: '(min-width: 768px) 640px, 100vw',
+  };
+
+  /** "Schedule a call" from the hero or the booking channels. */
+  protected openScheduler(): void {
+    if (this.booking?.schedulerEmbedUrl) this.schedulerOpen.set(true);
+    else if (this.booking) globalThis.open?.(this.booking.schedulerUrl, '_blank', 'noopener');
+  }
 
   constructor() {
     inject(IconRegistry).register(SERVICE_ICONS);

@@ -5,6 +5,7 @@
   [lead]="lead"
   [actions]="heroActions"
   [media]="photo"
+  (schedule)="openScheduler()"
 />
 <section id="catalogue" class="services-catalogue" aria-labelledby="catalogue-title">
   <h2 id="catalogue-title" class="fm-sr">All services</h2>
@@ -18,14 +19,21 @@
 >
   <fm-process-section [steps]="steps" label="How an engagement runs" />
 </fm-section-layout>
-<div class="services-cta">
-  <fm-cta-banner
-    title="Not sure which service fits?"
-    text="Tell me what you're building and I'll suggest where to start, usually on a short call."
-    [actions]="ctaActions"
-  />
-</div>
+<fm-booking-channels
+  [channels]="channels"
+  [photo]="bookingPhoto"
+  text="Every service is quoted after a short call. Book a slot on my calendar, or open a service page and the email and WhatsApp messages name that service for you."
+  (schedule)="openScheduler()"
+/>
 <fm-faq-section
   [items]="faq"
   description="Something else on your mind? Ask on the call, or send it by email."
 />
+@if (booking?.schedulerEmbedUrl; as embed) {
+  <fm-scheduler-modal
+    [open]="schedulerOpen()"
+    [src]="embed"
+    [fallbackUrl]="booking!.schedulerUrl"
+    (closed)="schedulerOpen.set(false)"
+  />
+}
