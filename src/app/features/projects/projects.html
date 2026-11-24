@@ -1,0 +1,24 @@
+<fm-page-hero
+  [crumbs]="crumbs"
+  eyebrow="Projects"
+  title="Everything I have built and shipped"
+  lead="Filter by status or category, or search. Public projects link to the live product and source; private client work shows the role and stack, and you can ask for a walkthrough."
+  [flush]="true"
+/>
+<section class="projects-all" aria-labelledby="projects-all-title">
+  <h2 id="projects-all-title" class="fm-sr">All projects</h2>
+  <fm-project-gallery
+    [projects]="projects"
+    [filterable]="true"
+    [filter]="filter()"
+    (filterChange)="setFilter($event)"
+    (engage)="engage($event)"
+  />
+</section>
+<div class="projects-cta">
+  <fm-cta-banner
+    title="Building something similar?"
+    text="Tell me what you have in mind and I will tell you how I would approach it."
+    [actions]="ctaActions"
+  />
+</div>

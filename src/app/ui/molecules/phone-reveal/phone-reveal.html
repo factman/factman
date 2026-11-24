@@ -8,12 +8,7 @@
   />
 } @else {
   <fm-contact-method [icon]="phone" label="Phone" [value]="masked()">
-    <fm-button
-      variant="tertiary"
-      size="sm"
-      [leadingIcon]="eye"
-      ariaLabel="Show phone number"
-      (pressed)="reveal()"
+    <fm-button variant="tertiary" size="sm" [leadingIcon]="eye" (pressed)="reveal()"
       >Show number</fm-button
     >
   </fm-contact-method>

@@ -10,3 +10,4 @@ export {
 export { SeoModule } from './seo.module';
 export { SeoService } from './seo.service';
 export { SiteTitleStrategy } from './site-title.strategy';
+export { type JsonLd, STRUCTURED_DATA_ID, StructuredData } from './structured-data';

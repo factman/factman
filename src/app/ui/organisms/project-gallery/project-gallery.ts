@@ -1,0 +1,71 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ViewEncapsulation,
+  computed,
+  input,
+  output,
+} from '@angular/core';
+
+import type { Project } from '@shared';
+import { Button, iconSearch } from '@ui/atoms';
+import { EmptyState, FilterBar, type FilterState, ProjectCard } from '@ui/molecules';
+
+import type { HeroAction } from '../page-hero/page-hero';
+
+import {
+  filterOptions,
+  filterProjects,
+  fromSelection,
+  NO_FILTER,
+  type ProjectFilter,
+  selectedValues,
+} from './project-filter';
+
+/**
+ * The projects (FR-20, FR-21, the canvas's ProjectsSection): ProjectCards in a grid of three, in
+ * the order given (newest first). With `filterable` (the /projects page) a FilterBar on a glass
+ * panel filters by status and category and searches, shows "4 of 7 projects" live, and an empty
+ * state with "Show all projects" when nothing matches; the page keeps the filter in the URL query
+ * (`filter` in, `filterChange` out). Links under the grid (`actions`) are for the home section.
+ * A private project's card asks for a walkthrough (`engage`).
+ * @level organism
+ */
+@Component({
+  selector: 'fm-project-gallery',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  // project-gallery* classes are this component's.
+  encapsulation: ViewEncapsulation.None,
+  styleUrl: './project-gallery.scss',
+  imports: [Button, EmptyState, FilterBar, ProjectCard],
+  host: { style: 'display: contents' },
+  templateUrl: './project-gallery.html',
+})
+export class ProjectGallery {
+  readonly projects = input.required<readonly Project[]>();
+  readonly filterable = input(false);
+  readonly filter = input<ProjectFilter>(NO_FILTER);
+  readonly actions = input<readonly HeroAction[]>([]);
+  readonly headingLevel = input<2 | 3>(3);
+
+  readonly filterChange = output<ProjectFilter>();
+  readonly engage = output<Project>();
+
+  protected readonly search = iconSearch;
+  protected readonly options = computed(() => filterOptions(this.projects()));
+  protected readonly selected = computed(() => selectedValues(this.filter()));
+  protected readonly shown = computed(() =>
+    this.filterable() ? filterProjects(this.projects(), this.filter()) : this.projects(),
+  );
+  protected readonly count = computed(
+    () => `${this.shown().length} of ${this.projects().length} projects`,
+  );
+
+  protected onFilter(state: FilterState): void {
+    this.filterChange.emit(fromSelection(state.selected, state.query));
+  }
+
+  protected clear(): void {
+    this.filterChange.emit(NO_FILTER);
+  }
+}

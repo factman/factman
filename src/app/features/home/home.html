@@ -55,13 +55,53 @@
 >
   <fm-services-grid [services]="services" ctaLabel="Compare all services" />
 </fm-section-layout>
-@for (section of sections; track section.id) {
-  <section fmReveal [id]="section.id" [attr.aria-labelledby]="section.id + '-title'" tabindex="-1">
-    <h2 [id]="section.id + '-title'">{{ section.label }}</h2>
-    @if ('route' in section) {
-      <p>
-        <a [routerLink]="section.route">All {{ section.label.toLowerCase() }}</a>
-      </p>
-    }
-  </section>
-}
+<fm-section-layout
+  sectionId="projects"
+  index="05"
+  eyebrow="Projects"
+  title="Things I have built"
+  description="Open-source tools, client platforms and side projects. Private work shows the role and stack, and you can ask for a walkthrough."
+>
+  <fm-project-gallery [projects]="projects" [actions]="projectLinks" (engage)="engage()" />
+</fm-section-layout>
+<fm-section-layout
+  sectionId="stats"
+  index="06"
+  eyebrow="Stats"
+  title="By the numbers"
+  description="Every figure here is counted from the same data files as the rest of the site. Nothing is typed in by hand."
+>
+  <fm-stats-panel [counters]="statsCounters()" [career]="strip.rows" [ticks]="strip.ticks" />
+</fm-section-layout>
+<fm-section-layout
+  sectionId="blog"
+  index="07"
+  eyebrow="Blog"
+  [title]="blogTitle"
+  description="Practical write-ups on fullstack engineering, fintech, cloud and leading teams, drawn from real products and the decisions behind them. New posts publish on Medium."
+>
+  <fm-blog-feed
+    [posts]="blog.posts()"
+    [status]="blog.status()"
+    [profileUrl]="blog.profileUrl"
+    [limit]="3"
+    (retry)="blog.retry()"
+  />
+  <div style="display: flex; justify-content: center; margin-top: var(--gap-3xl)">
+    <fm-button variant="secondary" size="lg" href="/blog" [trailingIcon]="blogArrow"
+      >Read the blog</fm-button
+    >
+  </div>
+</fm-section-layout>
+<fm-section-layout
+  sectionId="contact"
+  index="08"
+  eyebrow="Contact"
+  title="Let's build something"
+  description="Have a product to build, a team to lead or a system to fix? Tell me about it. The form opens your own mail app; nothing is sent from this site."
+>
+  <div class="home-contact">
+    <fm-contact-form [email]="contactEmail" [topics]="topics" />
+    <fm-contact-channels [details]="contactDetails" [photo]="contactPhoto" />
+  </div>
+</fm-section-layout>

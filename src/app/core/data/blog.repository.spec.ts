@@ -72,6 +72,18 @@ describe('BlogRepository (live Medium feed, 12 h cache)', () => {
     expect(empty.posts()).toEqual([]);
   });
 
+  it('tries Medium again on retry after an error', async () => {
+    fetchMock.mockRejectedValueOnce(new Error('offline'));
+    const blog = setup(start);
+    await blog.load();
+    expect(blog.status()).toBe('error');
+    await blog.load();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    await blog.retry();
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(blog.status()).toBe('ready');
+  });
+
   it('still works when storage is blocked', async () => {
     vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
       throw new Error('blocked');

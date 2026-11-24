@@ -1,25 +1,31 @@
 import { render, screen } from '@testing-library/angular';
 
+import { SITE } from '@core/config';
 import { ClientsRepository } from '@core/data';
+import { site } from '@data/site';
+import { resolveSite } from '@shared';
 
 import { Home } from './home';
 
+/** What the app's CoreModule provides and the page needs (the blog reads site.blog). */
+const SITE_PROVIDER = { provide: SITE, useValue: resolveSite(site, 'production') };
+
 describe('Home (Testing Library smoke test)', () => {
   it('shows the site heading', async () => {
-    await render(Home);
+    await render(Home, { providers: [SITE_PROVIDER] });
     expect(screen.getByRole('heading', { level: 1, name: 'Odunayo Mohammed' })).toBeTruthy();
   });
 });
 
 describe('Home "Worked with" strip (FR-52)', () => {
   it('is shown with the clients from the data', async () => {
-    await render(Home);
+    await render(Home, { providers: [SITE_PROVIDER] });
     expect(screen.getByRole('region', { name: 'Worked with' })).toBeTruthy();
   });
 
   it('is omitted when there are no clients', async () => {
     await render(Home, {
-      providers: [{ provide: ClientsRepository, useValue: { all: () => [] } }],
+      providers: [SITE_PROVIDER, { provide: ClientsRepository, useValue: { all: () => [] } }],
     });
     expect(screen.queryByRole('region', { name: 'Worked with' })).toBeNull();
   });
@@ -27,7 +33,7 @@ describe('Home "Worked with" strip (FR-52)', () => {
 
 describe('Home About (FR-10)', () => {
   it('has the #about section with the story and the #resume anchor inside it', async () => {
-    const { container } = await render(Home);
+    const { container } = await render(Home, { providers: [SITE_PROVIDER] });
     const about = container.querySelector('section#about')!;
     expect(about.getAttribute('aria-labelledby')).toBeTruthy();
     expect(
@@ -40,7 +46,7 @@ describe('Home About (FR-10)', () => {
 
 describe('Home Stack (FR-11, FR-12)', () => {
   it('has the #stack section with every area from skills.json', async () => {
-    const { container } = await render(Home);
+    const { container } = await render(Home, { providers: [SITE_PROVIDER] });
     const stack = container.querySelector('section#stack')!;
     expect(stack).toBeTruthy();
     const { skills } = await import('@data/skills');
@@ -52,7 +58,7 @@ describe('Home Stack (FR-11, FR-12)', () => {
 
 describe('Home Experience (FR-13 to FR-16)', () => {
   it('has the #experience section with every organization and CareerGlance', async () => {
-    const { container } = await render(Home);
+    const { container } = await render(Home, { providers: [SITE_PROVIDER] });
     const section = container.querySelector('section#experience')!;
     const { experience } = await import('@data/experience');
     expect(section.querySelectorAll('.experience-timeline-item')).toHaveLength(experience.length);
@@ -62,7 +68,7 @@ describe('Home Experience (FR-13 to FR-16)', () => {
 
 describe('Home Services (#services)', () => {
   it('shows every service as a tile, in order, with "Compare all services"', async () => {
-    const { container } = await render(Home);
+    const { container } = await render(Home, { providers: [SITE_PROVIDER] });
     const section = container.querySelector('section#services')!;
     const { services } = await import('@data/services');
     const hrefs = [...section.querySelectorAll('.service-card-link')].map((a) =>
@@ -87,6 +93,52 @@ describe('Home Services (#services)', () => {
     const { services } = await import('@data/services');
     const names = new Set(SERVICE_ICONS.map((i) => i.name));
     for (const s of services) expect(names.has(s.icon), `${s.slug}: ${s.icon}`).toBe(true);
+  });
+});
+
+describe('Home Projects (FR-20)', () => {
+  it('shows at most six featured projects, newest first, with "See all projects"', async () => {
+    const { container } = await render(Home, { providers: [SITE_PROVIDER] });
+    const section = container.querySelector('section#projects')!;
+    const cards = section.querySelectorAll('.project-gallery-list > li');
+    const { projects } = await import('@data/projects');
+    expect(cards.length).toBe(Math.min(6, projects.filter((p) => p.featured).length));
+    expect(screen.getByRole('link', { name: /See all projects/ }).getAttribute('href')).toBe(
+      '/projects',
+    );
+  });
+});
+
+describe('Home Contact (FR-27)', () => {
+  it('has the #contact section with the form and every topic', async () => {
+    const { container } = await render(Home, { providers: [SITE_PROVIDER] });
+    const section = container.querySelector('section#contact')!;
+    expect(section.querySelector('form')).toBeTruthy();
+    const { services } = await import('@data/services');
+    const options = [...section.querySelectorAll('option')].map((o) => o.textContent?.trim());
+    for (const s of services) expect(options).toContain(s.title);
+  });
+});
+
+describe('Home contact channels (FR-29, FR-30)', () => {
+  it('shows the email, WhatsApp and the city and country beside the form', async () => {
+    const { container } = await render(Home, { providers: [SITE_PROVIDER] });
+    const section = container.querySelector('section#contact')!;
+    const { contact } = await import('@data/contact');
+    expect(section.querySelector(`a[href="mailto:${contact.email}"]`)).toBeTruthy();
+    expect(section.querySelector('a[href^="https://wa.me/"]')).toBeTruthy();
+    expect(section.textContent).toContain(`${contact.city}, ${contact.country}`);
+  });
+});
+
+describe('Home Stats (FR-31)', () => {
+  it('has the #stats section with counters counted from the data', async () => {
+    const { container } = await render(Home, { providers: [SITE_PROVIDER] });
+    const section = container.querySelector('section#stats')!;
+    const { experience } = await import('@data/experience');
+    expect(section.querySelectorAll('.stats-panel-counters > li').length).toBeGreaterThanOrEqual(5);
+    expect(section.textContent).toContain(String(experience.length));
+    expect(section.querySelector('figure')).toBeTruthy();
   });
 });
 

@@ -1,5 +1,15 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { ServicesRepository } from '@core/data';
+import { StructuredData } from '@core/seo';
+import { site } from '@data/site';
 import { profile } from '@data/profile';
 import { portraitSources, type Service } from '@shared';
 import { Button, IconRegistry, iconArrowRight, iconCalendar, iconMail } from '@ui/atoms';
@@ -15,6 +25,26 @@ import {
 import { SectionLayout } from '@ui/templates';
 
 import { bookingPerson } from './booking';
+
+/**
+ * The service's schema.org data (ETE-113): a Service provided by the Person on the home page,
+ * served online, priced on request.
+ */
+export function serviceStructuredData(
+  service: Pick<Service, 'title' | 'summary' | 'slug'>,
+  provider: string,
+  url: string,
+) {
+  return {
+    '@type': 'Service',
+    name: service.title,
+    description: service.summary,
+    url: `${url}/services/${service.slug}`,
+    serviceType: service.title,
+    areaServed: 'Worldwide',
+    provider: { '@type': 'Person', '@id': `${url}/#person`, name: provider },
+  };
+}
 
 /**
  * One service (/services/:slug, FR-18, FR-19), resolved by `serviceResolver`: PageHero (icon,
@@ -59,6 +89,8 @@ export class ServiceDetailPage {
 
   constructor() {
     inject(IconRegistry).register(SERVICE_ICONS);
+    const data = inject(StructuredData);
+    effect(() => data.set(serviceStructuredData(this.service(), profile.name, site.url)));
   }
 
   /** BookingCard's choice: open the scheduler for "Schedule a call" (links open themselves). */

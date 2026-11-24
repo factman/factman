@@ -6,9 +6,9 @@ const pages = [
   ['/services', 'Senior help for the work that matters most', 'Services · Odunayo Mohammed'],
   ['/services/consultancy', 'Consultancy', 'Consultancy · Odunayo Mohammed'],
   ['/services/devops', 'DevOps', 'DevOps · Odunayo Mohammed'],
-  ['/projects', 'Projects', 'Projects · Odunayo Mohammed'],
+  ['/projects', 'Everything I have built and shipped', 'Projects · Odunayo Mohammed'],
   ['/projects/graphui', 'GraphUI', 'GraphUI · Odunayo Mohammed'],
-  ['/blog', 'Blog', 'Blog · Odunayo Mohammed'],
+  ['/blog', 'Building software, and the teams behind it', 'Blog · Odunayo Mohammed'],
   ['/privacy', 'Privacy and cookies', 'Privacy · Odunayo Mohammed'],
   ['/404', 'command not found', 'Page not found · Odunayo Mohammed'],
 ] as const;

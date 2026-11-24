@@ -49,6 +49,12 @@ export class BlogRepository {
     return this.pending;
   }
 
+  /** Tries Medium again after an error ("Try again"). */
+  retry(): Promise<void> {
+    this.pending = undefined;
+    return this.load();
+  }
+
   private async fetchPosts(): Promise<void> {
     const cached = this.readCache();
     const maxAge = this.config.cacheHours * 60 * 60 * 1000;

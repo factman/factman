@@ -44,7 +44,8 @@
     "ds:portraits": "nx run factman:ds:portraits",
     "ds:og": "nx run factman:ds:og",
     "ds:icons": "nx run factman:ds:icons",
-    "lint:eslint": "nx run factman:lint:eslint"
+    "lint:eslint": "nx run factman:lint:eslint",
+    "resume:html": "nx run factman:resume:html"
   },
   "private": true,
   "packageManager": "pnpm@10.34.9",

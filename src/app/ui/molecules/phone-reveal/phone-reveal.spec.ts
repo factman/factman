@@ -20,7 +20,7 @@ describe('PhoneReveal', () => {
     });
     expect(screen.getByText('+234 ••• ••• ••73')).toBeTruthy();
     expect(screen.queryByRole('link')).toBeNull();
-    await userEvent.click(screen.getByRole('button', { name: 'Show phone number' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Show number' }));
     expect(revealed).toHaveBeenCalledOnce();
     const link = await screen.findByRole('link', { name: '+234 706 678 0373' });
     expect(link.getAttribute('href')).toBe('tel:+2347066780373');
