@@ -19,6 +19,9 @@
       ],
       "outputs": ["{projectRoot}/src/app/shared/models/generated"]
     },
+    "sync:github": {
+      "command": "tsx scripts/github/sync-github.ts"
+    },
     "data:hero-code": {
       "command": "tsx scripts/data/generate-hero-code.ts"
     },

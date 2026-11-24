@@ -13,9 +13,11 @@ import {
   ProjectsRepository,
   ServicesRepository,
 } from '@core/data';
+import { SITE } from '@core/config';
 import { StructuredData } from '@core/seo';
 import { contact } from '@data/contact';
 import { experience } from '@data/experience';
+import { githubContributions } from '@data/generated/github-contributions';
 import { heroCodeFile } from '@data/generated/hero-code';
 import { profile } from '@data/profile';
 import { site } from '@data/site';
@@ -55,7 +57,7 @@ import { aboutFacts } from './about-facts';
 import { careerGlance, darkLogos, timelineEntries } from './experience-view';
 import { stackGroups } from './stack-groups';
 import { homeStructuredData } from './structured-data';
-import { careerStrip, statCounters } from './stats-view';
+import { careerStrip, contributionGraph, statCounters } from './stats-view';
 
 /** The networks the hero links to, in contact.json's order (ETeam has its own place). */
 const HERO_SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);
@@ -152,6 +154,10 @@ export class Home {
     ),
   );
   protected readonly strip = careerStrip(experience, profile.careerStart, this.now);
+  /** FR-33 (P1): the GitHub graph from the weekly snapshot, when the flag is on and one exists. */
+  protected readonly contributions = inject(SITE).features.contributionGraph
+    ? contributionGraph(githubContributions)
+    : undefined;
 
   /** Blog (FR-24): the newest three articles, read live from Medium after the page renders. */
   protected readonly blog = inject(BlogRepository);

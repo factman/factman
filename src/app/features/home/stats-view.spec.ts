@@ -1,4 +1,4 @@
-import { careerStrip, statCounters } from './stats-view';
+import { careerStrip, contributionGraph, statCounters } from './stats-view';
 
 const NOW = new Date('2026-11-10T12:00:00Z');
 
@@ -65,5 +65,54 @@ describe('careerStrip', () => {
 
   it('ticks every three years from the start, ending at now', () => {
     expect(ticks).toEqual(['2013', '2016', '2019', '2022', 'now']);
+  });
+});
+
+describe('contributionGraph (FR-33)', () => {
+  const snapshot = {
+    login: 'factman',
+    url: 'https://github.com/factman',
+    fetchedAt: '2026-11-24T06:00:00Z',
+    start: '2025-11-23',
+    total: 1284,
+    // Nine weeks from Sunday 23 Nov 2025: into December and January.
+    weeks: [
+      [0, 2, 3, 0, 1, 1, 1],
+      [9, 0, 3, 0, 0, 0, 0],
+      ...Array.from({ length: 7 }, () => [1, 0, 0, 0, 0, 0, 0]),
+    ],
+  };
+
+  it('hides without a snapshot', () => {
+    expect(contributionGraph(null)).toBeUndefined();
+    expect(contributionGraph({ ...snapshot, weeks: [] })).toBeUndefined();
+  });
+
+  it('labels each month at its first week', () => {
+    expect(contributionGraph(snapshot)!.months).toEqual([
+      { label: 'Nov', week: 0 },
+      { label: 'Dec', week: 2 },
+      { label: 'Jan', week: 6 },
+    ]);
+  });
+
+  it('drops a first label squeezed into a single week', () => {
+    const late = { ...snapshot, start: '2025-11-30' };
+    expect(contributionGraph(late)!.months.map((m) => m.label)).toEqual(['Dec', 'Jan']);
+  });
+
+  it('states the figures as its text alternative, and links to the profile', () => {
+    const graph = contributionGraph(snapshot)!;
+    expect(graph.summary).toBe(
+      '1,284 contributions in the last year, on 14 days. Busiest day: 9 on 30 Nov 2025. Longest streak: 4 days.',
+    );
+    expect(graph.profileUrl).toBe('https://github.com/factman');
+    expect(graph.levels[1][0]).toBe(4);
+  });
+
+  it('says so when the year was quiet', () => {
+    expect(contributionGraph({ ...snapshot, total: 0, weeks: [[0, 0]] })!.summary).toBe(
+      'No contributions in the last year.',
+    );
   });
 });
