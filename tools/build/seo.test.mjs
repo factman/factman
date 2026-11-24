@@ -125,3 +125,45 @@ test('the not-found page is noindex, with no canonical URL', () => {
     assert.deepEqual(canonicals, [], page);
   }
 });
+
+// ETE-113: sitemap.xml, robots.txt and the structured data.
+test('sitemap.xml lists every indexable page by its canonical URL, and not the 404 page', () => {
+  const xml = readFileSync(join(DIST, 'sitemap.xml'), 'utf8');
+  const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+  for (const path of PAGES) assert.ok(locs.includes(`${site.url}${path}`), `${path} is missing`);
+  assert.ok(!locs.some((u) => /\/404\b/.test(u)), 'the not-found page is in the sitemap');
+  assert.equal(new Set(locs).size, locs.length, 'the sitemap repeats a URL');
+});
+
+test('robots.txt disallows a preview, and points to the sitemap in production', () => {
+  const txt = readFileSync(join(DIST, 'robots.txt'), 'utf8');
+  if (BUILD_VARIANT === 'preview') assert.match(txt, /^Disallow: \/$/m);
+  else assert.ok(txt.includes(`Sitemap: ${site.url}/sitemap.xml`), txt);
+});
+
+/** The page's JSON-LD block, parsed. */
+const jsonLd = (path) => {
+  const html = readFileSync(file(path), 'utf8');
+  const raw = html.match(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/)?.[1];
+  return raw && JSON.parse(raw);
+};
+
+test('the home page describes the Person and the WebSite, with a city and country only', () => {
+  const data = jsonLd('/');
+  assert.ok(data, 'no JSON-LD on the home page');
+  assert.equal(data['@context'], 'https://schema.org');
+  const types = data['@graph'].map((n) => n['@type']);
+  assert.deepEqual(types, ['Person', 'WebSite']);
+  const [person] = data['@graph'];
+  assert.equal(person.address.streetAddress, undefined);
+  assert.ok(person.sameAs.length > 0);
+});
+
+test('each service page describes its Service, provided by the Person', () => {
+  for (const s of services) {
+    const data = jsonLd(`/services/${s.slug}`);
+    assert.equal(data['@type'], 'Service', s.slug);
+    assert.equal(data.name, s.title);
+    assert.equal(data.provider['@id'], `${site.url}/#person`);
+  }
+});
