@@ -1,4 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/angular-vite';
+import { expect, fn } from 'storybook/test';
 
 import { PrivacyPolicySection } from './privacy-policy-section';
 
@@ -10,6 +11,7 @@ const meta: Meta<PrivacyPolicySection> = {
   args: {
     email: 'hello@example.com',
     analytics: 'unset',
+    changeSettings: fn(),
     storage: [
       {
         name: 'fm_consent',
@@ -36,7 +38,15 @@ export default meta;
 
 type Story = StoryObj<PrivacyPolicySection>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  /** The cookie table, and "Change cookie settings" from the keyboard. */
+  play: async ({ args, canvas, userEvent }) => {
+    await expect(canvas.getByRole('table', { name: /Cookies and browser storage/ })).toBeVisible();
+    canvas.getByRole('button', { name: /Change cookie settings/ }).focus();
+    await userEvent.keyboard('{Enter}');
+    await expect(args.changeSettings).toHaveBeenCalled();
+  },
+};
 
 export const Mobile: Story = { globals: { viewport: { value: 'mobile' } } };
 

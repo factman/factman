@@ -2,7 +2,9 @@
  * ETE-83: UI test coverage per Atomic level. Every UI-kit component (src/app/ui: atoms to
  * templates) has a unit spec and a story; pages (src/app/features) are reported but not required
  * yet, since the Sections milestone builds them. The report counts, per level, the components
- * with a spec, a story and an interaction test (a story with a `play` function).
+ * with a spec, a story and an interaction test: a story with a `play` function, or a case in the
+ * UI suite (src/app/ui/ui-suite, PRD §12 UI-01 to UI-05) that renders it. Every organism must
+ * have one (ETE-234).
  * Run with `pnpm test:scripts`; the table prints with the results.
  */
 import assert from 'node:assert/strict';
@@ -39,19 +41,32 @@ export function components(): Component[] {
     });
 }
 
+/** Classes the UI suite's cases render: everything they import from the UI kit. */
+export function suiteCovered(): Set<string> {
+  const names = new Set<string>();
+  for (const f of files(join(ROOT, 'src/app/ui/ui-suite')).filter((f) => f.endsWith('.spec.ts'))) {
+    for (const m of readFileSync(f, 'utf8').matchAll(/import \{([^}]*)\} from '@ui\/\w+'/g)) {
+      for (const n of m[1].split(',')) names.add(n.replace(/^\s*type\s+/, '').trim());
+    }
+  }
+  return names;
+}
+
 const inFolder = (folder: string, suffix: string) =>
   readdirSync(folder)
     .filter((f) => f.endsWith(suffix))
     .map((f) => join(folder, f));
 
-export function coverage(list: Component[]) {
+export function coverage(list: Component[], suite = suiteCovered()) {
   const levels = new Map<string, { total: number; spec: number; story: number; play: number }>();
   const missing: string[] = [];
+  const untested: string[] = [];
   for (const c of list) {
     const required = c.level !== 'page';
     const specs = inFolder(c.folder, '.spec.ts');
     const stories = inFolder(c.folder, '.stories.ts');
-    const play = stories.some((s) => /\bplay:\s*async/.test(readFileSync(s, 'utf8')));
+    const play =
+      stories.some((s) => /\bplay:\s*async/.test(readFileSync(s, 'utf8'))) || suite.has(c.name);
     const row = levels.get(c.level) ?? { total: 0, spec: 0, story: 0, play: 0 };
     row.total++;
     if (specs.length) row.spec++;
@@ -59,18 +74,23 @@ export function coverage(list: Component[]) {
     if (stories.length) row.story++;
     else if (required) missing.push(`${c.name} (${relative(ROOT, c.folder)}): no story`);
     if (play) row.play++;
+    else if (c.level === 'organism') untested.push(`${c.name} (${relative(ROOT, c.folder)})`);
     levels.set(c.level, row);
   }
-  return { levels, missing };
+  return { levels, missing, untested };
 }
 
 describe('UI coverage per Atomic level (ETE-83)', () => {
   const list = components();
-  const { levels, missing } = coverage(list);
+  const { levels, missing, untested } = coverage(list);
 
   test('every UI-kit component has a spec and a story', () => {
     assert.ok(list.length > 0, 'found no components');
     assert.deepEqual(missing, []);
+  });
+
+  test('every organism has an interaction test (a story play function or a UI-suite case)', () => {
+    assert.deepEqual(untested, []);
   });
 
   test('report', () => {

@@ -1,5 +1,6 @@
 import { provideRouter } from '@angular/router';
 import { applicationConfig, type Meta, type StoryObj } from '@storybook/angular-vite';
+import { expect } from 'storybook/test';
 
 import { iconCalendar, iconGithub, iconMail } from '@ui/atoms';
 
@@ -28,7 +29,18 @@ export default meta;
 
 type Story = StoryObj<CtaBanner>;
 
-export const Text: Story = {};
+export const Text: Story = {
+  /** The heading and both actions, in order, reachable with Tab. */
+  play: async ({ canvas, userEvent }) => {
+    await expect(
+      canvas.getByRole('heading', { name: /Not sure which service fits/ }),
+    ).toBeVisible();
+    await userEvent.tab();
+    await expect(canvas.getByRole('link', { name: /Schedule a call/ })).toHaveFocus();
+    await userEvent.tab();
+    await expect(canvas.getByRole('link', { name: /Email me/ })).toHaveFocus();
+  },
+};
 
 /** With the cutout portrait (the project pages' "Building something similar?"). */
 export const WithPhoto: Story = {
