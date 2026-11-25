@@ -1,14 +1,9 @@
-import { InjectionToken, NgModule, inject } from '@angular/core';
-import type { ResolvedSite } from '@shared';
+import { NgModule } from '@angular/core';
 
-import { SITE } from '../config/site';
+import { ConsentService } from './consent.service';
 
-/** Consent settings: cookie name, version, lifetime and categories (bump the version to re-ask). */
-export const CONSENT = new InjectionToken<ResolvedSite['consent']>('fm.consent', {
-  providedIn: 'root',
-  factory: () => inject(SITE).consent,
-});
-
-/** Cookie consent. The banner and the stored choice arrive with the consent work. */
-@NgModule({})
+/** Cookie consent: `ConsentService`, which keeps the visitor's decision. The banner arrives next. */
+@NgModule({
+  providers: [ConsentService],
+})
 export class ConsentModule {}

@@ -9,7 +9,7 @@ App-wide services and providers, one NgModule per concern (ADR-002). Components 
 | `theme`     | `ThemeModule`     | Light and Dark theme (FR-04)                                                                  |
 | `seo`       | `SeoModule`       | `SeoService`: per-page title, description, robots, canonical, Open Graph and Twitter tags (route `data.seo` or a `seo` resolver) |
 | `analytics` | `AnalyticsModule` | `ANALYTICS`: GTM and GA4 settings (off on previews)                                          |
-| `consent`   | `ConsentModule`   | `CONSENT`: cookie name, version and categories                                                |
+| `consent`   | `ConsentModule`   | `ConsentService` (stored decision, re-prompt, Consent Mode state); `CONSENT` settings         |
 
 `CoreModule.forRoot({ environment })` (`@core`) imports all of them and is imported once, in `app.config.ts`. The environment comes from `FM_SITE_ENV`, set at build time: `pnpm build` builds production, `pnpm build:preview` builds a preview (noindex, analytics off).
 
