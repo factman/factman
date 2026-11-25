@@ -4,7 +4,7 @@ import { SCROLL_SPY_ENABLED } from '@shared';
 
 import { ANALYTICS } from './analytics/analytics.module';
 import { SITE } from './config/site';
-import { CONSENT } from './consent/consent.module';
+import { CONSENT } from './consent/consent.token';
 import { CoreModule } from './core.module';
 import siteJson from '../../data/site.json';
 
