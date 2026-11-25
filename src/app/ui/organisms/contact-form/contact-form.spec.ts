@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
 import { ContactForm } from './contact-form';
+import { ANALYTICS_TRACKER } from '@shared';
 
 const topics = ['General enquiry', 'DevOps', 'Mobile development'];
 
@@ -69,5 +70,27 @@ describe('ContactForm', () => {
     await userEvent.click(screen.getByRole('button', { name: /Compose email/ }));
     await userEvent.click(screen.getByRole('button', { name: /Edit message/ }));
     expect((screen.getByLabelText(/^Name/) as HTMLInputElement).value).toBe('Ada Lovelace');
+  });
+});
+
+describe('ContactForm analytics (FR-35)', () => {
+  it('sends contact_form_start once and contact_form_submit without personal data', async () => {
+    const track = vi.fn();
+    await render(ContactForm, {
+      inputs: { email: 'factman60@gmail.com', topics },
+      providers: [provideRouter([]), { provide: ANALYTICS_TRACKER, useValue: { track } }],
+    });
+    await fill();
+    expect(track.mock.calls.filter(([name]) => name === 'contact_form_start')).toHaveLength(1);
+    await userEvent.click(screen.getByRole('button', { name: /Compose email/ }));
+    expect(track).toHaveBeenCalledWith('contact_form_submit', {
+      topic: 'DevOps',
+      has_service: false,
+      message_length_bucket: '50-199',
+    });
+    const sent = JSON.stringify(track.mock.calls);
+    expect(sent).not.toContain('Ada');
+    expect(sent).not.toContain('ada@example.com');
+    expect(sent).not.toContain('CI/CD pipeline');
   });
 });

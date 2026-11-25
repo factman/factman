@@ -1,8 +1,14 @@
 import { contact } from '@data/contact';
 import { profile } from '@data/profile';
-import { formatPhone } from '@shared';
+import { type AnalyticsEvent, type BookingChannel, formatPhone } from '@shared';
 import { iconCalendar, iconMail, iconPhoneCall, iconWhatsapp } from '@ui/atoms';
 import type { BookingPerson, Channel } from '@ui/molecules';
+
+/** service_enquiry for the Services page's general channels (no one service). */
+const enquiry = (channel: BookingChannel): AnalyticsEvent => ({
+  name: 'service_enquiry',
+  params: { service_id: 'general', channel },
+});
 
 /** The general booking channels (the Services page's "Pick the channel that suits you"). */
 export function bookingChannels(): Channel[] {
@@ -16,24 +22,28 @@ export function bookingChannels(): Channel[] {
       label: 'Schedule a call',
       meta: 'Google Calendar · pick a slot',
       schedule: true,
+      track: enquiry('scheduler'),
     },
     {
       icon: iconMail,
       label: 'Email',
       meta: contact.email,
       href: `mailto:${contact.email}?subject=${subject}&body=${body}`,
+      track: enquiry('email'),
     },
     {
       icon: iconWhatsapp,
       label: 'WhatsApp',
       meta: formatPhone(contact.phone),
       href: `https://wa.me/${contact.whatsapp.number}?text=${encodeURIComponent(contact.whatsapp.message)}`,
+      track: enquiry('whatsapp'),
     },
     {
       icon: iconPhoneCall,
       label: 'Phone call',
       meta: formatPhone(contact.phone),
       href: `tel:${contact.phone}`,
+      track: enquiry('phone'),
     },
   ];
 }

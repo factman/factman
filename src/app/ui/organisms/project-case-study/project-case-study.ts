@@ -7,7 +7,7 @@ import {
   output,
 } from '@angular/core';
 
-import type { Project } from '@shared';
+import { type Project, Track } from '@shared';
 import {
   Button,
   iconArrowUpRight,
@@ -39,7 +39,7 @@ export interface NextProject {
   // project-case-study* classes are this component's.
   encapsulation: ViewEncapsulation.None,
   styleUrl: './project-case-study.scss',
-  imports: [Button, EngageCard, Image, SkillChip],
+  imports: [Button, EngageCard, Image, SkillChip, Track],
   host: { style: 'display: contents' },
   templateUrl: './project-case-study.html',
 })
@@ -73,9 +73,22 @@ export class ProjectCaseStudy {
     if (!this.isPublic()) return [];
     const { live, source, caseStudy } = this.project().links;
     return [
-      ...(live ? [{ label: 'Live site', href: live, icon: this.icons.external }] : []),
-      ...(source ? [{ label: 'Source code', href: source, icon: this.icons.code }] : []),
-      ...(caseStudy ? [{ label: 'Case study', href: caseStudy, icon: this.icons.external }] : []),
+      ...(live
+        ? [{ label: 'Live site', href: live, icon: this.icons.external, type: 'live' as const }]
+        : []),
+      ...(source
+        ? [{ label: 'Source code', href: source, icon: this.icons.code, type: 'source' as const }]
+        : []),
+      ...(caseStudy
+        ? [
+            {
+              label: 'Case study',
+              href: caseStudy,
+              icon: this.icons.external,
+              type: 'case-study' as const,
+            },
+          ]
+        : []),
     ];
   });
 }

@@ -4,13 +4,20 @@
   <span class="channel-card-meta">{{ channel().meta }}</span>
 </ng-template>
 @if (channel().schedule || !channel().href) {
-  <button type="button" class="channel-card" aria-haspopup="dialog" (click)="schedule.emit()">
+  <button
+    type="button"
+    class="channel-card"
+    aria-haspopup="dialog"
+    [fmTrack]="channel().track ?? null"
+    (click)="schedule.emit()"
+  >
     <ng-container [ngTemplateOutlet]="content" />
   </button>
 } @else {
   <a
     class="channel-card"
     [href]="channel().href"
+    [fmTrack]="channel().track ?? null"
     [attr.target]="external() ? '_blank' : null"
     [attr.rel]="external() ? 'noopener noreferrer' : null"
   >

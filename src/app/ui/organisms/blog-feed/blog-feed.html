@@ -16,7 +16,13 @@
         }
         <ul class="blog-feed-list">
           @for (post of shown(); track post.id) {
-            <li><fm-blog-post-card [post]="post" [headingLevel]="headingLevel()" /></li>
+            <li>
+              <fm-blog-post-card
+                [post]="post"
+                [headingLevel]="headingLevel()"
+                [location]="location()"
+              />
+            </li>
           }
         </ul>
       } @else {

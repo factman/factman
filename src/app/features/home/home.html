@@ -5,7 +5,7 @@
   [stats]="stats"
   [timezone]="timezone"
   [terminal]="terminalEnabled"
-  (openResume)="openResume($event)"
+  (openResume)="openResume($event, 'hero')"
   (openTerminal)="terminal.show()"
 >
   <fm-code-editor heroEditor [files]="editorFiles" [glow]="true" [decorative]="true" />
@@ -28,8 +28,8 @@
     <div id="resume" class="home-resume" tabindex="-1">
       <fm-resume-section
         [resumes]="resumes"
-        (preview)="openResume($event)"
-        (download)="downloadResume($event)"
+        (preview)="openResume($event, 'card')"
+        (download)="downloadResume($event, 'card')"
       />
     </div>
   </fm-about-section>
@@ -58,7 +58,7 @@
     <fm-experience-timeline
       [entries]="timeline"
       [glance]="glance"
-      (openResume)="openResume(resumeVariant())"
+      (openResume)="openResume(resumeVariant(), 'glance')"
     />
   } @placeholder {
     <div class="home-deferred" aria-hidden="true"></div>
@@ -121,6 +121,7 @@
       [status]="blog.status()"
       [profileUrl]="blog.profileUrl"
       [limit]="3"
+      location="home"
       (retry)="blog.retry()"
     />
     <div class="home-blog-more">
@@ -152,7 +153,7 @@
   [open]="resumeOpen()"
   [resumes]="resumes"
   [variant]="resumeVariant()"
-  (variantChange)="resumeVariant.set($event)"
+  (variantChange)="switchResume($event)"
   (closed)="resumeOpen.set(false)"
-  (download)="downloadResume($event)"
+  (download)="downloadResume($event, 'modal')"
 />

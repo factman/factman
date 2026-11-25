@@ -6,6 +6,7 @@
       <a
         class="fm-cmethod__value cmethod-value"
         [href]="href"
+        [fmTrack]="channel() ? { name: 'contact_click', params: { channel: channel()! } } : null"
         [attr.target]="external() ? '_blank' : null"
         [attr.rel]="external() ? 'noopener noreferrer' : null"
         >{{ value() }}
@@ -26,6 +27,7 @@
       label="Copy"
       [ariaLabel]="'Copy ' + label()"
       variant="tertiary"
+      [fmTrack]="channel() ? { name: 'contact_copy', params: { channel: channel()! } } : null"
       (copied)="copied.emit($event)"
     />
   }

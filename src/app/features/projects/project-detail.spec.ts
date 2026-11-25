@@ -4,6 +4,8 @@ import { render, screen } from '@testing-library/angular';
 import type { Project } from '@shared';
 
 import { engageMailto, ProjectDetailPage } from './project-detail';
+import userEvent from '@testing-library/user-event';
+import { ANALYTICS_TRACKER } from '@shared';
 
 const renderProject = (project: Project) =>
   render(ProjectDetailPage, { inputs: { project }, providers: [provideRouter([])] });
@@ -54,5 +56,56 @@ describe('engageMailto', () => {
     expect(decodeURIComponent(engageMailto({ title: 'GraphUI' }, 'me@x.com'))).toContain(
       'Question: GraphUI',
     );
+  });
+});
+
+describe('ProjectDetailPage analytics (FR-35)', () => {
+  it('sends project_open, and project_link_click for a public link', async () => {
+    const { projects } = await import('@data/projects');
+    const graphui = projects.find((p) => p.slug === 'graphui')!;
+    const track = vi.fn();
+    await render(ProjectDetailPage, {
+      inputs: { project: graphui },
+      providers: [provideRouter([]), { provide: ANALYTICS_TRACKER, useValue: { track } }],
+    });
+    expect(track).toHaveBeenCalledWith('project_open', {
+      project_id: graphui.id,
+      status: graphui.status,
+      visibility: 'public',
+    });
+    const link = screen.getAllByRole('link').find((a) => a.textContent?.includes('Source code'))!;
+    expect(link).toBeTruthy();
+    link.addEventListener('click', (e) => e.preventDefault());
+    await userEvent.click(link);
+    expect(track).toHaveBeenCalledWith('project_link_click', {
+      project_id: graphui.id,
+      link_type: 'source',
+    });
+  });
+
+  it('sends project_access_request for a private project', async () => {
+    const { projects } = await import('@data/projects');
+    const graphui = projects.find((p) => p.slug === 'graphui')!;
+    const hidden: Project = {
+      ...graphui,
+      visibility: 'private',
+      engage: { mode: 'request-access', note: 'Access is by request.' },
+    };
+    const track = vi.fn();
+    const assign = vi.fn();
+    vi.stubGlobal('location', { ...globalThis.location, assign });
+    await render(ProjectDetailPage, {
+      inputs: { project: hidden },
+      providers: [provideRouter([]), { provide: ANALYTICS_TRACKER, useValue: { track } }],
+    });
+    const button = screen
+      .getAllByRole('button')
+      .find((b) => /Request access/i.test(b.textContent ?? ''))!;
+    await userEvent.click(button);
+    expect(track).toHaveBeenCalledWith('project_access_request', {
+      project_id: hidden.id,
+      mode: 'request-access',
+    });
+    vi.unstubAllGlobals();
   });
 });

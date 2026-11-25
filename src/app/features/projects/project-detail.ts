@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input } from '@angular/core';
 import { ProjectsRepository } from '@core/data';
 import { contact } from '@data/contact';
 import { skills } from '@data/skills';
-import type { Project } from '@shared';
+import { ANALYTICS_TRACKER, type Project } from '@shared';
 import { iconActivity, iconCalendar, iconFolder, iconGlobe, iconLock } from '@ui/atoms';
 import type { ListItem } from '@ui/molecules';
 import { type HeroTag, PageHero, ProjectCaseStudy } from '@ui/organisms';
@@ -51,6 +51,19 @@ export class ProjectDetailPage {
   readonly project = input.required<Project>();
 
   private readonly all = inject(ProjectsRepository).all();
+  private readonly tracker = inject(ANALYTICS_TRACKER);
+
+  constructor() {
+    // project_open for each project shown (the route reuses the page between projects).
+    effect(() => {
+      const p = this.project();
+      this.tracker.track('project_open', {
+        project_id: p.id,
+        status: p.status,
+        visibility: p.visibility,
+      });
+    });
+  }
   private readonly skillName = new Map(skills.map((s) => [s.id, s.name]));
 
   protected readonly crumbs = computed(() => [
@@ -102,6 +115,11 @@ export class ProjectDetailPage {
   });
 
   protected requestAccess(): void {
-    globalThis.location?.assign(engageMailto(this.project(), contact.email));
+    const p = this.project();
+    this.tracker.track('project_access_request', {
+      project_id: p.id,
+      mode: p.engage?.mode ?? 'contact',
+    });
+    globalThis.location?.assign(engageMailto(p, contact.email));
   }
 }

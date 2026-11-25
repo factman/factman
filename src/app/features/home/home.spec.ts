@@ -8,6 +8,7 @@ import { site } from '@data/site';
 import { resolveSite } from '@shared';
 
 import { Home } from './home';
+import { ANALYTICS_TRACKER } from '@shared';
 
 /** What the app's CoreModule provides and the page needs (the blog reads site.blog). */
 const SITE_PROVIDER = { provide: SITE, useValue: resolveSite(site, 'production') };
@@ -214,5 +215,28 @@ describe('Home résumés (FR-43 to FR-47)', () => {
     );
     expect(click).toHaveBeenCalledOnce();
     click.mockRestore();
+  });
+});
+
+describe('Home résumé analytics (FR-35)', () => {
+  it('sends resume_preview_open, resume_variant_switch and resume_download', async () => {
+    const track = vi.fn();
+    await renderHome({
+      providers: [SITE_PROVIDER, { provide: ANALYTICS_TRACKER, useValue: { track } }],
+    });
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Preview Fullstack Software Engineer résumé' }),
+    );
+    expect(track).toHaveBeenCalledWith('resume_preview_open', {
+      resume_id: 'fullstack',
+      source: 'card',
+    });
+    await userEvent.click(await screen.findByRole('tab', { name: /Mobile/ }));
+    expect(track).toHaveBeenCalledWith('resume_variant_switch', {
+      resume_id: 'mobile',
+      previous_resume_id: 'fullstack',
+    });
+    await userEvent.click(screen.getByRole('button', { name: /Download Mobile Developer résumé/ }));
+    expect(track).toHaveBeenCalledWith('resume_download', { resume_id: 'mobile', source: 'card' });
   });
 });

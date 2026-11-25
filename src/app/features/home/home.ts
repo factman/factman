@@ -26,9 +26,11 @@ import { site } from '@data/site';
 import { skills } from '@data/skills';
 import { ThemeService } from '@core/theme';
 import {
+  ANALYTICS_TRACKER,
   CLOCK,
   countWord,
   portraitSources,
+  type ResumeSource,
   SharedModule,
   TERMINAL_ENABLED,
   TerminalLauncher,
@@ -229,18 +231,33 @@ export class Home {
   protected readonly resumeOpen = signal(false);
   protected readonly resumeVariant = signal(this.resumes[0]?.slug ?? '');
   private readonly document = inject(DOCUMENT);
+  private readonly tracker = inject(ANALYTICS_TRACKER);
 
   /** Preview a résumé: the hero's Résumé button (fullstack), a card's Preview, or CareerGlance's
    * "Get the résumé" (the one last shown, else the first). */
-  protected openResume(slug: string): void {
+  protected openResume(slug: string, source: ResumeSource): void {
     this.resumeVariant.set(slug);
     this.resumeOpen.set(true);
+    this.tracker.track('resume_preview_open', { resume_id: slug, source });
+  }
+
+  /** Another résumé chosen inside the preview. */
+  protected switchResume(slug: string): void {
+    const previous = this.resumeVariant();
+    this.resumeVariant.set(slug);
+    if (slug !== previous) {
+      this.tracker.track('resume_variant_switch', {
+        resume_id: slug,
+        previous_resume_id: previous,
+      });
+    }
   }
 
   /** Download a résumé's PDF under the manifest's file name. */
-  protected downloadResume(slug: string): void {
+  protected downloadResume(slug: string, source: ResumeSource): void {
     const resume = this.resumes.find((r) => r.slug === slug);
     if (!resume) return;
+    this.tracker.track('resume_download', { resume_id: slug, source });
     const link = this.document.createElement('a');
     link.href = resume.file;
     link.download = resume.fileName;
@@ -254,6 +271,6 @@ export class Home {
   /** A deep link `/#resume=<slug>` opens that résumé's preview on load (FR-47). */
   private openResumeFromLink(): void {
     const slug = /^#resume=([\w-]+)$/.exec(this.document.location?.hash ?? '')?.[1];
-    if (slug && this.resumes.some((r) => r.slug === slug)) this.openResume(slug);
+    if (slug && this.resumes.some((r) => r.slug === slug)) this.openResume(slug, 'link');
   }
 }

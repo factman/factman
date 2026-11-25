@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ANALYTICS_TRACKER, messageLengthBucket } from '@shared';
 
 import {
   Button,
@@ -67,6 +68,8 @@ export class ContactForm {
   private readonly document = inject(DOCUMENT);
   private readonly host: ElementRef<HTMLElement> = inject(ElementRef);
   private readonly injector = inject(Injector);
+  private readonly tracker = inject(ANALYTICS_TRACKER);
+  private started = false;
 
   /** Where the draft is addressed (contact.json `email`). */
   readonly email = input.required<string>();
@@ -115,6 +118,13 @@ export class ContactForm {
     });
   }
 
+  /** The first focus inside the form: contact_form_start, once. */
+  protected start(): void {
+    if (this.started) return;
+    this.started = true;
+    this.tracker.track('contact_form_start', {});
+  }
+
   protected submit(event?: Event): void {
     event?.preventDefault();
     this.submitted.set(true);
@@ -136,6 +146,12 @@ export class ContactForm {
     const draft = composeMessage(values, this.email());
     this.draft.set(draft);
     this.composed.emit(draft);
+    // The topic and the message's length bucket: never the name, email or text (PRD §10).
+    this.tracker.track('contact_form_submit', {
+      topic: values.topic,
+      has_service: !!this.topic(),
+      message_length_bucket: messageLengthBucket(values.message.trim().length),
+    });
     try {
       this.document.defaultView?.location.assign(draft.mailto);
     } catch {

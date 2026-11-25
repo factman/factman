@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
 import { ServiceDetailPage } from './service-detail';
+import { ANALYTICS_TRACKER } from '@shared';
 
 async function renderService(slug = 'devops') {
   const { services } = await import('@data/services');
@@ -57,5 +58,29 @@ describe('ServiceDetailPage (/services/:slug)', () => {
     await userEvent.click(screen.getAllByRole('button', { name: /Schedule a call/ })[0]);
     expect(container.querySelector('iframe')).toBeTruthy();
     expect(screen.getByText(`About ${service.title} · pick a time that suits you.`)).toBeTruthy();
+  });
+});
+
+describe('ServiceDetailPage analytics (FR-35)', () => {
+  it('sends service_view, and service_enquiry for a booking channel', async () => {
+    const { services } = await import('@data/services');
+    const service = services.find((s) => s.slug === 'devops')!;
+    const track = vi.fn();
+    await render(ServiceDetailPage, {
+      inputs: { service },
+      providers: [provideRouter([]), { provide: ANALYTICS_TRACKER, useValue: { track } }],
+    });
+    expect(track).toHaveBeenCalledWith('service_view', { service_id: 'devops' });
+    const whatsapp = screen
+      .getAllByRole('link')
+      .find(
+        (a) => a.getAttribute('href')?.startsWith('https://wa.me/') && a.closest('.booking-card'),
+      )!;
+    whatsapp.addEventListener('click', (e) => e.preventDefault());
+    await userEvent.click(whatsapp);
+    expect(track).toHaveBeenCalledWith('service_enquiry', {
+      service_id: 'devops',
+      channel: 'whatsapp',
+    });
   });
 });

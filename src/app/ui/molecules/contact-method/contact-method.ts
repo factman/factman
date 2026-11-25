@@ -7,6 +7,7 @@ import {
   output,
 } from '@angular/core';
 
+import { type ContactChannel, Track } from '@shared';
 import { Icon, type IconDef } from '@ui/atoms';
 
 import { CopyButton } from '../copy-button/copy-button';
@@ -24,7 +25,7 @@ import { CopyButton } from '../copy-button/copy-button';
   // fm-* classes are the design system's shared contract (PRD §6).
   encapsulation: ViewEncapsulation.None,
   styleUrl: './contact-method.scss',
-  imports: [CopyButton, Icon],
+  imports: [CopyButton, Icon, Track],
   host: { style: 'display: contents' },
   templateUrl: './contact-method.html',
 })
@@ -35,6 +36,8 @@ export class ContactMethod {
   readonly href = input<string>();
   /** Adds a button that copies the value. */
   readonly copy = input(false);
+  /** The analytics channel: its link sends contact_click, its copy button contact_copy. */
+  readonly channel = input<ContactChannel>();
   readonly variant = input<'row' | 'tile'>('row');
   /** A small mono line under the value ("2013 – 2015"); tiles only. */
   readonly meta = input<string>();

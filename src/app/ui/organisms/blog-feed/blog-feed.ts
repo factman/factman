@@ -51,6 +51,8 @@ export class BlogFeed {
   readonly filterable = input(false);
   readonly headingLevel = input<2 | 3>(3);
 
+  /** Where the feed is, for the blog_click event. */
+  readonly location = input<'home' | 'blog'>('blog');
   readonly retry = output<void>();
 
   protected readonly refresh = iconRefresh;

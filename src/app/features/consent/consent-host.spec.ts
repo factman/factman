@@ -7,6 +7,7 @@ import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
 import { ConsentHost } from './consent-host';
+import { ANALYTICS_TRACKER } from '@shared';
 
 const clear = () => {
   document.cookie = 'fm_consent=; Max-Age=0; Path=/';
@@ -84,5 +85,26 @@ describe('ConsentHost', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     expect(isOpen()).toBe(true);
+  });
+});
+
+describe('ConsentHost analytics (FR-35)', () => {
+  beforeEach(clear);
+
+  it('records the decision as consent_update from the prompt', async () => {
+    const track = vi.fn();
+    const view = await render(ConsentHost, {
+      providers: [
+        provideRouter([]),
+        importProvidersFrom(CoreModule.forRoot({ environment: 'production' })),
+        { provide: ANALYTICS_TRACKER, useValue: { track } },
+      ],
+      deferBlockBehavior: DeferBlockBehavior.Playthrough,
+    });
+    await view.fixture.whenStable();
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Accept all' }, { timeout: 2000 }),
+    );
+    expect(track).toHaveBeenCalledWith('consent_update', { analytics: true, source: 'prompt' });
   });
 });

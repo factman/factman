@@ -7,7 +7,7 @@
   [lead]="service().summary"
   [actions]="actions()"
   [media]="photo"
-  (schedule)="schedulerOpen.set(true)"
+  (schedule)="openScheduler()"
 />
 <div class="service-detail-content">
   <fm-service-detail-body [service]="service()" [person]="person" (channel)="onChannel($event)" />

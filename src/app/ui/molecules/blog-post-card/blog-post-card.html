@@ -12,7 +12,12 @@
       {{ post().readingMinutes }} min read
     </p>
     <div role="heading" [attr.aria-level]="headingLevel()" class="post-card-title">
-      <a class="post-card-link" [href]="post().url" target="_blank" rel="noopener noreferrer"
+      <a
+        class="post-card-link"
+        [href]="post().url"
+        target="_blank"
+        rel="noopener noreferrer"
+        [fmTrack]="{ name: 'blog_click', params: { post_id: post().id, location: location() } }"
         >{{ post().title }}<span class="fm-sr"> (opens Medium in a new tab)</span></a
       >
     </div>

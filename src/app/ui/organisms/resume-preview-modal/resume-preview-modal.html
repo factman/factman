@@ -84,6 +84,7 @@
               variant="secondary"
               [href]="r.file"
               [newTab]="true"
+              [fmTrack]="{ name: 'resume_open_pdf', params: { resume_id: r.slug } }"
               [leadingIcon]="icons.external"
               >Open PDF in new tab</fm-button
             >

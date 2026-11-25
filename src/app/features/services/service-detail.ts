@@ -11,7 +11,12 @@ import { ServicesRepository } from '@core/data';
 import { StructuredData } from '@core/seo';
 import { site } from '@data/site';
 import { profile } from '@data/profile';
-import { portraitSources, type Service } from '@shared';
+import {
+  ANALYTICS_TRACKER,
+  type BookingChannel as EnquiryChannel,
+  portraitSources,
+  type Service,
+} from '@shared';
 import { Button, IconRegistry, iconArrowRight, iconCalendar, iconMail } from '@ui/atoms';
 import { type BookingChannel, SERVICE_ICONS } from '@ui/molecules';
 import {
@@ -72,6 +77,7 @@ export class ServiceDetailPage {
     sizes: '(min-width: 1024px) 420px, (min-width: 768px) 360px, 300px',
   };
   protected readonly schedulerOpen = signal(false);
+  private readonly tracker = inject(ANALYTICS_TRACKER);
 
   protected readonly crumbs = computed(() => [
     { label: 'Home', href: '/' },
@@ -91,10 +97,23 @@ export class ServiceDetailPage {
     inject(IconRegistry).register(SERVICE_ICONS);
     const data = inject(StructuredData);
     effect(() => data.set(serviceStructuredData(this.service(), profile.name, site.url)));
+    // service_view for each service shown (the route reuses the page between services).
+    effect(() => this.tracker.track('service_view', { service_id: this.service().slug }));
+  }
+
+  /** The hero's "Schedule a call". */
+  protected openScheduler(): void {
+    this.enquiry('scheduler');
+    this.schedulerOpen.set(true);
+  }
+
+  private enquiry(channel: EnquiryChannel): void {
+    this.tracker.track('service_enquiry', { service_id: this.service().slug, channel });
   }
 
   /** BookingCard's choice: open the scheduler for "Schedule a call" (links open themselves). */
   protected onChannel(channel: BookingChannel): void {
+    this.enquiry(channel === 'schedule' ? 'scheduler' : channel);
     if (channel !== 'schedule') return;
     const { booking } = this.service();
     if (booking.schedulerEmbedUrl) this.schedulerOpen.set(true);
