@@ -8,3 +8,4 @@ One file per decision: `NNN-short-title.md`, using [template.md](template.md). S
 | [ADR-002](002-standalone-components-ngmodules-for-services.md) | Standalone components, NgModules for services | Accepted | ETE-40 |
 | [ADR-003](003-image-based-resume-preview.md) | Image-based résumé preview | Accepted | ETE-217 |
 | [ADR-004](004-per-icon-imports.md) | Per-icon imports for the icon set | Accepted | ETE-69 |
+| [ADR-005](005-static-csp-consent-in-code.md) | A static CSP, with analytics consent enforced in code | Accepted | ETE-129 |
