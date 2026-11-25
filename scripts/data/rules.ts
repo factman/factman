@@ -3,6 +3,7 @@
  * tagged with the PRD section 12 case they enforce (DS-04 to DS-17).
  * Every rule is a pure function of the loaded data, so it is unit-tested without the file system.
  */
+import { portraitWidths } from '../../src/app/shared/media/portrait-sources';
 import { placeholdersIn, VARIABLE } from '../../src/app/shared/resume/resume-text';
 import { highlightsFor } from '../../src/app/shared/resume/resume-view-model';
 import type { ImageSize } from './image-size';
@@ -504,10 +505,13 @@ export function clientEntries(data: DataSet): Issue[] {
   return issues;
 }
 
-/** The profile's photos (hero, About, contact); each one is checked by DS-17. */
-export const PROFILE_PHOTOS = ['photo', 'aboutPhoto', 'contactPhoto'] as const;
+/** The profile's photos (hero, About, contact, not-found); each one is checked by DS-17. */
+export const PROFILE_PHOTOS = ['photo', 'aboutPhoto', 'contactPhoto', 'notFoundPhoto'] as const;
 
-/** DS-17: every profile photo has alt text, and its width and height match the image file. */
+/**
+ * DS-17: every profile photo has alt text, its width and height match the image file, and its
+ * responsive AVIF and WebP exports exist.
+ */
 export function profilePhoto(data: DataSet, ctx: RuleContext): Issue[] {
   const profile = data['profile'];
   if (!isObject(profile)) return [];
@@ -524,6 +528,17 @@ function checkPhoto(key: string, photo: JsonObject, ctx: RuleContext): Issue[] {
   if (typeof photo['alt'] !== 'string' || !photo['alt'].trim())
     push('alt', 'the photo needs alt text');
   const src = str(photo['src']);
+  // The page loads the AVIF and WebP exports (FR-50), not the source, so each one must exist.
+  if (src && ctx.assetExists(toAssetPath(src)) && typeof photo['width'] === 'number') {
+    const base = toAssetPath(src).replace(/\.[a-z]+$/, '');
+    for (const w of portraitWidths(photo['width'])) {
+      for (const format of ['avif', 'webp']) {
+        const exported = `${base}-${w}.${format}`;
+        if (!ctx.assetExists(exported))
+          push('src', `"${exported}" is missing; run pnpm ds:portraits to export it`);
+      }
+    }
+  }
   if (src && ctx.imageSize && ctx.assetExists(toAssetPath(src))) {
     const size = ctx.imageSize(toAssetPath(src));
     if (!size) push('src', `can't read the size of "${src}" (use PNG, JPEG or WebP)`);

@@ -1,0 +1,125 @@
+// The canvas's WorkedWith strip: a glass card with a small heading over the logos in an endless
+// marquee (docs/interaction-and-motion.md, "Logo marquee"). The track holds two equal groups and
+// moves by half its width, so the copy takes the first group's place without a jump.
+@use 'ui/layout';
+
+.client-logo-strip {
+  @include layout.container;
+
+  padding-block: var(--gap-3xl);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.client-logo-strip-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+  align-items: stretch;
+  box-sizing: border-box;
+  padding: var(--padding-xl) var(--padding-3xl);
+  border: var(--border-width-sm) solid var(--glass-stroke-subtle);
+  border-radius: var(--radius-xl);
+  background: var(--glass-fill);
+
+  @media (width < 768px) {
+    padding: var(--padding-lg) var(--padding-md);
+  }
+}
+
+.client-logo-strip-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-sm);
+}
+
+// The design system's eyebrow, copied with our own class name (as SectionHeader does).
+.client-logo-strip-title {
+  margin: 0;
+  font: 500 0.75rem/1rem var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.client-logo-strip-viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    var(--neutral-1000) 8%,
+    var(--neutral-1000) 92%,
+    transparent
+  );
+}
+
+.client-logo-strip-track {
+  display: flex;
+  width: max-content;
+  animation: client-logo-strip-scroll calc(var(--duration-reveal) * 80) linear infinite;
+
+  @media (width < 768px) {
+    animation-duration: calc(var(--duration-reveal) * 60);
+  }
+}
+
+// Paused on hover, while anything inside has focus, and with the pause button.
+.client-logo-strip-viewport:hover .client-logo-strip-track,
+.client-logo-strip-viewport:focus-within .client-logo-strip-track,
+.client-logo-strip.is-paused .client-logo-strip-track {
+  animation-play-state: paused;
+}
+
+.client-logo-strip-group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--gap-5xl);
+  margin: 0;
+
+  // The same space after the last logo as between logos, so the loop has an even rhythm.
+  padding: var(--padding-xs) var(--gap-5xl) var(--padding-xs) 0;
+  list-style: none;
+
+  @media (width < 768px) {
+    gap: var(--gap-4xl);
+    padding-right: var(--gap-4xl);
+  }
+}
+
+@keyframes client-logo-strip-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+// Reduced motion: a static, wrapped, centred grid; no copy, no mask, nothing to pause.
+@media (prefers-reduced-motion: reduce) {
+  .client-logo-strip-viewport {
+    mask-image: none;
+  }
+
+  .client-logo-strip-track {
+    width: auto;
+    animation: none;
+  }
+
+  .client-logo-strip-group {
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-shrink: 1;
+    gap: var(--gap-md) var(--gap-4xl);
+    padding: 0;
+  }
+
+  .client-logo-strip-group.is-copy,
+  .client-logo-strip-group .is-repeat,
+  .client-logo-strip-toggle {
+    display: none;
+  }
+}

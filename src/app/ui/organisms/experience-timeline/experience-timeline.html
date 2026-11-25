@@ -1,0 +1,116 @@
+<div class="experience-timeline" [class.has-glance]="!!glance()">
+  <ol class="experience-timeline-list">
+    @for (entry of entries(); track entry.id; let last = $last) {
+      <li class="experience-timeline-item">
+        <div class="experience-timeline-rail" aria-hidden="true">
+          @if (entry.logo; as logo) {
+            <img
+              class="experience-timeline-logo"
+              [class.is-dark]="entry.logoDark"
+              [src]="logo"
+              alt=""
+              width="48"
+              height="48"
+              loading="lazy"
+              decoding="async"
+            />
+          } @else {
+            <span class="experience-timeline-logo is-initials">{{
+              initials(entry.organization)
+            }}</span>
+          }
+          @if (!last) {
+            <span class="experience-timeline-line"></span>
+          }
+        </div>
+        <div class="experience-timeline-card">
+          <div class="experience-timeline-company">
+            <h3>
+              @if (entry.website; as href) {
+                <a [href]="href" target="_blank" rel="noopener noreferrer"
+                  >{{ entry.organization }}<fm-icon [icon]="icons.external" [size]="16" /><span
+                    class="fm-sr"
+                  >
+                    (opens in a new tab)</span
+                  ></a
+                >
+              } @else {
+                {{ entry.organization }}
+              }
+            </h3>
+            @if (entry.total; as total) {
+              <span class="experience-timeline-total">{{ total }}</span>
+            }
+          </div>
+          @for (role of entry.roles; track role.id) {
+            <article class="experience-timeline-role" [class.is-current]="role.current">
+              <h4 class="experience-timeline-title">
+                {{ role.title }}
+                @if (role.current) {
+                  <fm-tag size="sm" tone="success" [dot]="true">Current</fm-tag>
+                }
+              </h4>
+              <p class="experience-timeline-meta">
+                <span class="experience-timeline-period">{{ role.period }}</span>
+                <span>· {{ role.duration }}</span>
+                @if (role.location; as location) {
+                  <span>· {{ location }}</span>
+                }
+                @if (role.type; as type) {
+                  <span>· {{ type }}</span>
+                }
+              </p>
+              @if (role.summary; as summary) {
+                <p class="experience-timeline-summary">{{ summary }}</p>
+              }
+              @if (role.highlights.length) {
+                @let opened = isOpen(role.id);
+                <ul class="experience-timeline-highlights" [id]="role.id + '-highlights'">
+                  <!-- Every highlight is in the page; the extra ones are hidden="until-found" while
+                       collapsed, so find-in-page reaches them and opens the role (ETE-258). -->
+                  @for (highlight of role.highlights; track $index; let i = $index) {
+                    <li
+                      [attr.hidden]="opened || i < preview() ? null : 'until-found'"
+                      (beforematch)="reveal(role.id)"
+                    >
+                      {{ highlight }}
+                    </li>
+                  }
+                </ul>
+                @if (role.highlights.length > preview()) {
+                  <button
+                    type="button"
+                    class="experience-timeline-more"
+                    [attr.aria-expanded]="opened"
+                    [attr.aria-controls]="role.id + '-highlights'"
+                    (click)="toggle(role.id)"
+                  >
+                    {{
+                      opened
+                        ? 'Show less'
+                        : 'Show ' + (role.highlights.length - preview()) + ' more'
+                    }}
+                    <span class="fm-sr">about {{ role.title }}</span>
+                    <fm-icon [icon]="opened ? icons.less : icons.more" [size]="16" />
+                  </button>
+                }
+              }
+              @if (role.skills.length) {
+                <ul class="experience-timeline-skills" aria-label="Skills used">
+                  @for (skill of role.skills; track skill) {
+                    <li><fm-skill-chip [label]="skill" /></li>
+                  }
+                </ul>
+              }
+            </article>
+          }
+        </div>
+      </li>
+    }
+  </ol>
+  @if (glance(); as g) {
+    <div class="experience-timeline-aside">
+      <fm-career-glance [roles]="g.roles" [stats]="g.stats" (openResume)="openResume.emit()" />
+    </div>
+  }
+</div>

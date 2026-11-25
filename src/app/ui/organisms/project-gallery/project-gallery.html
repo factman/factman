@@ -1,0 +1,52 @@
+<div class="project-gallery">
+  @if (filterable()) {
+    <div class="project-gallery-filters">
+      <fm-filter-bar
+        [options]="options()"
+        [selected]="selected()"
+        [query]="filter().query"
+        label="Filter projects by status and category"
+        searchLabel="Search projects, stack or summary"
+        (filterChange)="onFilter($event)"
+      />
+      <p class="project-gallery-count" aria-live="polite">{{ count() }}</p>
+    </div>
+  }
+  @if (shown().length) {
+    <ul class="project-gallery-list">
+      @for (project of shown(); track project.slug) {
+        <li>
+          <fm-project-card
+            [project]="project"
+            [href]="'/projects/' + project.slug"
+            [headingLevel]="headingLevel()"
+            (engage)="engage.emit($event)"
+          />
+        </li>
+      }
+    </ul>
+  } @else {
+    <fm-empty-state
+      [icon]="search"
+      title="No projects match"
+      description="Try another status, category or search term."
+      actionLabel="Show all projects"
+      [card]="true"
+      (action)="clear()"
+    />
+  }
+  @if (actions().length) {
+    <div class="project-gallery-actions">
+      @for (action of actions(); track action.label; let i = $index) {
+        <fm-button
+          size="lg"
+          [variant]="action.variant ?? (i === 0 ? 'secondary' : 'tertiary')"
+          [href]="action.href"
+          [leadingIcon]="action.leadingIcon"
+          [trailingIcon]="action.trailingIcon"
+          >{{ action.label }}</fm-button
+        >
+      }
+    </div>
+  }
+</div>

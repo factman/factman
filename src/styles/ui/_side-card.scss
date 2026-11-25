@@ -22,11 +22,11 @@
 
 @mixin title {
   margin: 0;
-  font: 600 20px/1.5 var(--font-sans);
+  font: 600 1.25rem/1.5 var(--font-sans);
 }
 
 @mixin text {
   margin: 0;
-  font: 400 14px/1.7 var(--font-sans);
+  font: 400 0.875rem/1.7 var(--font-sans);
   color: var(--text-secondary);
 }

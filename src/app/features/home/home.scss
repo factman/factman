@@ -1,0 +1,32 @@
+// The home page's own layout: the contact form beside the contact channels (1:1 from 1024px).
+
+.home-contact {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-5xl);
+  align-items: start;
+
+  @media (width < 1024px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-4xl);
+  }
+}
+
+// "Read the blog" under the newest posts.
+.home-blog-more {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--gap-3xl);
+}
+
+// A deferred section before it renders (client-side navigation only: the prerendered page has
+// every section in full). Its height keeps the sections below from all entering the viewport.
+.home-deferred {
+  min-block-size: 50vh;
+}
+
+// The résumé block under About's two columns (the canvas's #resume).
+.home-resume {
+  margin-top: calc(var(--gap-5xl) * 1.25);
+  scroll-margin-top: var(--navbar-height, 0);
+}

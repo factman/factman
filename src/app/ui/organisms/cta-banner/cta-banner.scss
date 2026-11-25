@@ -1,0 +1,88 @@
+// The canvas's CtaBanner (site.css .cta-banner, .cta-banner--photo): copy and buttons on a glass
+// panel; with a photo, a cutout portrait stands on the panel's foot at the right (not on phones).
+
+.cta-banner {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-xl);
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: var(--padding-4xl);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  background: var(--glass-panel);
+  box-shadow: var(--shadow-glass-panel);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+
+  @media (width < 768px) {
+    padding: var(--padding-xl);
+  }
+}
+
+.cta-banner.has-photo {
+  min-height: 280px;
+  padding-right: calc(var(--padding-4xl) + 260px);
+
+  @media (width < 768px) {
+    min-height: 0;
+    padding-right: var(--padding-xl);
+  }
+}
+
+.cta-banner-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+}
+
+.cta-banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  max-width: 640px;
+
+  p {
+    margin: 0;
+    font: 400 1rem/1.75 var(--font-sans);
+    color: var(--text-secondary);
+  }
+}
+
+.cta-banner-title {
+  font: 700 2rem/1.3 var(--font-sans);
+
+  @media (width < 768px) {
+    font: 700 1.5rem/1.3 var(--font-sans);
+  }
+}
+
+.cta-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+}
+
+.cta-banner-photo {
+  position: absolute;
+  right: var(--padding-3xl);
+  bottom: 0;
+  height: calc(100% - var(--padding-xl));
+  aspect-ratio: 4 / 5;
+  pointer-events: none;
+
+  @media (width < 768px) {
+    display: none;
+  }
+}
+
+.cta-banner-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}

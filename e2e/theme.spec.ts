@@ -14,6 +14,8 @@ test.describe('theme', () => {
     expect(await theme(page)).toBe('dark');
     const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
     expect(bg).toBe('rgb(7, 11, 20)'); // dark canvas, neutral-950
+    // The browser UI follows the same theme before any app code runs (ETE-261).
+    await expect(page.locator('meta[name="color-scheme"]')).toHaveAttribute('content', 'dark');
     await context.close();
   });
 
@@ -33,6 +35,7 @@ test.describe('theme', () => {
     const page = await context.newPage();
     await page.goto('/');
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+    await expect(page.locator('meta[name="color-scheme"]')).toHaveAttribute('content', 'light');
     await context.close();
   });
 

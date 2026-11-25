@@ -1,0 +1,27 @@
+// The canvas's .panel-card around the Stepper; it scrolls sideways on phones.
+
+.process-section {
+  box-sizing: border-box;
+  padding: var(--padding-3xl);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  background: var(--glass-fill-strong);
+  box-shadow: var(--shadow-glass-panel);
+
+  @media (width < 768px) {
+    overflow-x: auto;
+    padding: var(--padding-lg);
+  }
+
+  &:focus-visible {
+    outline: var(--border-width-lg) solid var(--border-focus);
+    outline-offset: 2px;
+  }
+}
+
+// Keep the steps readable while the panel scrolls.
+@media (width < 768px) {
+  .process-section .fm-stepper {
+    min-width: 640px;
+  }
+}

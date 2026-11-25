@@ -1,0 +1,392 @@
+/* The résumé layout (ETE-107, ported from the canvas's resume.css, ETE-223).
+   A4, 15 / 17 / 16 mm margins. Carlito (metric-compatible with Calibri) for text, Caladea
+   (metric-compatible with Cambria) for headings; both self-hosted, with system fallbacks.
+   Fixed colours: a résumé always prints light. One column of real text, so it extracts in reading
+   order. In print, the page boxes carry the footer (name, role, "Page x of y") on every page and
+   the running header from page 2; the template writes their text (pageCss in template.ts). */
+@page {
+  size: a4;
+  margin: 15mm 17mm 16mm;
+
+  @top-left {
+    vertical-align: middle;
+    font:
+      400 8pt/1 Carlito,
+      Calibri,
+      sans-serif;
+    color: #64768f;
+  }
+
+  @bottom-left {
+    vertical-align: middle;
+    font:
+      400 8pt/1 Carlito,
+      Calibri,
+      sans-serif;
+    color: #64768f;
+  }
+
+  @bottom-right {
+    content: 'Page ' counter(page) ' of ' counter(pages);
+    vertical-align: middle;
+    font:
+      400 8pt/1 Carlito,
+      Calibri,
+      sans-serif;
+    color: #64768f;
+  }
+}
+
+/* The first page opens with the name in full; the running header starts on page 2. */
+@page :first {
+  @top-left {
+    content: none;
+  }
+}
+
+:root {
+  --cv-ink: #07203f;
+  --cv-text: #1f2b40;
+  --cv-muted: #4a5a72;
+  --cv-faint: #64768f;
+  --cv-rule: #d3dce9;
+  --cv-accent: #0b4c9e;
+}
+
+html {
+  background: #dde5ef;
+}
+
+body {
+  margin: 0;
+}
+
+.cv-doc {
+  box-sizing: border-box;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 32px auto;
+  padding: 15mm 17mm 16mm;
+  background: #fff;
+  color: var(--cv-text);
+  box-shadow:
+    0 16px 40px -8px rgb(7 32 63 / 18%),
+    0 2px 8px rgb(7 32 63 / 8%);
+  border-top: 2.2mm solid var(--cv-accent);
+  font:
+    400 10pt/1.38 Carlito,
+    Calibri,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+}
+
+.cv-doc p,
+.cv-doc ul,
+.cv-doc h1,
+.cv-doc h2,
+.cv-doc h3,
+.cv-doc dl {
+  margin: 0;
+}
+
+/* Header */
+.cv-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 2mm 8mm;
+  padding-bottom: 3.2mm;
+  border-bottom: 0.75pt solid var(--cv-accent);
+}
+
+.cv-name {
+  font:
+    700 25pt/1.05 Caladea,
+    Cambria,
+    Georgia,
+    serif;
+  letter-spacing: 0.2pt;
+  color: var(--cv-ink);
+}
+
+.cv-role {
+  margin-top: 1.4mm;
+  font:
+    700 10.5pt/1.3 Carlito,
+    Calibri,
+    Arial,
+    sans-serif;
+  letter-spacing: 0.9pt;
+  text-transform: uppercase;
+  color: var(--cv-accent);
+}
+
+.cv-contact {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5mm;
+  font-size: 9.2pt;
+  color: var(--cv-muted);
+}
+
+.cv-contact__line {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cv-contact__line span + span::before {
+  content: '·';
+  margin: 0 2.2mm;
+  color: var(--cv-faint);
+}
+
+.cv-contact a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Sections */
+.cv-sec {
+  margin-top: 4.2mm;
+}
+
+.cv-h {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  margin-bottom: 2.2mm;
+  font:
+    700 10.5pt/1.2 Caladea,
+    Cambria,
+    Georgia,
+    serif;
+  letter-spacing: 0.8pt;
+  text-transform: uppercase;
+  color: var(--cv-accent);
+  break-after: avoid;
+}
+
+.cv-h::after {
+  content: '';
+  flex: 1;
+  height: 0;
+  border-top: 0.5pt solid var(--cv-rule);
+}
+
+.cv-summary {
+  font-size: 10.3pt;
+  line-height: 1.45;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.cv-skills {
+  display: grid;
+  grid-template-columns: 31mm 1fr;
+  gap: 1.1mm 4mm;
+  font-size: 9.6pt;
+}
+
+.cv-skills dt {
+  font-weight: 700;
+  color: var(--cv-ink);
+}
+
+.cv-skills dd {
+  margin: 0;
+}
+
+/* Experience */
+.cv-org {
+  margin-top: 2.8mm;
+  break-inside: avoid;
+}
+
+.cv-org:first-of-type {
+  margin-top: 0;
+}
+
+.cv-org__head,
+.cv-job__head,
+.cv-proj__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4mm;
+}
+
+.cv-org__name {
+  font-weight: 700;
+  font-size: 10.6pt;
+  color: var(--cv-ink);
+}
+
+.cv-org__meta,
+.cv-job__dates,
+.cv-row__dates {
+  font-size: 9pt;
+  color: var(--cv-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.cv-job {
+  margin-top: 1.2mm;
+}
+
+.cv-job__title {
+  font-style: italic;
+  font-weight: 700;
+  color: var(--cv-accent);
+  font-size: 10pt;
+}
+
+.cv-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.9mm;
+}
+
+.cv-list li {
+  position: relative;
+  padding-left: 4mm;
+  margin-top: 0.55mm;
+}
+
+.cv-list li::before {
+  content: '';
+  position: absolute;
+  left: 0.6mm;
+  top: 0.62em;
+  width: 1.3mm;
+  height: 1.3mm;
+  background: var(--cv-accent);
+  transform: rotate(45deg);
+}
+
+.cv-stack {
+  margin-top: 0.7mm;
+  font-size: 8.8pt;
+  color: var(--cv-faint);
+}
+
+.cv-stack b {
+  font-weight: 700;
+  color: var(--cv-muted);
+}
+
+/* Earlier roles, clients and projects */
+.cv-rows {
+  display: grid;
+  gap: 1.2mm;
+}
+
+.cv-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0 4mm;
+  align-items: baseline;
+  break-inside: avoid;
+}
+
+.cv-row__main b {
+  color: var(--cv-ink);
+}
+
+.cv-row__note {
+  grid-column: 1 / -1;
+  font-size: 9.3pt;
+  color: var(--cv-muted);
+}
+
+.cv-clients {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 9.6pt;
+}
+
+.cv-clients span + span::before {
+  content: '·';
+  margin: 0 2.2mm;
+  color: var(--cv-faint);
+}
+
+.cv-proj {
+  break-inside: avoid;
+}
+
+.cv-proj + .cv-proj {
+  margin-top: 1.8mm;
+}
+
+.cv-proj__name {
+  font-weight: 700;
+  color: var(--cv-ink);
+}
+
+.cv-proj__tech {
+  font-size: 8.8pt;
+  color: var(--cv-faint);
+  white-space: nowrap;
+}
+
+/* Closing columns: education, languages, publications */
+.cv-cols {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr 1.3fr;
+  gap: 0 6mm;
+  break-inside: avoid;
+}
+
+.cv-small {
+  font-size: 9.4pt;
+}
+
+.cv-small b {
+  color: var(--cv-ink);
+}
+
+.cv-muted {
+  color: var(--cv-muted);
+}
+
+/* An owner placeholder still to fill: highlighted on screen previews, plain in print. */
+.cv-ph {
+  padding: 0 0.6mm;
+  border-radius: 0.6mm;
+  background: #fbebcf;
+  color: #784708;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* "Experience, continued" (pnpm build:resumes): starts the page an Experience section runs onto. */
+.cv-continued {
+  break-before: page;
+}
+
+@media print {
+  html {
+    background: none;
+  }
+
+  .cv-doc {
+    width: auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    border-top: 0;
+  }
+
+  .cv-ph {
+    padding: 0;
+    background: none;
+    color: inherit;
+    font-weight: inherit;
+  }
+}

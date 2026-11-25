@@ -1,0 +1,34 @@
+<fm-dialog
+  [open]="open()"
+  label="Schedule a call"
+  [description]="description()"
+  size="lg"
+  (closed)="close()"
+>
+  <div class="scheduler-modal-stage">
+    @if (open()) {
+      @if (!loaded()) {
+        <div class="scheduler-modal-loading" role="status">
+          <span aria-hidden="true"><fm-spinner [size]="32" /></span>
+          <span>Loading available times…</span>
+        </div>
+      }
+      @if (frame(); as url) {
+        <iframe
+          class="scheduler-modal-frame"
+          [src]="url"
+          title="Book a call with Odunayo Mohammed on Google Calendar"
+          (load)="loaded.set(true)"
+        ></iframe>
+      }
+    }
+  </div>
+  <div dialogFooter class="scheduler-modal-foot">
+    <span class="scheduler-modal-note"
+      >Times show in your time zone. Google Calendar sends the confirmation.</span
+    >
+    <fm-button variant="tertiary" [href]="fallbackUrl()" [trailingIcon]="external"
+      >Open in a new tab</fm-button
+    >
+  </div>
+</fm-dialog>

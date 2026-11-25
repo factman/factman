@@ -16,7 +16,8 @@
   height: 100%;
 }
 
-.photo-frame img {
+// Only the photo: the overlay (the plate's logo, a note) has images of its own.
+.photo-frame picture img {
   display: block;
   width: 100%;
   height: 100%;
@@ -56,7 +57,7 @@
   border-radius: var(--radius-lg);
 }
 
-.photo-frame.is-note img {
+.photo-frame.is-note picture img {
   position: absolute;
   inset: 0;
   object-position: 70% center;
@@ -94,7 +95,7 @@
     aspect-ratio: auto;
   }
 
-  .photo-frame.is-note img {
+  .photo-frame.is-note picture img {
     position: static;
     aspect-ratio: 4 / 3;
   }

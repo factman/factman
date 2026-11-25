@@ -13,6 +13,7 @@ import { test } from 'node:test';
 
 import {
   APP_SOURCE,
+  appScriptExtras,
   BUILD_VARIANT,
   DIST,
   headerRule,
@@ -45,7 +46,7 @@ const productionToolsRule = headerRule(vercel, TOOLS_SOURCE, { production: true 
 const storybookDir = join(DIST, STORYBOOK_DIR);
 
 test("the app CSP allows exactly the app's inline scripts (run pnpm csp:hashes if not)", () => {
-  assert.equal(scriptSrcOf(appRule), scriptSrc(inlineScriptHashes()));
+  assert.equal(scriptSrcOf(appRule), scriptSrc(inlineScriptHashes(), appScriptExtras));
 });
 
 test('script-src never falls back to unsafe-inline, and the app never allows eval', () => {
@@ -104,3 +105,13 @@ if (BUILD_VARIANT === 'preview') {
     }
   });
 }
+
+// ETE-88: the host serves 404.html for every address with no page, so it must be the prerendered
+// not-found page (tools/build/not-found-page.mjs), never a bare placeholder.
+test('404.html is the prerendered not-found page, never indexed', () => {
+  const page = readFileSync(join(DIST, '404.html'), 'utf8');
+  assert.equal(page, readFileSync(join(DIST, '404', 'index.html'), 'utf8'));
+  assert.match(page, /<h1[^>]*>command not found<\/h1>/);
+  assert.match(page, /<meta name="robots" content="noindex">/);
+  assert.match(page, /<script src="main-[\w-]+\.js"/);
+});

@@ -1,0 +1,106 @@
+// The canvas's NotFoundSection: the text and terminal beside the thinking portrait from 1024px,
+// stacked below (docs/interaction-and-motion.md, splits).
+@use 'ui/layout';
+
+.not-found {
+  @include layout.section;
+
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.not-found-inner {
+  @include layout.container;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--gap-4xl);
+  align-items: center;
+
+  &.has-photo {
+    @media (width >= 1024px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--gap-5xl);
+    }
+  }
+}
+
+.not-found-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-xl);
+}
+
+// The design system's eyebrow (.fm-eyebrow), copied with our own class name (as SectionHeader does).
+.not-found-eyebrow {
+  margin: 0;
+  font: 500 0.75rem/1rem var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-default);
+}
+
+.not-found-title {
+  margin: 0;
+  font: 700 3.5rem/1.15 var(--font-sans);
+  letter-spacing: -0.01em;
+
+  @media (width < 768px) {
+    font: 700 2.5rem/1.15 var(--font-sans);
+  }
+}
+
+.not-found-lead {
+  margin: 0;
+  max-width: 560px;
+  font: 400 1.25rem/1.6 var(--font-sans);
+  color: var(--text-secondary);
+
+  @media (width < 768px) {
+    font: 400 1rem/1.6 var(--font-sans);
+  }
+}
+
+.not-found-terminal {
+  width: 100%;
+}
+
+.not-found-term {
+  min-height: 0;
+
+  p {
+    margin: 0;
+  }
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+}
+
+.not-found-photo {
+  width: min(100%, 440px);
+  margin: 0 auto;
+
+  @media (width < 768px) {
+    width: min(80%, 300px);
+  }
+}
+
+// The canvas's hero portrait: a cut-out that fades out at the bottom.
+.not-found-portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  object-position: center bottom;
+  mask-image: linear-gradient(
+    to bottom,
+    var(--neutral-1000) 0%,
+    var(--neutral-1000) 58%,
+    transparent 92%
+  );
+}

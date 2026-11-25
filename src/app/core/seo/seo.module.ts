@@ -1,23 +1,14 @@
-import { NgModule, inject, provideAppInitializer } from '@angular/core';
-import { Meta } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 import { TitleStrategy } from '@angular/router';
 
-import { SITE } from '../config/site';
+import { SeoService } from './seo.service';
 import { SiteTitleStrategy } from './site-title.strategy';
 
-/** Site-wide meta tags, written into every prerendered page. Previews are `noindex`. */
-export function applySiteMeta(): void {
-  const site = inject(SITE);
-  const meta = inject(Meta);
-  meta.updateTag({ name: 'description', content: site.description });
-  meta.updateTag({ name: 'robots', content: site.robots });
-}
-
-/** Titles and site-wide meta tags. Per-page meta, Open Graph and JSON-LD build on this. */
+/**
+ * Page titles, canonical URLs, description, robots, Open Graph and Twitter tags (ETE-112), written
+ * after every navigation. Previews are `noindex` through `site.robots`; JSON-LD comes with ETE-113.
+ */
 @NgModule({
-  providers: [
-    { provide: TitleStrategy, useClass: SiteTitleStrategy },
-    provideAppInitializer(applySiteMeta),
-  ],
+  providers: [SeoService, { provide: TitleStrategy, useClass: SiteTitleStrategy }],
 })
 export class SeoModule {}

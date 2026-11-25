@@ -1,0 +1,98 @@
+<div class="contact-form">
+  @if (draft(); as d) {
+    <div class="contact-form-ready" role="status" aria-live="polite">
+      <div class="contact-form-thanks">
+        <p class="contact-form-eyebrow">Message ready</p>
+        <p class="contact-form-title">Thanks, {{ firstName() }}. Talk soon!</p>
+        <p class="contact-form-text">I read every message myself and usually reply within a day.</p>
+      </div>
+      <fm-alert tone="success" title="Your message is ready"
+        >Your mail app should open with the message filled in. If it does not, use one of the
+        options below.</fm-alert
+      >
+      <dl class="contact-form-preview">
+        <dt>To</dt>
+        <dd>{{ email() }}</dd>
+        <dt>Subject</dt>
+        <dd>{{ d.subject }}</dd>
+      </dl>
+      <div class="contact-form-actions">
+        <fm-button [href]="d.mailto" [leadingIcon]="icons.mail">Open mail app</fm-button>
+        <fm-button variant="secondary" [href]="d.gmail" [leadingIcon]="icons.gmail"
+          >Open in Gmail</fm-button
+        >
+        <fm-copy-button [value]="copyText()" label="Copy message" variant="tertiary" />
+        <fm-button variant="text" [leadingIcon]="icons.edit" (pressed)="edit()"
+          >Edit message</fm-button
+        >
+      </div>
+    </div>
+  } @else {
+    <form
+      (focusin)="start()"
+      class="contact-form-fields"
+      [formGroup]="form"
+      novalidate
+      aria-labelledby="contact-form-title"
+      (submit)="submit($event)"
+    >
+      <h3 id="contact-form-title" class="contact-form-heading">Send a message</h3>
+      <div class="contact-form-row">
+        <fm-form-field label="Name" [error]="errors().name" [required]="true">
+          <fm-text-input
+            formControlName="name"
+            autocomplete="name"
+            inputId="contact-name"
+            placeholder="Your full name"
+          />
+        </fm-form-field>
+        <fm-form-field label="Email" [error]="errors().email" [required]="true">
+          <fm-text-input
+            formControlName="email"
+            type="email"
+            autocomplete="email"
+            inputId="contact-email"
+            placeholder="you@example.com"
+          />
+        </fm-form-field>
+      </div>
+      <fm-form-field label="Topic or service" [error]="errors().topic" [required]="true">
+        <fm-select
+          formControlName="topic"
+          [options]="options()"
+          inputId="contact-topic"
+          placeholder="Choose a topic"
+        />
+      </fm-form-field>
+      <fm-form-field
+        label="Message"
+        hint="At least 20 characters."
+        [error]="errors().message"
+        [required]="true"
+      >
+        <fm-text-area
+          formControlName="message"
+          [rows]="5"
+          [maxLength]="1200"
+          inputId="contact-message"
+          placeholder="What are you building, and when do you need it?"
+        />
+      </fm-form-field>
+      <div class="contact-form-consent">
+        <fm-checkbox
+          formControlName="consent"
+          inputId="contact-consent"
+          label="You may contact me about this message"
+          description="Nothing is stored or sent from this site; the message goes from your own mail app."
+        />
+        @if (errors().consent; as error) {
+          <p class="contact-form-error" role="alert">{{ error }}</p>
+        }
+      </div>
+      <div class="contact-form-submit">
+        <fm-button type="submit" size="lg" [trailingIcon]="icons.send">Compose email</fm-button>
+        <span class="contact-form-note">Opens your mail app</span>
+      </div>
+    </form>
+  }
+</div>

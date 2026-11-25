@@ -1,0 +1,72 @@
+<div class="site-header-spacer" aria-hidden="true"></div>
+<header #root class="site-header">
+  <div class="site-header-inner">
+    <div class="site-header-bar">
+      <a
+        class="site-header-home"
+        routerLink="/"
+        aria-label="Odunayo Mohammed, home"
+        (click)="goHome($event)"
+      >
+        <fm-logo type="odunayo" [size]="36" [theme]="theme()" />
+      </a>
+
+      <nav class="site-header-nav site-header-desktop" aria-label="Primary">
+        @for (link of links(); track link.id) {
+          <fm-nav-link [href]="link.href" [label]="link.label" [active]="link.active" size="sm" />
+        }
+      </nav>
+
+      <div class="site-header-actions">
+        <span class="site-header-desktop">
+          <fm-button
+            variant="tertiary"
+            size="sm"
+            [leadingIcon]="icons.fileText"
+            ariaHaspopup="dialog"
+            (pressed)="requestResume()"
+            >Résumé</fm-button
+          >
+        </span>
+        <fm-theme-toggle [theme]="theme()" (themeChange)="themeChange.emit($event)" />
+        <span class="site-header-desktop">
+          <fm-button variant="primary" size="sm" href="/services" [trailingIcon]="icons.arrowRight"
+            >Book a service</fm-button
+          >
+        </span>
+        <span #menuButton class="site-header-mobile">
+          <fm-icon-button
+            [icon]="menuIcon()"
+            label="Menu"
+            variant="secondary"
+            size="md"
+            [ariaExpanded]="menuOpen()"
+            [ariaControls]="menuId"
+            (pressed)="toggleMenu()"
+          />
+        </span>
+      </div>
+    </div>
+
+    @if (menuOpen()) {
+      <nav #panel [id]="menuId" class="site-header-menu site-header-mobile" aria-label="Menu">
+        @for (link of links(); track link.id) {
+          <fm-nav-link [href]="link.href" [label]="link.label" [active]="link.active" />
+        }
+        <div class="site-header-menu-actions">
+          <fm-button
+            variant="secondary"
+            size="lg"
+            [leadingIcon]="icons.fileText"
+            ariaHaspopup="dialog"
+            (pressed)="requestResume()"
+            >Résumé</fm-button
+          >
+          <fm-button variant="primary" size="lg" href="/services" [trailingIcon]="icons.arrowRight"
+            >Book a service</fm-button
+          >
+        </div>
+      </nav>
+    }
+  </div>
+</header>

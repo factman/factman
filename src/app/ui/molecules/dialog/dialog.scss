@@ -13,9 +13,27 @@ dialog.dialog:not([open]) {
   display: none;
 }
 
+// Scrolling inside the dialog or over its backdrop stays there: no root overflow lock, so the
+// page scrollbar and scroll position never move (ETE-252, prevent-page-scroll-under-modal-dialog).
+dialog.dialog:modal {
+  overscroll-behavior: contain;
+}
+
 dialog.dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
   background: var(--bg-overlay);
   backdrop-filter: blur(4px);
+}
+
+// Bare: the projected window is the panel, so the modal's own glass, border and width go.
+dialog.dialog.is-bare {
+  // 100% of the viewport the top layer sits in, without the scrollbar (100vw would include it).
+  width: min(1040px, calc(100% - 2 * var(--padding-md)));
+  border: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 // The panel fills the dialog, so a click on the dialog element itself is a click on the backdrop
@@ -35,20 +53,50 @@ dialog.dialog::backdrop {
   display: none;
 }
 
-// Opening: fade, and the panel scales up from 0.98 (docs/interaction-and-motion.md). Closing is
-// instant. Reduced motion is handled by the global rule.
-dialog.dialog[open] {
-  animation: dialog-in var(--duration-base) var(--ease-out);
-}
+// Opening and closing: a fade, and the panel scales from 0.98 only when motion is allowed
+// (docs/interaction-and-motion.md). display and overlay transition so it stays in the top layer
+// while it fades out (ETE-252, animate-to-from-top-layer).
+dialog.dialog {
+  opacity: 0;
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: var(--duration-base);
+  transition-timing-function: var(--ease-out);
+  transition-behavior: allow-discrete;
 
-@keyframes dialog-in {
-  from {
-    opacity: 0;
+  @media (prefers-reduced-motion: no-preference) {
     transform: scale(0.98);
   }
 }
 
-// Scroll lock while a dialog is open.
-:root.dialog-scroll-lock {
-  overflow: hidden;
+dialog.dialog[open] {
+  opacity: 1;
+
+  @starting-style {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transform: none;
+
+    @starting-style {
+      transform: scale(0.98);
+    }
+  }
+}
+
+dialog.dialog::backdrop {
+  transition-property: opacity, display, overlay;
+  transition-duration: var(--duration-base);
+  transition-timing-function: var(--ease-out);
+  transition-behavior: allow-discrete;
+}
+
+dialog.dialog:not([open])::backdrop {
+  opacity: 0;
+}
+
+dialog.dialog[open]::backdrop {
+  @starting-style {
+    opacity: 0;
+  }
 }

@@ -3,14 +3,14 @@ import { expect, test } from '@playwright/test';
 // ETE-43: every route of the site map is prerendered (FR-01), lazy-loaded and titled.
 const pages = [
   ['/', 'Odunayo Mohammed', 'Odunayo Mohammed'],
-  ['/services', 'Services', 'Services · Odunayo Mohammed'],
+  ['/services', 'Senior help for the work that matters most', 'Services · Odunayo Mohammed'],
   ['/services/consultancy', 'Consultancy', 'Consultancy · Odunayo Mohammed'],
   ['/services/devops', 'DevOps', 'DevOps · Odunayo Mohammed'],
-  ['/projects', 'Projects', 'Projects · Odunayo Mohammed'],
+  ['/projects', 'Everything I have built and shipped', 'Projects · Odunayo Mohammed'],
   ['/projects/graphui', 'GraphUI', 'GraphUI · Odunayo Mohammed'],
-  ['/blog', 'Blog', 'Blog · Odunayo Mohammed'],
-  ['/privacy', 'Privacy', 'Privacy · Odunayo Mohammed'],
-  ['/404', 'Page not found', 'Page not found · Odunayo Mohammed'],
+  ['/blog', 'Building software, and the teams behind it', 'Blog · Odunayo Mohammed'],
+  ['/privacy', 'Privacy and cookies', 'Privacy · Odunayo Mohammed'],
+  ['/404', 'command not found', 'Page not found · Odunayo Mohammed'],
 ] as const;
 
 for (const [path, h1, title] of pages) {
@@ -18,7 +18,7 @@ for (const [path, h1, title] of pages) {
     const res = await request.get(path);
     expect(res.status()).toBe(200);
     const html = await res.text();
-    expect(html).toContain(`<h1>${h1}</h1>`);
+    expect(html).toMatch(new RegExp(`<h1[^>]*>${h1}</h1>`));
     expect(html).toContain(`<title>${title}</title>`);
 
     await page.goto(path);
@@ -46,6 +46,22 @@ test('the not-found page is never indexed', async ({ request }) => {
   expect(html).toContain('<meta name="robots" content="noindex">');
 });
 
+// ETE-88 (FR-05): any address with no page, including unknown slugs on the detail routes, gets
+// the prerendered 404.html with a 404 status, keeps its address and shows the missing path.
+for (const path of ['/no-such-page', '/projects/does-not-exist', '/services/does-not-exist']) {
+  test(`${path} shows the not-found page with a 404 status`, async ({ page }) => {
+    const response = await page.goto(path);
+    expect(response?.status()).toBe(404);
+    await expect(page).toHaveURL(new RegExp(`${path}$`));
+    await expect(page).toHaveTitle('Page not found · Odunayo Mohammed');
+    await expect(page.getByRole('heading', { level: 1, name: 'command not found' })).toBeVisible();
+    await expect(page.getByText(`cd ${path}`)).toBeVisible();
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
+    await page.getByRole('link', { name: 'Go home' }).click();
+    await expect(page).toHaveURL(/\/$/);
+  });
+}
+
 test('home sections are anchors, and /#contact scrolls to and focuses its section', async ({
   page,
 }) => {
@@ -61,7 +77,8 @@ test('home sections are anchors, and /#contact scrolls to and focuses its sectio
     'blog',
     'contact',
   ]) {
-    await expect(page.locator(`section#${id}`)).toHaveCount(1);
+    // #resume sits inside the About section (ETE-92), so match any element with the id.
+    await expect(page.locator(`#${id}`)).toHaveCount(1);
   }
   await page.goto('/#contact');
   await expect(page.locator('section#contact')).toBeInViewport();
@@ -71,7 +88,9 @@ test('in-app navigation moves focus to the new page', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'All services' }).click();
   await expect(page).toHaveURL(/\/services$/);
-  await expect(page.getByRole('heading', { level: 1, name: 'Services' })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Senior help for the work that matters most' }),
+  ).toBeVisible();
   await expect(page.locator('main')).toBeFocused();
 
   await page.getByRole('link', { name: 'DevOps' }).click();

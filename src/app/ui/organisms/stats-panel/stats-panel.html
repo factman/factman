@@ -1,0 +1,29 @@
+<div class="stats-panel">
+  <ul class="stats-panel-counters">
+    @for (counter of counters(); track counter.label) {
+      <li>
+        <fm-stat-counter
+          [value]="counter.value"
+          [suffix]="counter.suffix ?? ''"
+          [label]="counter.label"
+          [framed]="true"
+        />
+      </li>
+    }
+  </ul>
+  @if (career().length) {
+    <div class="stats-panel-career">
+      <fm-career-strip [rows]="career()" [ticks]="ticks()" />
+    </div>
+  }
+  @if (contributions(); as c) {
+    <div class="stats-panel-contributions">
+      <fm-contribution-graph
+        [levels]="c.levels"
+        [months]="c.months"
+        [summary]="c.summary"
+        [profileUrl]="c.profileUrl"
+      />
+    </div>
+  }
+</div>

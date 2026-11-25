@@ -1,6 +1,6 @@
 {
   "name": "factman",
-  "version": "0.1.0-beta.3",
+  "version": "0.1.0-beta.4",
   "scripts": {
     "ng": "ng",
     "start": "nx run factman:start",
@@ -34,6 +34,8 @@
     "data:validate": "nx run factman:data:validate",
     "data:types": "nx run factman:data:types",
     "data:docs": "nx run factman:data:docs",
+    "data:hero-code": "nx run factman:data:hero-code",
+    "sync:github": "nx run factman:sync:github",
     "ds:tokens": "nx run factman:ds:tokens",
     "lint:styles": "nx run factman:lint:styles",
     "test:scripts": "nx run factman:test:scripts",
@@ -43,7 +45,10 @@
     "ds:portraits": "nx run factman:ds:portraits",
     "ds:og": "nx run factman:ds:og",
     "ds:icons": "nx run factman:ds:icons",
-    "lint:eslint": "nx run factman:lint:eslint"
+    "lint:eslint": "nx run factman:lint:eslint",
+    "resume:html": "nx run factman:resume:html",
+    "build:resumes": "nx run factman:build:resumes",
+    "resume:check": "nx run factman:resume:check"
   },
   "private": true,
   "packageManager": "pnpm@10.34.9",
@@ -56,6 +61,7 @@
     "@angular/platform-server": "^22.2.0",
     "@angular/router": "^22.2.0",
     "@angular/ssr": "^22.2.6",
+    "@vercel/analytics": "2.0.1",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
@@ -76,6 +82,8 @@
     "@eslint/js": "^10.0.1",
     "@fontsource-variable/jetbrains-mono": "5.3.0",
     "@fontsource-variable/plus-jakarta-sans": "5.3.0",
+    "@fontsource/caladea": "5.3.0",
+    "@fontsource/carlito": "5.3.0",
     "@fontsource/jost": "5.3.0",
     "@playwright/test": "1.65.0",
     "@storybook/addon-a11y": "^10.6.6",
@@ -103,6 +111,8 @@
     "json-schema-to-typescript": "^16.0.0",
     "lint-staged": "^17.6.0",
     "nx": "24.0.5",
+    "pdf-lib": "1.17.1",
+    "pdf-to-img": "7.0.2",
     "playwright": "1.65.0",
     "prettier": "^3.8.1",
     "serve": "14.2.7",

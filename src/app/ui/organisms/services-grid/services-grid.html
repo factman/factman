@@ -1,0 +1,20 @@
+<div class="services-grid">
+  <ul class="services-grid-list">
+    @for (service of shown(); track service.slug) {
+      <li>
+        <fm-service-card
+          [service]="service"
+          [href]="'/services/' + service.slug"
+          [headingLevel]="headingLevel()"
+        />
+      </li>
+    }
+  </ul>
+  @if (ctaLabel(); as label) {
+    <div class="services-grid-cta">
+      <fm-button variant="secondary" size="lg" [href]="ctaHref()" [trailingIcon]="arrow">{{
+        label
+      }}</fm-button>
+    </div>
+  }
+</div>

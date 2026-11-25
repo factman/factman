@@ -10,6 +10,7 @@
         [attr.aria-label]="
           variant() === 'icon' ? item.link.label + (item.web ? ' (opens in a new tab)' : '') : null
         "
+        [fmTrack]="event(item.link.id)"
         (click)="linkClick.emit(item.link)"
       >
         <span class="fm-social__logo"><fm-icon [icon]="item.icon" [size]="20" /></span>

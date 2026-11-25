@@ -1,12 +1,159 @@
-<h1>Odunayo Mohammed</h1>
-<p>Site under construction.</p>
-@for (section of sections; track section.id) {
-  <section fmReveal [id]="section.id" [attr.aria-labelledby]="section.id + '-title'" tabindex="-1">
-    <h2 [id]="section.id + '-title'">{{ section.label }}</h2>
-    @if ('route' in section) {
-      <p>
-        <a [routerLink]="section.route">All {{ section.label.toLowerCase() }}</a>
-      </p>
-    }
-  </section>
-}
+<fm-profile-hero
+  [profile]="profile"
+  [photo]="photo"
+  [socials]="socials"
+  [stats]="stats"
+  [timezone]="timezone"
+  [terminal]="terminalEnabled"
+  (openResume)="openResume($event, 'hero')"
+  (openTerminal)="terminal.show()"
+>
+  <fm-code-editor heroEditor [files]="editorFiles" [glow]="true" [decorative]="true" />
+</fm-profile-hero>
+<fm-client-logo-strip [clients]="clients" />
+<fm-section-layout
+  sectionId="about"
+  index="01"
+  eyebrow="About"
+  [title]="about.title"
+  [description]="about.description"
+>
+  <fm-about-section
+    [story]="profile.about"
+    [photo]="aboutPhoto"
+    [facts]="aboutFacts"
+    [theme]="theme()"
+  >
+    <!-- The résumé block, as #resume inside About (FR-43). -->
+    <div id="resume" class="home-resume" tabindex="-1">
+      <fm-resume-section
+        [resumes]="resumes"
+        (preview)="openResume($event, 'card')"
+        (download)="downloadResume($event, 'card')"
+      />
+    </div>
+  </fm-about-section>
+</fm-section-layout>
+<fm-section-layout
+  sectionId="stack"
+  index="02"
+  eyebrow="Stack"
+  title="The tools I reach for"
+  description="Grouped by area. Years are counted from the year I started using each one, so they never go stale."
+>
+  @defer (on viewport; hydrate on viewport) {
+    <fm-tech-stack [groups]="stack" />
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
+</fm-section-layout>
+<fm-section-layout
+  sectionId="experience"
+  index="03"
+  eyebrow="Experience"
+  title="Where I have worked"
+  description="Current roles first, then everything else from newest to oldest. Open a role to see what I shipped and the stack behind it."
+>
+  @defer (on viewport; hydrate on viewport) {
+    <fm-experience-timeline
+      [entries]="timeline"
+      [glance]="glance"
+      (openResume)="openResume(resumeVariant(), 'glance')"
+    />
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
+</fm-section-layout>
+<fm-section-layout
+  sectionId="services"
+  index="04"
+  eyebrow="Services"
+  title="How I can help"
+  [description]="servicesIntro"
+>
+  @defer (on viewport; hydrate on viewport) {
+    <fm-services-grid [services]="services" ctaLabel="Compare all services" />
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
+</fm-section-layout>
+<fm-section-layout
+  sectionId="projects"
+  index="05"
+  eyebrow="Projects"
+  title="Things I have built"
+  description="Open-source tools, client platforms and side projects. Private work shows the role and stack, and you can ask for a walkthrough."
+>
+  @defer (on viewport; hydrate on viewport) {
+    <fm-project-gallery [projects]="projects" [actions]="projectLinks" (engage)="engage()" />
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
+</fm-section-layout>
+<fm-section-layout
+  sectionId="stats"
+  index="06"
+  eyebrow="Stats"
+  title="By the numbers"
+  description="Every figure here is counted from the same data files as the rest of the site. Nothing is typed in by hand."
+>
+  @defer (on viewport; hydrate on viewport) {
+    <fm-stats-panel
+      [counters]="statsCounters()"
+      [career]="strip.rows"
+      [ticks]="strip.ticks"
+      [contributions]="contributions"
+    />
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
+</fm-section-layout>
+<fm-section-layout
+  sectionId="blog"
+  index="07"
+  eyebrow="Blog"
+  [title]="blogTitle"
+  description="Practical write-ups on fullstack engineering, fintech, cloud and leading teams, drawn from real products and the decisions behind them. New posts publish on Medium."
+>
+  @defer (on viewport; hydrate on viewport) {
+    <fm-blog-feed
+      [posts]="blog.posts()"
+      [status]="blog.status()"
+      [profileUrl]="blog.profileUrl"
+      [limit]="3"
+      location="home"
+      (retry)="blog.retry()"
+    />
+    <div class="home-blog-more">
+      <fm-button variant="secondary" size="lg" href="/blog" [trailingIcon]="blogArrow"
+        >Read the blog</fm-button
+      >
+    </div>
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
+</fm-section-layout>
+<fm-section-layout
+  sectionId="contact"
+  index="08"
+  eyebrow="Contact"
+  title="Let's build something"
+  description="Have a product to build, a team to lead or a system to fix? Tell me about it. The form opens your own mail app; nothing is sent from this site."
+>
+  @defer (on viewport; hydrate on viewport) {
+    <div class="home-contact">
+      <fm-contact-form [email]="contactEmail" [topics]="topics" />
+      <fm-contact-channels [details]="contactDetails" [photo]="contactPhoto" />
+    </div>
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
+</fm-section-layout>
+<fm-resume-preview-modal
+  [open]="resumeOpen()"
+  [resumes]="resumes"
+  [variant]="resumeVariant()"
+  (variantChange)="switchResume($event)"
+  (closed)="resumeOpen.set(false)"
+  (download)="downloadResume($event, 'modal')"
+/>

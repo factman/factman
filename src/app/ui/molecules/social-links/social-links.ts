@@ -7,7 +7,7 @@ import {
   output,
 } from '@angular/core';
 
-import type { Link } from '@shared';
+import { type AnalyticsEvent, type ContactChannel, type Link, Track } from '@shared';
 import {
   Icon,
   type IconDef,
@@ -36,6 +36,19 @@ export const socialIcon = (id: string): IconDef => ICONS[id] ?? iconGlobe;
 /** A link to another site opens in a new tab; `mailto:` and `tel:` don't. */
 const isWeb = (url: string) => /^https?:\/\//.test(url);
 
+const CHANNELS: ReadonlySet<string> = new Set<ContactChannel>([
+  'linkedin',
+  'github',
+  'x',
+  'medium',
+]);
+
+/** contact_click for a social link: its id when it is a known channel, else `website`. */
+export const socialEvent = (id: string): AnalyticsEvent => ({
+  name: 'contact_click',
+  params: { channel: CHANNELS.has(id) ? (id as ContactChannel) : 'website' },
+});
+
 /**
  * The visitor's ways to find Odunayo elsewhere: LinkedIn, GitHub, X … The page passes the links
  * (contact.json). `icon` shows square icon buttons named by their label; `pill` adds the label.
@@ -49,11 +62,12 @@ const isWeb = (url: string) => /^https?:\/\//.test(url);
   // fm-* classes are the design system's shared contract (PRD §6).
   encapsulation: ViewEncapsulation.None,
   styleUrl: './social-links.scss',
-  imports: [Icon],
+  imports: [Icon, Track],
   host: { style: 'display: contents' },
   templateUrl: './social-links.html',
 })
 export class SocialLinks {
+  protected readonly event = socialEvent;
   readonly links = input.required<readonly Pick<Link, 'id' | 'label' | 'url'>[]>();
   readonly variant = input<'icon' | 'pill'>('icon');
   /** Names the list for assistive tech. */

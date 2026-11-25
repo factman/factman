@@ -1,0 +1,54 @@
+<div class="contact-channels">
+  @if (photo(); as image) {
+    <fm-photo-frame [image]="image" variant="note">
+      <fm-availability-badge [status]="details().availability" />
+      <p class="contact-channels-note-title">Got a project in mind?</p>
+      <p class="contact-channels-note-text">
+        Tell me what you are building. I reply to every message, usually
+        {{ details().responseTime }}.
+      </p>
+    </fm-photo-frame>
+  }
+  <fm-contact-method
+    [icon]="icons.mail"
+    label="Email"
+    [value]="details().email"
+    [href]="'mailto:' + details().email"
+    [copy]="true"
+    channel="email"
+  />
+  @if (details().phone; as phone) {
+    <fm-phone-reveal [number]="phone" />
+  }
+  @if (details().whatsapp; as whatsapp) {
+    <fm-contact-method
+      [icon]="icons.whatsapp"
+      label="WhatsApp"
+      value="Chat on WhatsApp"
+      [href]="whatsapp"
+      channel="whatsapp"
+    />
+  }
+  <div class="contact-channels-pair">
+    @if (details().company; as company) {
+      <fm-contact-method
+        [icon]="icons.globe"
+        label="Company"
+        [value]="host(company.url)"
+        [href]="company.url"
+        channel="website"
+      />
+    }
+    <fm-contact-method
+      [icon]="icons.pin"
+      label="Location"
+      [value]="details().city + ', ' + details().country"
+    />
+  </div>
+  <fm-social-links [links]="details().socials" variant="pill" />
+  <p class="contact-channels-reply">
+    <fm-icon [icon]="icons.clock" [size]="16" />I usually reply {{ details().responseTime }} ({{
+      details().timezone
+    }})
+  </p>
+</div>

@@ -81,6 +81,10 @@
       "$ref": "#/$defs/photo",
       "description": "Contact section photo (ContactPhoto)."
     },
+    "notFoundPhoto": {
+      "$ref": "#/$defs/photo",
+      "description": "Not-found page photo (NotFoundSection), the thinking pose."
+    },
     "careerStart": {
       "type": "string",
       "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
@@ -222,7 +226,7 @@
         "src": {
           "type": "string",
           "pattern": "^profile/[a-z0-9-]+\\.(webp|jpe?g|png|avif)$",
-          "description": "Under src/assets (DS-17: must exist)."
+          "description": "Under src/assets (DS-17: it and its AVIF and WebP exports from pnpm ds:portraits must exist)."
         },
         "alt": {
           "type": "string",

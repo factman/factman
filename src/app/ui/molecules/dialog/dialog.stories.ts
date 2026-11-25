@@ -40,7 +40,9 @@ export const OpenAndClose: StoryObj<Dialog> = {
     // Escape fires the dialog's native cancel event, which a simulated key press doesn't (the unit
     // spec covers cancel); the close button takes the same path.
     await userEvent.click(body.getByRole('button', { name: 'Close' }));
-    await expect(dialog).not.toBeVisible();
+    // It fades out too (display and overlay transition: ETE-252), then the browser puts focus
+    // back on the button that opened it.
+    await waitFor(() => expect(dialog).not.toBeVisible());
     await expect(canvas.getByRole('button', { name: 'Preview résumé' })).toHaveFocus();
   },
 };

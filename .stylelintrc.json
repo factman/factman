@@ -58,8 +58,38 @@
       }
     ],
     "declaration-property-value-allowed-list": {
-      "transition-property": ["/^(none|(opacity|transform)(\\s*,\\s*(opacity|transform))*)$/"],
+      "transition-property": [
+        "/^(none|(opacity|transform|display|overlay)(\\s*,\\s*(opacity|transform|display|overlay))*)$/"
+      ],
       "transition": ["/^(none|(opacity|transform)\\s[^,]+(,\\s*(opacity|transform)\\s[^,]+)*)$/"]
+    },
+    "declaration-property-unit-disallowed-list": [
+      {
+        "font-size": ["px"],
+        "line-height": ["px"]
+      },
+      {
+        "message": "Type sizes are rem, so text follows the visitor's text size (ETE-263): px / 16."
+      }
+    ],
+    "declaration-property-value-disallowed-list": [
+      {
+        "font": ["/\\b\\d*\\.?\\d+px\\b/"]
+      },
+      {
+        "message": "Type sizes are rem, so text follows the visitor's text size (ETE-263): px / 16."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["scripts/resume/**/*.css"],
+      "rules": {
+        "scale-unlimited/declaration-strict-value": null,
+        "color-no-hex": null,
+        "function-disallowed-list": null,
+        "selector-class-pattern": null
+      }
     }
-  }
+  ]
 }

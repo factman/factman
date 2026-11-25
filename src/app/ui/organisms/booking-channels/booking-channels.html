@@ -1,0 +1,35 @@
+<section
+  class="booking-channels"
+  [id]="sectionId()"
+  [attr.aria-labelledby]="sectionId() + '-title'"
+>
+  <div class="booking-channels-container">
+    <div class="booking-channels-panel" [class.has-photo]="!!photo()">
+      @if (photo(); as p) {
+        <div class="booking-channels-photo">
+          <fm-image
+            [src]="p.src"
+            alt=""
+            [width]="p.width"
+            [height]="p.height"
+            [sources]="p.sources ?? {}"
+            [sizes]="p.sizes"
+            imgClass="booking-channels-picture"
+          />
+        </div>
+      }
+      <div class="booking-channels-head">
+        <p class="booking-channels-eyebrow">{{ eyebrow() }}</p>
+        <h2 class="booking-channels-title" [id]="sectionId() + '-title'">{{ title() }}</h2>
+        @if (text(); as text) {
+          <p class="booking-channels-text">{{ text }}</p>
+        }
+      </div>
+      <ul class="booking-channels-cards">
+        @for (channel of channels(); track channel.label) {
+          <li><fm-channel-card [channel]="channel" (schedule)="schedule.emit()" /></li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>

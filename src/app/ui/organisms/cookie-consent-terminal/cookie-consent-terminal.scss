@@ -1,0 +1,138 @@
+// The consent banner, as in the canvas's CookieConsent (site.css `.consent-dock`): a dark terminal
+// window docked bottom left, 440px wide; on phones a sheet along the bottom with only its top
+// corners rounded. Fixed in the top layer, so the page never shifts (ETE-119).
+
+.consent-dock {
+  width: 440px;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--terminal-fg);
+  font-family: var(--font-mono);
+  outline: none;
+}
+
+.consent-dock[hidden] {
+  display: none;
+}
+
+.consent-dock.consent-floating {
+  position: fixed;
+  inset: auto auto var(--gap-xl) var(--gap-xl);
+  max-width: calc(100vw - 2 * var(--gap-xl));
+  max-height: calc(100dvh - 2 * var(--gap-xl));
+  overflow: auto;
+  overscroll-behavior: contain;
+
+  @media (width < 768px) {
+    inset: auto 0 0;
+    width: auto;
+    max-width: none;
+  }
+}
+
+@media (width < 768px) {
+  .consent-dock.consent-floating .fm-window {
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+}
+
+// Rises 16px and fades in (fm-site-rise); appears at once with reduced motion.
+.consent-dock.consent-floating:is(:popover-open, :not([popover], [hidden])) {
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      opacity var(--duration-slow) var(--ease-out),
+      transform var(--duration-slow) var(--ease-out);
+
+    @starting-style {
+      opacity: 0;
+      transform: translateY(var(--gap-md));
+    }
+  }
+}
+
+.consent-dock .consent-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  min-height: 0;
+}
+
+.consent-dock p {
+  margin: 0;
+}
+
+// The message and choices fade in once the command is typed (page-fade).
+.consent-dock .consent-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: consent-fade var(--duration-base) var(--ease-out);
+  }
+}
+
+@keyframes consent-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.consent-dock .consent-choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-xs);
+}
+
+// fm-button's host is display: contents, so the inner button is the flex item.
+.consent-dock .consent-customize .fm-btn {
+  align-self: flex-start;
+  color: var(--terminal-path);
+}
+
+.consent-dock .consent-categories {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-2xs);
+}
+
+.consent-dock .consent-box {
+  color: var(--terminal-prompt);
+}
+
+// A terminal line that is a switch: no button chrome, a focus ring for the keyboard.
+.consent-dock .consent-switch {
+  all: unset;
+  border-radius: var(--radius-xs);
+  color: var(--terminal-fg);
+  cursor: pointer;
+  font: 400 0.8125rem/1.3125rem var(--font-mono);
+  white-space: pre-wrap;
+}
+
+.consent-dock .consent-switch:focus-visible {
+  outline: var(--border-width-lg) solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.consent-dock .consent-custom-actions {
+  display: flex;
+  gap: var(--gap-xs);
+}
+
+.consent-dock .consent-back .fm-btn {
+  color: var(--terminal-fg);
+}
+
+.consent-dock .consent-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+}
+
+.consent-dock .consent-policy {
+  color: var(--terminal-path);
+}

@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 
 import { NgTemplateOutlet } from '@angular/common';
+import { type AnalyticsEvent, Track } from '@shared';
 
 import { Icon, type IconDef } from '@ui/atoms';
 
@@ -20,6 +21,8 @@ export interface Channel {
   href?: string;
   /** The card opens the scheduler instead of following a link. */
   schedule?: boolean;
+  /** The analytics event a click sends (the page sets it, e.g. `service_enquiry`). */
+  track?: AnalyticsEvent;
 }
 
 /**
@@ -33,7 +36,7 @@ export interface Channel {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   styleUrl: './channel-card.scss',
-  imports: [Icon, NgTemplateOutlet],
+  imports: [Icon, NgTemplateOutlet, Track],
   host: { style: 'display: contents' },
   templateUrl: './channel-card.html',
 })

@@ -14,10 +14,10 @@
 .fm-stepper--h .fm-step__line { position: absolute; left: calc(50% + 24px); right: calc(-50% + 24px); top: 50%; height: 2px; margin-top: -1px; border-radius: 1px; background: var(--border-default); }
 .fm-step__line.is-done { background: var(--bg-inverse); }
 .fm-step__text { display: flex; flex-direction: column; gap: 2px; }
-.fm-step__title { font-size: 14px; line-height: 18px; font-weight: 600; color: var(--text-tertiary); }
+.fm-step__title { font-size: 0.875rem; line-height: 1.125rem; font-weight: 600; color: var(--text-tertiary); }
 .fm-step--current .fm-step__title, .fm-step--completed .fm-step__title { color: var(--text-primary); }
 .fm-step--error .fm-step__title { color: var(--text-danger); }
-.fm-step__desc { font-size: 12px; line-height: 15px; color: var(--text-tertiary); }
+.fm-step__desc { font-size: 0.75rem; line-height: 0.9375rem; color: var(--text-tertiary); }
 .fm-stepper--v { display: flex; flex-direction: column; }
 .fm-stepper--v .fm-step { gap: var(--gap-sm); }
 .fm-stepper--v .fm-step__rail { flex-direction: column; align-self: stretch; justify-content: flex-start; }
@@ -26,8 +26,8 @@
 .fm-stepper--v .fm-step__text { padding: 6px 0 var(--padding-lg); }
 .fm-stepper--compact { display: flex; flex-direction: column; gap: 10px; max-width: 360px; }
 .fm-stepper__chead { display: flex; justify-content: space-between; align-items: baseline; }
-.fm-stepper__ctitle { font-size: 16px; font-weight: 600; color: var(--text-primary); }
-.fm-stepper__ccount { font-size: 12px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
+.fm-stepper__ctitle { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+.fm-stepper__ccount { font-size: 0.75rem; color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
 .fm-stepper--dots { display: inline-flex; gap: var(--gap-xs); align-items: center; }
 .fm-stepper--dots i { width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--bg-track-hover); transition: width 200ms ease-out; }
 .fm-stepper--dots i.is-done { background: var(--accent-default); opacity: .5; }

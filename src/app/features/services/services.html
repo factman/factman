@@ -1,0 +1,39 @@
+<fm-page-hero
+  [crumbs]="crumbs"
+  eyebrow="Services"
+  title="Senior help for the work that matters most"
+  [lead]="lead"
+  [actions]="heroActions"
+  [media]="photo"
+  (schedule)="openScheduler()"
+/>
+<section id="catalogue" class="services-catalogue" aria-labelledby="catalogue-title">
+  <h2 id="catalogue-title" class="fm-sr">All services</h2>
+  <fm-services-grid [services]="services" [headingLevel]="3" />
+</section>
+<fm-section-layout
+  sectionId="process"
+  eyebrow="Process"
+  title="How an engagement runs"
+  description="The same four steps for every service, so you always know what happens next."
+>
+  <fm-process-section [steps]="steps" label="How an engagement runs" />
+</fm-section-layout>
+<fm-booking-channels
+  [channels]="channels"
+  [photo]="bookingPhoto"
+  text="Every service is quoted after a short call. Book a slot on my calendar, or open a service page and the email and WhatsApp messages name that service for you."
+  (schedule)="openScheduler()"
+/>
+<fm-faq-section
+  [items]="faq"
+  description="Something else on your mind? Ask on the call, or send it by email."
+/>
+@if (booking?.schedulerEmbedUrl; as embed) {
+  <fm-scheduler-modal
+    [open]="schedulerOpen()"
+    [src]="embed"
+    [fallbackUrl]="booking!.schedulerUrl"
+    (closed)="schedulerOpen.set(false)"
+  />
+}

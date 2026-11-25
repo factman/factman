@@ -6,7 +6,7 @@ import {
   input,
 } from '@angular/core';
 
-import type { BlogPost } from '@shared';
+import { type BlogPost, Track } from '@shared';
 import { Icon, Image, Tag, iconArrowUpRight } from '@ui/atoms';
 
 /** "12 Mar 2025": dates in UK day-month order, the same on the server and in the browser. */
@@ -29,7 +29,7 @@ export const postDate = (iso: string): string =>
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   styleUrl: './blog-post-card.scss',
-  imports: [Icon, Image, Tag],
+  imports: [Icon, Image, Tag, Track],
   host: { style: 'display: contents' },
   templateUrl: './blog-post-card.html',
 })
@@ -37,6 +37,8 @@ export class BlogPostCard {
   readonly post = input.required<BlogPost>();
   readonly layout = input<'card' | 'row'>('card');
   readonly headingLevel = input<2 | 3>(3);
+  /** Where the card is, for the blog_click event. */
+  readonly location = input<'home' | 'blog'>('blog');
 
   protected readonly external = iconArrowUpRight;
   protected readonly date = computed(() => postDate(this.post().publishedAt));

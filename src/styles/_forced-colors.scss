@@ -1,0 +1,38 @@
+// Forced colours (Windows High Contrast, ETE-260). In forced-colors mode the browser replaces our
+// colours and drops box-shadows and background images, so anything drawn only with those
+// disappears: several design-system focus rings are box-shadows, some inputs set outline: 0, and
+// selected tabs, chips and pressed buttons are marked by fill or shadow. Here they get a real
+// outline, border or underline in system colours, which forced colors keeps. Normal mode is
+// unchanged. :root raises specificity over the DS stylesheets that components load later.
+
+/* stylelint-disable selector-class-pattern -- these are the vendored DS's own BEM classes */
+/* stylelint-disable scale-unlimited/declaration-strict-value -- system colours, not design tokens */
+@media (forced-colors: active) {
+  // Every focused control shows a ring. <main> takes focus after navigation and shows none.
+  :root :focus-visible:not(main) {
+    outline: var(--border-width-md) solid Highlight !important;
+    outline-offset: 2px;
+  }
+
+  // The selected editor tab and the current underline nav item: a bar drawn with a border.
+  :root .fm-etab.is-active::after,
+  :root .fm-navlink--underline.is-active::after {
+    background: none;
+    border-block-start: var(--border-width-md) solid Highlight;
+  }
+
+  // Selected chips, pressed toggles and the current pill nav item: the selection colours.
+  :root .fm-chip.is-selected,
+  :root .fm-btn.is-pressed,
+  :root .fm-navlink--pill.is-active {
+    border-color: Highlight;
+    color: HighlightText;
+    background: Highlight;
+  }
+
+  // The current plain nav item, marked only by text colour: underline it.
+  :root .fm-navlink.is-active {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}

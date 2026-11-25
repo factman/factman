@@ -1,9 +1,10 @@
 import { createEnvironmentInjector, EnvironmentInjector, importProvidersFrom } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { SCROLL_SPY_ENABLED } from '@shared';
 
-import { ANALYTICS } from './analytics/analytics.module';
+import { ANALYTICS } from './analytics/analytics.token';
 import { SITE } from './config/site';
-import { CONSENT } from './consent/consent.module';
+import { CONSENT } from './consent/consent.token';
 import { CoreModule } from './core.module';
 import siteJson from '../../data/site.json';
 
@@ -19,8 +20,15 @@ describe('CoreModule', () => {
     expect(site.name).toBe('Odunayo Mohammed');
     // site.json's own value: noindex until launch (ETE-235), then index.
     expect(site.robots).toBe(siteJson.robots);
-    expect(TestBed.inject(ANALYTICS).enabled).toBe(true);
+    expect(site.analytics.enabled).toBe(true);
+    // Tests run in dev mode, where analytics stays off (ng serve never loads GTM).
+    expect(TestBed.inject(ANALYTICS).enabled).toBe(false);
     expect(TestBed.inject(CONSENT).cookie).toBe('fm_consent');
+  });
+
+  it('turns scroll-spy on or off from the site.json flag (FR-37, P1)', () => {
+    setup('production');
+    expect(TestBed.inject(SCROLL_SPY_ENABLED)).toBe(siteJson.features.scrollSpy);
   });
 
   it('applies the preview overrides: noindex, analytics off', () => {

@@ -1,0 +1,124 @@
+// The canvas's StackSection body and the design system's TechStack (.fm-stack in
+// portfolio-sections.css), copied with our own class names so the section doesn't load that file.
+
+.tech-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.tech-stack-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+}
+
+.tech-stack-panel {
+  box-sizing: border-box;
+  padding: var(--padding-3xl);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  background: var(--glass-fill-strong);
+  box-shadow: var(--shadow-glass-panel);
+  backdrop-filter: blur(var(--blur-glass-panel));
+
+  @media (width < 768px) {
+    padding: var(--padding-xl) var(--padding-lg);
+  }
+}
+
+.tech-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--gap-xl);
+}
+
+.tech-stack-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+// The accent for small text on the glass panel: --accent-default alone is under 4.5:1 there in the
+// dark theme, so mix in some text colour (lighter in dark, darker in light).
+.tech-stack {
+  --tech-stack-accent: color-mix(in srgb, var(--accent-default) 60%, var(--text-primary));
+}
+
+// The design system's eyebrow, as the area's heading.
+.tech-stack-title {
+  margin: 0;
+  font: 500 0.75rem/1rem var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tech-stack-accent);
+}
+
+.tech-stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tech-stack-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-2xs);
+  box-sizing: border-box;
+  height: 34px;
+  padding: 0 var(--padding-sm);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-sm);
+  background: var(--glass-fill);
+  font: 500 0.8125rem/1 var(--font-sans);
+  color: var(--text-primary);
+
+  // The border colour changes at once; only the lift animates (docs/interaction-and-motion.md).
+  transition: transform var(--duration-fast) var(--ease-out);
+
+  &:hover {
+    border-color: var(--accent-default);
+    transform: translateY(-1px);
+  }
+
+  .fm-icon {
+    color: var(--icon-secondary);
+  }
+}
+
+// Featured technologies: the accent on the icon and a stronger border.
+.tech-stack-item.is-featured {
+  border-color: var(--glass-stroke-strong);
+
+  .fm-icon {
+    color: var(--accent-default);
+  }
+}
+
+.tech-stack-years {
+  font: 500 0.6875rem/1 var(--font-mono);
+  color: var(--tech-stack-accent);
+}
+
+// The canvas's .mono-meta.
+.tech-stack-summary {
+  margin: 0;
+  font: 500 0.75rem/1rem var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-stack-item {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}

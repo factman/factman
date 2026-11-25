@@ -5,9 +5,9 @@ How things move and respond on the site, for the developers building the [compon
 ## Rules that apply everywhere
 
 1. **Durations and curves are tokens.** No raw `ms` or `cubic-bezier()` in our styles (stylelint enforces it).
-2. **Only `opacity` and `transform` animate** in our own styles (stylelint enforces it, ETE-26). Colour, background, border, shadow and filter changes on hover are instant. The vendored design-system CSS under `src/styles/factman/` keeps its own transitions.
+2. **Only `opacity` and `transform` animate** in our own styles (stylelint enforces it, ETE-26). A `transition-property` list may also name `display` and `overlay` (with `transition-behavior: allow-discrete`): they animate nothing themselves, they keep a dialog or popover in the top layer while it fades out (ETE-252). Colour, background, border, shadow and filter changes on hover are instant. The vendored design-system CSS under `src/styles/factman/` keeps its own transitions.
 3. **Nothing important waits for motion.** The prerendered HTML shows every element in its final state: text, counters at their final value, the first typed role. Motion is added in the browser only.
-4. **Reduced motion is a first-class state, not a fallback.** When `prefers-reduced-motion: reduce` matches, the global rule in `src/styles.scss` finishes every animation and transition at once and turns off smooth scrolling. Components also check `prefersReducedMotion()` from `@shared` and skip the work (see the table below).
+4. **Reduced motion is a first-class state, not a fallback.** There is no global reset (ETE-259): each stylesheet that moves something handles `prefers-reduced-motion` itself, preferably by opting in to the movement with `@media (prefers-reduced-motion: no-preference)`, and colour and opacity changes keep their timing. `pnpm test:scripts` fails when a stylesheet with keyframes, an animation or a transform transition has no reduced-motion rule. The vendored design-system CSS is covered by `src/styles/_reduced-motion.scss`. Components also check `prefersReducedMotion()` from `@shared` and skip the work (see the table below).
 5. **Every infinite animation sets `animation: none` under reduced motion.** The global rule runs an animation once at near-zero length, which leaves it on its last keyframe; for a loop that is usually the wrong frame (the marquee would sit half-scrolled, the caret would be invisible).
 
 ## Tokens
@@ -57,8 +57,9 @@ How things move and respond on the site, for the developers building the [compon
 - **Where:** `ClientLogoStrip`.
 - **Motion:** one endless right-to-left loop of two copies of the logo group (`translateX(0)` to `-50%`), linear. Length: `--duration-reveal` × 80 (48 s) at 768px and up, × 60 (36 s) below.
 - **Edges:** a gradient mask fades the strip out over the outer 8% on each side.
-- **Control:** pauses on hover and while anything inside has focus. The cloned group is `aria-hidden` and its links are `tabindex="-1"`, so each client is announced and focused once.
-- **Reduced motion:** no animation and no mask; the clone is removed and the logos wrap and centre as a static grid.
+- **Control:** pauses on hover, while anything inside has focus, and with its pause button (WCAG 2.2.2: hover alone leaves touch and keyboard users without a way to stop it).
+- **Copies:** a short list repeats until a group has at least 16 logos, so the loop never shows a gap; the second group makes it seamless. The repeats and the second group are `aria-hidden` and `inert`, so each client is announced and focused once.
+- **Reduced motion:** no animation, no mask and no pause button; the copies are removed and the logos wrap and centre as a static grid.
 
 ### Modals (résumé preview, scheduler)
 
@@ -92,6 +93,12 @@ All of these are instant (or static) under reduced motion. Endless ones stop: th
 ### Smooth scrolling
 
 In-page anchors (`#about`, `#contact` …) scroll smoothly; targets clear the sticky navbar with `scroll-margin-top: var(--navbar-height)`. Reduced motion jumps instead.
+
+How it works (FR-37, ETE-87):
+
+- **Scrolling:** `AnchorScroller` replaces the router's `ViewportScroller`. It scrolls anchors with `scrollIntoView`, so `scroll-margin-top` applies; Angular's own scroller ignores it. A new page and back or forward stay instant, as the router asks. There is no global `scroll-behavior: smooth`, which would animate those too.
+- **Deep links:** a link opened from outside (`/#contact`) jumps straight to its section once the page has rendered. The router doesn't scroll while a prerendered page hydrates.
+- **Scroll-spy:** behind the `features.scrollSpy` flag (P1, off in v1.0), the header marks the section in view (`aria-current="location"`). The URL hash follows it with `replaceState`: no jump, no history entry. Scrolling above the first section clears the hash.
 
 ## Reduced motion, per component
 

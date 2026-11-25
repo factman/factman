@@ -1,0 +1,78 @@
+// The canvas's ServiceDetailBody: the service's blocks beside the sticky BookingCard (8:4 from
+// 1024px, the card under the blocks below).
+@use 'ui/layout';
+
+.service-detail-body {
+  @include layout.split-aside;
+
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.service-detail-body-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-4xl);
+  min-width: 0;
+}
+
+.service-detail-body-aside {
+  @include layout.sticky-aside;
+}
+
+.service-detail-body-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+
+  h2 {
+    margin: 0;
+    font: 700 1.5rem/1.4 var(--font-sans);
+  }
+}
+
+// The canvas's .prose.
+.service-detail-body-prose {
+  margin: 0;
+  font: 400 1rem/1.75 var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.service-detail-body-tiles {
+  display: grid;
+  gap: var(--gap-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &.is-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  &.is-three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    @media (width < 1440px) and (width >= 1024px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (width < 768px) {
+    &.is-two,
+    &.is-three {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  // InfoTiles: full height in their row, and a value that wraps instead of truncating.
+  .fm-cmethod {
+    box-sizing: border-box;
+    height: 100%;
+    padding: var(--padding-lg);
+  }
+
+  .fm-cmethod .cmethod-value {
+    font: 600 0.875rem/1.5 var(--font-sans);
+    white-space: normal;
+  }
+}

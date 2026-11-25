@@ -1,0 +1,100 @@
+// The canvas's ProjectCaseStudy: the screenshots in a row of three, then the project's blocks
+// beside the sticky EngageCard (8:4 from 1024px), with "All projects" and "Next project" under them.
+@use 'ui/layout';
+
+.project-case-study {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-3xl);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.project-case-study-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap-xl);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (width < 1024px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (width < 768px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.project-case-study-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  background: var(--bg-surface);
+}
+
+.project-case-study-split {
+  @include layout.split-aside;
+}
+
+.project-case-study-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-4xl);
+  min-width: 0;
+}
+
+.project-case-study-aside {
+  @include layout.sticky-aside;
+}
+
+.project-case-study-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+
+  // The design system's eyebrow, as each block's heading (as in the canvas).
+  h2 {
+    margin: 0;
+    font: 500 0.75rem/1rem var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-default);
+  }
+}
+
+// The canvas's .prose.
+.project-case-study-prose {
+  margin: 0;
+  font: 400 1rem/1.75 var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.project-case-study-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-case-study-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+}
+
+.project-case-study-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+  padding-top: var(--padding-xl);
+  border-top: var(--border-width-sm) solid var(--glass-stroke);
+}

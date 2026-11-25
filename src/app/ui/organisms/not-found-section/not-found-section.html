@@ -1,0 +1,53 @@
+<section class="not-found" aria-labelledby="not-found-title">
+  <div class="not-found-inner" [class.has-photo]="!!photo()">
+    <div class="not-found-text">
+      <p class="not-found-eyebrow">Error 404</p>
+      <h1 id="not-found-title" class="not-found-title">command not found</h1>
+      <p class="not-found-lead">
+        The page you asked for does not exist, or it moved. Try one of these instead.
+      </p>
+
+      <div class="not-found-terminal">
+        <fm-window-frame variant="terminal" title="bash · 404">
+          <div class="fm-term__body not-found-term">
+            <p class="fm-term__line">
+              <span class="fm-term__user">odunayo</span><span class="fm-term__sep">:</span
+              ><span class="fm-term__path">~</span><span class="fm-term__sep">$ </span
+              ><span class="fm-term__cmd">cd {{ path() }}</span>
+            </p>
+            <p class="fm-term__line fm-term__out is-error">
+              bash: cd: {{ path() }}: No such file or directory
+            </p>
+            <p class="fm-term__line">
+              <span class="fm-term__user">odunayo</span><span class="fm-term__sep">:</span
+              ><span class="fm-term__path">~</span><span class="fm-term__sep">$ </span
+              ><span class="fm-term__cmd">ls ~</span>
+            </p>
+            <p class="fm-term__line fm-term__out is-info">{{ sections().join('  ') }}</p>
+          </div>
+        </fm-window-frame>
+      </div>
+
+      <nav class="not-found-actions" aria-label="Pages to try">
+        <fm-button variant="primary" size="md" href="/" [leadingIcon]="home">Go home</fm-button>
+        @for (page of suggestions(); track page.href) {
+          <fm-button variant="secondary" size="md" [href]="page.href">{{ page.label }}</fm-button>
+        }
+      </nav>
+    </div>
+
+    @if (photo(); as p) {
+      <figure class="not-found-photo">
+        <fm-image
+          [src]="p.src"
+          [alt]="p.alt"
+          [width]="p.width"
+          [height]="p.height"
+          [sources]="p.sources ?? {}"
+          sizes="(min-width: 1024px) 440px, min(100vw, 440px)"
+          imgClass="not-found-portrait"
+        />
+      </figure>
+    }
+  </div>
+</section>

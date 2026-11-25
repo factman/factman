@@ -6,9 +6,12 @@ import {
   output,
 } from '@angular/core';
 
+import type { TooltipPlacement } from './tooltip';
+
 /**
  * The floating box a `[fmTooltip]` shows. Not used directly: the directive creates it on the page
- * body and positions it next to its element.
+ * body. Where the browser has popovers it is a `popover="hint"` (or `manual`) in the top layer, so
+ * it shows above an open dialog; elsewhere it is shown and hidden with `hidden`.
  * @level atom
  */
 @Component({
@@ -21,7 +24,10 @@ import {
     role: 'tooltip',
     class: 'tooltip-panel',
     '[id]': 'panelId()',
-    '[hidden]': '!open()',
+    '[attr.popover]': 'popover()',
+    '[hidden]': '!popover() && !open()',
+    '[class.is-anchored]': 'anchored()',
+    '[attr.data-placement]': 'placement()',
     '(mouseenter)': 'hovered.emit(true)',
     '(mouseleave)': 'hovered.emit(false)',
   },
@@ -33,6 +39,11 @@ export class TooltipPanel {
   readonly panelId = input.required<string>();
   readonly text = input.required<string>();
   readonly open = input(false);
+  /** The popover mode the browser supports (`hint`, else `manual`); null without popovers. */
+  readonly popover = input<'hint' | 'manual' | null>(null);
+  /** Placed by CSS anchor positioning (the directive sets `position-anchor`). */
+  readonly anchored = input(false);
+  readonly placement = input<TooltipPlacement>('top');
   /** The pointer moved onto or off the tooltip, which keeps it open (WCAG 1.4.13). */
   readonly hovered = output<boolean>();
 }

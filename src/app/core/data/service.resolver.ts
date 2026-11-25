@@ -1,5 +1,6 @@
 import { inject } from '@angular/core';
 import { RedirectCommand, type ResolveFn, Router } from '@angular/router';
+import type { PageSeo } from '@core/seo';
 import type { Service } from '@shared';
 
 import { ServicesRepository } from './services.repository';
@@ -22,3 +23,9 @@ export const serviceResolver: ResolveFn<Service> = (route) => {
 /** Page title for /services/:slug: the service's title (an unknown slug is redirected anyway). */
 export const serviceTitleResolver: ResolveFn<string> = (route) =>
   inject(ServicesRepository).bySlug(route.paramMap.get('slug') ?? '')?.title ?? 'Page not found';
+
+/** Search and link-preview tags for /services/:slug, from the service (ETE-112). */
+export const serviceSeoResolver: ResolveFn<PageSeo | undefined> = (route) => {
+  const service = inject(ServicesRepository).bySlug(route.paramMap.get('slug') ?? '');
+  return service && { description: service.summary, type: 'article' };
+};

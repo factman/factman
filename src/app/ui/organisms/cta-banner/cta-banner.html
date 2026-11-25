@@ -1,0 +1,39 @@
+<div class="cta-banner" [class.has-photo]="!!photo()">
+  <div class="cta-banner-copy">
+    <div class="cta-banner-text">
+      <div class="cta-banner-title" role="heading" [attr.aria-level]="headingLevel()">
+        {{ title() }}
+      </div>
+      @if (text(); as text) {
+        <p>{{ text }}</p>
+      }
+    </div>
+    @if (actions().length) {
+      <div class="cta-banner-actions">
+        @for (action of actions(); track action.label; let i = $index) {
+          <fm-button
+            size="lg"
+            [variant]="action.variant ?? (i === 0 ? 'primary' : 'secondary')"
+            [href]="action.href"
+            [leadingIcon]="action.leadingIcon"
+            [trailingIcon]="action.trailingIcon"
+            >{{ action.label }}</fm-button
+          >
+        }
+      </div>
+    }
+  </div>
+  @if (photo(); as p) {
+    <div class="cta-banner-photo">
+      <fm-image
+        [src]="p.src"
+        alt=""
+        [width]="p.width"
+        [height]="p.height"
+        [sources]="p.sources ?? {}"
+        sizes="224px"
+        imgClass="cta-banner-picture"
+      />
+    </div>
+  }
+</div>

@@ -1,0 +1,57 @@
+name: Sync GitHub contributions
+
+# FR-33 (ETE-106): once a week, read the public contribution calendar into
+# src/app/data/generated/github-contributions.ts and open a pull request into dev.
+# It never commits to dev or main directly; the PR runs CI like any other.
+on:
+  schedule:
+    - cron: '0 6 * * 1' # Mondays, 06:00 UTC
+  workflow_dispatch:
+
+concurrency:
+  group: sync-github
+  cancel-in-progress: true
+
+permissions:
+  contents: write # push the sync branch
+  pull-requests: write # open the pull request
+
+jobs:
+  sync:
+    name: Sync and open a pull request
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: dev
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Read the contribution calendar
+        run: pnpm sync:github
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NX_NO_CLOUD: true
+      - name: Open a pull request when the snapshot changed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          file=src/app/data/generated/github-contributions.ts
+          if git diff --quiet -- "$file"; then
+            echo "No change in the contribution calendar."
+            exit 0
+          fi
+          branch="chore/sync-github-$(date -u +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add "$file"
+          git commit -m "chore(data): sync GitHub contributions $(date -u +%Y-%m-%d)"
+          git push --force-with-lease origin "$branch"
+          gh pr create --base dev --head "$branch" \
+            --title "chore(data): sync GitHub contributions $(date -u +%Y-%m-%d)" \
+            --body "The weekly contribution calendar snapshot (FR-33), written by \`pnpm sync:github\`. Merge when CI is green."

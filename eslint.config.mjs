@@ -21,6 +21,7 @@ export default defineConfig([
       'test-results/',
       'tools/eslint/fixtures/',
       'src/app/shared/models/generated/',
+      'src/app/data/generated/',
     ],
   },
   {

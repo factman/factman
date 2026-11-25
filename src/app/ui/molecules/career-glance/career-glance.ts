@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ViewEncapsulation,
+  input,
+  output,
+} from '@angular/core';
 
 import { Button, iconFileText } from '@ui/atoms';
 
@@ -20,7 +26,8 @@ export interface GlanceStat {
 
 /**
  * The Experience section's side panel: current roles, a few numbers that count up once (years,
- * organisations, roles) and a link to the résumé. The page computes roles and stats from
+ * organisations, roles) and "Get the résumé", which emits `openResume` so the page opens its résumé
+ * preview (the hero's Résumé button does the same). The page computes roles and stats from
  * experience.json; nothing here is typed in by hand.
  * @level molecule
  */
@@ -36,8 +43,8 @@ export interface GlanceStat {
 export class CareerGlance {
   readonly roles = input.required<readonly GlanceRole[]>();
   readonly stats = input.required<readonly GlanceStat[]>();
-  /** Where "Get the résumé" goes, e.g. `/resume` or `#resume`. */
-  readonly resumeHref = input('/resume');
+  /** "Get the résumé": the page opens its résumé preview. */
+  readonly openResume = output<void>();
 
   protected readonly fileText = iconFileText;
 }

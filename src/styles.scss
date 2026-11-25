@@ -4,6 +4,9 @@
  *   2. src/styles/factman/components.css  fm-* component classes (the design system's bundle.css)
  * Use tokens only: stylelint rejects raw colours, sizes and spacing (see docs/design-tokens.md).
  */
+@use 'reduced-motion';
+@use 'forced-colors';
+
 html {
   background: var(--bg-canvas);
 }
@@ -62,19 +65,56 @@ section[id] {
 }
 
 /*
- * Reduced motion (ETE-26): when the visitor asks for less motion, every animation and transition
- * finishes at once (reveals appear, hovers snap) and smooth scrolling is off. Components also check
- * prefersReducedMotion() to skip work: counters show their final value, typing shows the first role in full.
+ * Reduced motion (ETE-26, ETE-259). There is no global reset: each component opts in to its
+ * movement with @media (prefers-reduced-motion: no-preference), or turns it off under `reduce`,
+ * and colour and opacity changes keep their timing (docs/interaction-and-motion.md). Components
+ * also check prefersReducedMotion() to skip work: counters show their final value, typing shows
+ * the first role in full. The design system's vendored CSS can't be edited, so its moving rules
+ * are handled in styles/_reduced-motion.scss (loaded at the top of this file).
  */
-@media (prefers-reduced-motion: reduce) {
-  /* stylelint-disable scale-unlimited/declaration-strict-value -- near-zero, not a design duration */
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+
+/*
+ * Reveal on scroll, scroll-driven (ETE-269): where the browser has view timelines, the reveal
+ * directive adds .fm-reveal-scroll to an element below the fold, and it fades and lifts in as it
+ * enters the viewport, driven by scrolling on the compositor (no observer or script). Only with
+ * motion allowed; the directive adds nothing under reduced motion.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .fm-reveal-scroll {
+      animation: fm-reveal-scroll linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
   }
-  /* stylelint-enable scale-unlimited/declaration-strict-value */
+}
+
+@keyframes fm-reveal-scroll {
+  from {
+    opacity: 0;
+    transform: translateY(var(--gap-md));
+  }
+}
+
+/*
+ * Text wrapping (ETE-264): headings balance their lines, so a two-line title doesn't leave one
+ * word alone on the second line; body copy avoids a lone last word (pretty). Browsers without
+ * text-wrap wrap as before.
+ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+[role='heading'] {
+  text-wrap: balance;
+}
+
+p,
+li,
+dd,
+figcaption,
+blockquote {
+  text-wrap: pretty;
 }

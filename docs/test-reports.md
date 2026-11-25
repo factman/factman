@@ -13,8 +13,13 @@ are the site's 404 page.
 Where to find them:
 
 - **`dev`:** `https://factman.vercel.app/coverage` and `https://factman.vercel.app/playwright`.
-- **A pull request:** the `Preview deployment` job links the deployment (the "View deployment"
-  button on the pull request, and the job summary).
+- **A pull request:** the `Preview deployment` job comments on the pull request with the preview
+  and report links, the result of every CI job and the coverage totals (ETE-240). It keeps one
+  comment and updates it on every push. The job summary and the "View deployment" button link the
+  deployment too.
+
+The comment is public, so `tools/reports/preview-comment.mjs` puts only that in it: never tokens,
+secrets, or the Vercel team and project IDs. `pnpm test:reports` checks it.
 
 Previews sit behind Vercel Authentication: you sign in with an account on the `eteam-apps` team.
 The reports hold source code, test names, file paths and failure screenshots of the site, so keep
@@ -31,6 +36,15 @@ The unit tests (`ng test`) and the story tests (Vitest browser mode) each measur
 `tools/reports/merge-coverage.mjs` combines them. The two runners build the sources differently,
 so the same file comes back with different statement maps; the merge works by source line: code
 counts as covered when either run covered code starting on that line.
+
+It writes the HTML report twice. `coverage/index.html` is the standard report, for opening from
+disk. `coverage/deploy/` is the copy that previews serve at `/coverage` (ETE-239). Vercel serves the
+site with clean URLs and no trailing slash, so a folder's page is at `/coverage/app` and a file's at
+`/coverage/app/app.ts`, and the standard report's relative links (`base.css`, `../index.html`)
+would resolve one folder too high. The deploy copy links every page and asset by its absolute clean
+URL instead. An Angular template's page is `<name>.page.html` (`/coverage/app/app.html.page`),
+because `app.html.html` would lose both extensions. `pnpm test:reports` checks that every link in it
+resolves, and the reports e2e opens a folder and a source file on the preview build.
 
 **Playwright** (`/playwright`): one row per scenario and project (`chromium`, `firefox`,
 `webkit`, `pixel`, `iphone`, plus `production`, the production-build checks). Filter by passed,

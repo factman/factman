@@ -1,0 +1,47 @@
+// The canvas's PrivacyPolicySection: the policy's blocks beside the sticky consent card (8:4 from
+// 1024px, the card under the blocks below).
+@use 'ui/layout';
+
+.privacy-policy {
+  @include layout.split-aside;
+
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.privacy-policy-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-3xl);
+  min-width: 0;
+}
+
+.privacy-policy-aside {
+  @include layout.sticky-aside;
+}
+
+.privacy-policy-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+
+  h2 {
+    margin: 0;
+    font: 700 1.5rem/1.4 var(--font-sans);
+  }
+
+  // The canvas's .prose.
+  p {
+    margin: 0;
+    font: 400 1rem/1.75 var(--font-sans);
+    color: var(--text-secondary);
+  }
+
+  a {
+    color: var(--accent-default);
+  }
+}
+
+.privacy-policy-table {
+  overflow-x: auto;
+}

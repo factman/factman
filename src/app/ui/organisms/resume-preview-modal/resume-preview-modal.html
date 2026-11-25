@@ -1,0 +1,99 @@
+@if (current(); as r) {
+  <fm-dialog
+    [bare]="true"
+    [open]="open()"
+    [label]="r.title + ' résumé preview'"
+    (closed)="closed.emit()"
+  >
+    <div dialogBare class="resume-modal">
+      <fm-window-frame [title]="r.fileName" [closable]="true" (closed)="closed.emit()">
+        <div class="fm-window__tabs resume-modal-tabs" role="tablist" aria-label="Résumé variants">
+          @for (tab of resumes(); track tab.slug) {
+            <button
+              type="button"
+              role="tab"
+              class="fm-etab"
+              [id]="tabPrefix + '-' + tab.slug"
+              [class.is-active]="tab.slug === r.slug"
+              [attr.aria-selected]="tab.slug === r.slug"
+              [tabIndex]="tab.slug === r.slug ? 0 : -1"
+              (click)="pick(tab.slug)"
+              (keydown)="arrow($event)"
+            >
+              <fm-icon [icon]="icons.file" [size]="14" />{{ tab.title }}
+            </button>
+          }
+        </div>
+        <div
+          class="resume-modal-body"
+          role="tabpanel"
+          tabindex="0"
+          [id]="panelId"
+          [attr.aria-labelledby]="tabPrefix + '-' + r.slug"
+        >
+          @if (!loaded()) {
+            <div class="resume-modal-skeleton" aria-hidden="true">
+              <fm-skeleton width="60%" height="28px" />
+              <fm-skeleton width="40%" />
+              <fm-skeleton shape="rect" height="120px" />
+              <fm-skeleton shape="rect" height="220px" />
+            </div>
+          }
+          @if (image(); as src) {
+            <img
+              class="resume-modal-page"
+              [class.is-loading]="!loaded()"
+              [src]="src"
+              [alt]="'Page ' + page() + ' of ' + pageCount() + ' of the ' + r.title + ' résumé'"
+              width="1189"
+              height="1683"
+              decoding="async"
+              (load)="loaded.set(true)"
+            />
+          }
+        </div>
+        <div class="resume-modal-foot">
+          <div class="resume-modal-pager">
+            <fm-button
+              variant="tertiary"
+              size="sm"
+              [iconOnly]="true"
+              [leadingIcon]="icons.prev"
+              ariaLabel="Previous page"
+              [disabled]="page() === 1"
+              (pressed)="go(-1)"
+            />
+            <span class="resume-modal-meta" aria-live="polite"
+              >Page {{ page() }} of {{ pageCount() }}</span
+            >
+            <fm-button
+              variant="tertiary"
+              size="sm"
+              [iconOnly]="true"
+              [leadingIcon]="icons.next"
+              ariaLabel="Next page"
+              [disabled]="page() === pageCount()"
+              (pressed)="go(1)"
+            />
+          </div>
+          <span class="resume-modal-meta is-faint"
+            >A4 · {{ r.pages }} pages · {{ r.size }} · Updated {{ r.updated }}</span
+          >
+          <div class="resume-modal-actions">
+            <fm-button
+              variant="secondary"
+              [href]="r.file"
+              [newTab]="true"
+              [fmTrack]="{ name: 'resume_open_pdf', params: { resume_id: r.slug } }"
+              [leadingIcon]="icons.external"
+              >Open PDF in new tab</fm-button
+            >
+            <fm-button [leadingIcon]="icons.download" (pressed)="download.emit(r.slug)"
+              >Download</fm-button
+            >
+          </div>
+        </div>
+      </fm-window-frame>
+    </div>
+  </fm-dialog>
+}

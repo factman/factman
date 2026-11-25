@@ -1,0 +1,109 @@
+// The canvas's contact form on its glass panel, and the "message ready" state.
+
+.contact-form {
+  box-sizing: border-box;
+  padding: var(--padding-3xl);
+  border: var(--border-width-sm) solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  background: var(--glass-fill-strong);
+  box-shadow: var(--shadow-glass-panel);
+  backdrop-filter: blur(var(--blur-glass-panel));
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+
+  @media (width < 768px) {
+    padding: var(--padding-lg);
+  }
+}
+
+.contact-form-fields,
+.contact-form-ready {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+}
+
+.contact-form-heading {
+  margin: 0;
+  font: 600 1.25rem/1.5 var(--font-sans);
+}
+
+.contact-form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-md);
+
+  @media (width < 768px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.contact-form-consent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-2xs);
+}
+
+.contact-form-error {
+  margin: 0;
+  font: 400 0.8125rem/1.25rem var(--font-sans);
+  color: var(--text-danger);
+}
+
+.contact-form-submit,
+.contact-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+// The canvas's .mono-meta.
+.contact-form-note {
+  font: 500 0.75rem/1rem var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+.contact-form-thanks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-2xs);
+
+  p {
+    margin: 0;
+  }
+}
+
+.contact-form-eyebrow {
+  font: 500 0.75rem/1rem var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-default);
+}
+
+.contact-form-title {
+  font: 700 1.5rem/1.3 var(--font-sans);
+}
+
+.contact-form-text {
+  font: 400 1rem/1.75 var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.contact-form-preview {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--gap-2xs) var(--gap-md);
+  margin: 0;
+  padding: var(--padding-md);
+  border-radius: var(--radius-md);
+  background: var(--code-bg);
+  font: 400 0.8125rem/1.25rem var(--font-mono);
+  color: var(--code-fg);
+
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+}

@@ -1,0 +1,74 @@
+<section id="top" class="profile-hero" aria-labelledby="profile-hero-title">
+  <div class="profile-hero-grid">
+    <div class="profile-hero-copy">
+      <fm-availability-badge [status]="badge()" [label]="profile().availability.message" />
+      <div class="profile-hero-intro">
+        <p class="profile-hero-eyebrow">Hello, I'm</p>
+        <h1 id="profile-hero-title" class="profile-hero-title">{{ profile().name }}</h1>
+        <p class="profile-hero-roles"><fm-typewriter [words]="profile().roles" prefix=">" /></p>
+      </div>
+      <p class="profile-hero-lead">{{ profile().summary }}</p>
+      <ul class="profile-hero-meta">
+        <li><fm-icon [icon]="icons.pin" [size]="16" />{{ place() }}</li>
+        <li><fm-icon [icon]="icons.briefcase" [size]="16" />{{ years() }}+ years experience</li>
+        @if (timezone(); as tz) {
+          <li><fm-icon [icon]="icons.clock" [size]="16" />{{ tz }}</li>
+        }
+      </ul>
+      <div class="profile-hero-actions">
+        <fm-button size="lg" [href]="servicesHref()" [trailingIcon]="icons.arrowRight"
+          >Book a service</fm-button
+        >
+        <fm-button
+          variant="secondary"
+          size="lg"
+          [href]="projectsHref()"
+          [leadingIcon]="icons.layout"
+          >View projects</fm-button
+        >
+        <fm-button
+          variant="tertiary"
+          size="lg"
+          [leadingIcon]="icons.download"
+          ariaHaspopup="dialog"
+          (pressed)="openResume.emit('fullstack')"
+          >Résumé</fm-button
+        >
+        @if (terminal()) {
+          <fm-button
+            variant="tertiary"
+            size="lg"
+            [leadingIcon]="icons.terminal"
+            ariaHaspopup="dialog"
+            (pressed)="openTerminal.emit()"
+            >Terminal</fm-button
+          >
+        }
+      </div>
+      <fm-social-links [links]="socials()" />
+      <div class="profile-hero-stats">
+        <fm-stat-counter [value]="years()" suffix="+" label="Years building software" />
+        <fm-stat-counter [value]="stats().organizations" label="Organizations" />
+        <fm-stat-counter [value]="stats().technologies" label="Technologies" />
+      </div>
+    </div>
+
+    <div class="profile-hero-media">
+      @if (photo(); as p) {
+        <figure class="profile-hero-photo">
+          <fm-image
+            [src]="p.src"
+            [alt]="p.alt"
+            [width]="p.width"
+            [height]="p.height"
+            [sources]="p.sources"
+            sizes="(min-width: 1024px) 440px, (min-width: 768px) 360px, min(80vw, 300px)"
+            [priority]="true"
+            imgClass="profile-hero-portrait"
+          />
+        </figure>
+      }
+      <div class="profile-hero-editor"><ng-content select="[heroEditor]" /></div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+<figure class="contribution-graph" [attr.aria-labelledby]="captionId">
+  <figcaption class="contribution-graph-caption">
+    <span class="contribution-graph-title" [id]="captionId">{{ caption() }}</span>
+    <span class="contribution-graph-desc">{{ summary() }}</span>
+  </figcaption>
+  <div class="contribution-graph-scroll">
+    <svg
+      class="contribution-graph-svg"
+      [attr.viewBox]="viewBox()"
+      aria-hidden="true"
+      focusable="false"
+    >
+      @for (m of labels(); track m.week) {
+        <text class="contribution-graph-month" [attr.x]="m.x" y="10">{{ m.label }}</text>
+      }
+      @for (s of squares(); track s.key) {
+        <rect
+          [attr.class]="'contribution-graph-day is-level-' + s.level"
+          [attr.x]="s.x"
+          [attr.y]="s.y"
+          [attr.width]="cell"
+          [attr.height]="cell"
+          rx="2"
+        />
+      }
+    </svg>
+  </div>
+  <div class="contribution-graph-foot">
+    @if (profileUrl(); as href) {
+      <a class="contribution-graph-link" [href]="href" target="_blank" rel="noopener noreferrer"
+        >{{ profileLabel() }}<fm-icon [icon]="external" [size]="14" /><span class="fm-sr">
+          (opens in a new tab)</span
+        ></a
+      >
+    }
+    <span class="contribution-graph-legend" aria-hidden="true">
+      Less
+      @for (level of legend; track level) {
+        <span [class]="'contribution-graph-key is-level-' + level"></span>
+      }
+      More
+    </span>
+  </div>
+</figure>

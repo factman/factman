@@ -5,17 +5,53 @@
   margin: 0;
 }
 
+.fm-toast[hidden] {
+  display: none;
+}
+
 .fm-toast .toast-close:focus-visible {
   outline: var(--border-width-lg) solid var(--border-focus);
   outline-offset: 2px;
 }
 
-// The timer bar shrinks with transform (only opacity and transform animate); it pauses with the toast.
+// Floating: a manual popover in the top layer, bottom right (bottom centre on small screens).
+// The UA popover box is cleared so only the DS toast shows (ETE-253).
+.fm-toast.toast-floating {
+  position: fixed;
+  inset: auto var(--padding-lg) var(--padding-lg) auto;
+  margin: 0;
+  padding: 0;
+
+  @media (width < 640px) {
+    inset-inline: var(--padding-md);
+    width: auto;
+  }
+}
+
+.fm-toast.toast-floating[popover] {
+  border: 0;
+}
+
+.fm-toast.toast-floating:popover-open {
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform var(--duration-base) var(--ease-out);
+
+    @starting-style {
+      transform: translateY(var(--gap-sm));
+    }
+  }
+}
+
+// The timer bar shrinks with transform (only opacity and transform animate); it pauses with the
+// toast. Without motion the bar stays full: the close button and the pause still work.
 .fm-toast .toast-timer {
   transform-origin: left;
-  animation-name: toast-timer;
-  animation-timing-function: linear;
-  animation-fill-mode: forwards;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation-name: toast-timer;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
 }
 
 .fm-toast .toast-timer.is-paused {

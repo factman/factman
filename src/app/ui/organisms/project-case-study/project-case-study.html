@@ -1,0 +1,81 @@
+<div class="project-case-study">
+  @if (gallery().length) {
+    <ul class="project-case-study-gallery" aria-label="Screenshots">
+      @for (shot of gallery(); track shot.src) {
+        <li>
+          <fm-image
+            [src]="shot.src"
+            [alt]="shot.alt"
+            [width]="1280"
+            [height]="720"
+            sizes="(min-width: 1024px) 380px, 100vw"
+            imgClass="project-case-study-shot"
+          />
+        </li>
+      }
+    </ul>
+  }
+  <div class="project-case-study-split">
+    <div class="project-case-study-main">
+      @if (project().role; as role) {
+        <section class="project-case-study-block" aria-labelledby="project-role">
+          <h2 id="project-role">My role</h2>
+          <p class="project-case-study-prose">{{ role }}</p>
+        </section>
+      }
+      @if (stack().length) {
+        <section class="project-case-study-block" aria-labelledby="project-stack">
+          <h2 id="project-stack">Stack</h2>
+          <ul class="project-case-study-stack">
+            @for (name of stack(); track name) {
+              <li><fm-skill-chip [label]="name" /></li>
+            }
+          </ul>
+        </section>
+      }
+      @if (project().outcome; as outcome) {
+        <section class="project-case-study-block" aria-labelledby="project-outcome">
+          <h2 id="project-outcome">Outcome</h2>
+          <p class="project-case-study-prose">{{ outcome }}</p>
+        </section>
+      }
+      @if (links().length) {
+        <section class="project-case-study-block" aria-labelledby="project-links">
+          <h2 id="project-links">Links</h2>
+          <div class="project-case-study-links">
+            @for (link of links(); track link.href; let i = $index) {
+              <fm-button
+                [variant]="i === 0 ? 'primary' : 'secondary'"
+                [href]="link.href"
+                [trailingIcon]="link.icon"
+                [fmTrack]="{
+                  name: 'project_link_click',
+                  params: { project_id: project().id, link_type: link.type },
+                }"
+                >{{ link.label }}</fm-button
+              >
+            }
+          </div>
+        </section>
+      }
+      <nav class="project-case-study-nav" aria-label="More projects">
+        <fm-button variant="tertiary" href="/projects" [leadingIcon]="icons.back"
+          >All projects</fm-button
+        >
+        @if (next(); as next) {
+          <fm-button variant="tertiary" [href]="next.href" [trailingIcon]="icons.next"
+            >Next project<span class="fm-sr">: {{ next.title }}</span></fm-button
+          >
+        }
+      </nav>
+    </div>
+    <div class="project-case-study-aside">
+      <fm-engage-card
+        [project]="project()"
+        [facts]="facts()"
+        [similarHref]="similarHref()"
+        (requestAccess)="requestAccess.emit()"
+      />
+    </div>
+  </div>
+</div>

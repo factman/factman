@@ -199,9 +199,11 @@ export function buildResumeViewModel(
 
   // Companies and clients: clients.json minus the employers already listed, clients first.
   const employers = new Set(experience.map((o) => o.id));
-  const clientNames = [...clients]
+  const clientNames = clients
     .filter((c) => !employers.has(c.slug))
-    .sort((a, b) => Number(a.type !== 'client') - Number(b.type !== 'client') || a.order - b.order)
+    .toSorted(
+      (a, b) => Number(a.type !== 'client') - Number(b.type !== 'client') || a.order - b.order,
+    )
     .map((c) => c.name);
 
   const projectById = new Map(projects.map((p) => [p.id, p]));

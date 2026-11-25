@@ -64,8 +64,13 @@
   flex: none;
   gap: var(--gap-2xs);
   align-items: center;
-  font: 500 13px/1 var(--font-sans);
+  font: 500 0.8125rem/1 var(--font-sans);
   color: var(--accent-default);
+}
+
+// In the dark theme --accent-default is under 4.5:1 on the card at 13px; mix in text colour.
+:root[data-theme='dark'] .post-card-read {
+  color: color-mix(in srgb, var(--accent-default) 60%, var(--text-primary));
 }
 
 // The compact list layout: a small cover on the left.

@@ -84,7 +84,8 @@ describe('UI-01 Atoms', () => {
         },
       );
       const button = screen.getByRole('button', { name: /Send/ });
-      expect(button).toHaveProperty('disabled', true);
+      // Disabled is a real disabled button; loading stays enabled so focus stays put (ETE-250).
+      expect(button).toHaveProperty('disabled', 'disabled' in state);
       await userEvent.click(button);
       expect(pressed).not.toHaveBeenCalled();
       if ('loading' in state) expect(button.getAttribute('aria-busy')).toBe('true');
@@ -129,15 +130,15 @@ describe('UI-01 Atoms', () => {
   });
 
   describe('Switch', () => {
-    it('toggles with Space and reports aria-checked', async () => {
+    it('toggles with Space and reports its checked state', async () => {
       await render(Switch, { inputs: { label: 'Analytics cookies' } });
       const sw = screen.getByRole('switch', { name: 'Analytics cookies' });
       await userEvent.tab();
       expect(sw).toBe(document.activeElement);
       await userEvent.keyboard(' ');
-      expect(sw.getAttribute('aria-checked')).toBe('true');
+      expect((sw as HTMLInputElement).checked).toBe(true);
       await userEvent.keyboard(' ');
-      expect(sw.getAttribute('aria-checked')).toBe('false');
+      expect((sw as HTMLInputElement).checked).toBe(false);
     });
   });
 

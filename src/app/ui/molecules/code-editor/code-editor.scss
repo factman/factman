@@ -1,0 +1,41 @@
+// The design system's CodeEditor (DS:CodeEditor): the code, tab and status-bar styles come with
+// WindowFrame (portfolio-code-terminal-ui.css). Phones get the code alone, wrapped: no line
+// numbers, no status bar, no sideways scrolling.
+.code-editor .fm-code {
+  margin: 0;
+}
+
+// The DS's status bar uses --code-gutter, too faint for 11px text: use the code text colour, as
+// WindowFrame does for its title and tabs.
+.code-editor .code-editor-status {
+  color: var(--code-fg);
+
+  > span {
+    white-space: nowrap;
+  }
+}
+
+// The highlighted line's tint takes the light theme's string green just under 4.5:1; mix in a
+// little of the text colour there so it stays readable in both themes.
+.code-editor-line.is-hl .tok-string {
+  color: color-mix(in srgb, var(--syntax-string) 80%, var(--code-fg));
+}
+
+@media (width < 768px) {
+  .code-editor .code-editor-num,
+  .code-editor .code-editor-status {
+    display: none;
+  }
+
+  // Wrapped lines continue two characters in (a hanging indent), so each line still reads as one.
+  .code-editor .code-editor-line {
+    padding-left: calc(var(--padding-md) + 2ch);
+    text-indent: -2ch;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .code-editor .fm-code code {
+    min-width: 0;
+  }
+}

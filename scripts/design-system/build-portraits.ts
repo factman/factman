@@ -1,6 +1,7 @@
 /**
  * `pnpm ds:portraits` (ETE-198): responsive exports of the profile photos for `srcset` (ETE-91).
- * Sources are the photos named in src/data/profile.json (`photo`, `aboutPhoto`, `contactPhoto`),
+ * Sources are the photos named in src/data/profile.json (`photo`, `aboutPhoto`, `contactPhoto`,
+ * `notFoundPhoto`),
  * the approved canvas images. Each is exported at half, three-quarters and full width, as AVIF and
  * WebP, next to the source: `odunayo-hero.webp` → `odunayo-hero-360.avif`, `odunayo-hero-360.webp`, …
  * Never enlarged: the full width is the source's own width.
@@ -15,7 +16,7 @@ import { readImageSize } from '../data/image-size';
 
 export const PROFILE_FILE = 'src/data/profile.json';
 export const ASSETS_DIR = 'src/assets';
-export const PHOTO_KEYS = ['photo', 'aboutPhoto', 'contactPhoto'] as const;
+export const PHOTO_KEYS = ['photo', 'aboutPhoto', 'contactPhoto', 'notFoundPhoto'] as const;
 export const FORMATS = ['avif', 'webp'] as const;
 /** Fractions of the source width to export; 1 is the source width itself. */
 export const STEPS = [0.5, 0.75, 1] as const;

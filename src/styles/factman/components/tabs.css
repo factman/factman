@@ -7,9 +7,9 @@
 .fm-tabs--v { flex-direction: column; border-bottom: 0; }
 .fm-tabs--line.fm-tabs--v { border-left: var(--border-width-sm) solid var(--border-subtle); }
 .fm-tabs--soft { display: inline-flex; padding: 4px; border-radius: var(--radius-md); background: var(--glass-fill-subtle); border: var(--border-width-sm) solid var(--glass-stroke); align-self: flex-start; }
-.fm-tab { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: var(--gap-xs); height: 40px; padding: 0 var(--padding-md); border: 0; background: transparent; color: var(--text-secondary); font: 500 14px/20px var(--font-sans); white-space: nowrap; cursor: pointer; transition: color 150ms ease-out, background-color 150ms ease-out; }
-.fm-tabs--sm .fm-tab { height: 32px; padding: 0 var(--padding-sm); font-size: 12px; gap: 6px; }
-.fm-tabs--lg .fm-tab { height: 48px; padding: 0 var(--padding-lg); font-size: 16px; line-height: 24px; }
+.fm-tab { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: var(--gap-xs); height: 40px; padding: 0 var(--padding-md); border: 0; background: transparent; color: var(--text-secondary); font: 500 0.875rem/1.25rem var(--font-sans); white-space: nowrap; cursor: pointer; transition: color 150ms ease-out, background-color 150ms ease-out; }
+.fm-tabs--sm .fm-tab { height: 32px; padding: 0 var(--padding-sm); font-size: 0.75rem; gap: 6px; }
+.fm-tabs--lg .fm-tab { height: 48px; padding: 0 var(--padding-lg); font-size: 1rem; line-height: 1.5rem; }
 .fm-tab:hover { color: var(--text-primary); }
 .fm-tab:focus-visible { outline: var(--border-width-lg) solid var(--border-focus); outline-offset: -2px; border-radius: var(--radius-sm); }
 .fm-tab:disabled { color: var(--text-disabled); cursor: not-allowed; }
@@ -21,4 +21,4 @@
 .fm-tabs--soft.fm-tabs--sm .fm-tab { border-radius: var(--radius-sm); }
 .fm-tabs--soft .fm-tab:hover { background: var(--glass-fill); }
 .fm-tabs--soft .fm-tab.is-selected { background: var(--glass-fill-elevated); border-color: var(--glass-stroke); box-shadow: var(--shadow-glass-chip); }
-.fm-tabs__panel { font-size: 14px; line-height: 22px; color: var(--text-secondary); }
+.fm-tabs__panel { font-size: 0.875rem; line-height: 1.375rem; color: var(--text-secondary); }

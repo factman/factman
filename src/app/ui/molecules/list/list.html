@@ -9,13 +9,17 @@
     }
   </span>
   @if (item.value) {
-    <span class="fm-list__value">{{ item.value }}</span>
+    <span class="fm-list__value list-value">{{ item.value }}</span>
   }
   @if (item.href) {
     <span class="fm-list__chev"><fm-icon [icon]="chevron" [size]="16" /></span>
   }
 </ng-template>
-<ul class="fm-list list" [class.fm-list--inset]="variant() === 'inset'">
+<ul
+  class="fm-list list"
+  [class.fm-list--inset]="variant() === 'inset'"
+  [class.list-inset]="variant() === 'inset'"
+>
   @for (item of items(); track $index) {
     @if (item.href) {
       <li class="fm-list__item is-interactive list-row">

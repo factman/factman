@@ -72,11 +72,37 @@ test('the catch-all rule sets no CSP or framing header, so the app and Storybook
 
 test('CSP blocks inline and third-party scripts and framing', () => {
   const csp = value(APP, 'Content-Security-Policy');
-  // Own scripts, plus inline scripts allowed one by one by hash (pnpm csp:hashes); never unsafe-inline.
-  assert.match(csp, /script-src 'self'( 'sha256-[A-Za-z0-9+/]+=*')*;/);
+  // Own scripts, Google Tag Manager (loaded only after consent, ETE-120), plus inline scripts allowed
+  // one by one by hash (pnpm csp:hashes); never unsafe-inline.
+  assert.match(
+    csp,
+    /script-src 'self' https:\/\/www\.googletagmanager\.com( 'sha256-[A-Za-z0-9+/]+=*')*;/,
+  );
   assert.doesNotMatch(csp, /script-src[^;]*unsafe-(inline|eval)/);
   assert.match(csp, /frame-ancestors 'none'/);
   assert.match(csp, /object-src 'none'/);
+});
+
+test("CSP enforces Trusted Types, with only Angular's, JSON-LD, feed, Google tag and Vercel insights policies (ETE-267, ETE-270, ETE-120, ETE-271)", () => {
+  const csp = value(APP, 'Content-Security-Policy');
+  assert.equal(directive(csp, 'require-trusted-types-for'), "require-trusted-types-for 'script'");
+  // fm-gtm sets GTM's script URL; goog#html is the policy Google's gtm.js and gtag.js create for
+  // the scripts they add themselves; fm-vercel-insights sets /_vercel/insights/script.js.
+  assert.equal(
+    directive(csp, 'trusted-types'),
+    'trusted-types angular angular#bundler fm-json-ld fm-feed-html fm-gtm goog#html fm-vercel-insights',
+  );
+  assert.doesNotMatch(csp, /'allow-duplicates'/);
+});
+
+test('CSP lets GA4 send its hits through GTM; Vercel Web Analytics stays same-origin (ETE-120, ETE-271)', () => {
+  const csp = value(APP, 'Content-Security-Policy');
+  const google = 'https://*.google-analytics.com https://*.googletagmanager.com';
+  assert.equal(
+    directive(csp, 'connect-src'),
+    "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com",
+  );
+  assert.ok(directive(csp, 'img-src').endsWith(google));
 });
 
 test('CSP lets only the Google Calendar scheduler load in a frame (ETE-214)', () => {
@@ -147,11 +173,11 @@ test('the blog feed path rewrites to the Medium feed in site.json (ETE-32)', () 
 
 test('the CSP lets blog covers load from Medium, and only images', () => {
   const csp = value(APP, 'Content-Security-Policy');
-  assert.equal(
+  assert.match(
     directive(csp, 'img-src'),
-    "img-src 'self' data: https://cdn-images-1.medium.com https://miro.medium.com",
+    /^img-src 'self' data: https:\/\/cdn-images-1\.medium\.com https:\/\/miro\.medium\.com /,
   );
-  assert.equal(directive(csp, 'connect-src'), "connect-src 'self'");
+  assert.doesNotMatch(directive(csp, 'connect-src'), /medium/);
 });
 
 test('HSTS lasts at least a year', () => {

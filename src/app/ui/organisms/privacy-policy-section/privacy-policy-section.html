@@ -1,0 +1,57 @@
+<div class="privacy-policy">
+  <div class="privacy-policy-main">
+    <section class="privacy-policy-block" aria-labelledby="privacy-collected">
+      <h2 id="privacy-collected">What is collected</h2>
+      <p>
+        Vercel Web Analytics, from the site's host, counts page views and a few key actions (an
+        enquiry, a message sent, a résumé downloaded) for every visitor. It sets no cookie and
+        stores nothing on your device: it sees the page address (without anything after
+        <code>#</code> or <code>?</code>, apart from campaign tags), the referring site, your
+        country, browser and device type. A visitor is a hash of the request that changes daily, so
+        visits can't be linked across days or sites. There is nothing to accept, so it runs without
+        asking.
+      </p>
+      <p>
+        Google Analytics needs your choice. If you accept analytics, Google Analytics 4 counts page
+        views and a few clicks (for example, which service or project you opened) so I can see which
+        content helps. Advertising signals are always off and Google signals are disabled.
+      </p>
+      <p>
+        No Google script, cookie or request is made before you accept. If your browser sends a
+        Global Privacy Control signal, analytics stays off by default.
+      </p>
+    </section>
+    <section class="privacy-policy-block" aria-labelledby="privacy-storage">
+      <h2 id="privacy-storage">Cookies and storage</h2>
+      <div
+        class="privacy-policy-table"
+        role="region"
+        aria-label="Cookies and storage, scrolls sideways on small screens"
+        tabindex="0"
+      >
+        <fm-table
+          [columns]="columns"
+          [rows]="rows(storage())"
+          caption="Cookies and browser storage this site uses"
+        />
+      </div>
+    </section>
+    <section class="privacy-policy-block" aria-labelledby="privacy-form">
+      <h2 id="privacy-form">The contact form</h2>
+      <p>
+        The form builds an email in your own mail app. The text you type stays in your browser until
+        you press send in that app. Analytics never receives your name, email, phone or message.
+      </p>
+    </section>
+    <section class="privacy-policy-block" aria-labelledby="privacy-questions">
+      <h2 id="privacy-questions">Questions and requests</h2>
+      <p>
+        To ask what is held about you, or to have it removed, email
+        <a [href]="'mailto:' + email()">{{ email() }}</a> and I will reply within a few days.
+      </p>
+    </section>
+  </div>
+  <div class="privacy-policy-aside">
+    <fm-consent-status-card [analytics]="analytics()" (changeSettings)="changeSettings.emit()" />
+  </div>
+</div>

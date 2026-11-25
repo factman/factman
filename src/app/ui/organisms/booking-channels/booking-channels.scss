@@ -1,0 +1,121 @@
+// The canvas's BookingChannelsSection (site.css .booking-panel): a dark band in both themes, the
+// photo fading in from the right behind the heading (on top, fading down, below 768px), and the
+// four channel cards in a row (two below 1024px, one below 768px).
+@use 'ui/layout';
+
+.booking-channels {
+  @include layout.section;
+
+  scroll-margin-top: var(--navbar-height);
+  font-family: var(--font-sans);
+}
+
+.booking-channels-container {
+  @include layout.container;
+}
+
+.booking-channels-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
+  overflow: hidden;
+  isolation: isolate;
+  box-sizing: border-box;
+  padding: var(--padding-4xl);
+  border-radius: var(--radius-xl);
+  background: var(--bg-inverse);
+  color: var(--text-inverse);
+
+  @media (width < 768px) {
+    padding: var(--padding-xl);
+  }
+}
+
+.booking-channels-photo {
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: -1;
+  height: 100%;
+  aspect-ratio: 900 / 507;
+  mask-image: linear-gradient(to right, transparent 0%, var(--neutral-1000) 45%);
+
+  @media (width < 768px) {
+    position: static;
+    z-index: auto;
+    width: calc(100% + 2 * var(--padding-xl));
+    height: auto;
+    margin: calc(var(--padding-xl) * -1) calc(var(--padding-xl) * -1) 0;
+    mask-image: linear-gradient(to bottom, var(--neutral-1000) 60%, transparent);
+  }
+}
+
+.booking-channels-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.booking-channels-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  max-width: 52%;
+  min-height: 200px;
+
+  @media (width < 1024px) {
+    max-width: 60%;
+    min-height: 0;
+  }
+
+  @media (width < 768px) {
+    max-width: none;
+  }
+}
+
+.booking-channels-eyebrow {
+  margin: 0;
+  font: 500 0.75rem/1rem var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-inverse);
+}
+
+.booking-channels-title {
+  margin: 0;
+  font: 700 2.5rem/1.15 var(--font-sans);
+
+  @media (width < 768px) {
+    font: 700 1.75rem/1.2 var(--font-sans);
+  }
+}
+
+.booking-channels-text {
+  margin: 0;
+  font: 400 1rem/1.75 var(--font-sans);
+  color: var(--text-inverse);
+}
+
+.booking-channels-cards {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (width < 1024px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (width < 768px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  > li {
+    display: flex;
+  }
+}

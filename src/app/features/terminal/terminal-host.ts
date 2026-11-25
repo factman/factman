@@ -1,0 +1,43 @@
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ThemeService } from '@core/theme';
+import { contact } from '@data/contact';
+import { experience } from '@data/experience';
+import { profile } from '@data/profile';
+import { projects } from '@data/projects';
+import { resumes } from '@data/resumes';
+import { skills } from '@data/skills';
+import { CLOCK, TerminalLauncher } from '@shared';
+import { Terminal } from '@ui/organisms';
+
+import { terminalCommands } from './terminal-commands';
+
+/**
+ * The interactive terminal (FR-36) with its commands built from the data files. The app shell
+ * loads it lazily, the first time Ctrl/Cmd+K or the hero's button opens it, so neither it nor
+ * the data it reads is in the initial bundle.
+ * @level page
+ */
+@Component({
+  selector: 'fm-terminal-host',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [Terminal],
+  template: `<fm-terminal
+    [open]="launcher.open()"
+    [commands]="commands"
+    (closed)="launcher.hide()"
+  />`,
+})
+export class TerminalHost {
+  protected readonly launcher = inject(TerminalLauncher);
+  private readonly theme = inject(ThemeService);
+  protected readonly commands = terminalCommands({
+    profile,
+    experience,
+    skills,
+    projects,
+    contact,
+    resumes: resumes.resumes,
+    theme: (arg) => this.theme.command(arg),
+    now: inject(CLOCK)(),
+  });
+}

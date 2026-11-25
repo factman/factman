@@ -43,7 +43,7 @@
   margin: 0;
   padding: var(--padding-sm) 0 0 var(--padding-md);
   border-top: var(--border-width-sm) solid var(--border-subtle);
-  font: 400 13px/1.5 var(--font-sans);
+  font: 400 0.8125rem/1.5 var(--font-sans);
   color: var(--text-secondary);
 }
 
@@ -52,18 +52,20 @@
   gap: var(--gap-2xs);
   align-items: center;
   margin-top: auto;
-  font: 500 13px/1 var(--font-sans);
+  font: 500 0.8125rem/1 var(--font-sans);
   color: var(--accent-default);
 }
 
-// The arrow nudges 3px right with the card's hover lift.
-.service-card-more svg {
-  transition: transform var(--duration-fast) var(--ease-out);
-}
+// The arrow nudges 3px right with the card's hover lift, only when motion is allowed (ETE-259).
+@media (prefers-reduced-motion: no-preference) {
+  .service-card-more svg {
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
 
-.service-card:hover .service-card-more svg,
-.service-card:focus-within .service-card-more svg {
-  transform: translateX(3px);
+  .service-card:hover .service-card-more svg,
+  .service-card:focus-within .service-card-more svg {
+    transform: translateX(3px);
+  }
 }
 
 .service-card-cta {

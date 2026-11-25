@@ -219,6 +219,16 @@ Text can use:
 - `{since:<skill id>}`: the year you started a skill, e.g. `{since:ionic}`;
 - `[placeholders]`: figures you'll supply later, such as `[N engineers]`. Every placeholder has an entry in `resumes.json` → `placeholders`; put the real figure in its `value` and every résumé using it updates.
 
+### Updating the PDFs
+
+The downloadable PDFs and their preview images are committed in `public/resumes/`. After changing anything a résumé shows (the files in the table above), print them again and commit the result:
+
+```bash
+pnpm build:resumes
+```
+
+Every build checks that the committed PDFs match the data (`pnpm resume:check`) and fails if they don't, or if a PDF has more pages than the résumé's `pages.max`. The production build (Vercel, `main`) also fails while any `[placeholder]` is still unfilled; preview builds allow them.
+
 ## Images
 
 | Where                                        | Format                         | Size                                        | Alt text                     |

@@ -2,8 +2,13 @@
 export { BLOG_CACHE_KEY, BlogRepository, type BlogStatus } from './blog.repository';
 export { ClientsRepository } from './clients.repository';
 export { DataModule } from './data.module';
-export { projectResolver, projectTitleResolver } from './project.resolver';
+export { projectResolver, projectSeoResolver, projectTitleResolver } from './project.resolver';
 export { ProjectsRepository } from './projects.repository';
-export { NOT_FOUND_PATH, serviceResolver, serviceTitleResolver } from './service.resolver';
+export {
+  NOT_FOUND_PATH,
+  serviceResolver,
+  serviceSeoResolver,
+  serviceTitleResolver,
+} from './service.resolver';
 export { ServicesRepository } from './services.repository';
 export { SkillsRepository } from './skills.repository';
