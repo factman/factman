@@ -61,15 +61,14 @@ export class ConsentHost {
   );
   protected readonly categories = computed<ConsentCategoryView[]>(() => {
     const choices = this.consent.choices();
-    return this.config.categories
-      .filter((c) => c.used !== false)
-      .map((c) => ({
-        id: c.id,
-        label: c.label,
-        description: c.description,
-        required: c.required,
-        granted: choices[c.id],
-      }));
+    return this.config.categories.map((c) => ({
+      id: c.id,
+      label: c.label,
+      description: c.description,
+      required: c.required,
+      used: c.used !== false,
+      granted: choices[c.id],
+    }));
   });
 
   constructor() {

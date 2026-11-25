@@ -1,63 +1,82 @@
 <section
   #panel
-  class="consent-banner"
+  class="consent-dock"
   role="dialog"
+  data-theme="dark"
+  tabindex="-1"
   [class.consent-floating]="floating()"
   [attr.popover]="popover()"
   [hidden]="floating() && !popover() && !open()"
-  aria-label="Cookie settings"
-  [attr.aria-describedby]="id + '-desc'"
+  [attr.aria-labelledby]="id + '-title'"
+  [attr.aria-describedby]="ready() ? id + '-desc' : null"
   (keydown)="keydown($event)"
 >
-  <fm-window-frame
-    variant="terminal"
-    title="consent.sh"
-    [closable]="true"
-    (closed)="dismissed.emit()"
-  >
+  <fm-window-frame variant="terminal" [title]="'consent.sh'">
     <div class="fm-term__body consent-body">
-      <h2 class="fm-term__line consent-title">
+      <span class="fm-sr" [id]="id + '-title'">Cookie settings</span>
+      <p class="fm-term__line">
         <span class="fm-term__user">odunayo</span><span class="fm-term__sep">:</span
         ><span class="fm-term__path">~</span><span class="fm-term__sep">$ </span
-        ><span class="fm-term__cmd">./consent</span>
-      </h2>
-      <!-- One line of text: fm-term__line keeps whitespace (pre-wrap). -->
-      <p class="fm-term__line fm-term__out is-default" [id]="id + '-desc'">{{ message }}</p>
+        ><span class="fm-term__cmd">{{ command() }}</span>
+        @if (!ready()) {
+          <fm-caret shape="block" />
+        }
+      </p>
+
+      @if (ready()) {
+        <div class="consent-content">
+          <p class="fm-term__line fm-term__out is-default" [id]="id + '-desc'">{{ message }}</p>
+
+          @if (mode() === 'main') {
+            <div class="consent-choices">
+              <fm-button variant="primary" size="md" (pressed)="acceptNecessary()"
+                ><span class="consent-key" aria-hidden="true">[n] </span>Accept necessary</fm-button
+              >
+              <fm-button variant="primary" size="md" (pressed)="acceptAll()"
+                ><span class="consent-key" aria-hidden="true">[a] </span>Accept all</fm-button
+              >
+            </div>
+            <fm-button class="consent-customize" variant="text" size="sm" (pressed)="customize()"
+              ><span class="consent-key" aria-hidden="true">[c] </span>Customize</fm-button
+            >
+          } @else {
+            <div class="consent-categories" role="group" aria-label="Cookie categories">
+              @for (c of categories(); track c.id) {
+                @if (switchable(c)) {
+                  <button
+                    type="button"
+                    role="switch"
+                    class="fm-term__line consent-switch"
+                    [attr.aria-checked]="!!draft()[c.id]"
+                    (click)="toggle(c.id)"
+                  >
+                    <span class="consent-box">{{ box(c) }}</span
+                    >{{ line(c) }}
+                  </button>
+                } @else {
+                  <p class="fm-term__line fm-term__out">
+                    <span [class.consent-box]="c.required">{{ box(c) }}</span
+                    >{{ line(c) }}
+                  </p>
+                }
+              }
+            </div>
+            <div class="consent-custom-actions">
+              <fm-button variant="primary" size="md" [leadingIcon]="save" (pressed)="saveChoices()"
+                >Save choices</fm-button
+              >
+              <fm-button class="consent-back" variant="tertiary" size="md" (pressed)="back()"
+                >Back</fm-button
+              >
+            </div>
+          }
+
+          <p class="fm-term__line fm-term__out consent-foot">
+            <span aria-hidden="true">&gt; _</span
+            ><a class="consent-policy" [routerLink]="policyHref()">privacy --cookies</a>
+          </p>
+        </div>
+      }
     </div>
   </fm-window-frame>
-
-  <div class="consent-controls">
-    @if (customizing()) {
-      <fieldset class="consent-categories">
-        <legend class="consent-legend">Cookie categories</legend>
-        @for (c of categories(); track c.id) {
-          <fm-switch
-            size="sm"
-            [label]="c.label"
-            [description]="c.description"
-            [ngModel]="c.required || draft()[c.id]"
-            (ngModelChange)="setDraft(c.id, $event)"
-            [disabled]="c.required"
-          />
-        }
-      </fieldset>
-    }
-
-    <div class="consent-actions">
-      <fm-button #accept variant="secondary" size="sm" (pressed)="acceptAll()"
-        ><kbd class="consent-key" aria-hidden="true">a</kbd> Accept all</fm-button
-      >
-      <fm-button variant="secondary" size="sm" (pressed)="rejectAll()"
-        ><kbd class="consent-key" aria-hidden="true">r</kbd> Reject all</fm-button
-      >
-      @if (customizing()) {
-        <fm-button variant="text" size="sm" (pressed)="save()">Save choices</fm-button>
-      } @else {
-        <fm-button variant="text" size="sm" (pressed)="toggleCustomize()"
-          ><kbd class="consent-key" aria-hidden="true">c</kbd> Customize</fm-button
-        >
-      }
-      <fm-link class="consent-policy" [href]="policyHref()">Privacy policy</fm-link>
-    </div>
-  </div>
 </section>
