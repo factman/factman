@@ -40,16 +40,15 @@
 
 .resume-card-page {
   display: block;
-  width: 60%;
-  margin-inline: auto;
+  width: 100%;
   height: auto;
-  aspect-ratio: 210 / 297;
+  aspect-ratio: 10 / 9;
   border-radius: var(--radius-xs) var(--radius-xs) 0 0;
   background: var(--neutral-0);
   box-shadow: var(--shadow-glass-regular);
 }
 
-// A placeholder page: a few grey lines.
+// A placeholder page (no thumbnail yet): the same frame as the image, with a few grey lines.
 .resume-card-page {
   box-sizing: border-box;
   padding: var(--padding-md);
