@@ -20,10 +20,7 @@ interface TrustedTypesFactory {
   createPolicy(name: string, rules: { createScript(input: string): string }): ScriptPolicy;
 }
 
-/**
- * One policy per window (keyed by its `trustedTypes`): a CSP without `'allow-duplicates'` refuses
- * a second policy by the same name.
- */
+/** One policy per window (keyed by its `trustedTypes`), created on first use. */
 const policies = new WeakMap<TrustedTypesFactory, ScriptPolicy | null>();
 
 function jsonLdPolicy(win: (Window & { trustedTypes?: TrustedTypesFactory }) | null) {

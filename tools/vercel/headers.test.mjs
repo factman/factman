@@ -88,11 +88,13 @@ test("CSP enforces Trusted Types, with only Angular's, JSON-LD, feed, Google tag
   assert.equal(directive(csp, 'require-trusted-types-for'), "require-trusted-types-for 'script'");
   // fm-gtm sets GTM's script URL; goog#html is the policy Google's gtm.js and gtag.js create for
   // the scripts they add themselves; fm-vercel-insights sets /_vercel/insights/script.js.
+  // 'allow-duplicates': each Google script on the page (gtm.js, Tag Assistant's preview, a tag's
+  // own library) creates its own goog#html, and a CSP can't allow that for one name only. Our own
+  // policies are still created once per window.
   assert.equal(
     directive(csp, 'trusted-types'),
-    'trusted-types angular angular#bundler fm-json-ld fm-feed-html fm-gtm goog#html fm-vercel-insights',
+    "trusted-types angular angular#bundler fm-json-ld fm-feed-html fm-gtm goog#html fm-vercel-insights 'allow-duplicates'",
   );
-  assert.doesNotMatch(csp, /'allow-duplicates'/);
 });
 
 test('CSP lets GA4 send its hits through GTM; Vercel Web Analytics stays same-origin (ETE-120, ETE-271)', () => {

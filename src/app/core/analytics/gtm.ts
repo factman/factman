@@ -24,7 +24,7 @@ interface TrustedTypesFactory {
   createPolicy(name: string, rules: { createScriptURL(input: string): string }): ScriptUrlPolicy;
 }
 
-/** One policy per window: a CSP without `'allow-duplicates'` refuses a second by the same name. */
+/** One policy per window, created on first use. */
 const policies = new WeakMap<TrustedTypesFactory, ScriptUrlPolicy | null>();
 
 function gtmPolicy(win: DataLayerWindow): ScriptUrlPolicy | null {
