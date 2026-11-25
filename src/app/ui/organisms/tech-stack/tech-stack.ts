@@ -3,9 +3,11 @@ import {
   Component,
   ViewEncapsulation,
   computed,
+  inject,
   input,
   signal,
 } from '@angular/core';
+import { ANALYTICS_TRACKER } from '@shared';
 
 import { Chip, Icon, type IconDef } from '@ui/atoms';
 
@@ -50,6 +52,7 @@ export class TechStack {
   /** Shows the category chips. */
   readonly filter = input(true);
 
+  private readonly tracker = inject(ANALYTICS_TRACKER);
   protected readonly selected = signal(ALL);
   protected readonly categories = computed(() => [ALL, ...this.groups().map((g) => g.category)]);
   protected readonly shown = computed(() => {
@@ -66,6 +69,8 @@ export class TechStack {
   });
 
   protected select(category: string): void {
+    if (category === this.selected()) return;
     this.selected.set(category);
+    this.tracker.track('filter_used', { scope: 'stack', value: category });
   }
 }

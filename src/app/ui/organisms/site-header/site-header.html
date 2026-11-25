@@ -30,7 +30,12 @@
         </span>
         <fm-theme-toggle [theme]="theme()" (themeChange)="themeChange.emit($event)" />
         <span class="site-header-desktop">
-          <fm-button variant="primary" size="sm" href="/services" [trailingIcon]="icons.arrowRight"
+          <fm-button
+            variant="primary"
+            size="sm"
+            href="/services"
+            [trailingIcon]="icons.arrowRight"
+            [fmTrack]="bookCta"
             >Book a service</fm-button
           >
         </span>
@@ -62,7 +67,12 @@
             (pressed)="requestResume()"
             >Résumé</fm-button
           >
-          <fm-button variant="primary" size="lg" href="/services" [trailingIcon]="icons.arrowRight"
+          <fm-button
+            variant="primary"
+            size="lg"
+            href="/services"
+            [trailingIcon]="icons.arrowRight"
+            [fmTrack]="bookCta"
             >Book a service</fm-button
           >
         </div>

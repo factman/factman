@@ -210,3 +210,59 @@ test.describe('Vercel Web Analytics (ETE-271)', () => {
       .toContainEqual(expect.stringMatching(/\/_action\/contact_click\?page=%2F&channel=email$/));
   });
 });
+
+// ETE-123: the "no Google before consent" gate, on the production build.
+test.describe('first-party only before consent (ETE-123)', () => {
+  /** Third-party hosts a first visit may load: Medium's blog cover images. */
+  const ALLOWED = new Set(['cdn-images-1.medium.com', 'miro.medium.com']);
+
+  test('a first visit loads fonts, scripts and assets from this site only', async ({
+    page,
+    baseURL,
+  }) => {
+    const origin = new URL(baseURL!).origin;
+    const google = await stubGoogle(page);
+    await stubInsights(page);
+    const foreign: string[] = [];
+    const fonts: string[] = [];
+    page.on('request', (request) => {
+      const url = new URL(request.url());
+      if (!/^https?:$/.test(url.protocol)) return;
+      if (request.resourceType() === 'font') fonts.push(url.origin);
+      if (url.origin !== origin && !ALLOWED.has(url.hostname)) foreign.push(url.href);
+    });
+    for (const path of ['/', '/services', '/projects', '/blog', '/privacy']) {
+      await page.goto(path);
+      await expect(page.locator('main h1')).toBeVisible();
+      await page.mouse.wheel(0, 20000);
+    }
+    expect(fonts.length).toBeGreaterThan(0);
+    expect([...new Set(fonts)]).toEqual([origin]);
+    expect(foreign).toEqual([]);
+    expect(google).toEqual([]);
+  });
+
+  test('after Accept all, a CTA click and a section view reach the data layer', async ({
+    page,
+  }) => {
+    await withCsp(page);
+    await stubGoogle(page);
+    await stubInsights(page);
+    await page.goto('/');
+    await banner(page).getByRole('button', { name: 'Accept all' }).click();
+    await expect(banner(page)).toBeHidden();
+    await page.locator('#stack').scrollIntoViewIfNeeded();
+    await expect
+      .poll(async () => (await layer(page)).filter((e) => !Array.isArray(e)))
+      .toContainEqual(expect.objectContaining({ event: 'section_view', section_id: 'stack' }));
+    await page
+      .locator('main')
+      .getByRole('link', { name: /Book a service/ })
+      .first()
+      .click();
+    await expect(page).toHaveURL(/\/services$/);
+    expect(await layer(page)).toContainEqual(
+      expect.objectContaining({ event: 'cta_click', cta_id: 'book_a_service', location: 'hero' }),
+    );
+  });
+});

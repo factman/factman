@@ -6,7 +6,7 @@
           <div class="blog-feed-filters">
             <div class="blog-feed-tags" role="group" aria-label="Filter articles by tag">
               @for (t of tags(); track t) {
-                <fm-chip size="sm" [selected]="tag() === t" [value]="t" (toggled)="tag.set(t)">{{
+                <fm-chip size="sm" [selected]="tag() === t" [value]="t" (toggled)="selectTag(t)">{{
                   t
                 }}</fm-chip>
               }

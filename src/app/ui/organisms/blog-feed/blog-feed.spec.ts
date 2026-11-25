@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import { type BlogPost, postsFromFeed } from '@shared';
+import { ANALYTICS_TRACKER, type BlogPost, postsFromFeed } from '@shared';
 
 import { SAMPLE_FEED } from '../../../shared/blog/sample-feed.testing';
 
@@ -64,5 +64,18 @@ describe('BlogFeed', () => {
     const matching = posts.filter((p) => p.tags.includes(tag)).length;
     expect(screen.getByText(`${matching} of ${posts.length} articles`)).toBeTruthy();
     expect(screen.getByRole('group', { name: 'Filter articles by tag' })).toBeTruthy();
+  });
+});
+
+describe('BlogFeed analytics (filter_used)', () => {
+  it('sends filter_used with the tag when a tag chip is picked', async () => {
+    const track = vi.fn();
+    await render(BlogFeed, {
+      inputs: { posts, status: 'ready', profileUrl: PROFILE, filterable: true },
+      providers: [{ provide: ANALYTICS_TRACKER, useValue: { track } }],
+    });
+    const tag = postTags(posts)[0];
+    await userEvent.click(screen.getByRole('button', { name: tag }));
+    expect(track).toHaveBeenCalledWith('filter_used', { scope: 'blog', value: tag });
   });
 });

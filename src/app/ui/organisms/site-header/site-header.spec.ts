@@ -2,9 +2,12 @@ import { provideRouter } from '@angular/router';
 import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import type { SiteNavItem } from '@shared';
+import { ANALYTICS_TRACKER, type SiteNavItem } from '@shared';
 
 import { SiteHeader } from './site-header';
+
+/** Any URL renders nothing, so clicking a link in a test navigates without an error. */
+const ANY_ROUTE = [{ path: '**', children: [] }];
 
 const nav: SiteNavItem[] = [
   { id: 'about', label: 'About', anchor: '#about' },
@@ -147,5 +150,23 @@ describe('SiteHeader', () => {
     expect(resume).toHaveBeenCalledOnce();
     expect(menuNav()).toBeNull();
     expect(document.activeElement).toBe(menuButton());
+  });
+});
+
+describe('SiteHeader analytics (cta_click)', () => {
+  it('sends cta_click from "Book a service" with location header', async () => {
+    const track = vi.fn();
+    await render(`<fm-site-header [nav]="nav" current="home" theme="light" />`, {
+      imports: [SiteHeader],
+      providers: [provideRouter(ANY_ROUTE), { provide: ANALYTICS_TRACKER, useValue: { track } }],
+      componentProperties: { nav },
+    });
+    const link = screen.getAllByRole('link', { name: /Book a service/ })[0];
+    link.addEventListener('click', (e) => e.preventDefault());
+    await userEvent.click(link);
+    expect(track).toHaveBeenCalledWith('cta_click', {
+      cta_id: 'book_a_service',
+      location: 'header',
+    });
   });
 });

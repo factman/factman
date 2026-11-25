@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
+import { ctaEvent, Track } from '@shared';
 
 import { Button, Image } from '@ui/atoms';
 import type { FramedImage } from '@ui/molecules';
@@ -17,11 +18,14 @@ import type { HeroAction } from '../page-hero/page-hero';
   // cta-banner* classes are this component's.
   encapsulation: ViewEncapsulation.None,
   styleUrl: './cta-banner.scss',
-  imports: [Button, Image],
+  imports: [Button, Image, Track],
   host: { style: 'display: contents' },
   templateUrl: './cta-banner.html',
 })
 export class CtaBanner {
+  /** A call to action's `cta_click` event. */
+  protected readonly cta = ctaEvent;
+
   readonly title = input.required<string>();
   readonly text = input<string>();
   /** Links; the first is primary. */

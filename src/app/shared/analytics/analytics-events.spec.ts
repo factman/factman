@@ -1,4 +1,6 @@
 import {
+  ctaEvent,
+  ctaId,
   ANALYTICS_EVENT_NAMES,
   type AnalyticsEvent,
   type AnalyticsEventName,
@@ -75,6 +77,21 @@ describe('analytics event catalogue', () => {
       [{ topic: { nested: true } }, 'topic'],
     ])('rejects personal data or free text: %j', (params, key) => {
       expect(checkParams(params)).toBe(key);
+    });
+  });
+});
+
+describe('ctaId / ctaEvent', () => {
+  it('makes a snake_case id from a label', () => {
+    expect(ctaId('Book a service')).toBe('book_a_service');
+    expect(ctaId('  Get the résumé → ')).toBe('get_the_resume');
+    expect(ctaId('GitHub profile')).toBe('github_profile');
+  });
+
+  it('builds a cta_click event', () => {
+    expect(ctaEvent('View projects', 'hero')).toEqual({
+      name: 'cta_click',
+      params: { cta_id: 'view_projects', location: 'hero' },
     });
   });
 });

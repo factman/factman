@@ -5,6 +5,7 @@ import {
   input,
   output,
 } from '@angular/core';
+import { ctaEvent, Track } from '@shared';
 
 import {
   Button,
@@ -54,11 +55,14 @@ export interface HeroMedia extends FramedImage {
   // page-hero* classes are this component's.
   encapsulation: ViewEncapsulation.None,
   styleUrl: './page-hero.scss',
-  imports: [Breadcrumbs, Button, Icon, Image, ScheduleCallButton, Tag],
+  imports: [Breadcrumbs, Button, Icon, Image, ScheduleCallButton, Tag, Track],
   host: { style: 'display: contents' },
   templateUrl: './page-hero.html',
 })
 export class PageHero {
+  /** A call to action's `cta_click` event. */
+  protected readonly cta = ctaEvent;
+
   readonly crumbs = input<readonly Crumb[]>([]);
   readonly eyebrow = input<string>();
   readonly icon = input<IconDef | string>();

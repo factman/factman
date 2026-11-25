@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   DOCUMENT,
   Component,
+  DestroyRef,
   computed,
   inject,
   signal,
@@ -62,6 +63,8 @@ import { SectionLayout } from '@ui/templates';
 import { aboutFacts } from './about-facts';
 import { careerGlance, darkLogos, timelineEntries } from './experience-view';
 import { stackGroups } from './stack-groups';
+import { HOME_SECTIONS } from './home-sections';
+import { watchSectionViews } from './section-views';
 import { homeStructuredData } from './structured-data';
 import { careerStrip, contributionGraph, statCounters } from './stats-view';
 
@@ -198,9 +201,17 @@ export class Home {
   constructor() {
     inject(IconRegistry).register([...SERVICE_ICONS, ...RESUME_ICONS]);
     inject(StructuredData).set(homeStructuredData(site, profile, contact));
+    const destroyRef = inject(DestroyRef);
     afterNextRender(() => {
       void this.blog.load();
       this.openResumeFromLink();
+      // section_view: each section once, the first time it is in view.
+      const stop = watchSectionViews(
+        this.document,
+        HOME_SECTIONS.map((s) => s.id),
+        (id) => this.tracker.track('section_view', { section_id: id }),
+      );
+      destroyRef.onDestroy(stop);
     });
   }
 

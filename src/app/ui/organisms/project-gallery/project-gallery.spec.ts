@@ -2,10 +2,13 @@ import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import type { Project } from '@shared';
+import { ANALYTICS_TRACKER, type Project } from '@shared';
 
 import { NO_FILTER } from './project-filter';
 import { ProjectGallery } from './project-gallery';
+
+/** Any URL renders nothing, so clicking a link in a test navigates without an error. */
+const ANY_ROUTE = [{ path: '**', children: [] }];
 
 const project = (slug: string, over: Partial<Project> = {}): Project =>
   ({
@@ -81,5 +84,38 @@ describe('ProjectGallery', () => {
     expect(screen.getByRole('link', { name: /See all projects/ }).getAttribute('href')).toBe(
       '/projects',
     );
+  });
+});
+
+describe('ProjectGallery analytics (filter_used, cta_click)', () => {
+  it('sends filter_used for a chip, and "search" for a search, never the typed text', async () => {
+    const track = vi.fn();
+    await render(ProjectGallery, {
+      inputs: { projects, filterable: true },
+      providers: [provideRouter(ANY_ROUTE), { provide: ANALYTICS_TRACKER, useValue: { track } }],
+    });
+    await userEvent.click(screen.getByRole('button', { name: /Archived/ }));
+    expect(track).toHaveBeenLastCalledWith('filter_used', {
+      scope: 'projects',
+      value: 'status:archived',
+    });
+    await userEvent.type(screen.getByRole('searchbox'), 'payments api');
+    expect(track).toHaveBeenCalledWith('filter_used', { scope: 'projects', value: 'search' });
+    expect(JSON.stringify(track.mock.calls)).not.toContain('payments');
+  });
+
+  it("sends cta_click from the home section's links with location projects_section", async () => {
+    const track = vi.fn();
+    await render(ProjectGallery, {
+      inputs: { projects, actions: [{ label: 'See all projects', href: '/projects' }] },
+      providers: [provideRouter(ANY_ROUTE), { provide: ANALYTICS_TRACKER, useValue: { track } }],
+    });
+    const link = screen.getByRole('link', { name: /See all projects/ });
+    link.addEventListener('click', (e) => e.preventDefault());
+    await userEvent.click(link);
+    expect(track).toHaveBeenCalledWith('cta_click', {
+      cta_id: 'see_all_projects',
+      location: 'projects_section',
+    });
   });
 });

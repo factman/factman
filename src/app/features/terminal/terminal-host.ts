@@ -6,7 +6,7 @@ import { profile } from '@data/profile';
 import { projects } from '@data/projects';
 import { resumes } from '@data/resumes';
 import { skills } from '@data/skills';
-import { CLOCK, TerminalLauncher } from '@shared';
+import { ANALYTICS_TRACKER, CLOCK, TerminalLauncher } from '@shared';
 import { Terminal } from '@ui/organisms';
 
 import { terminalCommands } from './terminal-commands';
@@ -25,6 +25,7 @@ import { terminalCommands } from './terminal-commands';
     [open]="launcher.open()"
     [commands]="commands"
     (closed)="launcher.hide()"
+    (run)="ran($event)"
   />`,
 })
 export class TerminalHost {
@@ -40,4 +41,13 @@ export class TerminalHost {
     theme: (arg) => this.theme.command(arg),
     now: inject(CLOCK)(),
   });
+
+  private readonly tracker = inject(ANALYTICS_TRACKER);
+  /** Command names that may be reported: the terminal's own, plus help and clear. */
+  private readonly known = new Set(['help', 'clear', ...this.commands.map((c) => c.name)]);
+
+  /** Sends terminal_command for a known command; anything else typed is never sent. */
+  protected ran(name: string): void {
+    if (this.known.has(name)) this.tracker.track('terminal_command', { command: name });
+  }
 }

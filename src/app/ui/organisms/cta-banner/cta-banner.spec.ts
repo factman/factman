@@ -1,7 +1,12 @@
 import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
+import { ANALYTICS_TRACKER } from '@shared';
 
 import { CtaBanner } from './cta-banner';
+
+/** Any URL renders nothing, so clicking a link in a test navigates without an error. */
+const ANY_ROUTE = [{ path: '**', children: [] }];
 
 describe('CtaBanner', () => {
   it('has a heading, text and the actions, the first primary', async () => {
@@ -37,5 +42,25 @@ describe('CtaBanner', () => {
     });
     expect(container.querySelector('.cta-banner')!.classList).toContain('has-photo');
     expect(container.querySelector('.cta-banner-photo img')!.getAttribute('alt')).toBe('');
+  });
+});
+
+describe('CtaBanner analytics (cta_click)', () => {
+  it('sends cta_click from its actions with location cta_banner', async () => {
+    const track = vi.fn();
+    await render(CtaBanner, {
+      inputs: {
+        title: 'Building something similar?',
+        actions: [{ label: 'Book a service', href: '/services' }],
+      },
+      providers: [provideRouter(ANY_ROUTE), { provide: ANALYTICS_TRACKER, useValue: { track } }],
+    });
+    const link = screen.getByRole('link', { name: /Book a service/ });
+    link.addEventListener('click', (e) => e.preventDefault());
+    await userEvent.click(link);
+    expect(track).toHaveBeenCalledWith('cta_click', {
+      cta_id: 'book_a_service',
+      location: 'cta_banner',
+    });
   });
 });

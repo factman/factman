@@ -2,9 +2,12 @@ import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import { CLOCK } from '@shared';
+import { ANALYTICS_TRACKER, CLOCK } from '@shared';
 
 import { ProfileHero, type ProfileHeroProfile } from './profile-hero';
+
+/** Any URL renders nothing, so clicking a link in a test navigates without an error. */
+const ANY_ROUTE = [{ path: '**', children: [] }];
 
 const profile: ProfileHeroProfile = {
   name: 'Odunayo Mohammed',
@@ -23,14 +26,18 @@ const photo = {
   sources: { avif: '/a-360.avif 360w', webp: '/a-360.webp 360w' },
 };
 
-async function renderHero(editor = '') {
+async function renderHero(editor = '', track = vi.fn()) {
   const openResume = vi.fn();
   await render(
     `<fm-profile-hero [profile]="profile" [photo]="photo" [socials]="socials" [stats]="stats"
        timezone="WAT · UTC+1" (openResume)="openResume($event)">${editor}</fm-profile-hero>`,
     {
       imports: [ProfileHero],
-      providers: [provideRouter([]), { provide: CLOCK, useValue: () => new Date('2026-11-10') }],
+      providers: [
+        provideRouter(ANY_ROUTE),
+        { provide: CLOCK, useValue: () => new Date('2026-11-10') },
+        { provide: ANALYTICS_TRACKER, useValue: { track } },
+      ],
       componentProperties: {
         profile,
         photo,
@@ -129,5 +136,21 @@ describe('ProfileHero', () => {
     );
     await userEvent.click(screen.getByRole('button', { name: /Terminal/ }));
     expect(openTerminal).toHaveBeenCalled();
+  });
+});
+
+describe('ProfileHero analytics (cta_click)', () => {
+  it('sends cta_click from Book a service and View projects, with location hero', async () => {
+    const track = vi.fn();
+    await renderHero('', track);
+    for (const name of [/Book a service/, /View projects/]) {
+      const link = screen.getByRole('link', { name });
+      link.addEventListener('click', (e) => e.preventDefault());
+      await userEvent.click(link);
+    }
+    expect(track.mock.calls).toEqual([
+      ['cta_click', { cta_id: 'book_a_service', location: 'hero' }],
+      ['cta_click', { cta_id: 'view_projects', location: 'hero' }],
+    ]);
   });
 });
