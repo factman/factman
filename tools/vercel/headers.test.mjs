@@ -68,6 +68,11 @@ for (const source of [APP, STORYBOOK, REPORTS]) {
   }
 }
 
+test('Permissions-Policy names only features browsers know (no retired FLoC interest-cohort)', () => {
+  const policy = value(ALL, 'Permissions-Policy');
+  assert.equal(policy, 'camera=(), microphone=(), geolocation=(), payment=(), usb=()');
+});
+
 test('the catch-all rule sets no CSP or framing header, so the app and Storybook rules never clash', () => {
   assert.equal(value(ALL, 'Content-Security-Policy'), undefined);
   assert.equal(value(ALL, 'X-Frame-Options'), undefined);
