@@ -308,6 +308,19 @@ jobs:
             echo "- Coverage: $url/coverage"
             echo "- Playwright report: $url/playwright"
           } >> "$GITHUB_STEP_SUMMARY"
+      # SEC (ETE-129): the deployed preview must send exactly the vercel.json headers. Previews are
+      # behind Vercel Authentication, so this needs the project's Protection Bypass for Automation
+      # secret; without it the step warns and skips.
+      - name: Check the deployed headers
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: |
+          if [ -z "$VERCEL_AUTOMATION_BYPASS_SECRET" ]; then
+            echo "::warning::VERCEL_AUTOMATION_BYPASS_SECRET is not set, so the preview's live headers are not checked. See docs/adr/005-static-csp-consent-in-code.md."
+            exit 0
+          fi
+          node tools/vercel/live-headers.mjs "$URL"
       # Through the REST API with the team ID: the CLI's alias command looks up a user account,
       # which a team token does not have.
       - name: Serve dev at factman.vercel.app

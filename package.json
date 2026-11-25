@@ -27,6 +27,7 @@
     "vr": "nx run factman:vr",
     "vr:update": "nx run factman:vr:update",
     "test:headers": "nx run factman:test:headers",
+    "test:live-headers": "node tools/vercel/live-headers.mjs",
     "test:reports": "nx run factman:test:reports",
     "test:build": "nx run factman:test:build",
     "test:build-production": "nx run factman:test:build-production",
