@@ -47,11 +47,11 @@ jobs:
       - name: Lockfile integrity and licences
         run: |
           node --test "tools/security/*.test.mjs"
-          node tools/security/supply-chain.mjs --report licences.md
+          node tools/security/supply-chain.mjs --report "$RUNNER_TEMP/licences.md"
       - uses: actions/upload-artifact@v4
         with:
           name: licences
-          path: licences.md
+          path: ${{ runner.temp }}/licences.md
       - name: Format, lint, typecheck and header check (vercel.json)
         run: pnpm nx run-many -t format:check lint typecheck test:headers test:reports
       # Nx Cloud Self-Healing CI: when an Nx task above fails, Nx Cloud analyses it and proposes a fix on the PR.
