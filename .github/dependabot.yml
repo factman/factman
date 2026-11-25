@@ -1,0 +1,73 @@
+# Dependency updates (ETE-130): weekly, grouped, into dev (PRs run the full CI).
+# Commit messages follow Conventional Commits, which commitlint expects.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    target-branch: dev
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Africa/Lagos
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: fix(deps)
+      prefix-development: chore(deps)
+    groups:
+      angular:
+        patterns:
+          [
+            '@angular/*',
+            '@angular-devkit/*',
+            '@schematics/angular',
+            'angular-eslint',
+            '@angular-eslint/*',
+            'zone.js',
+          ]
+      nx:
+        patterns: ['nx', '@nx/*']
+      storybook:
+        patterns: ['storybook', '@storybook/*']
+      testing:
+        patterns:
+          [
+            'vitest',
+            '@vitest/*',
+            '@playwright/test',
+            'playwright',
+            '@testing-library/*',
+            'jsdom',
+            '@axe-core/*',
+            'axe-core',
+          ]
+      lint-and-format:
+        patterns:
+          [
+            'eslint',
+            'eslint-*',
+            '@eslint/*',
+            'typescript-eslint',
+            '@typescript-eslint/*',
+            'stylelint',
+            'stylelint-*',
+            'prettier',
+            '@commitlint/*',
+            'lint-staged',
+            'husky',
+          ]
+      other-minor-and-patch:
+        update-types: [minor, patch]
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: dev
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Africa/Lagos
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns: ['*']
