@@ -21,6 +21,7 @@ import {
 
 import { ConsentService } from '../consent/consent.service';
 import { ANALYTICS } from './analytics.token';
+import { VercelInsights } from './vercel-insights';
 import {
   clearAnalyticsCookies,
   dataLayer,
@@ -32,7 +33,8 @@ import {
 
 /**
  * Google Tag Manager and GA4, only after consent (FR-35, ETE-120), and the catalogue's events
- * (ETE-121) through GTM's data layer: `dataLayer.push({ event, ...params })`.
+ * (ETE-121) through GTM's data layer: `dataLayer.push({ event, ...params })`. Key actions also go
+ * to Vercel Web Analytics (`VercelInsights`, ETE-271), which needs no consent.
  *
  * Consent Mode v2 in basic mode: nothing from Google loads until the visitor allows `analytics`.
  * Then the consent state is queued (`gtag('consent', 'default', …)`) and GTM's script is added,
@@ -51,6 +53,7 @@ import {
 export class AnalyticsService implements AnalyticsTracker {
   private readonly config = inject(ANALYTICS);
   private readonly consent = inject(ConsentService);
+  private readonly vercel = inject(VercelInsights);
   private readonly doc = inject(DOCUMENT);
   private readonly window = this.doc.defaultView as DataLayerWindow | null;
   private readonly browser = isPlatformBrowser(inject(PLATFORM_ID));
@@ -86,14 +89,20 @@ export class AnalyticsService implements AnalyticsTracker {
     return this.enabled && this.consent.granted('analytics');
   }
 
+  /**
+   * Sends an event: to Vercel Web Analytics if it is a key action (no consent needed, ETE-271),
+   * and to GTM once analytics is allowed.
+   */
   track<K extends AnalyticsEventName>(name: K, params: AnalyticsEvents[K]): void {
-    if (!this.active) return;
+    if (!this.enabled) return;
     const bad = checkParams(params as Record<string, unknown>);
     if (bad) {
       if (isDevMode())
         console.warn(`analytics: ${name} dropped, "${bad}" looks like personal data`);
       return;
     }
+    this.vercel.action(name, params);
+    if (!this.active) return;
     this.sync();
     dataLayer(this.window!).push({ event: name, ...params });
   }

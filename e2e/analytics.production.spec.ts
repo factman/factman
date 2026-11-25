@@ -145,3 +145,68 @@ test.describe('analytics after consent (ETE-120)', () => {
     expect(errors).toEqual([]);
   });
 });
+
+/**
+ * Stands in for Vercel's insights script (served only on Vercel): records each page view as
+ * `beforeSend` leaves it, as the real script would send it.
+ */
+const FAKE_INSIGHTS = `(() => {
+  const queue = window.vaq || [];
+  let beforeSend = (e) => e;
+  window.__views = [];
+  const send = () => {
+    const event = beforeSend({ type: 'pageview', url: location.href });
+    if (event) window.__views.push(event.url);
+  };
+  window.vai = true;
+  window.va = (type, props) => {
+    if (type === 'beforeSend') beforeSend = props;
+    else if (type === 'pageview') send();
+  };
+  queue.forEach(([type, props]) => window.va(type, props));
+  send();
+})();`;
+
+async function stubInsights(page: Page): Promise<string[]> {
+  const requests: string[] = [];
+  await page.route('**/_vercel/insights/**', (route) => {
+    requests.push(new URL(route.request().url()).pathname);
+    return route.fulfill({ status: 200, contentType: 'text/javascript', body: FAKE_INSIGHTS });
+  });
+  return requests;
+}
+const views = (page: Page) =>
+  page.evaluate(() => (window as unknown as { __views?: string[] }).__views ?? []);
+
+test.describe('Vercel Web Analytics (ETE-271)', () => {
+  test('counts the page without consent or cookies, redacted, under Trusted Types', async ({
+    page,
+    context,
+  }) => {
+    const errors = await withCsp(page);
+    const google = await stubGoogle(page);
+    const insights = await stubInsights(page);
+    await page.goto('/privacy?utm_source=e2e&email=me%40example.com#top');
+    // The banner still asks about Google Analytics; Vercel's runs already.
+    await expect(banner(page)).toBeVisible();
+    await expect.poll(() => insights).toEqual(['/_vercel/insights/script.js']);
+    await expect
+      .poll(() => views(page))
+      .toEqual([expect.stringMatching(/:\d+\/privacy\?utm_source=e2e$/)]);
+    expect(google).toEqual([]);
+    expect((await context.cookies()).map((c) => c.name)).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+
+  test('sends a key action as a virtual page view on /_action/<event>', async ({ page }) => {
+    await withCsp(page);
+    await stubGoogle(page);
+    await stubInsights(page);
+    await page.goto('/#contact');
+    await expect.poll(() => views(page)).toHaveLength(1);
+    await page.locator('#contact a[href^="mailto:"]').first().click();
+    await expect
+      .poll(() => views(page))
+      .toContainEqual(expect.stringMatching(/\/_action\/contact_click\?page=%2F&channel=email$/));
+  });
+});

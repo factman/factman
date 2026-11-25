@@ -83,19 +83,19 @@ test('CSP blocks inline and third-party scripts and framing', () => {
   assert.match(csp, /object-src 'none'/);
 });
 
-test("CSP enforces Trusted Types, with only Angular's, JSON-LD, feed and Google tag policies (ETE-267, ETE-270, ETE-120)", () => {
+test("CSP enforces Trusted Types, with only Angular's, JSON-LD, feed, Google tag and Vercel insights policies (ETE-267, ETE-270, ETE-120, ETE-271)", () => {
   const csp = value(APP, 'Content-Security-Policy');
   assert.equal(directive(csp, 'require-trusted-types-for'), "require-trusted-types-for 'script'");
   // fm-gtm sets GTM's script URL; goog#html is the policy Google's gtm.js and gtag.js create for
-  // the scripts they add themselves.
+  // the scripts they add themselves; fm-vercel-insights sets /_vercel/insights/script.js.
   assert.equal(
     directive(csp, 'trusted-types'),
-    'trusted-types angular angular#bundler fm-json-ld fm-feed-html fm-gtm goog#html',
+    'trusted-types angular angular#bundler fm-json-ld fm-feed-html fm-gtm goog#html fm-vercel-insights',
   );
   assert.doesNotMatch(csp, /'allow-duplicates'/);
 });
 
-test('CSP lets GA4 send its hits through GTM, and nothing else third party (ETE-120)', () => {
+test('CSP lets GA4 send its hits through GTM; Vercel Web Analytics stays same-origin (ETE-120, ETE-271)', () => {
   const csp = value(APP, 'Content-Security-Policy');
   const google = 'https://*.google-analytics.com https://*.googletagmanager.com';
   assert.equal(

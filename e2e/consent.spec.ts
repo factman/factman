@@ -106,7 +106,7 @@ test.describe('cookie consent banner', () => {
     await page.goto('/privacy');
     await acceptNecessary(page).click();
     await expect(banner(page)).toBeHidden();
-    await expect(page.getByText('analytics off')).toBeVisible();
+    await expect(page.getByText('analytics off', { exact: true })).toBeVisible();
 
     const change = page.getByRole('button', { name: /Change cookie settings/ });
     await change.click();
@@ -116,6 +116,6 @@ test.describe('cookie consent banner', () => {
     await page.keyboard.press('a');
     await expect(banner(page)).toBeHidden();
     await expect(change).toBeFocused();
-    await expect(page.getByText('analytics on')).toBeVisible();
+    await expect(page.getByText('analytics on', { exact: true })).toBeVisible();
   });
 });
