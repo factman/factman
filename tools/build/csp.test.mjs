@@ -13,6 +13,7 @@ import { test } from 'node:test';
 
 import {
   APP_SOURCE,
+  appScriptExtras,
   BUILD_VARIANT,
   DIST,
   headerRule,
@@ -45,7 +46,7 @@ const productionToolsRule = headerRule(vercel, TOOLS_SOURCE, { production: true 
 const storybookDir = join(DIST, STORYBOOK_DIR);
 
 test("the app CSP allows exactly the app's inline scripts (run pnpm csp:hashes if not)", () => {
-  assert.equal(scriptSrcOf(appRule), scriptSrc(inlineScriptHashes()));
+  assert.equal(scriptSrcOf(appRule), scriptSrc(inlineScriptHashes(), appScriptExtras));
 });
 
 test('script-src never falls back to unsafe-inline, and the app never allows eval', () => {

@@ -20,7 +20,9 @@ describe('CoreModule', () => {
     expect(site.name).toBe('Odunayo Mohammed');
     // site.json's own value: noindex until launch (ETE-235), then index.
     expect(site.robots).toBe(siteJson.robots);
-    expect(TestBed.inject(ANALYTICS).enabled).toBe(true);
+    expect(site.analytics.enabled).toBe(true);
+    // Tests run in dev mode, where analytics stays off (ng serve never loads GTM).
+    expect(TestBed.inject(ANALYTICS).enabled).toBe(false);
     expect(TestBed.inject(CONSENT).cookie).toBe('fm_consent');
   });
 

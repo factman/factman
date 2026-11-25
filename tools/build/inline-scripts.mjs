@@ -80,6 +80,13 @@ export const scriptSrc = (hashes, extra = []) =>
   ["script-src 'self'", ...extra, ...[...hashes.keys()].sort()].join(' ');
 
 /**
+ * Script sources the app needs beyond its own files and inline-script hashes: Google Tag Manager,
+ * which AnalyticsService adds only after the visitor allows analytics (ETE-120). GTM then loads
+ * GA4's gtag.js from the same host.
+ */
+export const appScriptExtras = ['https://www.googletagmanager.com'];
+
+/**
  * Sources Storybook needs beyond its inline-script hashes. Storybook's Angular renderer compiles
  * stories just in time (it reads the component metadata that only JIT keeps), and the JIT compiler
  * uses eval. Allowed on /storybook only; the app's rule never gets it (tools/build/csp.test.mjs).

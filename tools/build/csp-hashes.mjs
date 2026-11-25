@@ -12,6 +12,7 @@ import { format } from 'prettier';
 
 import {
   APP_SOURCE,
+  appScriptExtras,
   DIST,
   headerRule,
   inlineScriptHashes,
@@ -40,8 +41,11 @@ function setScriptSrc(rule, directive) {
 
 const app = inlineScriptHashes();
 const storybook = storybookScriptHashes();
-setScriptSrc(headerRule(config, APP_SOURCE), scriptSrc(app));
-setScriptSrc(headerRule(config, TOOLS_SOURCE, { production: true }), scriptSrc(app));
+setScriptSrc(headerRule(config, APP_SOURCE), scriptSrc(app, appScriptExtras));
+setScriptSrc(
+  headerRule(config, TOOLS_SOURCE, { production: true }),
+  scriptSrc(app, appScriptExtras),
+);
 setScriptSrc(headerRule(config, STORYBOOK_SOURCE), scriptSrc(storybook, storybookScriptExtras));
 
 writeFileSync(
