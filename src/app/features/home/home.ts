@@ -230,7 +230,8 @@ export class Home {
   protected readonly resumeVariant = signal(this.resumes[0]?.slug ?? '');
   private readonly document = inject(DOCUMENT);
 
-  /** Preview a résumé: the hero's Résumé button (fullstack) or a card's Preview. */
+  /** Preview a résumé: the hero's Résumé button (fullstack), a card's Preview, or CareerGlance's
+   * "Get the résumé" (the one last shown, else the first). */
   protected openResume(slug: string): void {
     this.resumeVariant.set(slug);
     this.resumeOpen.set(true);

@@ -110,7 +110,7 @@
   </ol>
   @if (glance(); as g) {
     <div class="experience-timeline-aside">
-      <fm-career-glance [roles]="g.roles" [stats]="g.stats" [resumeHref]="g.resumeHref" />
+      <fm-career-glance [roles]="g.roles" [stats]="g.stats" (openResume)="openResume.emit()" />
     </div>
   }
 </div>

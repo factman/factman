@@ -55,7 +55,11 @@
   description="Current roles first, then everything else from newest to oldest. Open a role to see what I shipped and the stack behind it."
 >
   @defer (on viewport; hydrate on viewport) {
-    <fm-experience-timeline [entries]="timeline" [glance]="glance" />
+    <fm-experience-timeline
+      [entries]="timeline"
+      [glance]="glance"
+      (openResume)="openResume(resumeVariant())"
+    />
   } @placeholder {
     <div class="home-deferred" aria-hidden="true"></div>
   }

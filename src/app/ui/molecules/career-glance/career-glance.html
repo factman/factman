@@ -17,7 +17,12 @@
     }
   </div>
   <div class="glance-cta">
-    <fm-button variant="secondary" [full]="true" [href]="resumeHref()" [leadingIcon]="fileText"
+    <fm-button
+      variant="secondary"
+      [full]="true"
+      [leadingIcon]="fileText"
+      ariaHaspopup="dialog"
+      (pressed)="openResume.emit()"
       >Get the résumé</fm-button
     >
   </div>

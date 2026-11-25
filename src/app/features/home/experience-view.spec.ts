@@ -103,7 +103,6 @@ describe('careerGlance', () => {
       [3, 'roles'],
       [1, 'current roles'],
     ]);
-    expect(glance.resumeHref).toBe('#resume');
   });
 });
 

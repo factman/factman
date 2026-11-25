@@ -137,7 +137,8 @@ describe('ExperienceTimeline', () => {
     ).toEqual(['Angular', 'Node.js']);
   });
 
-  it('puts CareerGlance beside the timeline when given', async () => {
+  it('puts CareerGlance beside the timeline and passes on "Get the résumé"', async () => {
+    const openResume = vi.fn();
     await render(ExperienceTimeline, {
       inputs: {
         entries,
@@ -146,10 +147,12 @@ describe('ExperienceTimeline', () => {
             { title: 'Chief Technology Officer', description: 'Simple Finance · since Jan 2024' },
           ],
           stats: [{ value: 13, suffix: '+', label: 'years since 2013' }],
-          resumeHref: '#resume',
         },
       },
+      on: { openResume },
     });
     expect(screen.getByRole('complementary', { name: 'At a glance' })).toBeTruthy();
+    await userEvent.click(screen.getByRole('button', { name: /Get the résumé/ }));
+    expect(openResume).toHaveBeenCalledTimes(1);
   });
 });
