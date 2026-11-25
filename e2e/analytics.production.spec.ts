@@ -19,7 +19,7 @@ const vercel = JSON.parse(readFileSync('vercel.json', 'utf8')) as {
 /** The app's CSP, without upgrade-insecure-requests (the test server is plain http). */
 const CSP = (
   vercel.headers
-    .find((h) => h.source === '/((?!(?:storybook|coverage|playwright)(?:/|$)).*)' && !h.has)
+    .find((h) => h.source === '/((?!(?:storybook|coverage|playwright)(?:/|$)).*)' && h.has)
     ?.headers.find((h) => h.key === 'Content-Security-Policy')?.value ?? ''
 )
   .replace(/;\s*upgrade-insecure-requests/, '')

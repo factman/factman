@@ -6,13 +6,14 @@ interface VercelHeader {
   value: string;
 }
 interface VercelConfig {
-  headers: { source: string; headers: VercelHeader[] }[];
+  headers: { source: string; has?: unknown[]; headers: VercelHeader[] }[];
 }
 
 const vercel = JSON.parse(readFileSync('vercel.json', 'utf8')) as VercelConfig;
-// The app's rule: every path but /storybook (which has its own, see storybook.spec.ts).
+// The app's rule on the production hosts: every path but /storybook (which has its own, see
+// storybook.spec.ts). Other hosts get the same policy plus the Vercel Toolbar's sources.
 const csp = vercel.headers
-  .find((h) => h.source === '/((?!(?:storybook|coverage|playwright)(?:/|$)).*)')
+  .find((h) => h.source === '/((?!(?:storybook|coverage|playwright)(?:/|$)).*)' && h.has)
   ?.headers.find((h) => h.key === 'Content-Security-Policy')?.value;
 
 // Serves pages with the production CSP from vercel.json and checks nothing is blocked: inline

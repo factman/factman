@@ -5,11 +5,11 @@ import { readFileSync } from 'node:fs';
 // the Medium image CDN are mocked here; vercel.json rewrites /feeds/medium to Medium in production.
 const feed = readFileSync('e2e/fixtures/medium-feed.xml', 'utf8');
 const vercel = JSON.parse(readFileSync('vercel.json', 'utf8')) as {
-  headers: { source: string; headers: { key: string; value: string }[] }[];
+  headers: { source: string; has?: unknown[]; headers: { key: string; value: string }[] }[];
 };
 const csp = (
   vercel.headers
-    .find((h) => h.source === '/((?!(?:storybook|coverage|playwright)(?:/|$)).*)')
+    .find((h) => h.source === '/((?!(?:storybook|coverage|playwright)(?:/|$)).*)' && h.has)
     ?.headers.find((h) => h.key === 'Content-Security-Policy')?.value ?? ''
 ).replace('upgrade-insecure-requests', '');
 // A 1×1 transparent PNG.
