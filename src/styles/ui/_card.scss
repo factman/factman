@@ -7,6 +7,10 @@
 @mixin surface {
   position: relative;
   display: flex;
+
+  // Grows to fill its slot (the grids' list items are flex columns), so every card in a row is as
+  // tall as the tallest.
+  flex: 1 1 auto;
   flex-direction: column;
   box-sizing: border-box;
   min-width: 0;

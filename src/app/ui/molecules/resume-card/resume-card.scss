@@ -8,23 +8,47 @@
 .resume-card-thumb {
   @include card.placeholder;
 
+  // A block, not the placeholder's flex row: as a flex item the <picture> kept its image's
+  // intrinsic width as a minimum and spilled past the padding in narrow cards.
+  display: block;
+  box-sizing: border-box;
   height: auto;
+  overflow: hidden;
   padding: var(--padding-lg) var(--padding-lg) 0;
   border-bottom: var(--border-width-sm) solid var(--border-subtle);
 }
 
-.resume-card-thumb img,
+.resume-card-thumb picture {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+// The page fills the thumb's width, top aligned; the frame crops the rest of the page below.
+.resume-card-thumb img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 10 / 9;
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+  background: var(--neutral-0);
+  box-shadow: var(--shadow-glass-regular);
+  object-fit: cover;
+  object-position: center top;
+}
+
 .resume-card-page {
   display: block;
-  width: 60%;
+  width: 100%;
   height: auto;
-  aspect-ratio: 210 / 297;
+  aspect-ratio: 10 / 9;
   border-radius: var(--radius-xs) var(--radius-xs) 0 0;
   background: var(--neutral-0);
   box-shadow: var(--shadow-glass-regular);
 }
 
-// A placeholder page: a few grey lines.
+// A placeholder page (no thumbnail yet): the same frame as the image, with a few grey lines.
 .resume-card-page {
   box-sizing: border-box;
   padding: var(--padding-md);
