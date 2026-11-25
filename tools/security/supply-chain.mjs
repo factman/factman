@@ -65,7 +65,7 @@ function report(prod, all) {
   return [
     '# Third-party licences',
     '',
-    `Production dependencies (shipped): ${prod.length}. All dependencies: ${all.length}.`,
+    `Production dependencies (shipped): ${prod.length}. All dependencies: ${all ? all.length : 'not listed on this runner'}.`,
     '',
     '## Production',
     '',
@@ -75,10 +75,9 @@ function report(prod, all) {
       .sort((a, b) => a.name.localeCompare(b.name))
       .map((p) => `- ${p.name}@${p.versions.join(', ')}: ${p.licence}`),
     '',
-    '## All dependencies (including build and test tools)',
-    '',
-    table(counts(all)),
-    '',
+    ...(all
+      ? ['## All dependencies (including build and test tools)', '', table(counts(all)), '']
+      : []),
   ].join('\n');
 }
 
@@ -100,7 +99,19 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   }
 
   const at = process.argv.indexOf('--report');
-  if (at > 0) writeFileSync(process.argv[at + 1], report(prod, licences(false)));
+  if (at > 0) {
+    // The full list is for the report only. pnpm can't list optional platform packages that this
+    // OS didn't install (e.g. @emnapi on Linux), so it is best-effort; production is the gate.
+    let all = null;
+    try {
+      all = licences(false);
+    } catch (error) {
+      console.warn(
+        `supply-chain: all-dependency licences unavailable here (${error.message.split('\n')[0]})`,
+      );
+    }
+    writeFileSync(process.argv[at + 1], report(prod, all));
+  }
 
   if (failures.length) {
     console.error(`supply-chain: ${failures.join('\n')}`);
