@@ -13,6 +13,12 @@ test('the page links the brand icons and the manifest, and each one is served', 
     ),
   );
   expect(hrefs).toEqual(['/favicon.ico', '/apple-touch-icon.png', '/site.webmanifest']);
+  // Sent with credentials: on a protected preview, Vercel Authentication would otherwise redirect
+  // the manifest to vercel.com, which the CSP's manifest-src 'self' blocks.
+  await expect(page.locator('link[rel="manifest"]')).toHaveAttribute(
+    'crossorigin',
+    'use-credentials',
+  );
   await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#07203f');
 
   for (const href of hrefs) expect((await request.get(href!)).ok(), href!).toBe(true);
