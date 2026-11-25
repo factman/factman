@@ -56,10 +56,39 @@
     },
     {
       "source": "/((?!(?:storybook|coverage|playwright)(?:/|$)).*)",
+      "has": [
+        {
+          "type": "host",
+          "value": {
+            "suf": "factman.dev"
+          }
+        }
+      ],
       "headers": [
         {
           "key": "Content-Security-Policy",
           "value": "default-src 'self'; script-src 'self' https://www.googletagmanager.com 'sha256-8sGKvDKC8crv9OBcqEMvqrNDWlm1/80h7NJpJzqOnLI=' 'sha256-IDjA6WpDQY+VIPYro8+IrXtASagDgZcVYdLzJQFnqSQ=' 'sha256-VM2mZqyEQZoLzoTrp5EigFvzQ0+f1wSeBuoOn95WHCg=' 'sha256-n1JwiNASFbjOQNeAir2X6pzhUQNl7s0Ucb1IxSZt52Q=' 'sha256-vZevQn0+wlpWa0tXRiLzfS2gc7qYc74I60dnNL1Zkok=' 'sha256-vl0fCtBTmRrtD+EVWov2yVMuU7QHyKPV/ze3YwQzRIg=' 'sha256-xe7VvcGkQBhiV7PLaGvf6/scktlA69la9xwV+kcNjDM='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://cdn-images-1.medium.com https://miro.medium.com https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-src https://calendar.google.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; require-trusted-types-for 'script'; trusted-types angular angular#bundler fm-json-ld fm-feed-html fm-gtm goog#html fm-vercel-insights 'allow-duplicates'; upgrade-insecure-requests"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        }
+      ]
+    },
+    {
+      "source": "/((?!(?:storybook|coverage|playwright)(?:/|$)).*)",
+      "missing": [
+        {
+          "type": "host",
+          "value": {
+            "suf": "factman.dev"
+          }
+        }
+      ],
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' https://www.googletagmanager.com 'sha256-8sGKvDKC8crv9OBcqEMvqrNDWlm1/80h7NJpJzqOnLI=' 'sha256-IDjA6WpDQY+VIPYro8+IrXtASagDgZcVYdLzJQFnqSQ=' 'sha256-VM2mZqyEQZoLzoTrp5EigFvzQ0+f1wSeBuoOn95WHCg=' 'sha256-n1JwiNASFbjOQNeAir2X6pzhUQNl7s0Ucb1IxSZt52Q=' 'sha256-vZevQn0+wlpWa0tXRiLzfS2gc7qYc74I60dnNL1Zkok=' 'sha256-vl0fCtBTmRrtD+EVWov2yVMuU7QHyKPV/ze3YwQzRIg=' 'sha256-xe7VvcGkQBhiV7PLaGvf6/scktlA69la9xwV+kcNjDM=' https://vercel.live; style-src 'self' 'unsafe-inline' https://vercel.live; img-src 'self' data: https://cdn-images-1.medium.com https://miro.medium.com https://*.google-analytics.com https://*.googletagmanager.com https://vercel.live https://vercel.com blob:; font-src 'self' https://vercel.live https://assets.vercel.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://vercel.live wss://ws-us3.pusher.com; frame-src https://calendar.google.com https://vercel.live; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; require-trusted-types-for 'script'; trusted-types angular angular#bundler fm-json-ld fm-feed-html fm-gtm goog#html fm-vercel-insights 'allow-duplicates'; upgrade-insecure-requests"
         },
         {
           "key": "X-Frame-Options",

@@ -14,6 +14,9 @@ const ruleFor = (source, { production = false } = {}) =>
   config.headers.find((h) => h.source === source && onProductionHost(h) === production);
 const forPath = (source, options) => ruleFor(source, options)?.headers ?? [];
 const value = (source, key) => forPath(source).find((h) => h.key === key)?.value;
+/** The app's header on the production hosts, and on every other host (previews, dev). */
+const appValue = (key) => forPath(APP, { production: true }).find((h) => h.key === key)?.value;
+const previewValue = (key) => value(APP, key);
 /**
  * Header sources: every path, the app (everything but the tool paths), the static Storybook
  * (ETE-220), the test reports (ETE-237), and the tool paths on the production hosts (ETE-236).
@@ -71,7 +74,7 @@ test('the catch-all rule sets no CSP or framing header, so the app and Storybook
 });
 
 test('CSP blocks inline and third-party scripts and framing', () => {
-  const csp = value(APP, 'Content-Security-Policy');
+  const csp = appValue('Content-Security-Policy');
   // Own scripts, Google Tag Manager (loaded only after consent, ETE-120), plus inline scripts allowed
   // one by one by hash (pnpm csp:hashes); never unsafe-inline.
   assert.match(
@@ -84,7 +87,7 @@ test('CSP blocks inline and third-party scripts and framing', () => {
 });
 
 test("CSP enforces Trusted Types, with only Angular's, JSON-LD, feed, Google tag and Vercel insights policies (ETE-267, ETE-270, ETE-120, ETE-271)", () => {
-  const csp = value(APP, 'Content-Security-Policy');
+  const csp = appValue('Content-Security-Policy');
   assert.equal(directive(csp, 'require-trusted-types-for'), "require-trusted-types-for 'script'");
   // fm-gtm sets GTM's script URL; goog#html is the policy Google's gtm.js and gtag.js create for
   // the scripts they add themselves; fm-vercel-insights sets /_vercel/insights/script.js.
@@ -98,7 +101,7 @@ test("CSP enforces Trusted Types, with only Angular's, JSON-LD, feed, Google tag
 });
 
 test('CSP lets GA4 send its hits through GTM; Vercel Web Analytics stays same-origin (ETE-120, ETE-271)', () => {
-  const csp = value(APP, 'Content-Security-Policy');
+  const csp = appValue('Content-Security-Policy');
   const google = 'https://*.google-analytics.com https://*.googletagmanager.com';
   assert.equal(
     directive(csp, 'connect-src'),
@@ -108,9 +111,47 @@ test('CSP lets GA4 send its hits through GTM; Vercel Web Analytics stays same-or
 });
 
 test('CSP lets only the Google Calendar scheduler load in a frame (ETE-214)', () => {
-  const csp = value(APP, 'Content-Security-Policy');
+  const csp = appValue('Content-Security-Policy');
   assert.equal(directive(csp, 'frame-src'), 'frame-src https://calendar.google.com');
-  assert.equal(value(APP, 'X-Frame-Options'), 'DENY');
+  assert.equal(appValue('X-Frame-Options'), 'DENY');
+});
+
+test('the app CSP has a production-host rule and a rule for every other host, never both (ETE-271 follow-up)', () => {
+  const rules = config.headers.filter((h) => h.source === APP);
+  assert.equal(rules.length, 2);
+  assert.deepEqual(ruleFor(APP, { production: true }).has, [PRODUCTION_HOST]);
+  assert.deepEqual(ruleFor(APP).missing, [PRODUCTION_HOST]);
+});
+
+test('previews also allow the Vercel Toolbar; production never does', () => {
+  const production = appValue('Content-Security-Policy');
+  const preview = previewValue('Content-Security-Policy');
+  assert.doesNotMatch(production, /vercel\.live|pusher|assets\.vercel\.com/);
+  assert.match(directive(preview, 'script-src'), / https:\/\/vercel\.live$/);
+  assert.equal(
+    directive(preview, 'frame-src'),
+    'frame-src https://calendar.google.com https://vercel.live',
+  );
+  assert.ok(
+    directive(preview, 'connect-src').endsWith(' https://vercel.live wss://ws-us3.pusher.com'),
+  );
+  assert.ok(
+    directive(preview, 'font-src').endsWith(' https://vercel.live https://assets.vercel.com'),
+  );
+  // Everything else, Trusted Types included, is the production policy.
+  for (const name of [
+    'default-src',
+    'object-src',
+    'base-uri',
+    'form-action',
+    'frame-ancestors',
+    'manifest-src',
+    'require-trusted-types-for',
+    'trusted-types',
+  ]) {
+    assert.equal(directive(preview, name), directive(production, name), name);
+  }
+  assert.equal(previewValue('X-Frame-Options'), 'DENY');
 });
 
 test('Storybook may frame its own preview and nothing else, and is not indexed (ETE-220)', () => {
@@ -137,7 +178,7 @@ test('on the production hosts, every tool path gets the app CSP and DENY (ETE-23
   const production = (key) =>
     forPath(TOOLS, { production: true }).find((h) => h.key === key)?.value;
   assert.deepEqual(ruleFor(TOOLS, { production: true }).has, [PRODUCTION_HOST]);
-  assert.equal(production('Content-Security-Policy'), value(APP, 'Content-Security-Policy'));
+  assert.equal(production('Content-Security-Policy'), appValue('Content-Security-Policy'));
   assert.equal(production('X-Frame-Options'), 'DENY');
   assert.doesNotMatch(directive(production('Content-Security-Policy'), 'script-src'), /unsafe-/);
 });
@@ -174,7 +215,7 @@ test('the blog feed path rewrites to the Medium feed in site.json (ETE-32)', () 
 });
 
 test('the CSP lets blog covers load from Medium, and only images', () => {
-  const csp = value(APP, 'Content-Security-Policy');
+  const csp = appValue('Content-Security-Policy');
   assert.match(
     directive(csp, 'img-src'),
     /^img-src 'self' data: https:\/\/cdn-images-1\.medium\.com https:\/\/miro\.medium\.com /,

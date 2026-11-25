@@ -16,7 +16,9 @@ const vercel = JSON.parse(readFileSync('vercel.json', 'utf8')) as VercelConfig;
 const csp = (rule?: VercelConfig['headers'][number]) =>
   rule?.headers.find((h) => h.key === 'Content-Security-Policy')?.value ?? '';
 const APP_CSP = csp(
-  vercel.headers.find((h) => h.source === '/((?!(?:storybook|coverage|playwright)(?:/|$)).*)'),
+  vercel.headers.find(
+    (h) => h.source === '/((?!(?:storybook|coverage|playwright)(?:/|$)).*)' && !!h.has,
+  ),
 );
 const PRODUCTION_TOOLS_CSP = csp(
   vercel.headers.find(

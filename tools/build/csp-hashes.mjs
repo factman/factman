@@ -1,6 +1,8 @@
 // pnpm csp:hashes: writes the hash of every inline script in the build into the CSP script-src
 // in vercel.json, so they run under script-src 'self' without 'unsafe-inline'. The app's pages
 // and the static Storybook at /storybook (ETE-220) each get their own header rule and hashes.
+// The app has two rules: the production hosts', and every other host's, which is the same policy
+// plus the Vercel Toolbar's sources (withToolbar), so previews can show the toolbar.
 // The production hosts' tool-path rule (ETE-236, ETE-237) gets the app's hashes, like every other
 // path. The reports' rule (/coverage, /playwright) allows inline scripts and is not hashed.
 // Run it after a change adds or alters an inline script (Angular's event replay, the theme
@@ -22,6 +24,7 @@ import {
   storybookScriptHashes,
   TOOLS_SOURCE,
   storybookScriptExtras,
+  withToolbar,
 } from './inline-scripts.mjs';
 
 if (!existsSync(join(DIST, STORYBOOK_DIR))) {
@@ -41,11 +44,15 @@ function setScriptSrc(rule, directive) {
 
 const app = inlineScriptHashes();
 const storybook = storybookScriptHashes();
-setScriptSrc(headerRule(config, APP_SOURCE), scriptSrc(app, appScriptExtras));
+const productionApp = headerRule(config, APP_SOURCE, { production: true });
+setScriptSrc(productionApp, scriptSrc(app, appScriptExtras));
 setScriptSrc(
   headerRule(config, TOOLS_SOURCE, { production: true }),
   scriptSrc(app, appScriptExtras),
 );
+// Every other host (previews, dev) gets the production policy plus the Vercel Toolbar's sources.
+const cspOf = (rule) => rule.headers.find((h) => h.key === 'Content-Security-Policy');
+cspOf(headerRule(config, APP_SOURCE)).value = withToolbar(cspOf(productionApp).value);
 setScriptSrc(headerRule(config, STORYBOOK_SOURCE), scriptSrc(storybook, storybookScriptExtras));
 
 writeFileSync(

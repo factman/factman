@@ -87,6 +87,32 @@ export const scriptSrc = (hashes, extra = []) =>
 export const appScriptExtras = ['https://www.googletagmanager.com'];
 
 /**
+ * Sources the Vercel Toolbar needs, by directive (vercel.com/docs/vercel-toolbar/managing-toolbar).
+ * Vercel injects the toolbar (comments, feedback) on preview deployments only, so only the app's
+ * rule for hosts other than the production ones gets them; production keeps the strict policy.
+ */
+export const TOOLBAR_SOURCES = {
+  'script-src': ['https://vercel.live'],
+  'style-src': ['https://vercel.live'],
+  'img-src': ['https://vercel.live', 'https://vercel.com', 'blob:'],
+  'font-src': ['https://vercel.live', 'https://assets.vercel.com'],
+  'connect-src': ['https://vercel.live', 'wss://ws-us3.pusher.com'],
+  'frame-src': ['https://vercel.live'],
+};
+
+/** A CSP with the Vercel Toolbar's sources added to each directive that needs them. */
+export const withToolbar = (csp) =>
+  csp
+    .split(';')
+    .map((part) => {
+      const directive = part.trim();
+      const name = directive.split(' ')[0];
+      const extra = (TOOLBAR_SOURCES[name] ?? []).filter((s) => !directive.split(' ').includes(s));
+      return [directive, ...extra].join(' ');
+    })
+    .join('; ');
+
+/**
  * Sources Storybook needs beyond its inline-script hashes. Storybook's Angular renderer compiles
  * stories just in time (it reads the component metadata that only JIT keeps), and the JIT compiler
  * uses eval. Allowed on /storybook only; the app's rule never gets it (tools/build/csp.test.mjs).

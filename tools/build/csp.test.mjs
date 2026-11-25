@@ -23,6 +23,7 @@ import {
   STORYBOOK_SOURCE,
   storybookScriptExtras,
   storybookScriptHashes,
+  withToolbar,
   TOOL_DIRS,
   TOOLS_SOURCE,
 } from './inline-scripts.mjs';
@@ -40,7 +41,8 @@ const scriptSrcOf = (rule) =>
     .map((d) => d.trim())
     .find((d) => d.startsWith('script-src '));
 
-const appRule = headerRule(vercel, APP_SOURCE);
+const appRule = headerRule(vercel, APP_SOURCE, { production: true });
+const previewAppRule = headerRule(vercel, APP_SOURCE);
 const storybookRule = headerRule(vercel, STORYBOOK_SOURCE);
 const productionToolsRule = headerRule(vercel, TOOLS_SOURCE, { production: true });
 const storybookDir = join(DIST, STORYBOOK_DIR);
@@ -49,8 +51,17 @@ test("the app CSP allows exactly the app's inline scripts (run pnpm csp:hashes i
   assert.equal(scriptSrcOf(appRule), scriptSrc(inlineScriptHashes(), appScriptExtras));
 });
 
+test("other hosts (previews) get the app CSP plus only the Vercel Toolbar's sources (run pnpm csp:hashes if not)", () => {
+  assert.equal(
+    header(previewAppRule, 'Content-Security-Policy'),
+    withToolbar(header(appRule, 'Content-Security-Policy')),
+  );
+  assert.equal(header(previewAppRule, 'X-Frame-Options'), header(appRule, 'X-Frame-Options'));
+});
+
 test('script-src never falls back to unsafe-inline, and the app never allows eval', () => {
   assert.doesNotMatch(scriptSrcOf(appRule), /unsafe-inline|unsafe-eval/);
+  assert.doesNotMatch(scriptSrcOf(previewAppRule), /unsafe-inline|unsafe-eval/);
   assert.doesNotMatch(scriptSrcOf(storybookRule), /unsafe-inline/);
 });
 
