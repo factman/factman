@@ -12,6 +12,11 @@ export {
   validateContact,
 } from './contact-form/contact-message';
 export { ContactForm } from './contact-form/contact-form';
+export {
+  type ConsentCategoryView,
+  type ConsentDecision,
+  CookieConsentTerminal,
+} from './cookie-consent-terminal/cookie-consent-terminal';
 export { CtaBanner } from './cta-banner/cta-banner';
 export {
   ExperienceTimeline,

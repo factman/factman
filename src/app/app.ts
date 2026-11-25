@@ -10,13 +10,14 @@ import {
 import { isPlatformBrowser, ViewportScroller } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { ConsentHost } from '@features/consent';
 import { TerminalHost } from '@features/terminal';
 import { TERMINAL_ENABLED, TerminalLauncher } from '@shared';
 import { filter, skip, take } from 'rxjs';
 
 @Component({
   selector: 'fm-root',
-  imports: [RouterOutlet, TerminalHost],
+  imports: [ConsentHost, RouterOutlet, TerminalHost],
   host: { '(document:keydown)': 'shortcut($event)' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './app.scss',

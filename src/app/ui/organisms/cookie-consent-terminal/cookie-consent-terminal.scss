@@ -1,0 +1,116 @@
+// The consent banner: a terminal window over the page, bottom right (full width on small
+// screens). Fixed in the top layer, so the page never shifts (ETE-119).
+
+.consent-banner {
+  width: min(28rem, 100%);
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: var(--font-sans);
+}
+
+.consent-banner[hidden] {
+  display: none;
+}
+
+.consent-banner.consent-floating {
+  position: fixed;
+  inset: auto var(--padding-lg) var(--padding-lg) auto;
+  max-height: calc(100dvh - 2 * var(--padding-lg));
+  overflow: auto;
+  overscroll-behavior: contain;
+
+  @media (width < 640px) {
+    inset: auto var(--padding-md) var(--padding-md);
+    width: auto;
+  }
+}
+
+// Fades in and rises 16px (docs/interaction-and-motion.md); appears at once with reduced motion.
+.consent-banner.consent-floating:is(:popover-open, :not([popover], [hidden])) {
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      opacity var(--duration-slow) var(--ease-out),
+      transform var(--duration-slow) var(--ease-out);
+
+    @starting-style {
+      opacity: 0;
+      transform: translateY(var(--gap-md));
+    }
+  }
+}
+
+.consent-banner .consent-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  min-height: 0;
+}
+
+.consent-banner p,
+.consent-banner .consent-title {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+// The controls sit on the page's own surface (light or dark), not on the always-dark terminal,
+// so the themed buttons, switches and link keep their contrast.
+.consent-banner .consent-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  margin-block-start: calc(var(--radius-lg) * -1);
+  padding: calc(var(--padding-md) + var(--radius-lg)) var(--padding-md) var(--padding-md);
+  border: var(--border-width-sm) solid var(--border-subtle);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  background: var(--bg-surface-raised);
+  box-shadow: var(--shadow-window);
+  color: var(--text-primary);
+}
+
+.consent-banner .fm-window {
+  position: relative;
+  z-index: 1;
+}
+
+.consent-banner .consent-categories {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.consent-banner .consent-legend {
+  margin-block-end: var(--gap-2xs);
+  padding: 0;
+  color: var(--text-secondary);
+  font: 500 0.75rem/1rem var(--font-mono);
+}
+
+.consent-banner .consent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-xs);
+}
+
+.consent-banner .consent-policy {
+  margin-inline-start: auto;
+}
+
+// The close button sits on the terminal's dark bar in both themes: use the terminal text colour,
+// or it is dark on dark in the light theme.
+// stylelint-disable-next-line selector-class-pattern -- the DS window's own BEM class
+.consent-banner .fm-window__actions .fm-btn {
+  color: var(--terminal-fg);
+}
+
+.consent-banner .consent-key {
+  font-family: var(--font-mono);
+}

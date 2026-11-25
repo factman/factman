@@ -1,0 +1,63 @@
+<section
+  #panel
+  class="consent-banner"
+  role="dialog"
+  [class.consent-floating]="floating()"
+  [attr.popover]="popover()"
+  [hidden]="floating() && !popover() && !open()"
+  aria-label="Cookie settings"
+  [attr.aria-describedby]="id + '-desc'"
+  (keydown)="keydown($event)"
+>
+  <fm-window-frame
+    variant="terminal"
+    title="consent.sh"
+    [closable]="true"
+    (closed)="dismissed.emit()"
+  >
+    <div class="fm-term__body consent-body">
+      <h2 class="fm-term__line consent-title">
+        <span class="fm-term__user">odunayo</span><span class="fm-term__sep">:</span
+        ><span class="fm-term__path">~</span><span class="fm-term__sep">$ </span
+        ><span class="fm-term__cmd">./consent</span>
+      </h2>
+      <!-- One line of text: fm-term__line keeps whitespace (pre-wrap). -->
+      <p class="fm-term__line fm-term__out is-default" [id]="id + '-desc'">{{ message }}</p>
+    </div>
+  </fm-window-frame>
+
+  <div class="consent-controls">
+    @if (customizing()) {
+      <fieldset class="consent-categories">
+        <legend class="consent-legend">Cookie categories</legend>
+        @for (c of categories(); track c.id) {
+          <fm-switch
+            size="sm"
+            [label]="c.label"
+            [description]="c.description"
+            [ngModel]="c.required || draft()[c.id]"
+            (ngModelChange)="setDraft(c.id, $event)"
+            [disabled]="c.required"
+          />
+        }
+      </fieldset>
+    }
+
+    <div class="consent-actions">
+      <fm-button #accept variant="secondary" size="sm" (pressed)="acceptAll()"
+        ><kbd class="consent-key" aria-hidden="true">a</kbd> Accept all</fm-button
+      >
+      <fm-button variant="secondary" size="sm" (pressed)="rejectAll()"
+        ><kbd class="consent-key" aria-hidden="true">r</kbd> Reject all</fm-button
+      >
+      @if (customizing()) {
+        <fm-button variant="text" size="sm" (pressed)="save()">Save choices</fm-button>
+      } @else {
+        <fm-button variant="text" size="sm" (pressed)="toggleCustomize()"
+          ><kbd class="consent-key" aria-hidden="true">c</kbd> Customize</fm-button
+        >
+      }
+      <fm-link class="consent-policy" [href]="policyHref()">Privacy policy</fm-link>
+    </div>
+  </div>
+</section>
