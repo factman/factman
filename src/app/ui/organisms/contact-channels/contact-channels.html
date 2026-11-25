@@ -15,6 +15,7 @@
     [value]="details().email"
     [href]="'mailto:' + details().email"
     [copy]="true"
+    channel="email"
   />
   @if (details().phone; as phone) {
     <fm-phone-reveal [number]="phone" />
@@ -25,6 +26,7 @@
       label="WhatsApp"
       value="Chat on WhatsApp"
       [href]="whatsapp"
+      channel="whatsapp"
     />
   }
   <div class="contact-channels-pair">
@@ -34,6 +36,7 @@
         label="Company"
         [value]="host(company.url)"
         [href]="company.url"
+        channel="website"
       />
     }
     <fm-contact-method

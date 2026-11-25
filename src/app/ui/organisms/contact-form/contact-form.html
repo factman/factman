@@ -29,6 +29,7 @@
     </div>
   } @else {
     <form
+      (focusin)="start()"
       class="contact-form-fields"
       [formGroup]="form"
       novalidate

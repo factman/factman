@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/angular';
 
 import { BlogPostCard, postDate } from './blog-post-card';
+import userEvent from '@testing-library/user-event';
+import { ANALYTICS_TRACKER } from '@shared';
 
 const post = {
   id: 'p1',
@@ -34,5 +36,19 @@ describe('BlogPostCard', () => {
   it('has a compact row layout', async () => {
     await render(BlogPostCard, { inputs: { post, layout: 'row' } });
     expect(screen.getByRole('article').classList).toContain('is-row');
+  });
+});
+
+describe('BlogPostCard analytics (FR-35)', () => {
+  it('sends blog_click with the post id and where the card is', async () => {
+    const track = vi.fn();
+    await render(BlogPostCard, {
+      inputs: { post: post, location: 'home' },
+      providers: [{ provide: ANALYTICS_TRACKER, useValue: { track } }],
+    });
+    const link = screen.getByRole('link', { name: new RegExp(post.title) });
+    link.addEventListener('click', (e) => e.preventDefault());
+    await userEvent.click(link);
+    expect(track).toHaveBeenCalledWith('blog_click', { post_id: post.id, location: 'home' });
   });
 });

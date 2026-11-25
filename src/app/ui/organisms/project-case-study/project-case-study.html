@@ -48,6 +48,10 @@
                 [variant]="i === 0 ? 'primary' : 'secondary'"
                 [href]="link.href"
                 [trailingIcon]="link.icon"
+                [fmTrack]="{
+                  name: 'project_link_click',
+                  params: { project_id: project().id, link_type: link.type },
+                }"
                 >{{ link.label }}</fm-button
               >
             }

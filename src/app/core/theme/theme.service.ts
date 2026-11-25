@@ -1,4 +1,5 @@
 import { computed, DOCUMENT, effect, inject, Injectable, signal } from '@angular/core';
+import { ANALYTICS_TRACKER } from '@shared';
 
 import { SITE } from '../config/site';
 import {
@@ -19,6 +20,7 @@ export class ThemeService {
   private readonly document = inject(DOCUMENT);
   private readonly window = this.document.defaultView;
   private readonly fallback = inject(SITE).defaultTheme;
+  private readonly tracker = inject(ANALYTICS_TRACKER);
   private readonly storage = () => this.window?.localStorage;
   private readonly media = this.window?.matchMedia?.('(prefers-color-scheme: dark)');
 
@@ -50,6 +52,7 @@ export class ThemeService {
     const theme = preference === 'system' ? null : preference;
     writeStoredTheme(this.storage, theme);
     this.stored.set(theme);
+    this.tracker.track('theme_toggle', { theme: preference });
   }
 
   /**

@@ -9,7 +9,7 @@ import {
   signal,
 } from '@angular/core';
 
-import type { ResumeDownload } from '@shared';
+import { type ResumeDownload, Track } from '@shared';
 import {
   Button,
   fieldId,
@@ -36,7 +36,7 @@ import { Dialog, WindowFrame } from '@ui/molecules';
   // resume-modal* classes are this component's; fm-window__* and fm-etab come from the design system.
   encapsulation: ViewEncapsulation.None,
   styleUrl: './resume-preview-modal.scss',
-  imports: [Button, Dialog, Icon, Skeleton, WindowFrame],
+  imports: [Button, Dialog, Icon, Skeleton, Track, WindowFrame],
   host: { style: 'display: contents' },
   templateUrl: './resume-preview-modal.html',
 })

@@ -1,17 +1,13 @@
-import { InjectionToken, NgModule, inject } from '@angular/core';
-import type { ResolvedSite } from '@shared';
+import { NgModule } from '@angular/core';
+import { ANALYTICS_TRACKER } from '@shared';
 
-import { SITE } from '../config/site';
-
-/** GTM and GA4 settings for this build (analytics is off on previews). */
-export const ANALYTICS = new InjectionToken<ResolvedSite['analytics']>('fm.analytics', {
-  providedIn: 'root',
-  factory: () => inject(SITE).analytics,
-});
+import { AnalyticsService } from './analytics.service';
 
 /**
- * Analytics (GTM and GA4). Loading the tags is gated on consent and arrives with the analytics
- * work; this module holds the configuration that work reads.
+ * Analytics (GTM and GA4): AnalyticsService, which components reach through `ANALYTICS_TRACKER`
+ * (@shared). Events go to the data layer only after consent; loading GTM arrives with ETE-120.
  */
-@NgModule({})
+@NgModule({
+  providers: [AnalyticsService, { provide: ANALYTICS_TRACKER, useExisting: AnalyticsService }],
+})
 export class AnalyticsModule {}

@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CONSENT, ConsentService, OPEN_CONSENT_EVENT } from '@core/consent';
+import { ANALYTICS_TRACKER } from '@shared';
 import {
   type ConsentCategoryView,
   type ConsentDecision,
@@ -46,6 +47,7 @@ import {
 export class ConsentHost {
   private readonly consent = inject(ConsentService);
   private readonly config = inject(CONSENT);
+  private readonly tracker = inject(ANALYTICS_TRACKER);
   private readonly browser = isPlatformBrowser(inject(PLATFORM_ID));
 
   /** Closed for this page view (decided or dismissed); reopened on request. */
@@ -104,6 +106,11 @@ export class ConsentHost {
 
   protected decide(decision: ConsentDecision): void {
     this.consent.save(decision);
+    // Sent only when the decision allows analytics: the tracker is a no-op otherwise.
+    this.tracker.track('consent_update', {
+      analytics: this.consent.granted('analytics'),
+      source: this.requested() ? 'settings' : 'prompt',
+    });
     this.close();
   }
 

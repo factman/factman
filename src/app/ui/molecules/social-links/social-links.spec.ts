@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import { SocialLinks } from './social-links';
+import { SocialLinks, socialEvent } from './social-links';
 
 const links = [
   { id: 'linkedin', label: 'LinkedIn', url: 'https://www.linkedin.com/in/mohammed-odunayo' },
@@ -36,5 +36,15 @@ describe('SocialLinks', () => {
     github.addEventListener('click', (e) => e.preventDefault());
     await userEvent.click(github);
     expect(clicked).toHaveBeenCalledWith(links[1]);
+  });
+});
+
+describe('socialEvent', () => {
+  it('maps known links to their channel and others to website', () => {
+    expect(socialEvent('linkedin')).toEqual({
+      name: 'contact_click',
+      params: { channel: 'linkedin' },
+    });
+    expect(socialEvent('eteam').params).toEqual({ channel: 'website' });
   });
 });
