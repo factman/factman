@@ -1,8 +1,8 @@
 import type { Page } from '@playwright/test';
 
-/** Google's tag and analytics hosts (GTM, GA4 beacons). */
+/** Google's tag, analytics, static and API hosts (GTM, GA4 beacons, gstatic, googleapis). */
 export const GOOGLE =
-  /^https:\/\/([a-z0-9-]+\.)*(googletagmanager\.com|google-analytics\.com|analytics\.google\.com)\//;
+  /^https:\/\/([a-z0-9-]+\.)*(googletagmanager\.com|google-analytics\.com|analytics\.google\.com|gstatic\.com|googleapis\.com)\//;
 
 /**
  * Answers every request to Google's tag and analytics hosts with an empty response, so specs

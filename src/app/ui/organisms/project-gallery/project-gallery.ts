@@ -5,9 +5,10 @@ import {
   computed,
   input,
   output,
+  inject,
 } from '@angular/core';
 
-import type { Project } from '@shared';
+import { ANALYTICS_TRACKER, ctaEvent, type Project, Track } from '@shared';
 import { Button, iconSearch } from '@ui/atoms';
 import { EmptyState, FilterBar, type FilterState, ProjectCard } from '@ui/molecules';
 
@@ -37,11 +38,14 @@ import {
   // project-gallery* classes are this component's.
   encapsulation: ViewEncapsulation.None,
   styleUrl: './project-gallery.scss',
-  imports: [Button, EmptyState, FilterBar, ProjectCard],
+  imports: [Button, EmptyState, FilterBar, ProjectCard, Track],
   host: { style: 'display: contents' },
   templateUrl: './project-gallery.html',
 })
 export class ProjectGallery {
+  /** A call to action's `cta_click` event. */
+  protected readonly cta = ctaEvent;
+
   readonly projects = input.required<readonly Project[]>();
   readonly filterable = input(false);
   readonly filter = input<ProjectFilter>(NO_FILTER);
@@ -52,6 +56,7 @@ export class ProjectGallery {
   readonly engage = output<Project>();
 
   protected readonly search = iconSearch;
+  private readonly tracker = inject(ANALYTICS_TRACKER);
   protected readonly options = computed(() => filterOptions(this.projects()));
   protected readonly selected = computed(() => selectedValues(this.filter()));
   protected readonly shown = computed(() =>
@@ -62,6 +67,14 @@ export class ProjectGallery {
   );
 
   protected onFilter(state: FilterState): void {
+    const before = this.selected();
+    for (const value of state.selected.filter((v) => !before.includes(v))) {
+      this.tracker.track('filter_used', { scope: 'projects', value });
+    }
+    // A search is reported as "search": what the visitor typed never leaves the browser.
+    if (state.query.trim() && !this.filter().query.trim()) {
+      this.tracker.track('filter_used', { scope: 'projects', value: 'search' });
+    }
     this.filterChange.emit(fromSelection(state.selected, state.query));
   }
 

@@ -137,3 +137,21 @@ export function checkParams(params: Readonly<Record<string, unknown>>): string |
   }
   return null;
 }
+
+/** A CTA's id from its label: "Book a service" → `book_a_service`. */
+export function ctaId(label: string): string {
+  return label
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+}
+
+/**
+ * The `cta_click` event for a call to action: its id comes from the label, `location` names the
+ * block it sits in (`hero`, `header`, `page_hero`, `cta_banner`, …).
+ */
+export function ctaEvent(label: string, location: string): AnalyticsEvent {
+  return { name: 'cta_click', params: { cta_id: ctaId(label), location } };
+}

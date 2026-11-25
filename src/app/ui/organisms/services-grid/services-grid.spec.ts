@@ -1,10 +1,15 @@
 import { provideRouter } from '@angular/router';
 import { render, screen, within } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
+import { ANALYTICS_TRACKER } from '@shared';
 
 import { IconRegistry } from '@ui/atoms';
 import { SERVICE_ICONS } from '@ui/molecules';
 
 import { type GridService, relatedServices, ServicesGrid } from './services-grid';
+
+/** Any URL renders nothing, so clicking a link in a test navigates without an error. */
+const ANY_ROUTE = [{ path: '**', children: [] }];
 
 const service = (slug: string, title: string, icon = 'code'): GridService => ({
   slug,
@@ -81,5 +86,23 @@ describe('ServicesGrid', () => {
     const { container } = await renderGrid();
     expect(container.querySelector('.services-grid-cta')).toBeNull();
     expect(within(container as HTMLElement).queryByText(/Compare/)).toBeNull();
+  });
+});
+
+describe('ServicesGrid analytics (cta_click)', () => {
+  it('sends cta_click from its CTA with location services_section', async () => {
+    const track = vi.fn();
+    const result = await render(ServicesGrid, {
+      inputs: { services, ctaLabel: 'Compare all services' },
+      providers: [provideRouter(ANY_ROUTE), { provide: ANALYTICS_TRACKER, useValue: { track } }],
+    });
+    result.fixture.componentRef.injector.get(IconRegistry).register(SERVICE_ICONS);
+    const link = screen.getByRole('link', { name: /Compare all services/ });
+    link.addEventListener('click', (e) => e.preventDefault());
+    await userEvent.click(link);
+    expect(track).toHaveBeenCalledWith('cta_click', {
+      cta_id: 'compare_all_services',
+      location: 'services_section',
+    });
   });
 });

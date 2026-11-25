@@ -12,9 +12,14 @@
   </ul>
   @if (ctaLabel(); as label) {
     <div class="services-grid-cta">
-      <fm-button variant="secondary" size="lg" [href]="ctaHref()" [trailingIcon]="arrow">{{
-        label
-      }}</fm-button>
+      <fm-button
+        variant="secondary"
+        size="lg"
+        [href]="ctaHref()"
+        [trailingIcon]="arrow"
+        [fmTrack]="cta(label, 'services_section')"
+        >{{ label }}</fm-button
+      >
     </div>
   }
 </div>

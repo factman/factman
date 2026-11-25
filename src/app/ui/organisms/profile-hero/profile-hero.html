@@ -16,7 +16,11 @@
         }
       </ul>
       <div class="profile-hero-actions">
-        <fm-button size="lg" [href]="servicesHref()" [trailingIcon]="icons.arrowRight"
+        <fm-button
+          size="lg"
+          [href]="servicesHref()"
+          [trailingIcon]="icons.arrowRight"
+          [fmTrack]="cta.book"
           >Book a service</fm-button
         >
         <fm-button
@@ -24,6 +28,7 @@
           size="lg"
           [href]="projectsHref()"
           [leadingIcon]="icons.layout"
+          [fmTrack]="cta.projects"
           >View projects</fm-button
         >
         <fm-button
@@ -41,6 +46,7 @@
             [leadingIcon]="icons.terminal"
             ariaHaspopup="dialog"
             (pressed)="openTerminal.emit()"
+            [fmTrack]="cta.terminal"
             >Terminal</fm-button
           >
         }

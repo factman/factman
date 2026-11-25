@@ -6,7 +6,7 @@ import {
   input,
 } from '@angular/core';
 
-import type { Service } from '@shared';
+import { ctaEvent, type Service, Track } from '@shared';
 import { Button, iconArrowRight } from '@ui/atoms';
 import { ServiceCard } from '@ui/molecules';
 
@@ -40,11 +40,14 @@ export function relatedServices<T extends { slug: string }>(
   // services-grid* classes are this component's.
   encapsulation: ViewEncapsulation.None,
   styleUrl: './services-grid.scss',
-  imports: [Button, ServiceCard],
+  imports: [Button, ServiceCard, Track],
   host: { style: 'display: contents' },
   templateUrl: './services-grid.html',
 })
 export class ServicesGrid {
+  /** A call to action's `cta_click` event. */
+  protected readonly cta = ctaEvent;
+
   readonly services = input.required<readonly GridService[]>();
   /** Shows at most this many. */
   readonly limit = input<number>();

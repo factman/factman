@@ -8,7 +8,7 @@ import {
   output,
 } from '@angular/core';
 
-import { CLOCK, type Link, type ResponsivePortrait, yearsSince } from '@shared';
+import { CLOCK, ctaEvent, type Link, type ResponsivePortrait, Track, yearsSince } from '@shared';
 import {
   Button,
   Icon,
@@ -61,11 +61,18 @@ export interface ProfileHeroStats {
   // profile-hero* classes are this component's.
   encapsulation: ViewEncapsulation.None,
   styleUrl: './profile-hero.scss',
-  imports: [AvailabilityBadge, Button, Icon, Image, SocialLinks, StatCounter, Typewriter],
+  imports: [AvailabilityBadge, Button, Icon, Image, SocialLinks, StatCounter, Track, Typewriter],
   host: { style: 'display: contents' },
   templateUrl: './profile-hero.html',
 })
 export class ProfileHero {
+  /** The hero's calls to action (`cta_click`, location `hero`). */
+  protected readonly cta = {
+    book: ctaEvent('Book a service', 'hero'),
+    projects: ctaEvent('View projects', 'hero'),
+    terminal: ctaEvent('Terminal', 'hero'),
+  };
+
   readonly profile = input.required<ProfileHeroProfile>();
   readonly photo = input<ResponsivePortrait>();
   readonly socials = input.required<readonly Pick<Link, 'id' | 'label' | 'url'>[]>();

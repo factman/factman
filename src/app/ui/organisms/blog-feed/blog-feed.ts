@@ -3,12 +3,13 @@ import {
   Component,
   ViewEncapsulation,
   computed,
+  inject,
   input,
   output,
   signal,
 } from '@angular/core';
 
-import type { BlogPost } from '@shared';
+import { ANALYTICS_TRACKER, type BlogPost } from '@shared';
 import { Button, Chip, iconRefresh, Skeleton } from '@ui/atoms';
 import { BlogPostCard } from '@ui/molecules';
 
@@ -57,6 +58,7 @@ export class BlogFeed {
 
   protected readonly refresh = iconRefresh;
   protected readonly placeholders = [0, 1, 2];
+  private readonly tracker = inject(ANALYTICS_TRACKER);
   protected readonly tag = signal(ALL_TAGS);
   protected readonly tags = computed(() => [ALL_TAGS, ...postTags(this.posts())]);
   protected readonly filtered = computed(() => {
@@ -72,4 +74,11 @@ export class BlogFeed {
   protected readonly count = computed(
     () => `${this.filtered().length} of ${this.posts().length} articles`,
   );
+
+  /** Picks a tag chip (filter_used, scope blog: the tag is Medium's, never typed text). */
+  protected selectTag(tag: string): void {
+    if (tag === this.tag()) return;
+    this.tag.set(tag);
+    this.tracker.track('filter_used', { scope: 'blog', value: tag });
+  }
 }

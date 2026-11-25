@@ -1,6 +1,7 @@
 import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
+import { ANALYTICS_TRACKER } from '@shared';
 import { iconBraces, iconServer } from '@ui/atoms';
 
 import { type StackGroup, TechStack } from './tech-stack';
@@ -60,5 +61,18 @@ describe('TechStack', () => {
   it('leaves out the chips when the filter is off', async () => {
     await renderStack(false);
     expect(screen.queryByRole('group', { name: 'Filter skills by category' })).toBeNull();
+  });
+});
+
+describe('TechStack analytics (filter_used)', () => {
+  it('sends filter_used with the category when a chip changes the filter', async () => {
+    const track = vi.fn();
+    await render(TechStack, {
+      inputs: { groups, filter: true },
+      providers: [{ provide: ANALYTICS_TRACKER, useValue: { track } }],
+    });
+    await userEvent.click(screen.getByRole('button', { name: 'Backend' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Backend' }));
+    expect(track.mock.calls).toEqual([['filter_used', { scope: 'stack', value: 'Backend' }]]);
   });
 });

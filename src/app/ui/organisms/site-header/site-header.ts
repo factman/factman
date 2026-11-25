@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { prefersReducedMotion, ScrollSpy, type SiteNavItem } from '@shared';
+import { ctaEvent, prefersReducedMotion, ScrollSpy, type SiteNavItem, Track } from '@shared';
 import {
   Button,
   IconButton,
@@ -62,11 +62,14 @@ const DESKTOP_QUERY = '(min-width: 1024px)';
   // site-header* classes are this component's; it also rounds the design system's buttons.
   encapsulation: ViewEncapsulation.None,
   styleUrl: './site-header.scss',
-  imports: [Button, IconButton, Logo, NavLink, RouterLink, ThemeToggle],
+  imports: [Button, IconButton, Logo, NavLink, RouterLink, ThemeToggle, Track],
   host: { style: 'display: contents', '(document:click)': 'clickOutside($event)' },
   templateUrl: './site-header.html',
 })
 export class SiteHeader {
+  /** "Book a service" in the bar and in the menu (`cta_click`, location `header`). */
+  protected readonly bookCta = ctaEvent('Book a service', 'header');
+
   readonly nav = input.required<readonly SiteNavItem[]>();
   readonly current = input<SiteHeaderPage>('other');
   readonly theme = input.required<Theme>();

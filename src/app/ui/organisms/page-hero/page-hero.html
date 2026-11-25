@@ -46,6 +46,7 @@
                   [service]="action.service"
                   [leadingIcon]="action.leadingIcon"
                   [trailingIcon]="action.trailingIcon"
+                  [fmTrack]="cta(action.label, 'page_hero')"
                   (schedule)="schedule.emit($event)"
                 />
               } @else {
@@ -55,6 +56,7 @@
                   [href]="action.href"
                   [leadingIcon]="action.leadingIcon"
                   [trailingIcon]="action.trailingIcon"
+                  [fmTrack]="cta(action.label, 'page_hero')"
                   >{{ action.label }}</fm-button
                 >
               }

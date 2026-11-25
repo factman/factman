@@ -2,7 +2,12 @@ import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
+import { ANALYTICS_TRACKER } from '@shared';
+
 import { PageHero } from './page-hero';
+
+/** Any URL renders nothing, so clicking a link in a test navigates without an error. */
+const ANY_ROUTE = [{ path: '**', children: [] }];
 
 const media = {
   src: '/assets/profile/odunayo-about.webp',
@@ -80,5 +85,29 @@ describe('PageHero', () => {
       'Quote per engagement',
     ]);
     expect(screen.getByText('Remote from Lagos')).toBeTruthy();
+  });
+});
+
+describe('PageHero analytics (cta_click)', () => {
+  it('sends cta_click from each action, its id from the label, location page_hero', async () => {
+    const track = vi.fn();
+    await render(PageHero, {
+      inputs: {
+        title: 'Services',
+        actions: [
+          { label: 'Browse services', href: '#catalogue' },
+          { label: 'Schedule a call', schedule: true },
+        ],
+      },
+      providers: [provideRouter(ANY_ROUTE), { provide: ANALYTICS_TRACKER, useValue: { track } }],
+    });
+    const link = screen.getByRole('link', { name: /Browse services/ });
+    link.addEventListener('click', (e) => e.preventDefault());
+    await userEvent.click(link);
+    await userEvent.click(screen.getByRole('button', { name: /Schedule a call/ }));
+    expect(track.mock.calls).toEqual([
+      ['cta_click', { cta_id: 'browse_services', location: 'page_hero' }],
+      ['cta_click', { cta_id: 'schedule_a_call', location: 'page_hero' }],
+    ]);
   });
 });
