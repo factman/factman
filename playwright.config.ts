@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
+import { decidedConsentState } from './e2e/fixtures/consent';
+
 const PORT = 4300;
 const baseURL = process.env['E2E_BASE_URL'] ?? `http://localhost:${PORT}`;
 
@@ -41,6 +43,9 @@ export default defineConfig({
     // Evidence for failures only, so the report stays small.
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
+    // Every spec starts with a stored consent decision, so the banner does not cover the page;
+    // e2e/consent.spec.ts clears it (ETE-119).
+    storageState: decidedConsentState(baseURL),
   },
   projects:
     variant === 'production'

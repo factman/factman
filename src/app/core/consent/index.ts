@@ -9,4 +9,4 @@ export {
 } from './consent-state';
 export { ConsentModule } from './consent.module';
 export { ConsentService } from './consent.service';
-export { CONSENT } from './consent.token';
+export { CONSENT, OPEN_CONSENT_EVENT } from './consent.token';

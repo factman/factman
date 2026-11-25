@@ -11,7 +11,11 @@ describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
-      providers: [provideRouter([])],
+      // The consent banner reads ConsentService (CoreModule).
+      providers: [
+        provideRouter([]),
+        importProvidersFrom(CoreModule.forRoot({ environment: 'production' })),
+      ],
     }).compileComponents();
   });
 
@@ -27,7 +31,13 @@ describe('App focus management', () => {
   const setup = async () => {
     // jsdom does not implement scrolling.
     Element.prototype.scrollIntoView ??= vi.fn();
-    await TestBed.configureTestingModule({ imports: [App], providers: [provideRouter([])] });
+    await TestBed.configureTestingModule({
+      imports: [App],
+      providers: [
+        provideRouter([]),
+        importProvidersFrom(CoreModule.forRoot({ environment: 'production' })),
+      ],
+    });
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     document.body.appendChild(fixture.nativeElement);

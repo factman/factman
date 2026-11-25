@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, DOCUMENT, inject } from '@angular/core';
-import { CONSENT } from '@core/consent';
+import { ChangeDetectionStrategy, Component, computed, DOCUMENT, inject } from '@angular/core';
+import { CONSENT, ConsentService, OPEN_CONSENT_EVENT } from '@core/consent';
 import { contact } from '@data/contact';
 import { PageHero, PrivacyPolicySection, type StorageItem } from '@ui/organisms';
 
-/** The event the consent banner (ETE-119) listens for to reopen; the footer sends it too. */
-export const OPEN_CONSENT_EVENT = 'fm-consent-open';
+export { OPEN_CONSENT_EVENT } from '@core/consent';
 
 /** What each stored key does, by name; keys not listed use their category's description. */
 const PURPOSE: Record<string, string> = {
@@ -53,11 +52,16 @@ export function storageItems(
 export class PrivacyPage {
   private readonly document = inject(DOCUMENT);
   private readonly consent = inject(CONSENT);
+  private readonly choice = inject(ConsentService);
 
   protected readonly crumbs = [{ label: 'Home', href: '/' }, { label: 'Privacy' }];
   protected readonly note = `Policy version ${this.consent.version}`;
   protected readonly storage = storageItems(this.consent.categories);
   protected readonly email = contact.email;
+  /** The status card's analytics line: on, off, or not decided yet. */
+  protected readonly analytics = computed(() =>
+    this.choice.needsDecision() ? 'unset' : this.choice.granted('analytics') ? 'granted' : 'denied',
+  );
 
   protected openSettings(): void {
     this.document.dispatchEvent(new CustomEvent(OPEN_CONSENT_EVENT));

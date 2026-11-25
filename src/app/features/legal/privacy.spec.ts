@@ -4,12 +4,17 @@ import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
 import { SITE } from '@core/config';
+import { ConsentService } from '@core/consent';
 import { site } from '@data/site';
 import { resolveSite } from '@shared';
 
 import { OPEN_CONSENT_EVENT, PrivacyPage, storageItems } from './privacy';
 
-const providers = [provideRouter([]), { provide: SITE, useValue: resolveSite(site, 'production') }];
+const providers = [
+  provideRouter([]),
+  { provide: SITE, useValue: resolveSite(site, 'production') },
+  ConsentService,
+];
 
 describe('storageItems', () => {
   it('splits each stored key into its name and lifetime, with its purpose', () => {
@@ -70,5 +75,16 @@ describe('PrivacyPage (/privacy)', () => {
     fixture.debugElement.injector.get(DOCUMENT).addEventListener(OPEN_CONSENT_EVENT, opened);
     await userEvent.click(screen.getByRole('button', { name: /cookie settings/i }));
     expect(opened).toHaveBeenCalled();
+  });
+
+  it("shows the visitor's analytics choice in the status card", async () => {
+    document.cookie = 'fm_consent=; Max-Age=0; Path=/';
+    localStorage.clear();
+    const { fixture } = await render(PrivacyPage, { providers });
+    expect(screen.getByText('analytics not decided')).toBeTruthy();
+    fixture.debugElement.injector.get(ConsentService).acceptAll();
+    fixture.detectChanges();
+    expect(screen.getByText('analytics on')).toBeTruthy();
+    fixture.debugElement.injector.get(ConsentService).reset();
   });
 });
