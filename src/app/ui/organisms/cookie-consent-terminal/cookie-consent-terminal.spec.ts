@@ -2,14 +2,36 @@ import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import { type ConsentCategoryView, CookieConsentTerminal } from './cookie-consent-terminal';
+import {
+  CONSENT_COMMAND,
+  CONSENT_TYPING,
+  type ConsentCategoryView,
+  CookieConsentTerminal,
+} from './cookie-consent-terminal';
 
 const categories: ConsentCategoryView[] = [
-  { id: 'necessary', label: 'necessary', description: 'always on', required: true, granted: true },
+  {
+    id: 'necessary',
+    label: 'necessary',
+    description: 'always on',
+    required: true,
+    granted: true,
+  },
   { id: 'analytics', label: 'analytics', description: 'GA4', required: false, granted: false },
+  {
+    id: 'advertising',
+    label: 'advertising',
+    description: 'not used on this site',
+    required: false,
+    used: false,
+    granted: false,
+  },
 ];
 
-const renderBanner = async (inputs: Record<string, unknown> = {}) => {
+/** Long enough for the command to finish typing. */
+const TYPED_MS = CONSENT_TYPING.start + CONSENT_TYPING.perChar * (CONSENT_COMMAND.length + 2);
+
+const renderBanner = async (inputs: Record<string, unknown> = {}, typed = true) => {
   const decide = vi.fn();
   const dismissed = vi.fn();
   const view = await render(CookieConsentTerminal, {
@@ -17,91 +39,131 @@ const renderBanner = async (inputs: Record<string, unknown> = {}) => {
     on: { decide, dismissed },
     providers: [provideRouter([])],
   });
+  if (typed) await screen.findByRole('button', { name: 'Accept all' }, { timeout: 2000 });
   return { ...view, decide, dismissed };
 };
 
+const typeInBanner = async (keys: string) => {
+  screen.getByRole('dialog').focus();
+  await userEvent.keyboard(keys);
+};
+
 describe('CookieConsentTerminal', () => {
-  it('is a dialog named "Cookie settings" with the policy link', async () => {
+  it('types the command with a caret, then shows the message and choices', async () => {
+    vi.useFakeTimers();
+    try {
+      const { fixture } = await renderBanner({}, false);
+      const prompt = () => screen.getByText(/^\.\/consent/, { selector: '.fm-term__cmd' });
+      expect(screen.queryByRole('button', { name: 'Accept all' })).toBeNull();
+      expect(document.querySelector('.fm-caret')).not.toBeNull();
+      vi.advanceTimersByTime(TYPED_MS);
+      fixture.detectChanges();
+      expect(prompt().textContent).toBe(CONSENT_COMMAND);
+      expect(document.querySelector('.fm-caret')).toBeNull();
+      expect(screen.getByText(/uses Google Analytics to count visits/)).toBeTruthy();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('shows the whole command at once with reduced motion', async () => {
+    const matchMedia = window.matchMedia;
+    window.matchMedia = ((q: string) => ({ matches: q.includes('reduce') })) as typeof matchMedia;
+    try {
+      await renderBanner({}, false);
+      expect(screen.getByRole('button', { name: 'Accept all' })).toBeTruthy();
+    } finally {
+      window.matchMedia = matchMedia;
+    }
+  });
+
+  it('is a dark dialog named "Cookie settings" with the policy link', async () => {
     await renderBanner();
-    expect(screen.getByRole('dialog', { name: 'Cookie settings' })).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Privacy policy' }).getAttribute('href')).toBe(
+    const dialog = screen.getByRole('dialog', { name: 'Cookie settings' });
+    expect(dialog.getAttribute('data-theme')).toBe('dark');
+    expect(screen.getByRole('link', { name: 'privacy --cookies' }).getAttribute('href')).toBe(
       '/privacy',
     );
   });
 
-  it('shows Accept all and Reject all at the same size and style', async () => {
+  it('shows Accept necessary and Accept all as the same primary button', async () => {
     await renderBanner();
-    const accept = screen.getByRole('button', { name: /Accept all/ });
-    const reject = screen.getByRole('button', { name: /Reject all/ });
-    expect(accept.className).toBe(reject.className);
+    const necessary = screen.getByRole('button', { name: 'Accept necessary' });
+    const all = screen.getByRole('button', { name: 'Accept all' });
+    expect(necessary.className).toBe(all.className);
+    expect(all.className).toContain('fm-btn--primary');
   });
 
-  it('accepts and rejects every optional category; necessary stays on', async () => {
+  it('accepts necessary only, or everything used; unused categories stay off', async () => {
     const { decide } = await renderBanner();
-    await userEvent.click(screen.getByRole('button', { name: /Accept all/ }));
-    expect(decide).toHaveBeenLastCalledWith({ necessary: true, analytics: true });
-    await userEvent.click(screen.getByRole('button', { name: /Reject all/ }));
-    expect(decide).toHaveBeenLastCalledWith({ necessary: true, analytics: false });
-  });
-
-  it('saves a per-category choice from Customize; necessary cannot be switched off', async () => {
-    const { decide } = await renderBanner();
-    await userEvent.click(screen.getByRole('button', { name: /Customize/ }));
-    const necessary = screen.getByRole('switch', { name: /necessary/ }) as HTMLInputElement;
-    expect(necessary.checked).toBe(true);
-    expect(necessary.disabled).toBe(true);
-    await userEvent.click(screen.getByRole('switch', { name: /analytics/ }));
-    await userEvent.click(screen.getByRole('button', { name: 'Save choices' }));
-    expect(decide).toHaveBeenCalledWith({ necessary: true, analytics: true });
-  });
-
-  it('starts Customize from the current choice', async () => {
-    await renderBanner({
-      categories: [categories[0], { ...categories[1], granted: true }],
+    await userEvent.click(screen.getByRole('button', { name: 'Accept all' }));
+    expect(decide).toHaveBeenLastCalledWith({
+      necessary: true,
+      analytics: true,
+      advertising: false,
     });
-    await userEvent.click(screen.getByRole('button', { name: /Customize/ }));
-    expect((screen.getByRole('switch', { name: /analytics/ }) as HTMLInputElement).checked).toBe(
-      true,
-    );
+    await userEvent.click(screen.getByRole('button', { name: 'Accept necessary' }));
+    expect(decide).toHaveBeenLastCalledWith({
+      necessary: true,
+      analytics: false,
+      advertising: false,
+    });
   });
 
-  it('responds to a, r and c with focus inside', async () => {
+  it('saves a choice from Customize, where only analytics is a switch', async () => {
     const { decide } = await renderBanner();
-    screen.getByRole('button', { name: /Accept all/ }).focus();
-    await userEvent.keyboard('c');
-    expect(screen.getByRole('switch', { name: /analytics/ })).toBeTruthy();
-    await userEvent.keyboard('r');
-    expect(decide).toHaveBeenLastCalledWith({ necessary: true, analytics: false });
-    await userEvent.keyboard('a');
-    expect(decide).toHaveBeenLastCalledWith({ necessary: true, analytics: true });
+    await userEvent.click(screen.getByRole('button', { name: 'Customize' }));
+    expect(screen.getAllByRole('switch')).toHaveLength(1);
+    const lineOf = (text: RegExp) =>
+      screen.getByText((_, el) => el?.tagName === 'P' && text.test(el.textContent ?? ''));
+    expect(lineOf(/necessary {3}always on/).textContent).toMatch(/^\[x\]/);
+    expect(lineOf(/advertising {3}not used/).textContent).toMatch(/^\[ \]/);
+    const analytics = screen.getByRole('switch', { name: /analytics/ });
+    expect(analytics.getAttribute('aria-checked')).toBe('false');
+    await userEvent.click(analytics);
+    expect(analytics.getAttribute('aria-checked')).toBe('true');
+    expect(analytics.textContent).toContain('[x]');
+    await userEvent.click(screen.getByRole('button', { name: 'Save choices' }));
+    expect(decide).toHaveBeenCalledWith({ necessary: true, analytics: true, advertising: false });
   });
 
-  it('ignores the letter keys with a modifier', async () => {
+  it('goes back from Customize with Back and with Esc', async () => {
+    const { dismissed } = await renderBanner();
+    await userEvent.click(screen.getByRole('button', { name: 'Customize' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Back' }));
+    expect(screen.getByRole('button', { name: 'Accept all' })).toBeTruthy();
+    await typeInBanner('c');
+    expect(screen.getByRole('switch')).toBeTruthy();
+    await typeInBanner('{Escape}');
+    expect(screen.getByRole('button', { name: 'Accept all' })).toBeTruthy();
+    expect(dismissed).not.toHaveBeenCalled();
+  });
+
+  it('responds to n and a with focus inside, not with a modifier', async () => {
     const { decide } = await renderBanner();
-    screen.getByRole('button', { name: /Accept all/ }).focus();
-    await userEvent.keyboard('{Control>}a{/Control}');
+    await typeInBanner('{Control>}a{/Control}');
     expect(decide).not.toHaveBeenCalled();
+    await typeInBanner('n');
+    expect(decide).toHaveBeenLastCalledWith(expect.objectContaining({ analytics: false }));
+    await typeInBanner('a');
+    expect(decide).toHaveBeenLastCalledWith(expect.objectContaining({ analytics: true }));
   });
 
-  it('closes on Esc and from the close button without deciding', async () => {
+  it('closes on Esc from the main view without deciding', async () => {
     const { decide, dismissed } = await renderBanner();
-    screen.getByRole('button', { name: /Reject all/ }).focus();
-    await userEvent.keyboard('{Escape}');
+    await typeInBanner('{Escape}');
     expect(dismissed).toHaveBeenCalledTimes(1);
-    await userEvent.click(screen.getByRole('button', { name: 'Close consent.sh' }));
-    expect(dismissed).toHaveBeenCalledTimes(2);
     expect(decide).not.toHaveBeenCalled();
   });
 
   describe('floating', () => {
     it('takes focus when asked and gives it back when it closes', async () => {
       const opener = document.createElement('button');
-      opener.textContent = 'cookie settings';
       document.body.append(opener);
       opener.focus();
 
       const { fixture } = await renderBanner({ floating: true, focusOnOpen: true });
-      expect(document.activeElement?.textContent).toContain('Accept all');
+      expect(document.activeElement).toBe(screen.getByRole('dialog'));
 
       fixture.componentRef.setInput('open', false);
       fixture.detectChanges();

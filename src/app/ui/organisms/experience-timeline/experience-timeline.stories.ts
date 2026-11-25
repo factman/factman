@@ -93,7 +93,6 @@ const GLANCE: TimelineGlance = {
     { value: 12, label: 'roles' },
     { value: 2, label: 'current roles' },
   ],
-  resumeHref: '#resume',
 };
 
 /**

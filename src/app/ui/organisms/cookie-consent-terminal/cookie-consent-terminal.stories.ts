@@ -8,7 +8,7 @@ const categories: ConsentCategoryView[] = [
   {
     id: 'necessary',
     label: 'necessary',
-    description: 'theme, consent choice and the Medium articles cache · always on',
+    description: 'theme and consent choice · always on',
     required: true,
     granted: true,
   },
@@ -19,12 +19,21 @@ const categories: ConsentCategoryView[] = [
     required: false,
     granted: false,
   },
+  {
+    id: 'advertising',
+    label: 'advertising',
+    description: 'not used on this site',
+    required: false,
+    used: false,
+    granted: false,
+  },
 ];
 
 /**
- * The cookie consent banner (FR-34): `./consent` in a terminal window. Accept all and Reject all
- * match; Customize shows a switch per category. With focus inside, `a`, `r`, `c` and Esc work.
- * The stories keep it in the flow (`floating: false`); on the site it floats bottom right.
+ * The cookie consent banner (FR-34), as in the canvas's CookieConsent: the prompt types
+ * `./consent --analytics`, then "[n] Accept necessary" and "[a] Accept all" (equal primary
+ * buttons) and "[c] Customize". Always dark. The stories keep it in the flow (`floating: false`);
+ * on the site it docks bottom left.
  */
 const meta: Meta<CookieConsentTerminal> = {
   title: 'Organisms/CookieConsentTerminal',
@@ -39,34 +48,46 @@ type Story = StoryObj<CookieConsentTerminal>;
 export const Default: Story = {
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
-    const accept = canvas.getByRole('button', { name: /accept all/i });
-    const reject = canvas.getByRole('button', { name: /reject all/i });
-    // Equally prominent: same size and style.
-    await expect(accept.className).toBe(reject.className);
-    await userEvent.click(reject);
-    await expect(args.decide).toHaveBeenCalledWith({ necessary: true, analytics: false });
+    const all = await canvas.findByRole('button', { name: 'Accept all' });
+    const necessary = canvas.getByRole('button', { name: 'Accept necessary' });
+    await expect(all.className).toBe(necessary.className);
+    await userEvent.click(necessary);
+    await expect(args.decide).toHaveBeenCalledWith({
+      necessary: true,
+      analytics: false,
+      advertising: false,
+    });
   },
 };
 
 export const Customize: Story = {
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole('button', { name: /customize/i }));
-    await userEvent.click(canvas.getByRole('switch', { name: /analytics/i }));
-    await userEvent.click(canvas.getByRole('button', { name: /save choices/i }));
-    await expect(args.decide).toHaveBeenCalledWith({ necessary: true, analytics: true });
+    await userEvent.click(await canvas.findByRole('button', { name: 'Customize' }));
+    await userEvent.click(canvas.getByRole('switch', { name: /analytics/ }));
+    await userEvent.click(canvas.getByRole('button', { name: 'Save choices' }));
+    await expect(args.decide).toHaveBeenCalledWith({
+      necessary: true,
+      analytics: true,
+      advertising: false,
+    });
   },
 };
 
 export const Keyboard: Story = {
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
-    canvas.getByRole('button', { name: /accept all/i }).focus();
+    await canvas.findByRole('button', { name: 'Accept all' });
+    canvas.getByRole('dialog').focus();
     await userEvent.keyboard('c');
-    await expect(canvas.getByRole('switch', { name: /analytics/i })).toBeInTheDocument();
+    await expect(canvas.getByRole('switch', { name: /analytics/ })).toBeInTheDocument();
     await userEvent.keyboard('{Escape}');
-    await expect(args.dismissed).toHaveBeenCalled();
+    await expect(args.dismissed).not.toHaveBeenCalled();
     await userEvent.keyboard('a');
-    await expect(args.decide).toHaveBeenCalledWith({ necessary: true, analytics: true });
+    await expect(args.decide).toHaveBeenCalledWith({
+      necessary: true,
+      analytics: true,
+      advertising: false,
+    });
   },
 };

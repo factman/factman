@@ -3,6 +3,7 @@ import {
   Component,
   ViewEncapsulation,
   input,
+  output,
   signal,
 } from '@angular/core';
 
@@ -46,7 +47,6 @@ export interface TimelineEntry {
 export interface TimelineGlance {
   roles: readonly GlanceRole[];
   stats: readonly GlanceStat[];
-  resumeHref: string;
 }
 
 /** Highlights shown before "Show more" (FR-16). */
@@ -82,6 +82,8 @@ export const initials = (name: string): string =>
 export class ExperienceTimeline {
   readonly entries = input.required<readonly TimelineEntry[]>();
   readonly glance = input<TimelineGlance>();
+  /** CareerGlance's "Get the résumé": the page opens its résumé preview. */
+  readonly openResume = output<void>();
   /** Highlights shown before "Show more". */
   readonly preview = input(PREVIEW);
 

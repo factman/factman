@@ -1,10 +1,12 @@
 import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
 
 import { CareerGlance } from './career-glance';
 
 describe('CareerGlance', () => {
-  it('lists current roles, stats and the résumé link', async () => {
+  it('lists current roles, stats and "Get the résumé", which asks the page to open it', async () => {
+    const openResume = vi.fn();
     await render(CareerGlance, {
       inputs: {
         roles: [
@@ -15,8 +17,8 @@ describe('CareerGlance', () => {
           { value: 12, suffix: '+', label: 'years since 2013' },
           { value: 10, label: 'organizations' },
         ],
-        resumeHref: '#resume',
       },
+      on: { openResume },
       providers: [provideRouter([])],
     });
     expect(screen.getByRole('complementary', { name: 'At a glance' })).toBeTruthy();
@@ -24,8 +26,11 @@ describe('CareerGlance', () => {
       2,
     );
     expect(screen.getByText('12+ years since 2013')).toBeTruthy();
-    expect(screen.getByRole('link', { name: /Get the résumé/ }).getAttribute('href')).toMatch(
-      /#resume$/,
-    );
+    // A button that opens the résumé preview, not a link that scrolls to the section.
+    expect(screen.queryByRole('link', { name: /Get the résumé/ })).toBeNull();
+    const button = screen.getByRole('button', { name: /Get the résumé/ });
+    expect(button.getAttribute('aria-haspopup')).toBe('dialog');
+    await userEvent.click(button);
+    expect(openResume).toHaveBeenCalledTimes(1);
   });
 });

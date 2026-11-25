@@ -94,6 +94,23 @@ test.describe('résumés', () => {
     await expect(page.getByRole('dialog')).toBeHidden();
   });
 
+  test('"Get the résumé" beside the timeline opens the preview, not the section', async ({
+    page,
+  }) => {
+    await openHome(page, '#experience');
+    const button = page.getByRole('button', { name: 'Get the résumé' });
+    await button.scrollIntoViewIfNeeded();
+    const scrolled = await page.evaluate(() => scrollY);
+    await button.click();
+    const dialog = dialogFor(page, 'Fullstack Software Engineer');
+    await expect(dialog).toBeVisible();
+    // The page stayed where it was: no jump to #resume.
+    expect(await page.evaluate(() => scrollY)).toBe(scrolled);
+    expect(new URL(page.url()).hash).not.toBe('#resume');
+    await page.keyboard.press('Escape');
+    await expect(dialog).toBeHidden();
+  });
+
   test('RS-24: page 2 previews load only when that page is shown', async ({ page }) => {
     const requested: string[] = [];
     page.on('request', (r) => requested.push(new URL(r.url()).pathname));

@@ -25,7 +25,7 @@ const renderHost = async () => {
   return { ...view, consent: view.fixture.debugElement.injector.get(ConsentService) };
 };
 
-const banner = () => document.querySelector<HTMLElement>('.consent-banner');
+const banner = () => document.querySelector<HTMLElement>('.consent-dock');
 /** Shown as a popover, or (without the Popover API, as in jsdom) not hidden. */
 const isOpen = () => {
   const el = banner();
@@ -45,15 +45,19 @@ describe('ConsentHost', () => {
   it('opens on a first visit and stores Accept all', async () => {
     const { consent, fixture } = await renderHost();
     expect(isOpen()).toBe(true);
-    await userEvent.click(screen.getByRole('button', { name: /Accept all/ }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Accept all' }, { timeout: 2000 }),
+    );
     await fixture.whenStable();
     expect(consent.status()).toBe('accepted');
     expect(isOpen()).toBe(false);
   });
 
-  it('stores Reject all', async () => {
+  it('stores Accept necessary', async () => {
     const { consent, fixture } = await renderHost();
-    await userEvent.click(screen.getByRole('button', { name: /Reject all/ }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Accept necessary' }, { timeout: 2000 }),
+    );
     await fixture.whenStable();
     expect(consent.status()).toBe('declined');
     expect(consent.granted('analytics')).toBe(false);
@@ -61,7 +65,7 @@ describe('ConsentHost', () => {
 
   it('closes on Esc without deciding', async () => {
     const { consent, fixture } = await renderHost();
-    screen.getByRole('button', { name: /Accept all/ }).focus();
+    screen.getByRole('dialog', { hidden: true }).focus();
     await userEvent.keyboard('{Escape}');
     await fixture.whenStable();
     expect(isOpen()).toBe(false);

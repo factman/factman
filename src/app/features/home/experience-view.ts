@@ -76,7 +76,6 @@ export function careerGlance(
   experience: readonly Organization[],
   careerStart: string,
   now: Date,
-  resumeHref = '#resume',
 ): TimelineGlance {
   const current = sortExperience(experience).flatMap((org) =>
     org.roles.filter(isCurrent).map((role) => ({
@@ -97,7 +96,6 @@ export function careerGlance(
       { value: roles, label: 'roles' },
       { value: current.length, label: 'current roles' },
     ],
-    resumeHref,
   };
 }
 
