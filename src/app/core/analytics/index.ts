@@ -2,3 +2,4 @@
 export { AnalyticsModule } from './analytics.module';
 export { AnalyticsService } from './analytics.service';
 export { ANALYTICS } from './analytics.token';
+export { VercelInsights } from './vercel-insights';
