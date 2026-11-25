@@ -7,3 +7,8 @@ allowBuilds:
   lmdb: false
   msgpackr-extract: false
   nx: false
+
+# Security overrides (ETE-130): pin a dependency's dependency to a patched release until the parent
+# updates. serve (the local e2e server) pins compression 1.8.1, which GHSA-vc2v-76pw-4v95 affects.
+overrides:
+  compression@<1.8.2: 1.8.2
