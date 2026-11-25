@@ -13,7 +13,22 @@
   border-bottom: var(--border-width-sm) solid var(--border-subtle);
 }
 
-.resume-card-thumb img,
+.resume-card-thumb picture {
+  display: block;
+  width: 100%;
+}
+
+// The page image fills the thumb's width; the page itself (A4, 60% of that width) is contained
+// and sits top centre, so every card shows it the same way, whatever the image's size.
+.resume-card-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 350 / 297;
+  object-fit: contain;
+  object-position: center top;
+}
+
 .resume-card-page {
   display: block;
   width: 60%;
