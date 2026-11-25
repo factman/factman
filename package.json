@@ -1,6 +1,6 @@
 {
   "name": "factman",
-  "version": "0.1.0-beta.3",
+  "version": "0.1.0-beta.4",
   "scripts": {
     "ng": "ng",
     "start": "nx run factman:start",
