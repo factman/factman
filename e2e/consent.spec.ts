@@ -1,6 +1,7 @@
 import { expect, type Page, test } from '@playwright/test';
 
 import { CONSENT_COOKIE } from './fixtures/consent';
+import { stubGoogle } from './fixtures/google';
 
 // FR-34 (ETE-119): the cookie consent banner, as in the canvas's CookieConsent. These start with no
 // stored decision.
@@ -62,6 +63,8 @@ test.describe('cookie consent banner', () => {
   test('Accept all stores the decision and closes; the next page does not ask', async ({
     page,
   }) => {
+    // Previews never load Google's tags, even after Accept all (ETE-120).
+    const google = await stubGoogle(page);
     await page.goto('/');
     await acceptAll(page).click();
     await expect(banner(page)).toBeHidden();
@@ -69,6 +72,7 @@ test.describe('cookie consent banner', () => {
     await page.goto('/services');
     await expect(page.locator('main h1')).toBeVisible();
     await expect(banner(page)).toHaveCount(0);
+    expect(google).toEqual([]);
   });
 
   test('Accept necessary stores the decision and closes', async ({ page }) => {
