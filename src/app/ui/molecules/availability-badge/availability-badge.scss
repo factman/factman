@@ -3,16 +3,20 @@
   display: inline-flex;
   box-sizing: border-box;
   align-items: center;
-  height: 32px;
-  padding: 0 var(--padding-md) 0 var(--padding-sm);
+  max-width: 100%;
+  min-height: 32px;
+  padding: var(--padding-2xs) var(--padding-md) var(--padding-2xs) var(--padding-sm);
   border: var(--border-width-sm) solid var(--glass-stroke);
   border-radius: var(--radius-full);
   background: var(--glass-fill-strong);
   box-shadow: var(--shadow-glass-chip);
-  white-space: nowrap;
 }
 
+// One line where it fits; in a narrow container (the contact note) it wraps instead of spilling
+// out (the pill keeps its rounded ends).
 .availability .fm-status {
-  font: 500 0.8125rem/1 var(--font-sans);
+  min-width: 0;
+  font: 500 0.8125rem/1.25 var(--font-sans);
   color: var(--text-primary);
+  white-space: normal;
 }
