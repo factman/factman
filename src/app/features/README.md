@@ -1,6 +1,6 @@
 # Features (pages)
 
-One folder per route group: home, services, projects, blog, contact, legal, not-found. A page fills a template with real content.
+One folder per route group: home, services, projects, blog, contact, legal, not-found. A page fills a template with real content. Four folders hold what every page shares: site-header and site-footer (in the app shell's MainLayout), consent (the cookie banner) and terminal.
 
 - **May depend on:** every UI level, other pages, core, shared and data.
 - Pages are the **only** level that reads the data layer.

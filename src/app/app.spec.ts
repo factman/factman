@@ -1,6 +1,6 @@
 import { ViewportScroller } from '@angular/common';
 import { importProvidersFrom } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { DeferBlockState, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { CoreModule } from '@core';
 import { TERMINAL_ENABLED, TerminalLauncher } from '@shared';
@@ -24,6 +24,24 @@ describe('App', () => {
     await fixture.whenStable();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('main#main')).not.toBeNull();
+  });
+
+  it('frames every page with the site header and footer (MainLayout)', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    // The footer is deferred until it is in view (prerendered pages have it already).
+    for (const block of await fixture.getDeferBlocks())
+      await block.render(DeferBlockState.Complete);
+    const el = fixture.nativeElement as HTMLElement;
+    const site = el.querySelector('fm-main-layout .site')!;
+    expect(site.querySelectorAll('fm-site-header')).toHaveLength(1);
+    expect(site.querySelectorAll('fm-site-footer')).toHaveLength(1);
+    // Header, then <main>, then footer, with one <main> on the page.
+    const order = [...site.querySelectorAll('fm-site-header, main, fm-site-footer')].map((n) =>
+      n.tagName.toLowerCase(),
+    );
+    expect(order).toEqual(['fm-site-header', 'main', 'fm-site-footer']);
+    expect(el.querySelectorAll('main')).toHaveLength(1);
   });
 });
 

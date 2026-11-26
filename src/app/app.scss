@@ -1,0 +1,5 @@
+// Holds the footer's place until it loads (a client-rendered page only; prerendered pages have
+// the footer already), so the viewport trigger has something to watch.
+.site-footer-placeholder {
+  min-block-size: 1px;
+}
