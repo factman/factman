@@ -6,7 +6,8 @@ import {
   output,
 } from '@angular/core';
 
-import { Button, iconFileText } from '@ui/atoms';
+import { Button } from '@ui/atoms/button/button';
+import { iconFileText } from '@ui/atoms/icon/icons';
 
 import { AvatarLabel } from '../avatar-label/avatar-label';
 import { StatCounter } from '../stat-counter/stat-counter';

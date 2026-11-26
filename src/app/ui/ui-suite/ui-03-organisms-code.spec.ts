@@ -10,8 +10,8 @@ import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
 import type { TerminalCommand } from '@shared';
-import { CodeEditor, type EditorFile } from '@ui/molecules';
-import { Terminal } from '@ui/organisms';
+import { CodeEditor, type EditorFile } from '@ui/molecules/code-editor/code-editor';
+import { Terminal } from '@ui/organisms/terminal/terminal';
 
 const profileTs: EditorFile = {
   name: 'profile.ts',

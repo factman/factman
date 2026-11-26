@@ -100,7 +100,13 @@ test('home sections are anchors, and /#contact scrolls to and focuses its sectio
 
 test('in-app navigation moves focus to the new page', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'All services' }).click();
+  const all = page.getByRole('link', { name: 'All services' });
+  // The services section hydrates as it scrolls into view (ETE-126). Click once it has, as a
+  // visitor who scrolled to it would: WebKit drops a link click that lands in the same instant
+  // the section starts hydrating (Chromium and Firefox replay it).
+  await all.scrollIntoViewIfNeeded();
+  await page.waitForLoadState('networkidle');
+  await all.click();
   await expect(page).toHaveURL(/\/services$/);
   await expect(
     page.getByRole('heading', { level: 1, name: 'Senior help for the work that matters most' }),

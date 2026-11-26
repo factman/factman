@@ -24,6 +24,9 @@ type Story = StoryObj<Home>;
 
 export const Default: Story = {
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole('heading', { level: 1, name: 'Odunayo Mohammed' })).toBeVisible();
+    // The hero renders once the browser is idle on a client-side render (ETE-126).
+    await expect(
+      await canvas.findByRole('heading', { level: 1, name: 'Odunayo Mohammed' }, { timeout: 3000 }),
+    ).toBeVisible();
   },
 };

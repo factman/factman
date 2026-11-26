@@ -7,7 +7,8 @@ import {
 } from '@angular/core';
 
 import { Reveal } from '@shared';
-import { Accordion, type AccordionItem, SectionHeader } from '@ui/molecules';
+import { Accordion, type AccordionItem } from '@ui/molecules/accordion/accordion';
+import { SectionHeader } from '@ui/molecules/section-header/section-header';
 
 /** A question and its answer (services.json `faq`, or the Services page's own). */
 export interface FaqItem {

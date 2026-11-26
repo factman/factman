@@ -45,27 +45,29 @@ The source of truth is `tools/eslint/atomic-levels.mjs`. Change this table and t
 
 ## Public APIs and path aliases
 
-Every level and every feature has an `index.ts` that is its public API. Import through the alias, never through a deep path:
+Every level and every feature has an `index.ts` that is its public API. For features, core, shared and data, import through the alias, never through a deep path.
 
-| Alias              | Points to                                                                                                            |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------- |
-| `@ui/tokens`       | `src/app/ui/tokens/index.ts`                                                                                         |
-| `@ui/atoms`        | `src/app/ui/atoms/index.ts`                                                                                          |
-| `@ui/molecules`    | `src/app/ui/molecules/index.ts`                                                                                      |
-| `@ui/organisms`    | `src/app/ui/organisms/index.ts`                                                                                      |
-| `@ui/templates`    | `src/app/ui/templates/index.ts`                                                                                      |
-| `@features/<name>` | `src/app/features/<name>/index.ts`                                                                                   |
-| `@core`            | `src/app/core/index.ts` (`CoreModule`)                                                                               |
-| `@core/<concern>`  | `src/app/core/<concern>/index.ts`                                                                                    |
-| `@shared`          | `src/app/shared/index.ts`                                                                                            |
-| `@data`            | `src/app/data/index.ts`                                                                                              |
-| `@data/<set>`      | `src/app/data/<set>.ts` (one data set: `site`, `services`, `clients` …), so each chunk carries only the JSON it uses |
+The UI levels are the exception (ETE-126): import each component from its own file, `@ui/<level>/<folder>/<file>`. esbuild can't drop what a barrel re-exports, so importing `@ui/organisms` put every organism (and Angular forms, through the contact form) into one chunk that every page loaded and evaluated. With per-component imports each page loads only the components it renders. The level's `index.ts` stays as its catalogue; lint forbids importing it (`no-restricted-imports`).
+
+| Alias              | Points to                                                                                                                            |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `@ui/<level>/*`    | `src/app/ui/<level>/*`: one component's file, e.g. `@ui/atoms/button/button` (level: tokens, atoms, molecules, organisms, templates) |
+| `@features/<name>` | `src/app/features/<name>/index.ts`                                                                                                   |
+| `@core`            | `src/app/core/index.ts` (`CoreModule`)                                                                                               |
+| `@core/<concern>`  | `src/app/core/<concern>/index.ts`                                                                                                    |
+| `@shared`          | `src/app/shared/index.ts`                                                                                                            |
+| `@data`            | `src/app/data/index.ts`                                                                                                              |
+| `@data/<set>`      | `src/app/data/<set>.ts` (one data set: `site`, `services`, `clients` …), so each chunk carries only the JSON it uses                 |
 
 ```ts
 // Good
+import { Button } from '@ui/atoms/button/button';
+import { SHARED_TOKEN } from '@shared';
+
+// Bad: the barrel pulls every atom into the page's chunk
 import { Button } from '@ui/atoms';
 
-// Bad: deep import, bypasses the public API
+// Bad: a relative path across levels
 import { Button } from '../../ui/atoms/button/button';
 ```
 

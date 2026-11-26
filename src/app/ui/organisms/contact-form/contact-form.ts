@@ -16,19 +16,17 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ANALYTICS_TRACKER, messageLengthBucket } from '@shared';
 
-import {
-  Button,
-  Checkbox,
-  Image,
-  iconEdit,
-  iconExternalLink,
-  iconMail,
-  iconSend,
-  Select,
-  TextArea,
-  TextInput,
-} from '@ui/atoms';
-import { Alert, CopyButton, type FramedImage, FormField } from '@ui/molecules';
+import { Button } from '@ui/atoms/button/button';
+import { Checkbox } from '@ui/atoms/checkbox/checkbox';
+import { iconEdit, iconExternalLink, iconMail, iconSend } from '@ui/atoms/icon/icons';
+import { Image } from '@ui/atoms/image/image';
+import { Select } from '@ui/atoms/select/select';
+import { TextArea } from '@ui/atoms/text-area/text-area';
+import { TextInput } from '@ui/atoms/text-input/text-input';
+import { Alert } from '@ui/molecules/alert/alert';
+import { CopyButton } from '@ui/molecules/copy-button/copy-button';
+import { FormField } from '@ui/molecules/form-field/form-field';
+import { type FramedImage } from '@ui/molecules/photo-frame/photo-frame';
 
 import {
   type ComposedMessage,

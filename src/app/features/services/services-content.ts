@@ -1,5 +1,5 @@
-import type { FaqItem } from '@ui/organisms';
-import type { Step } from '@ui/molecules';
+import type { FaqItem } from '@ui/organisms/faq-section/faq-section';
+import type { Step } from '@ui/molecules/stepper/stepper';
 
 /**
  * The Services page's own copy (the canvas's Services page). Each service has its own process and

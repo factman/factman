@@ -1,7 +1,7 @@
 import { DOCUMENT, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { type BeforeSendEvent, inject as injectAnalytics, pageview } from '@vercel/analytics';
-import { type AnalyticsEventName, type AnalyticsEvents, KEY_EVENTS } from '@shared';
+import { type AnalyticsEventName, type AnalyticsEvents, KEY_EVENTS, whenIdle } from '@shared';
 
 import { ANALYTICS } from './analytics.token';
 
@@ -106,7 +106,9 @@ export class VercelInsights {
   private started = false;
 
   constructor() {
-    this.start();
+    // After the page is up (ETE-126): the script and its setup are no part of the first paint, so
+    // they run in their own task instead of the bootstrap one. The first page view still counts.
+    if (this.enabled) whenIdle(this.doc.defaultView, () => this.start());
   }
 
   /** Production build, in a browser. */

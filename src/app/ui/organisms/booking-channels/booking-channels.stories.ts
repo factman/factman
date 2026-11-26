@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/angular-vite';
 import { expect } from 'storybook/test';
 
-import { iconCalendar, iconMail, iconPhoneCall, iconWhatsapp } from '@ui/atoms';
+import { iconCalendar, iconMail, iconPhoneCall, iconWhatsapp } from '@ui/atoms/icon/icons';
 
 import { BookingChannels } from './booking-channels';
 

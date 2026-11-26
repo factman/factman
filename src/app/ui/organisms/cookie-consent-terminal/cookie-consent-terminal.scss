@@ -64,14 +64,22 @@
   margin: 0;
 }
 
-// The message and choices fade in once the command is typed (page-fade).
+// The message and choices fade in once the command is typed (page-fade). Until then they keep
+// their space (visibility, not display), so the dock has its final height from the first frame
+// and never shifts the layout (CLS, ETE-126).
 .consent-dock .consent-content {
   display: flex;
   flex-direction: column;
   gap: var(--gap-sm);
 
+  &.is-pending {
+    visibility: hidden;
+  }
+
   @media (prefers-reduced-motion: no-preference) {
-    animation: consent-fade var(--duration-base) var(--ease-out);
+    &:not(.is-pending) {
+      animation: consent-fade var(--duration-base) var(--ease-out);
+    }
   }
 }
 

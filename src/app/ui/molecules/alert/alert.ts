@@ -7,7 +7,9 @@ import {
   output,
 } from '@angular/core';
 
-import { Icon, IconButton, iconClose } from '@ui/atoms';
+import { IconButton } from '@ui/atoms/icon-button/icon-button';
+import { Icon } from '@ui/atoms/icon/icon';
+import { iconClose } from '@ui/atoms/icon/icons';
 
 import { type FeedbackTone, TONE_ICON } from './alert-tone';
 

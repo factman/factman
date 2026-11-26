@@ -2,7 +2,8 @@ import { provideRouter } from '@angular/router';
 import { type Meta, type StoryObj, applicationConfig } from '@storybook/angular-vite';
 import { expect } from 'storybook/test';
 
-import { iconLightbulb, provideIcons } from '@ui/atoms';
+import { provideIcons } from '@ui/atoms/icon/icon-registry';
+import { iconLightbulb } from '@ui/atoms/icon/icons';
 
 import { ServiceCard } from './service-card';
 

@@ -1,4 +1,4 @@
-// Public API of the molecules level. Export every molecule from here; import it only via `@ui/molecules`.
+// The molecules level's catalogue. Import each export from its own file (@ui/molecules/<folder>/<file>), not from here: lint forbids it (ETE-126).
 export { Accordion, type AccordionItem } from './accordion/accordion';
 export { Alert } from './alert/alert';
 export { type FeedbackTone, TONE_ICON } from './alert/alert-tone';

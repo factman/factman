@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj, componentWrapperDecorator } from '@storybook/angular-vite';
 import { expect } from 'storybook/test';
 
-import { iconCalendar, iconMail, iconWhatsapp } from '@ui/atoms';
+import { iconCalendar, iconMail, iconWhatsapp } from '@ui/atoms/icon/icons';
 
 import { ChannelCard } from './channel-card';
 

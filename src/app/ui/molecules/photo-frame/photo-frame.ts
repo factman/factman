@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
 
-import { Image, type ImageSources } from '@ui/atoms';
+import { Image, type ImageSources } from '@ui/atoms/image/image';
 
 export interface FramedImage {
   src: string;

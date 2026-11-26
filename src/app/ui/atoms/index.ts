@@ -1,4 +1,4 @@
-// Public API of the atoms level. Export every atom from here; import it only via `@ui/atoms`.
+// The atoms level's catalogue. Import each export from its own file (@ui/atoms/<folder>/<file>), not from here: lint forbids it (ETE-126).
 export { Avatar, AVATAR_SIZES, type AvatarSize, initialsOf } from './avatar/avatar';
 export { Badge, type BadgeTone, badgeText } from './badge/badge';
 export { Button, type ButtonSize, type ButtonVariant } from './button/button';

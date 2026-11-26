@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import { iconCalendar, iconMail, iconPhoneCall } from '@ui/atoms';
+import { iconCalendar, iconMail, iconPhoneCall } from '@ui/atoms/icon/icons';
 
 import { BookingChannels } from './booking-channels';
 

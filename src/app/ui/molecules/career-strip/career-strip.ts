@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
 
-import { fieldId } from '@ui/atoms';
+import { fieldId } from '@ui/atoms/form-control/value-control';
 
 export interface CareerBar {
   /** "CTO · Jan 2024 – Present": the tooltip and the screen-reader text. */

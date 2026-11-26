@@ -25,6 +25,11 @@
   min-block-size: 50vh;
 }
 
+// The hero's space until it renders on a client-side visit (prerendered pages have it already).
+.home-hero-placeholder {
+  min-block-size: 100dvh;
+}
+
 // The résumé block under About's two columns (the canvas's #resume).
 .home-resume {
   margin-top: calc(var(--gap-5xl) * 1.25);

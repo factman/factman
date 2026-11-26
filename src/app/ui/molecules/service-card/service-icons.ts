@@ -1,5 +1,5 @@
+import { type IconDef } from '@ui/atoms/icon/icon-def';
 import {
-  type IconDef,
   iconCloud,
   iconCode,
   iconCreditCard,
@@ -8,7 +8,7 @@ import {
   iconUsers,
   iconWorkflow,
   iconWrench,
-} from '@ui/atoms';
+} from '@ui/atoms/icon/icons';
 
 /**
  * The icons services.json names for its services (ADR-004). A page that shows ServiceCards

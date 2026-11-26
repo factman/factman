@@ -1,7 +1,8 @@
 import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 
-import { iconLightbulb, provideIcons } from '@ui/atoms';
+import { provideIcons } from '@ui/atoms/icon/icon-registry';
+import { iconLightbulb } from '@ui/atoms/icon/icons';
 
 import { ServiceCard } from './service-card';
 

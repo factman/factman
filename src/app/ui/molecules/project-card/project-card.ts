@@ -9,7 +9,10 @@ import {
 import { RouterLink } from '@angular/router';
 
 import type { Project } from '@shared';
-import { Button, Image, Tag, type TagTone, iconArrowUpRight, iconCode, iconLock } from '@ui/atoms';
+import { Button } from '@ui/atoms/button/button';
+import { iconArrowUpRight, iconCode, iconLock } from '@ui/atoms/icon/icons';
+import { Image } from '@ui/atoms/image/image';
+import { Tag, type TagTone } from '@ui/atoms/tag/tag';
 
 const STATUS: Record<Project['status'], { label: string; tone: TagTone }> = {
   completed: { label: 'Completed', tone: 'success' },

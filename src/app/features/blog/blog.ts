@@ -3,8 +3,9 @@ import { BlogRepository } from '@core/data';
 import { profile } from '@data/profile';
 import { site } from '@data/site';
 import { portraitSources } from '@shared';
-import { iconArrowUpRight, iconMedium, iconRss } from '@ui/atoms';
-import { BlogFeed, type HeroAction, PageHero } from '@ui/organisms';
+import { iconArrowUpRight, iconMedium, iconRss } from '@ui/atoms/icon/icons';
+import { BlogFeed } from '@ui/organisms/blog-feed/blog-feed';
+import { type HeroAction, PageHero } from '@ui/organisms/page-hero/page-hero';
 
 /**
  * Blog (/blog, FR-25): PageHero with "Follow on Medium" and the RSS feed, then every article read

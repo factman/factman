@@ -9,7 +9,9 @@ import {
 } from '@angular/core';
 import { ANALYTICS_TRACKER } from '@shared';
 
-import { Chip, Icon, type IconDef } from '@ui/atoms';
+import { Chip } from '@ui/atoms/chip/chip';
+import { Icon } from '@ui/atoms/icon/icon';
+import { type IconDef } from '@ui/atoms/icon/icon-def';
 
 /** One technology: its name, an icon, years of use (from `since`) and whether it is featured. */
 export interface StackItem {

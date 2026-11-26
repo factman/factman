@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
 
-import { Icon, iconCheck } from '@ui/atoms';
+import { Icon } from '@ui/atoms/icon/icon';
+import { iconCheck } from '@ui/atoms/icon/icons';
 
 export type StepStatus = 'completed' | 'current' | 'upcoming' | 'error';
 

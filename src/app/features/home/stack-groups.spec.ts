@@ -1,4 +1,4 @@
-import { iconBraces, iconServer } from '@ui/atoms';
+import { iconBraces, iconServer } from '@ui/atoms/icon/icons';
 
 import { SKILL_ICONS, stackGroups } from './stack-groups';
 

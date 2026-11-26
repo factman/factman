@@ -9,8 +9,11 @@ import {
 } from '@angular/core';
 
 import { ANALYTICS_TRACKER, ctaEvent, type Project, Track } from '@shared';
-import { Button, iconSearch } from '@ui/atoms';
-import { EmptyState, FilterBar, type FilterState, ProjectCard } from '@ui/molecules';
+import { Button } from '@ui/atoms/button/button';
+import { iconSearch } from '@ui/atoms/icon/icons';
+import { EmptyState } from '@ui/molecules/empty-state/empty-state';
+import { FilterBar, type FilterState } from '@ui/molecules/filter-bar/filter-bar';
+import { ProjectCard } from '@ui/molecules/project-card/project-card';
 
 import type { HeroAction } from '../page-hero/page-hero';
 

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
 
-import { Icon, iconHeart } from '@ui/atoms';
+import { Icon } from '@ui/atoms/icon/icon';
+import { iconHeart } from '@ui/atoms/icon/icons';
 
 import { WindowFrame } from '../window-frame/window-frame';
 

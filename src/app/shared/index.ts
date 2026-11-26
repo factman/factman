@@ -13,6 +13,7 @@ export * from './terminal/terminal';
 export * from './site/resolve-site';
 export * from './time/clock';
 export * from './time/year-month';
+export * from './time/when-idle';
 export * from './experience/experience';
 export * from './experience/years';
 export * from './experience/counters';

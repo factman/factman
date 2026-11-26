@@ -17,17 +17,19 @@ import {
   portraitSources,
   type Service,
 } from '@shared';
-import { Button, IconRegistry, iconArrowRight, iconCalendar, iconMail } from '@ui/atoms';
-import { type BookingChannel, SERVICE_ICONS } from '@ui/molecules';
+import { Button } from '@ui/atoms/button/button';
+import { IconRegistry } from '@ui/atoms/icon/icon-registry';
+import { iconArrowRight, iconCalendar, iconMail } from '@ui/atoms/icon/icons';
+import { type BookingChannel } from '@ui/molecules/booking-card/booking-card';
+import { SERVICE_ICONS } from '@ui/molecules/service-card/service-icons';
+import { type HeroAction, PageHero } from '@ui/organisms/page-hero/page-hero';
+import { SchedulerModal } from '@ui/organisms/scheduler-modal/scheduler-modal';
 import {
-  type HeroAction,
-  PageHero,
   priceLabel,
-  SchedulerModal,
   ServiceDetailBody,
-  ServicesGrid,
-} from '@ui/organisms';
-import { SectionLayout } from '@ui/templates';
+} from '@ui/organisms/service-detail-body/service-detail-body';
+import { ServicesGrid } from '@ui/organisms/services-grid/services-grid';
+import { SectionLayout } from '@ui/templates/section-layout/section-layout';
 
 import { bookingPerson } from './booking';
 

@@ -10,8 +10,10 @@ import {
 } from '@angular/core';
 import { DomSanitizer, type SafeResourceUrl } from '@angular/platform-browser';
 
-import { Button, iconArrowUpRight, Spinner } from '@ui/atoms';
-import { Dialog } from '@ui/molecules';
+import { Button } from '@ui/atoms/button/button';
+import { iconArrowUpRight } from '@ui/atoms/icon/icons';
+import { Spinner } from '@ui/atoms/spinner/spinner';
+import { Dialog } from '@ui/molecules/dialog/dialog';
 
 /** Only Google Calendar appointment schedules may be framed (the CSP's one frame source). */
 const EMBED =

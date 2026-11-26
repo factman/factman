@@ -43,6 +43,18 @@ test.describe('home', () => {
       await section.scrollIntoViewIfNeeded();
       await expect(section.locator('.home-deferred')).toHaveCount(0);
     }
+    // Organisms whose host is display: contents hydrate too (ETE-126): Experience's "Show more"
+    // expands once its section is in view.
+    const first = page
+      .locator('section#experience')
+      .getByRole('button', { name: /^Show \d+ more/ })
+      .first();
+    await first.scrollIntoViewIfNeeded();
+    // Pinned by what it controls: its name changes to "Show less" once expanded.
+    const controls = await first.getAttribute('aria-controls');
+    const more = page.locator(`section#experience button[aria-controls="${controls}"]`);
+    await more.click();
+    await expect(more).toHaveAttribute('aria-expanded', 'true');
     // The contact form hydrated with its section: an empty submit shows the inline errors.
     const form = page.locator('#contact form');
     await form.getByRole('button', { name: /Compose email/ }).click();

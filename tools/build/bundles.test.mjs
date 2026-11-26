@@ -5,6 +5,7 @@
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { gzipSync } from 'node:zlib';
 import { test } from 'node:test';
 
 const dist = 'dist/factman/browser';
@@ -104,4 +105,36 @@ test('the terminal host and its commands are a lazy chunk, not in the initial bu
     js.some((f) => !initial.has(f) && read(f).includes(marker)),
     'no lazy chunk holds the terminal',
   );
+});
+
+// Performance budgets (PF, ETE-126): the JavaScript each prerendered page downloads at once (its
+// entry script and modulepreloads), gzipped. Angular's own "initial" budget (angular.json) covers
+// the app's initial files; this covers what each route adds. Every page shares one UI-kit chunk
+// (the @ui barrels can't be split by route), which sets the floor; a page that grows past its
+// ceiling fails the build. Lower the ceilings when the chunking work lands.
+const JS_BUDGET_KB = {
+  'index.html': 155,
+  'services/index.html': 160,
+  'projects/index.html': 165,
+  'blog/index.html': 160,
+  'privacy/index.html': 150,
+  '404.html': 145,
+};
+const gzipKb = (files) =>
+  [...files].reduce(
+    (kb, f) =>
+      kb + gzipSync(readFileSync(join(dist, f.replace(/^\//, ''))), { level: 9 }).length / 1024,
+    0,
+  );
+
+test('each page stays within its JavaScript budget (gzip, ETE-126)', () => {
+  const rows = Object.entries(JS_BUDGET_KB).map(([page, budget]) => {
+    const kb = gzipKb(loads(page));
+    return { page, kb: Math.round(kb * 10) / 10, budget };
+  });
+  console.log(
+    `\n${rows.map((r) => `${r.page.padEnd(22)} ${String(r.kb).padStart(6)} KB gz  (budget ${r.budget})`).join('\n')}\n`,
+  );
+  for (const r of rows)
+    assert.ok(r.kb <= r.budget, `${r.page}: ${r.kb} KB gz, budget ${r.budget} KB`);
 });

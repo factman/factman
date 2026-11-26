@@ -1,7 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, DOCUMENT, inject } from '@angular/core';
 import { CONSENT, ConsentService, OPEN_CONSENT_EVENT } from '@core/consent';
 import { contact } from '@data/contact';
-import { PageHero, PrivacyPolicySection, type StorageItem } from '@ui/organisms';
+import { PageHero } from '@ui/organisms/page-hero/page-hero';
+import {
+  PrivacyPolicySection,
+  type StorageItem,
+} from '@ui/organisms/privacy-policy-section/privacy-policy-section';
 
 export { OPEN_CONSENT_EVENT } from '@core/consent';
 

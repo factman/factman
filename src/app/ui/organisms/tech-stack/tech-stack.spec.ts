@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
 import { ANALYTICS_TRACKER } from '@shared';
-import { iconBraces, iconServer } from '@ui/atoms';
+import { iconBraces, iconServer } from '@ui/atoms/icon/icons';
 
 import { type StackGroup, TechStack } from './tech-stack';
 

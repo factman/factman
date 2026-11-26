@@ -1,7 +1,7 @@
 import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 
-import { iconMail } from '@ui/atoms';
+import { iconMail } from '@ui/atoms/icon/icons';
 
 import { List } from './list';
 

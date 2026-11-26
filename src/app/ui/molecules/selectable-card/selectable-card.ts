@@ -6,7 +6,9 @@ import {
   output,
 } from '@angular/core';
 
-import { Icon, type IconDef, fieldId } from '@ui/atoms';
+import { fieldId } from '@ui/atoms/form-control/value-control';
+import { Icon } from '@ui/atoms/icon/icon';
+import { type IconDef } from '@ui/atoms/icon/icon-def';
 
 /**
  * A card the visitor picks, such as the kind of call to book. It is a real radio button (or

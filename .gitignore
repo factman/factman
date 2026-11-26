@@ -200,3 +200,4 @@ yarn.lock
 
 /coverage-raw
 /blob-report
+.lighthouseci/

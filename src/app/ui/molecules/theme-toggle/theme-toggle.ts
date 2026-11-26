@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 
-import { Button, IconButton, iconMoon, iconSun } from '@ui/atoms';
+import { Button } from '@ui/atoms/button/button';
+import { IconButton } from '@ui/atoms/icon-button/icon-button';
+import { iconMoon, iconSun } from '@ui/atoms/icon/icons';
 
 export type Theme = 'light' | 'dark';
 

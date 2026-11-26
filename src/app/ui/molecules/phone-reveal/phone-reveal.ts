@@ -12,7 +12,8 @@ import {
   signal,
 } from '@angular/core';
 
-import { Button, iconEye, iconPhone } from '@ui/atoms';
+import { Button } from '@ui/atoms/button/button';
+import { iconEye, iconPhone } from '@ui/atoms/icon/icons';
 
 import { ContactMethod } from '../contact-method/contact-method';
 import { formatPhone, maskPhone } from './phone';

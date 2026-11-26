@@ -9,15 +9,11 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import {
-  Button,
-  Chip,
-  type ChipToggle,
-  Select,
-  type SelectOption,
-  TextInput,
-  iconSearch,
-} from '@ui/atoms';
+import { Button } from '@ui/atoms/button/button';
+import { Chip, type ChipToggle } from '@ui/atoms/chip/chip';
+import { iconSearch } from '@ui/atoms/icon/icons';
+import { Select, type SelectOption } from '@ui/atoms/select/select';
+import { TextInput } from '@ui/atoms/text-input/text-input';
 
 export interface FilterOption {
   value: string;

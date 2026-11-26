@@ -1,7 +1,9 @@
 import { type Meta, type StoryObj, moduleMetadata } from '@storybook/angular-vite';
 import { expect } from 'storybook/test';
 
-import { Select, TextArea, TextInput } from '@ui/atoms';
+import { Select } from '@ui/atoms/select/select';
+import { TextArea } from '@ui/atoms/text-area/text-area';
+import { TextInput } from '@ui/atoms/text-input/text-input';
 
 import { FormField } from './form-field';
 

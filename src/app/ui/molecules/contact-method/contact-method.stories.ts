@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/angular-vite';
 import { expect } from 'storybook/test';
 
-import { iconClock, iconMail, iconPhone } from '@ui/atoms';
+import { iconClock, iconMail, iconPhone } from '@ui/atoms/icon/icons';
 
 import { ContactMethod } from './contact-method';
 

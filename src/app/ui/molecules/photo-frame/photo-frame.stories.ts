@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj, moduleMetadata } from '@storybook/angular-vite';
 import { expect } from 'storybook/test';
 
-import { Logo } from '@ui/atoms';
+import { Logo } from '@ui/atoms/logo/logo';
 
 import { AvailabilityBadge } from '../availability-badge/availability-badge';
 import { PhotoFrame } from './photo-frame';

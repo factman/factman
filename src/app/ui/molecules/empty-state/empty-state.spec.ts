@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import { iconSearch } from '@ui/atoms';
+import { iconSearch } from '@ui/atoms/icon/icons';
 
 import { EmptyState } from './empty-state';
 

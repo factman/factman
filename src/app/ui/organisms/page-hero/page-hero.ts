@@ -7,16 +7,14 @@ import {
 } from '@angular/core';
 import { ctaEvent, Track } from '@shared';
 
-import {
-  Button,
-  type ButtonVariant,
-  Icon,
-  type IconDef,
-  Image,
-  Tag,
-  type TagTone,
-} from '@ui/atoms';
-import { type Crumb, Breadcrumbs, type FramedImage, ScheduleCallButton } from '@ui/molecules';
+import { Button, type ButtonVariant } from '@ui/atoms/button/button';
+import { Icon } from '@ui/atoms/icon/icon';
+import { type IconDef } from '@ui/atoms/icon/icon-def';
+import { Image } from '@ui/atoms/image/image';
+import { Tag, type TagTone } from '@ui/atoms/tag/tag';
+import { type Crumb, Breadcrumbs } from '@ui/molecules/breadcrumbs/breadcrumbs';
+import { type FramedImage } from '@ui/molecules/photo-frame/photo-frame';
+import { ScheduleCallButton } from '@ui/molecules/schedule-call-button/schedule-call-button';
 
 /** A call to action: a link (`href`), or "Schedule a call" (`schedule`), which emits `schedule`. */
 export interface HeroAction {

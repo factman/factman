@@ -2,7 +2,7 @@ import { signal } from '@angular/core';
 import { type Meta, type StoryObj, moduleMetadata } from '@storybook/angular-vite';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 
-import { Button } from '@ui/atoms';
+import { Button } from '@ui/atoms/button/button';
 
 import { Dialog } from './dialog';
 

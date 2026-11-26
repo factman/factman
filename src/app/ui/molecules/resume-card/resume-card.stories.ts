@@ -1,7 +1,8 @@
 import { type Meta, type StoryObj, applicationConfig } from '@storybook/angular-vite';
 import { expect, fn, userEvent } from 'storybook/test';
 
-import { iconCloud, iconLayout, iconMobile, provideIcons } from '@ui/atoms';
+import { provideIcons } from '@ui/atoms/icon/icon-registry';
+import { iconCloud, iconLayout, iconMobile } from '@ui/atoms/icon/icons';
 
 import { ResumeCard } from './resume-card';
 

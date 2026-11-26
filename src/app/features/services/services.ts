@@ -2,18 +2,16 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { ServicesRepository } from '@core/data';
 import { profile } from '@data/profile';
 import { countWord, portraitSources } from '@shared';
-import { IconRegistry, iconCalendar, iconGrid } from '@ui/atoms';
-import { SERVICE_ICONS } from '@ui/molecules';
-import {
-  BookingChannels,
-  FaqSection,
-  type HeroAction,
-  PageHero,
-  ProcessSection,
-  SchedulerModal,
-  ServicesGrid,
-} from '@ui/organisms';
-import { SectionLayout } from '@ui/templates';
+import { IconRegistry } from '@ui/atoms/icon/icon-registry';
+import { iconCalendar, iconGrid } from '@ui/atoms/icon/icons';
+import { SERVICE_ICONS } from '@ui/molecules/service-card/service-icons';
+import { BookingChannels } from '@ui/organisms/booking-channels/booking-channels';
+import { FaqSection } from '@ui/organisms/faq-section/faq-section';
+import { type HeroAction, PageHero } from '@ui/organisms/page-hero/page-hero';
+import { ProcessSection } from '@ui/organisms/process-section/process-section';
+import { SchedulerModal } from '@ui/organisms/scheduler-modal/scheduler-modal';
+import { ServicesGrid } from '@ui/organisms/services-grid/services-grid';
+import { SectionLayout } from '@ui/templates/section-layout/section-layout';
 
 import { bookingChannels } from './booking';
 import { ENGAGEMENT_STEPS, SERVICES_FAQ } from './services-content';

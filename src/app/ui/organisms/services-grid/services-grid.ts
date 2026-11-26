@@ -7,8 +7,9 @@ import {
 } from '@angular/core';
 
 import { ctaEvent, type Service, Track } from '@shared';
-import { Button, iconArrowRight } from '@ui/atoms';
-import { ServiceCard } from '@ui/molecules';
+import { Button } from '@ui/atoms/button/button';
+import { iconArrowRight } from '@ui/atoms/icon/icons';
+import { ServiceCard } from '@ui/molecules/service-card/service-card';
 
 /** What a tile needs of a service. */
 export type GridService = Pick<Service, 'slug' | 'title' | 'summary' | 'icon' | 'deliverables'>;

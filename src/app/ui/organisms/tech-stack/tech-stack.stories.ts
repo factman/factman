@@ -12,7 +12,7 @@ import {
   iconPackage,
   iconServer,
   iconTerminal,
-} from '@ui/atoms';
+} from '@ui/atoms/icon/icons';
 
 import { type StackGroup, TechStack } from './tech-stack';
 

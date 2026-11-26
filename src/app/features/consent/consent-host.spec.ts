@@ -9,6 +9,13 @@ import userEvent from '@testing-library/user-event';
 import { ConsentHost } from './consent-host';
 import { ANALYTICS_TRACKER } from '@shared';
 
+/** A first visit's banner opens once the browser is idle (ETE-126); here, at once. */
+const idleNow = () =>
+  vi.stubGlobal('requestIdleCallback', (cb: () => void) => {
+    cb();
+    return 0;
+  });
+
 const clear = () => {
   document.cookie = 'fm_consent=; Max-Age=0; Path=/';
   localStorage.clear();
@@ -41,7 +48,9 @@ const isOpen = () => {
 
 describe('ConsentHost', () => {
   beforeEach(clear);
+  beforeEach(idleNow);
   afterEach(clear);
+  afterEach(() => vi.unstubAllGlobals());
 
   it('opens on a first visit and stores Accept all', async () => {
     const { consent, fixture } = await renderHost();
@@ -90,6 +99,8 @@ describe('ConsentHost', () => {
 
 describe('ConsentHost analytics (FR-35)', () => {
   beforeEach(clear);
+  beforeEach(idleNow);
+  afterEach(() => vi.unstubAllGlobals());
 
   it('records the decision as consent_update from the prompt', async () => {
     const track = vi.fn();

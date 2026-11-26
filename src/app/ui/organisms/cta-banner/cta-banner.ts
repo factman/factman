@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
 import { ctaEvent, Track } from '@shared';
 
-import { Button, Image } from '@ui/atoms';
-import type { FramedImage } from '@ui/molecules';
+import { Button } from '@ui/atoms/button/button';
+import { Image } from '@ui/atoms/image/image';
+import type { FramedImage } from '@ui/molecules/photo-frame/photo-frame';
 
 import type { HeroAction } from '../page-hero/page-hero';
 

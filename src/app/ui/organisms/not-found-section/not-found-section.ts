@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
 
-import { Button, Image, iconHome } from '@ui/atoms';
-import { type FramedImage, WindowFrame } from '@ui/molecules';
+import { Button } from '@ui/atoms/button/button';
+import { iconHome } from '@ui/atoms/icon/icons';
+import { Image } from '@ui/atoms/image/image';
+import { type FramedImage } from '@ui/molecules/photo-frame/photo-frame';
+import { WindowFrame } from '@ui/molecules/window-frame/window-frame';
 
 /** A page the not-found section offers instead (Projects, Services, Blog …). */
 export interface NotFoundSuggestion {

@@ -9,11 +9,9 @@ import {
 } from '@angular/core';
 
 import { CLOCK, ctaEvent, type Link, type ResponsivePortrait, Track, yearsSince } from '@shared';
+import { Button } from '@ui/atoms/button/button';
+import { Icon } from '@ui/atoms/icon/icon';
 import {
-  Button,
-  Icon,
-  Image,
-  Typewriter,
   iconArrowRight,
   iconBriefcase,
   iconClock,
@@ -21,8 +19,15 @@ import {
   iconLayout,
   iconPin,
   iconTerminal,
-} from '@ui/atoms';
-import { type Availability, AvailabilityBadge, SocialLinks, StatCounter } from '@ui/molecules';
+} from '@ui/atoms/icon/icons';
+import { Image } from '@ui/atoms/image/image';
+import { Typewriter } from '@ui/atoms/typewriter/typewriter';
+import {
+  type Availability,
+  AvailabilityBadge,
+} from '@ui/molecules/availability-badge/availability-badge';
+import { SocialLinks } from '@ui/molecules/social-links/social-links';
+import { StatCounter } from '@ui/molecules/stat-counter/stat-counter';
 
 /** What the hero shows about the owner: the profile.json fields it uses. */
 export interface ProfileHeroProfile {

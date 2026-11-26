@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/angular-vite';
 import { expect } from 'storybook/test';
 
-import { iconBookOpen, iconGlobe, iconGraduationCap } from '@ui/atoms';
+import { iconBookOpen, iconGlobe, iconGraduationCap } from '@ui/atoms/icon/icons';
 
 import { AboutSection } from './about-section';
 

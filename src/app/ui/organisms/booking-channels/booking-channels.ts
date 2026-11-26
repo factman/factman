@@ -6,8 +6,9 @@ import {
   output,
 } from '@angular/core';
 
-import { Image } from '@ui/atoms';
-import { type Channel, ChannelCard, type FramedImage } from '@ui/molecules';
+import { Image } from '@ui/atoms/image/image';
+import { type Channel, ChannelCard } from '@ui/molecules/channel-card/channel-card';
+import { type FramedImage } from '@ui/molecules/photo-frame/photo-frame';
 
 /**
  * "Pick the channel that suits you" (the canvas's BookingChannelsSection, `#book`): a dark band

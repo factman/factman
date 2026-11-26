@@ -52,6 +52,14 @@ function loadedScript() {
 }
 
 describe('VercelInsights', () => {
+  // The script starts once the browser is idle (ETE-126); here, at once.
+  beforeEach(() =>
+    vi.stubGlobal('requestIdleCallback', (cb: () => void) => {
+      cb();
+      return 0;
+    }),
+  );
+  afterEach(() => vi.unstubAllGlobals());
   beforeEach(() => {
     scripts().forEach((s) => s.remove());
     delete win.va;

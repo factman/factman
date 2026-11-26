@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { Icon, iconChevronRight } from '@ui/atoms';
+import { Icon } from '@ui/atoms/icon/icon';
+import { iconChevronRight } from '@ui/atoms/icon/icons';
 
 export interface Crumb {
   label: string;

@@ -7,7 +7,10 @@ import {
 } from '@angular/core';
 
 import { type BlogPost, Track } from '@shared';
-import { Icon, Image, Tag, iconArrowUpRight } from '@ui/atoms';
+import { Icon } from '@ui/atoms/icon/icon';
+import { iconArrowUpRight } from '@ui/atoms/icon/icons';
+import { Image } from '@ui/atoms/image/image';
+import { Tag } from '@ui/atoms/tag/tag';
 
 /** "12 Mar 2025": dates in UK day-month order, the same on the server and in the browser. */
 export const postDate = (iso: string): string =>

@@ -7,7 +7,8 @@ import {
   output,
 } from '@angular/core';
 
-import { IconButton, iconClose } from '@ui/atoms';
+import { IconButton } from '@ui/atoms/icon-button/icon-button';
+import { iconClose } from '@ui/atoms/icon/icons';
 
 export interface WindowTab {
   label: string;

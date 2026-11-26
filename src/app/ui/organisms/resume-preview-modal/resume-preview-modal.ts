@@ -10,18 +10,19 @@ import {
 } from '@angular/core';
 
 import { type ResumeDownload, Track } from '@shared';
+import { Button } from '@ui/atoms/button/button';
+import { fieldId } from '@ui/atoms/form-control/value-control';
+import { Icon } from '@ui/atoms/icon/icon';
 import {
-  Button,
-  fieldId,
-  Icon,
   iconChevronLeft,
   iconChevronRight,
   iconDownload,
   iconExternalLink,
   iconFileText,
-  Skeleton,
-} from '@ui/atoms';
-import { Dialog, WindowFrame } from '@ui/molecules';
+} from '@ui/atoms/icon/icons';
+import { Skeleton } from '@ui/atoms/skeleton/skeleton';
+import { Dialog } from '@ui/molecules/dialog/dialog';
+import { WindowFrame } from '@ui/molecules/window-frame/window-frame';
 
 /**
  * The résumé preview (FR-44 to FR-46, the canvas's ResumeModal): a code window in the shared

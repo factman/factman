@@ -71,6 +71,17 @@ export default defineConfig([
         },
       ],
       'atomic/level-tag': 'error',
+      // Per-component UI imports (ETE-126, docs/atomic-design.md): a barrel puts the whole level in
+      // every page's chunk.
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: ['tokens', 'atoms', 'molecules', 'organisms', 'templates'].map((level) => ({
+            name: `@ui/${level}`,
+            message: `Import the component from its file, e.g. @ui/${level}/<folder>/<file> (docs/atomic-design.md).`,
+          })),
+        },
+      ],
     },
   },
   {

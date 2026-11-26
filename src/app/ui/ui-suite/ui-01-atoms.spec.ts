@@ -8,17 +8,15 @@ import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import {
-  Button,
-  Caret,
-  Icon,
-  Link,
-  Switch,
-  TextInput,
-  Tooltip,
-  Typewriter,
-  iconDownload,
-} from '@ui/atoms';
+import { Button } from '@ui/atoms/button/button';
+import { Caret } from '@ui/atoms/caret/caret';
+import { Icon } from '@ui/atoms/icon/icon';
+import { iconDownload } from '@ui/atoms/icon/icons';
+import { Link } from '@ui/atoms/link/link';
+import { Switch } from '@ui/atoms/switch/switch';
+import { TextInput } from '@ui/atoms/text-input/text-input';
+import { Tooltip } from '@ui/atoms/tooltip/tooltip';
+import { Typewriter } from '@ui/atoms/typewriter/typewriter';
 
 const router = [provideRouter([])];
 

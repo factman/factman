@@ -12,7 +12,9 @@ import {
   viewChild,
 } from '@angular/core';
 
-import { IconButton, fieldId, iconClose } from '@ui/atoms';
+import { fieldId } from '@ui/atoms/form-control/value-control';
+import { IconButton } from '@ui/atoms/icon-button/icon-button';
+import { iconClose } from '@ui/atoms/icon/icons';
 
 /**
  * A modal dialog over the page, the shell for the résumé preview and the scheduler. It is a native

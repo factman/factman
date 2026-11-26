@@ -2,7 +2,10 @@ import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { profile } from '@data/profile';
 import { portraitSources } from '@shared';
-import { NotFoundSection, type NotFoundSuggestion } from '@ui/organisms';
+import {
+  NotFoundSection,
+  type NotFoundSuggestion,
+} from '@ui/organisms/not-found-section/not-found-section';
 
 /** Pages offered on the not-found page, after "Go home" (NotFoundSection artboard). */
 export const NOT_FOUND_SUGGESTIONS: readonly NotFoundSuggestion[] = [

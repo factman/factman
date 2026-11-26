@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import { iconLayout, provideIcons } from '@ui/atoms';
+import { provideIcons } from '@ui/atoms/icon/icon-registry';
+import { iconLayout } from '@ui/atoms/icon/icons';
 
 import { ResumeCard } from './resume-card';
 
