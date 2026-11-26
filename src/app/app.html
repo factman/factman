@@ -5,7 +5,15 @@
   <main id="main" tabindex="-1">
     <router-outlet />
   </main>
-  <fm-site-footer-host layoutFooter />
+  <!-- The footer (and the profile and contact data it shows) loads as it scrolls into view; the
+       prerendered page has it already, so it only hydrates then (ETE-41, ETE-273). -->
+  <ng-container ngProjectAs="[layoutFooter]">
+    @defer (on viewport; hydrate on viewport) {
+      <fm-site-footer-host />
+    } @placeholder {
+      <div class="site-footer-placeholder" aria-hidden="true"></div>
+    }
+  </ng-container>
   <!-- FR-34: the cookie consent banner, loaded only when it opens. -->
   <fm-consent-host layoutOverlays />
   @if (terminalEnabled) {

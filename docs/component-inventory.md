@@ -151,6 +151,8 @@ Already scaffolded; each fills a template with data from `@core/data` and owns t
 | NotFound      | `NotFoundPage`      | `fm-not-found-page`      | `**`              | ETE-88          |
 | Consent       | `ConsentHost`       | `fm-consent-host`        | (app shell, lazy) | ETE-119 (built) |
 | Terminal      | `TerminalHost`      | `fm-terminal-host`       | (app shell, lazy) | ETE-111 (built) |
+| SiteHeader    | `SiteHeaderHost`    | `fm-site-header-host`    | (app shell)       | ETE-273 (built) |
+| SiteFooter    | `SiteFooterHost`    | `fm-site-footer-host`    | (app shell, lazy) | ETE-273 (built) |
 
 ## Not Angular components
 

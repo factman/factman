@@ -1,6 +1,6 @@
 import { ViewportScroller } from '@angular/common';
 import { importProvidersFrom } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { DeferBlockState, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { CoreModule } from '@core';
 import { TERMINAL_ENABLED, TerminalLauncher } from '@shared';
@@ -29,6 +29,9 @@ describe('App', () => {
   it('frames every page with the site header and footer (MainLayout)', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
+    // The footer is deferred until it is in view (prerendered pages have it already).
+    for (const block of await fixture.getDeferBlocks())
+      await block.render(DeferBlockState.Complete);
     const el = fixture.nativeElement as HTMLElement;
     const site = el.querySelector('fm-main-layout .site')!;
     expect(site.querySelectorAll('fm-site-header')).toHaveLength(1);

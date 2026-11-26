@@ -4,7 +4,8 @@ import type { ResumeSource } from '../analytics/analytics-events';
 
 /** A request to preview one résumé, and where it came from (for `resume_preview_open`). */
 export interface ResumeRequest {
-  slug: string;
+  /** The résumé's slug, or null for the first one (the header's Résumé button). */
+  slug: string | null;
   source: ResumeSource;
 }
 
@@ -17,7 +18,7 @@ export interface ResumeRequest {
 export class ResumeLauncher {
   readonly request = signal<ResumeRequest | null>(null);
 
-  open(slug: string, source: ResumeSource): void {
+  open(slug: string | null, source: ResumeSource): void {
     this.request.set({ slug, source });
   }
 

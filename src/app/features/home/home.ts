@@ -211,8 +211,9 @@ export class Home {
     effect(() => {
       if (!rendered() || !this.launcher.request()) return;
       const request = untracked(() => this.launcher.take());
-      if (request && this.resumes.some((r) => r.slug === request.slug)) {
-        untracked(() => this.openResume(request.slug, request.source));
+      const slug = request && (request.slug ?? this.resumes[0]?.slug);
+      if (request && slug && this.resumes.some((r) => r.slug === slug)) {
+        untracked(() => this.openResume(slug, request.source));
       }
     });
     afterNextRender(() => {
