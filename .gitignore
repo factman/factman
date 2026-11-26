@@ -169,8 +169,6 @@ yarn-error.log
 testem.log
 /typings
 __screenshots__/
-# Visual regression baselines are committed (ETE-84, docs/visual-regression.md).
-!vr/__screenshots__/
 
 # System files
 .DS_Store
@@ -200,8 +198,5 @@ yarn.lock
 .claude/worktrees
 .claude/settings.local.json
 
-# Visual regression (ETE-84): reports and screenshots a run collects
-vr-report/
-vr-actual/
 /coverage-raw
 /blob-report
