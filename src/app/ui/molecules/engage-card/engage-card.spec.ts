@@ -2,7 +2,7 @@ import { provideRouter } from '@angular/router';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import { iconActivity } from '@ui/atoms';
+import { iconActivity } from '@ui/atoms/icon/icons';
 
 import { EngageCard } from './engage-card';
 

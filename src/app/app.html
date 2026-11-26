@@ -1,7 +1,15 @@
 <a class="skip-link" href="#main" (click)="skipToMain($event)">Skip to content</a>
 <!-- The page frame (MainLayout): header, the page, footer, then the fixed layers. -->
 <fm-main-layout>
-  <fm-site-header-host layoutHeader />
+  <!-- The header is prerendered and hydrates once the browser is idle (or on a click, which event
+       replay plays back), in its own task rather than in the bootstrap one (ETE-126). -->
+  <ng-container ngProjectAs="[layoutHeader]">
+    @defer (on idle; hydrate on idle) {
+      <fm-site-header-host />
+    } @placeholder {
+      <div class="site-header-placeholder" aria-hidden="true"></div>
+    }
+  </ng-container>
   <main id="main" tabindex="-1">
     <router-outlet />
   </main>

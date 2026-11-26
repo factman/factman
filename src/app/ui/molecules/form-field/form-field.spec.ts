@@ -1,7 +1,8 @@
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { render, screen } from '@testing-library/angular';
 
-import { Checkbox, TextInput } from '@ui/atoms';
+import { Checkbox } from '@ui/atoms/checkbox/checkbox';
+import { TextInput } from '@ui/atoms/text-input/text-input';
 
 import { FormField } from './form-field';
 

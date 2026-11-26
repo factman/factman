@@ -8,7 +8,9 @@ import {
 import { RouterLink } from '@angular/router';
 
 import type { Service } from '@shared';
-import { Button, Icon, iconArrowRight } from '@ui/atoms';
+import { Button } from '@ui/atoms/button/button';
+import { Icon } from '@ui/atoms/icon/icon';
+import { iconArrowRight } from '@ui/atoms/icon/icons';
 
 /**
  * A service offered: icon, title and summary. Without `href` it ends with a "Get a quote" button

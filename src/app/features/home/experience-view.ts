@@ -11,7 +11,10 @@ import {
   sortExperience,
   yearsSince,
 } from '@shared';
-import type { TimelineEntry, TimelineGlance } from '@ui/organisms';
+import type {
+  TimelineEntry,
+  TimelineGlance,
+} from '@ui/organisms/experience-timeline/experience-timeline';
 
 const TYPE_LABEL: Readonly<Record<NonNullable<Role['type']>, string>> = {
   'full-time': 'Full-time',

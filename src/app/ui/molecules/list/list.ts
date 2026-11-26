@@ -2,7 +2,9 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@a
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
-import { Icon, type IconDef, iconChevronRight } from '@ui/atoms';
+import { Icon } from '@ui/atoms/icon/icon';
+import { type IconDef } from '@ui/atoms/icon/icon-def';
+import { iconChevronRight } from '@ui/atoms/icon/icons';
 
 export interface ListItem {
   title: string;

@@ -17,18 +17,12 @@ import {
 import { RouterLink } from '@angular/router';
 
 import { ctaEvent, prefersReducedMotion, ScrollSpy, type SiteNavItem, Track } from '@shared';
-import {
-  Button,
-  IconButton,
-  Logo,
-  NavLink,
-  type NavLinkActive,
-  iconArrowRight,
-  iconClose,
-  iconFileText,
-  iconMenu,
-} from '@ui/atoms';
-import { type Theme, ThemeToggle } from '@ui/molecules';
+import { Button } from '@ui/atoms/button/button';
+import { IconButton } from '@ui/atoms/icon-button/icon-button';
+import { iconArrowRight, iconClose, iconFileText, iconMenu } from '@ui/atoms/icon/icons';
+import { Logo } from '@ui/atoms/logo/logo';
+import { NavLink, type NavLinkActive } from '@ui/atoms/nav-link/nav-link';
+import { type Theme, ThemeToggle } from '@ui/molecules/theme-toggle/theme-toggle';
 
 /** The page the header sits on: the home page uses section anchors, the others use routes. */
 export type SiteHeaderPage = 'home' | 'services' | 'projects' | 'blog' | 'other';

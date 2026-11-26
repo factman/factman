@@ -3,9 +3,10 @@ import { ProjectsRepository } from '@core/data';
 import { contact } from '@data/contact';
 import { skills } from '@data/skills';
 import { ANALYTICS_TRACKER, type Project } from '@shared';
-import { iconActivity, iconCalendar, iconFolder, iconGlobe, iconLock } from '@ui/atoms';
-import type { ListItem } from '@ui/molecules';
-import { type HeroTag, PageHero, ProjectCaseStudy } from '@ui/organisms';
+import { iconActivity, iconCalendar, iconFolder, iconGlobe, iconLock } from '@ui/atoms/icon/icons';
+import type { ListItem } from '@ui/molecules/list/list';
+import { type HeroTag, PageHero } from '@ui/organisms/page-hero/page-hero';
+import { ProjectCaseStudy } from '@ui/organisms/project-case-study/project-case-study';
 
 const STATUS: Record<Project['status'], { label: string; tone: HeroTag['tone'] }> = {
   completed: { label: 'Completed', tone: 'success' },

@@ -14,7 +14,8 @@ import {
   viewChild,
 } from '@angular/core';
 
-import { Icon, iconClose } from '@ui/atoms';
+import { Icon } from '@ui/atoms/icon/icon';
+import { iconClose } from '@ui/atoms/icon/icons';
 
 import { type FeedbackTone, TONE_ICON } from '../alert/alert-tone';
 

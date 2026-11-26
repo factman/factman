@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/angular';
 
-import { iconLinkedin, iconMail } from '@ui/atoms';
+import { iconLinkedin, iconMail } from '@ui/atoms/icon/icons';
 
 import { ContactMethod } from './contact-method';
 import userEvent from '@testing-library/user-event';

@@ -45,7 +45,7 @@ export function components(): Component[] {
 export function suiteCovered(): Set<string> {
   const names = new Set<string>();
   for (const f of files(join(ROOT, 'src/app/ui/ui-suite')).filter((f) => f.endsWith('.spec.ts'))) {
-    for (const m of readFileSync(f, 'utf8').matchAll(/import \{([^}]*)\} from '@ui\/\w+'/g)) {
+    for (const m of readFileSync(f, 'utf8').matchAll(/import \{([^}]*)\} from '@ui\/[\w/-]+'/g)) {
       for (const n of m[1].split(',')) names.add(n.replace(/^\s*type\s+/, '').trim());
     }
   }

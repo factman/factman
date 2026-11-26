@@ -10,12 +10,12 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CONSENT, ConsentService, OPEN_CONSENT_EVENT } from '@core/consent';
-import { ANALYTICS_TRACKER } from '@shared';
+import { ANALYTICS_TRACKER, whenIdle } from '@shared';
 import {
   type ConsentCategoryView,
   type ConsentDecision,
   CookieConsentTerminal,
-} from '@ui/organisms';
+} from '@ui/organisms/cookie-consent-terminal/cookie-consent-terminal';
 
 /**
  * The cookie consent banner on every page (FR-34), wired to `ConsentService`. It opens by itself
@@ -58,8 +58,17 @@ export class ConsentHost {
   protected readonly opener = signal<HTMLElement | null>(null);
   /** The control last pressed: Safari does not focus buttons on click. */
   private pressed: HTMLElement | null = null;
+  /**
+   * The page is up: a first visit's banner waits for the browser to be idle (ETE-126), so its code
+   * and typing start in their own task, not in the one that hydrates the page. Asking for it
+   * (privacy page, footer) opens it at once.
+   */
+  private readonly idle = signal(false);
   protected readonly open = computed(
-    () => this.browser && !this.closed() && (this.requested() || this.consent.needsDecision()),
+    () =>
+      this.browser &&
+      !this.closed() &&
+      (this.requested() || (this.idle() && this.consent.needsDecision())),
   );
   protected readonly categories = computed<ConsentCategoryView[]>(() => {
     const choices = this.consent.choices();
@@ -76,6 +85,7 @@ export class ConsentHost {
   constructor() {
     if (!this.browser) return;
     const doc = inject(DOCUMENT);
+    const cancelIdle = whenIdle(doc.defaultView, () => this.idle.set(true));
     const press = (event: Event) => {
       const target = event.target instanceof Element ? event.target : null;
       this.pressed = target?.closest<HTMLElement>('button, a[href], [tabindex]') ?? null;
@@ -99,6 +109,7 @@ export class ConsentHost {
     doc.addEventListener('pointerdown', press, true);
     doc.addEventListener(OPEN_CONSENT_EVENT, reopen);
     inject(DestroyRef).onDestroy(() => {
+      cancelIdle();
       doc.removeEventListener('pointerdown', press, true);
       doc.removeEventListener(OPEN_CONSENT_EVENT, reopen);
     });

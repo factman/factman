@@ -5,16 +5,15 @@ import { ProjectsRepository } from '@core/data';
 import { contact } from '@data/contact';
 import { profile } from '@data/profile';
 import { portraitSources, type Project } from '@shared';
-import { iconArrowRight, iconGithub } from '@ui/atoms';
+import { iconArrowRight, iconGithub } from '@ui/atoms/icon/icons';
+import { CtaBanner } from '@ui/organisms/cta-banner/cta-banner';
+import { type HeroAction, PageHero } from '@ui/organisms/page-hero/page-hero';
 import {
-  CtaBanner,
   fromQueryParams,
-  type HeroAction,
-  PageHero,
-  ProjectGallery,
   type ProjectFilter,
   toQueryParams,
-} from '@ui/organisms';
+} from '@ui/organisms/project-gallery/project-filter';
+import { ProjectGallery } from '@ui/organisms/project-gallery/project-gallery';
 import { map } from 'rxjs';
 
 const GITHUB = contact.links.find((l) => l.id === 'github')?.url;

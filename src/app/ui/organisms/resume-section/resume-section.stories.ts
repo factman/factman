@@ -1,6 +1,6 @@
 import { applicationConfig, type Meta, type StoryObj } from '@storybook/angular-vite';
-import { provideIcons } from '@ui/atoms';
-import { RESUME_ICONS } from '@ui/molecules';
+import { provideIcons } from '@ui/atoms/icon/icon-registry';
+import { RESUME_ICONS } from '@ui/molecules/resume-card/resume-card';
 import { expect, within } from 'storybook/test';
 
 import { ResumeSection } from './resume-section';

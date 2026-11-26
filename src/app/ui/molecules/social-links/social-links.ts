@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 
 import { type AnalyticsEvent, type ContactChannel, type Link, Track } from '@shared';
+import { Icon } from '@ui/atoms/icon/icon';
+import { type IconDef } from '@ui/atoms/icon/icon-def';
 import {
-  Icon,
-  type IconDef,
   iconGithub,
   iconGlobe,
   iconLinkedin,
@@ -18,7 +18,7 @@ import {
   iconMedium,
   iconWhatsapp,
   iconX,
-} from '@ui/atoms';
+} from '@ui/atoms/icon/icons';
 
 /** Brand icons by link id (contact.json `links[].id`); anything else gets a globe. */
 const ICONS: Record<string, IconDef> = {

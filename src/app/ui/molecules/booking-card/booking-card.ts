@@ -8,15 +8,10 @@ import {
 } from '@angular/core';
 
 import type { Service } from '@shared';
-import {
-  Avatar,
-  Button,
-  Divider,
-  iconArrowRight,
-  iconMail,
-  iconPhoneCall,
-  iconWhatsapp,
-} from '@ui/atoms';
+import { Avatar } from '@ui/atoms/avatar/avatar';
+import { Button } from '@ui/atoms/button/button';
+import { Divider } from '@ui/atoms/divider/divider';
+import { iconArrowRight, iconMail, iconPhoneCall, iconWhatsapp } from '@ui/atoms/icon/icons';
 
 import { AvailabilityBadge } from '../availability-badge/availability-badge';
 import { formatPhone } from '../phone-reveal/phone';

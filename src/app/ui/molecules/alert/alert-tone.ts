@@ -1,4 +1,5 @@
-import { type IconDef, iconAlert, iconCheckCircle, iconInfo, iconWarning } from '@ui/atoms';
+import { type IconDef } from '@ui/atoms/icon/icon-def';
+import { iconAlert, iconCheckCircle, iconInfo, iconWarning } from '@ui/atoms/icon/icons';
 
 export type FeedbackTone = 'info' | 'success' | 'warning' | 'danger' | 'neutral';
 

@@ -7,7 +7,9 @@ import {
   output,
 } from '@angular/core';
 
-import { Button, type ButtonSize, type ButtonVariant, type IconDef, iconCalendar } from '@ui/atoms';
+import { Button, type ButtonSize, type ButtonVariant } from '@ui/atoms/button/button';
+import { type IconDef } from '@ui/atoms/icon/icon-def';
+import { iconCalendar } from '@ui/atoms/icon/icons';
 
 /**
  * "Schedule a call": a button that asks the page to open the scheduler (`schedule`, with the

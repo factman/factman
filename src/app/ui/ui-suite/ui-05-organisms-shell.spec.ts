@@ -10,12 +10,12 @@ import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
 import type { SiteNavItem } from '@shared';
+import { ContactForm } from '@ui/organisms/contact-form/contact-form';
 import {
   type ConsentCategoryView,
-  ContactForm,
   CookieConsentTerminal,
-  SiteHeader,
-} from '@ui/organisms';
+} from '@ui/organisms/cookie-consent-terminal/cookie-consent-terminal';
+import { SiteHeader } from '@ui/organisms/site-header/site-header';
 
 /** Any URL renders nothing, so following a link in a test navigates without an error. */
 const ANY_ROUTE = [{ path: '**', children: [] }];

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
 
-import { Breadcrumbs, type Crumb } from '@ui/molecules';
+import { Breadcrumbs, type Crumb } from '@ui/molecules/breadcrumbs/breadcrumbs';
 
 /**
  * The service and project detail pages (canvas TemplateDetail): breadcrumbs, then the hero

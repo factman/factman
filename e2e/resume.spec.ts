@@ -28,9 +28,10 @@ test.describe('résumés', () => {
       for (const n of [1, 2]) {
         const image = dialog.getByRole('img', { name: `Page ${n} of 2 of the ${title} résumé` });
         await expect(image).toBeVisible();
-        expect(await image.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(
-          0,
-        );
+        // Decoded, not just laid out (the page image can still be loading when it shows).
+        await expect
+          .poll(() => image.evaluate((img: HTMLImageElement) => img.naturalWidth))
+          .toBeGreaterThan(0);
         if (n === 1) await dialog.getByRole('button', { name: 'Next page' }).click();
       }
       const download = page.waitForEvent('download');

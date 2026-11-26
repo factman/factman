@@ -10,7 +10,8 @@ import {
 import { NgTemplateOutlet } from '@angular/common';
 import { type AnalyticsEvent, Track } from '@shared';
 
-import { Icon, type IconDef } from '@ui/atoms';
+import { Icon } from '@ui/atoms/icon/icon';
+import { type IconDef } from '@ui/atoms/icon/icon-def';
 
 export interface Channel {
   icon: IconDef | string;

@@ -8,7 +8,8 @@ import {
 import { expect, fn, userEvent } from 'storybook/test';
 
 import { CLOCK } from '@shared';
-import { CodeEditor, highlight } from '@ui/molecules';
+import { highlight } from '@ui/molecules/code-block/highlight';
+import { CodeEditor } from '@ui/molecules/code-editor/code-editor';
 
 import { ProfileHero } from './profile-hero';
 

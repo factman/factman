@@ -2,7 +2,7 @@ import { provideRouter } from '@angular/router';
 import { type Meta, type StoryObj, applicationConfig } from '@storybook/angular-vite';
 import { expect } from 'storybook/test';
 
-import { iconClock, iconGlobe, iconMail } from '@ui/atoms';
+import { iconClock, iconGlobe, iconMail } from '@ui/atoms/icon/icons';
 
 import { List } from './list';
 

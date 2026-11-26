@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
 
-import { type Step, Stepper } from '@ui/molecules';
+import { type Step, Stepper } from '@ui/molecules/stepper/stepper';
 
 /**
  * How an engagement runs (the canvas's ProcessSection body): the numbered steps across a glass

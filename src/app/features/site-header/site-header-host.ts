@@ -4,7 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { SITE } from '@core/config';
 import { ThemeService } from '@core/theme';
 import { ResumeLauncher } from '@shared';
-import { SiteHeader } from '@ui/organisms';
+import { SiteHeader } from '@ui/organisms/site-header/site-header';
 import { filter } from 'rxjs';
 
 import { pageOf } from './page-of';

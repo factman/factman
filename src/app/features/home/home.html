@@ -1,16 +1,30 @@
-<fm-profile-hero
-  [profile]="profile"
-  [photo]="photo"
-  [socials]="socials"
-  [stats]="stats"
-  [timezone]="timezone"
-  [terminal]="terminalEnabled"
-  (openResume)="openResume($event, 'hero')"
-  (openTerminal)="terminal.show()"
->
-  <fm-code-editor heroEditor [files]="editorFiles" [glow]="true" [decorative]="true" />
-</fm-profile-hero>
-<fm-client-logo-strip [clients]="clients" />
+<!-- Prerendered; hydrates once the browser is idle, in its own task (ETE-126). A click before
+     then is played back by event replay. -->
+<!-- Every viewport-hydrated block below has a real box at its root (.home-block, .home-strip,
+     .home-contact): the organisms' hosts are display: contents, which the viewport trigger can't
+     see, so they never hydrated (ETE-126). -->
+@defer (on idle; hydrate on idle) {
+  <fm-profile-hero
+    [profile]="profile"
+    [photo]="photo"
+    [socials]="socials"
+    [stats]="stats"
+    [timezone]="timezone"
+    [terminal]="terminalEnabled"
+    (openResume)="openResume($event, 'hero')"
+    (openTerminal)="terminal.show()"
+  >
+    <fm-code-editor heroEditor [files]="editorFiles" [glow]="true" [decorative]="true" />
+  </fm-profile-hero>
+} @placeholder {
+  <div class="home-hero-placeholder" aria-hidden="true"></div>
+}
+@defer (on viewport; hydrate on viewport) {
+  <!-- A real box for the viewport trigger: the strip's host is display: contents. -->
+  <div class="home-strip"><fm-client-logo-strip [clients]="clients" /></div>
+} @placeholder {
+  <div class="home-deferred" aria-hidden="true"></div>
+}
 <fm-section-layout
   sectionId="about"
   index="01"
@@ -18,21 +32,27 @@
   [title]="about.title"
   [description]="about.description"
 >
-  <fm-about-section
-    [story]="profile.about"
-    [photo]="aboutPhoto"
-    [facts]="aboutFacts"
-    [theme]="theme()"
-  >
-    <!-- The résumé block, as #resume inside About (FR-43). -->
-    <div id="resume" class="home-resume" tabindex="-1">
-      <fm-resume-section
-        [resumes]="resumes"
-        (preview)="openResume($event, 'card')"
-        (download)="downloadResume($event, 'card')"
-      />
+  @defer (on viewport; hydrate on viewport) {
+    <div class="home-block">
+      <fm-about-section
+        [story]="profile.about"
+        [photo]="aboutPhoto"
+        [facts]="aboutFacts"
+        [theme]="theme()"
+      >
+        <!-- The résumé block, as #resume inside About (FR-43). -->
+        <div id="resume" class="home-resume" tabindex="-1">
+          <fm-resume-section
+            [resumes]="resumes"
+            (preview)="openResume($event, 'card')"
+            (download)="downloadResume($event, 'card')"
+          />
+        </div>
+      </fm-about-section>
     </div>
-  </fm-about-section>
+  } @placeholder {
+    <div class="home-deferred" aria-hidden="true"></div>
+  }
 </fm-section-layout>
 <fm-section-layout
   sectionId="stack"
@@ -42,7 +62,9 @@
   description="Grouped by area. Years are counted from the year I started using each one, so they never go stale."
 >
   @defer (on viewport; hydrate on viewport) {
-    <fm-tech-stack [groups]="stack" />
+    <div class="home-block">
+      <fm-tech-stack [groups]="stack" />
+    </div>
   } @placeholder {
     <div class="home-deferred" aria-hidden="true"></div>
   }
@@ -55,11 +77,13 @@
   description="Current roles first, then everything else from newest to oldest. Open a role to see what I shipped and the stack behind it."
 >
   @defer (on viewport; hydrate on viewport) {
-    <fm-experience-timeline
-      [entries]="timeline"
-      [glance]="glance"
-      (openResume)="openResume(resumeVariant(), 'glance')"
-    />
+    <div class="home-block">
+      <fm-experience-timeline
+        [entries]="timeline"
+        [glance]="glance"
+        (openResume)="openResume(resumeVariant(), 'glance')"
+      />
+    </div>
   } @placeholder {
     <div class="home-deferred" aria-hidden="true"></div>
   }
@@ -72,7 +96,9 @@
   [description]="servicesIntro"
 >
   @defer (on viewport; hydrate on viewport) {
-    <fm-services-grid [services]="services" ctaLabel="Compare all services" />
+    <div class="home-block">
+      <fm-services-grid [services]="services" ctaLabel="Compare all services" />
+    </div>
   } @placeholder {
     <div class="home-deferred" aria-hidden="true"></div>
   }
@@ -85,7 +111,9 @@
   description="Open-source tools, client platforms and side projects. Private work shows the role and stack, and you can ask for a walkthrough."
 >
   @defer (on viewport; hydrate on viewport) {
-    <fm-project-gallery [projects]="projects" [actions]="projectLinks" (engage)="engage()" />
+    <div class="home-block">
+      <fm-project-gallery [projects]="projects" [actions]="projectLinks" (engage)="engage()" />
+    </div>
   } @placeholder {
     <div class="home-deferred" aria-hidden="true"></div>
   }
@@ -98,12 +126,14 @@
   description="Every figure here is counted from the same data files as the rest of the site. Nothing is typed in by hand."
 >
   @defer (on viewport; hydrate on viewport) {
-    <fm-stats-panel
-      [counters]="statsCounters()"
-      [career]="strip.rows"
-      [ticks]="strip.ticks"
-      [contributions]="contributions"
-    />
+    <div class="home-block">
+      <fm-stats-panel
+        [counters]="statsCounters()"
+        [career]="strip.rows"
+        [ticks]="strip.ticks"
+        [contributions]="contributions"
+      />
+    </div>
   } @placeholder {
     <div class="home-deferred" aria-hidden="true"></div>
   }
@@ -116,18 +146,20 @@
   description="Practical write-ups on fullstack engineering, fintech, cloud and leading teams, drawn from real products and the decisions behind them. New posts publish on Medium."
 >
   @defer (on viewport; hydrate on viewport) {
-    <fm-blog-feed
-      [posts]="blog.posts()"
-      [status]="blog.status()"
-      [profileUrl]="blog.profileUrl"
-      [limit]="3"
-      location="home"
-      (retry)="blog.retry()"
-    />
-    <div class="home-blog-more">
-      <fm-button variant="secondary" size="lg" href="/blog" [trailingIcon]="blogArrow"
-        >Read the blog</fm-button
-      >
+    <div class="home-block">
+      <fm-blog-feed
+        [posts]="blog.posts()"
+        [status]="blog.status()"
+        [profileUrl]="blog.profileUrl"
+        [limit]="3"
+        location="home"
+        (retry)="blog.retry()"
+      />
+      <div class="home-blog-more">
+        <fm-button variant="secondary" size="lg" href="/blog" [trailingIcon]="blogArrow"
+          >Read the blog</fm-button
+        >
+      </div>
     </div>
   } @placeholder {
     <div class="home-deferred" aria-hidden="true"></div>
@@ -149,11 +181,14 @@
     <div class="home-deferred" aria-hidden="true"></div>
   }
 </fm-section-layout>
-<fm-resume-preview-modal
-  [open]="resumeOpen()"
-  [resumes]="resumes"
-  [variant]="resumeVariant()"
-  (variantChange)="switchResume($event)"
-  (closed)="resumeOpen.set(false)"
-  (download)="downloadResume($event, 'modal')"
-/>
+<!-- The preview dialog's code loads the first time a résumé is opened (ETE-126). -->
+@defer (when resumeOpen()) {
+  <fm-resume-preview-modal
+    [open]="resumeOpen()"
+    [resumes]="resumes"
+    [variant]="resumeVariant()"
+    (variantChange)="switchResume($event)"
+    (closed)="resumeOpen.set(false)"
+    (download)="downloadResume($event, 'modal')"
+  />
+}

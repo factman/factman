@@ -1,5 +1,6 @@
 import { skillsByCategory } from '@data';
 import { type Skill, skillYears } from '@shared';
+import { type IconDef } from '@ui/atoms/icon/icon-def';
 import {
   iconBraces,
   iconCloud,
@@ -9,7 +10,6 @@ import {
   iconFlame,
   iconGitBranch,
   iconGithub,
-  type IconDef,
   iconLayers,
   iconLayout,
   iconMobile,
@@ -18,8 +18,8 @@ import {
   iconServer,
   iconTerminal,
   iconWorkflow,
-} from '@ui/atoms';
-import type { StackGroup } from '@ui/organisms';
+} from '@ui/atoms/icon/icons';
+import type { StackGroup } from '@ui/organisms/tech-stack/tech-stack';
 
 /**
  * The icons skills.json uses, imported one by one (ADR-004) so the page ships only these. A name

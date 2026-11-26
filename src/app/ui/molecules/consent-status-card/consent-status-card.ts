@@ -7,7 +7,8 @@ import {
   output,
 } from '@angular/core';
 
-import { Button, iconSettings } from '@ui/atoms';
+import { Button } from '@ui/atoms/button/button';
+import { iconSettings } from '@ui/atoms/icon/icons';
 
 import { WindowFrame } from '../window-frame/window-frame';
 

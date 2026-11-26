@@ -2,7 +2,7 @@ import { provideRouter } from '@angular/router';
 import { applicationConfig, type Meta, type StoryObj } from '@storybook/angular-vite';
 import { expect } from 'storybook/test';
 
-import { iconCalendar, iconGrid, iconWorkflow } from '@ui/atoms';
+import { iconCalendar, iconGrid, iconWorkflow } from '@ui/atoms/icon/icons';
 
 import { PageHero } from './page-hero';
 

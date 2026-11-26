@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/angular';
 
-import { iconGlobe, iconGraduationCap } from '@ui/atoms';
+import { iconGlobe, iconGraduationCap } from '@ui/atoms/icon/icons';
 
 import { type AboutFact, AboutSection } from './about-section';
 

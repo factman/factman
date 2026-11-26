@@ -8,17 +8,15 @@ import {
 } from '@angular/core';
 
 import type { Service } from '@shared';
-import { iconCheckCircle, iconLayers } from '@ui/atoms';
+import { iconCheckCircle, iconLayers } from '@ui/atoms/icon/icons';
+import { Accordion, type AccordionItem } from '@ui/molecules/accordion/accordion';
 import {
-  Accordion,
-  type AccordionItem,
   type BookingChannel,
   BookingCard,
   type BookingPerson,
-  ContactMethod,
-  type Step,
-  Stepper,
-} from '@ui/molecules';
+} from '@ui/molecules/booking-card/booking-card';
+import { ContactMethod } from '@ui/molecules/contact-method/contact-method';
+import { type Step, Stepper } from '@ui/molecules/stepper/stepper';
 
 import { faqId } from '../faq-section/faq-section';
 

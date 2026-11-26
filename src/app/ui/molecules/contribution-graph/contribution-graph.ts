@@ -6,7 +6,9 @@ import {
   input,
 } from '@angular/core';
 
-import { fieldId, Icon, iconArrowUpRight } from '@ui/atoms';
+import { fieldId } from '@ui/atoms/form-control/value-control';
+import { Icon } from '@ui/atoms/icon/icon';
+import { iconArrowUpRight } from '@ui/atoms/icon/icons';
 
 /** A month label over the graph, at the week it starts in. */
 export interface ContributionMonth {

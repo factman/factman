@@ -40,28 +40,31 @@ import {
   TerminalLauncher,
   yearsSince,
 } from '@shared';
-import { Button, IconRegistry, iconArrowRight, iconGithub } from '@ui/atoms';
-import { CodeEditor, RESUME_ICONS, SERVICE_ICONS } from '@ui/molecules';
+import { Button } from '@ui/atoms/button/button';
+import { IconRegistry } from '@ui/atoms/icon/icon-registry';
+import { iconArrowRight, iconGithub } from '@ui/atoms/icon/icons';
+import { CodeEditor } from '@ui/molecules/code-editor/code-editor';
+import { RESUME_ICONS } from '@ui/molecules/resume-card/resume-card';
+import { SERVICE_ICONS } from '@ui/molecules/service-card/service-icons';
+import { AboutSection } from '@ui/organisms/about-section/about-section';
+import { BlogFeed } from '@ui/organisms/blog-feed/blog-feed';
+import { ClientLogoStrip } from '@ui/organisms/client-logo-strip/client-logo-strip';
 import {
-  AboutSection,
-  BlogFeed,
-  ClientLogoStrip,
   ContactChannels,
   type ContactDetails,
-  ContactForm,
-  contactTopics,
-  ExperienceTimeline,
-  type HeroAction,
-  ProfileHero,
-  ProjectGallery,
-  type ProfileHeroStats,
-  ResumePreviewModal,
-  ResumeSection,
-  ServicesGrid,
-  StatsPanel,
-  TechStack,
-} from '@ui/organisms';
-import { SectionLayout } from '@ui/templates';
+} from '@ui/organisms/contact-channels/contact-channels';
+import { ContactForm } from '@ui/organisms/contact-form/contact-form';
+import { contactTopics } from '@ui/organisms/contact-form/contact-message';
+import { ExperienceTimeline } from '@ui/organisms/experience-timeline/experience-timeline';
+import { type HeroAction } from '@ui/organisms/page-hero/page-hero';
+import { ProfileHero, type ProfileHeroStats } from '@ui/organisms/profile-hero/profile-hero';
+import { ProjectGallery } from '@ui/organisms/project-gallery/project-gallery';
+import { ResumePreviewModal } from '@ui/organisms/resume-preview-modal/resume-preview-modal';
+import { ResumeSection } from '@ui/organisms/resume-section/resume-section';
+import { ServicesGrid } from '@ui/organisms/services-grid/services-grid';
+import { StatsPanel } from '@ui/organisms/stats-panel/stats-panel';
+import { TechStack } from '@ui/organisms/tech-stack/tech-stack';
+import { SectionLayout } from '@ui/templates/section-layout/section-layout';
 
 import { aboutFacts } from './about-facts';
 import { careerGlance, darkLogos, timelineEntries } from './experience-view';
@@ -125,19 +128,35 @@ export class Home {
     ...portraitSources(profile.aboutPhoto),
     sizes: '(min-width: 768px) 480px, 360px',
   };
-  protected readonly aboutFacts = aboutFacts(profile);
+  /*
+   * The sections' view data is worked out the first time a section renders or hydrates, not when
+   * the page is created (ETE-126): every section below the hero is deferred, so the bootstrap task
+   * no longer derives all of it up front. Each is computed once and kept.
+   */
+  private readonly lazy = new Map<string, unknown>();
+  private once<T>(key: string, make: () => T): T {
+    if (!this.lazy.has(key)) this.lazy.set(key, make());
+    return this.lazy.get(key) as T;
+  }
+
+  protected get aboutFacts() {
+    return this.once('aboutFacts', () => aboutFacts(profile));
+  }
 
   /** Stack (FR-11, FR-12): years of use are counted from each skill's `since` at build time. */
-  protected readonly stack = stackGroups(skills, this.now);
+  protected get stack() {
+    return this.once('stack', () => stackGroups(skills, this.now));
+  }
 
   /** Experience (FR-13 to FR-16) and CareerGlance, from experience.json. */
-  protected readonly timeline = timelineEntries(
-    experience,
-    skills,
-    this.now,
-    darkLogos(this.clients),
-  );
-  protected readonly glance = careerGlance(experience, profile.careerStart, this.now);
+  protected get timeline() {
+    return this.once('timeline', () =>
+      timelineEntries(experience, skills, this.now, darkLogos(this.clients)),
+    );
+  }
+  protected get glance() {
+    return this.once('glance', () => careerGlance(experience, profile.careerStart, this.now));
+  }
 
   /** Services in services.json `order`; their icons are chosen by the data (ADR-004). */
   protected readonly services = inject(ServicesRepository).all();
@@ -167,11 +186,16 @@ export class Home {
       this.now,
     ),
   );
-  protected readonly strip = careerStrip(experience, profile.careerStart, this.now);
+  protected get strip() {
+    return this.once('strip', () => careerStrip(experience, profile.careerStart, this.now));
+  }
+  private readonly graphOn = inject(SITE).features.contributionGraph;
   /** FR-33 (P1): the GitHub graph from the weekly snapshot, when the flag is on and one exists. */
-  protected readonly contributions = inject(SITE).features.contributionGraph
-    ? contributionGraph(githubContributions)
-    : undefined;
+  protected get contributions() {
+    return this.once('contributions', () =>
+      this.graphOn ? contributionGraph(githubContributions) : undefined,
+    );
+  }
 
   /** Blog (FR-24): the newest three articles, read live from Medium after the page renders. */
   protected readonly blog = inject(BlogRepository);

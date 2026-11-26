@@ -1,5 +1,5 @@
 import type { Project } from '@shared';
-import type { FilterOption } from '@ui/molecules';
+import type { FilterOption } from '@ui/molecules/filter-bar/filter-bar';
 
 /** The gallery's filter: statuses and categories (any of each), and a search. */
 export interface ProjectFilter {

@@ -7,7 +7,10 @@ import {
   input,
 } from '@angular/core';
 
-import { FIELD_CONTEXT, type FieldContext, Icon, fieldId, iconAlert } from '@ui/atoms';
+import { FIELD_CONTEXT, type FieldContext } from '@ui/atoms/form-control/field-context';
+import { fieldId } from '@ui/atoms/form-control/value-control';
+import { Icon } from '@ui/atoms/icon/icon';
+import { iconAlert } from '@ui/atoms/icon/icons';
 
 /**
  * A form control with its label, hint and error:

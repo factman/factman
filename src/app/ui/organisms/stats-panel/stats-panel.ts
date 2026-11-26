@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
 
+import { type GlanceStat } from '@ui/molecules/career-glance/career-glance';
+import { type CareerRow, CareerStrip } from '@ui/molecules/career-strip/career-strip';
 import {
-  type CareerRow,
-  CareerStrip,
   ContributionGraph,
   type ContributionMonth,
-  type GlanceStat,
-  StatCounter,
-} from '@ui/molecules';
+} from '@ui/molecules/contribution-graph/contribution-graph';
+import { StatCounter } from '@ui/molecules/stat-counter/stat-counter';
 
 /** The GitHub contribution graph's inputs (FR-33), prepared by the page from the snapshot. */
 export interface StatsContributions {

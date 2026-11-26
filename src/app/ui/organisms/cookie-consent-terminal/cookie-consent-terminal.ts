@@ -17,8 +17,10 @@ import {
 import { RouterLink } from '@angular/router';
 import { prefersReducedMotion } from '@shared';
 
-import { Button, Caret, iconSave } from '@ui/atoms';
-import { WindowFrame } from '@ui/molecules';
+import { Button } from '@ui/atoms/button/button';
+import { Caret } from '@ui/atoms/caret/caret';
+import { iconSave } from '@ui/atoms/icon/icons';
+import { WindowFrame } from '@ui/molecules/window-frame/window-frame';
 
 /** A consent category as the banner shows it (from site.json, with the visitor's current choice). */
 export interface ConsentCategoryView {

@@ -11,8 +11,9 @@ import {
   yearMonthOf,
   yearsSince,
 } from '@shared';
-import type { CareerRow, GlanceStat } from '@ui/molecules';
-import type { StatsContributions } from '@ui/organisms';
+import type { GlanceStat } from '@ui/molecules/career-glance/career-glance';
+import type { CareerRow } from '@ui/molecules/career-strip/career-strip';
+import type { StatsContributions } from '@ui/organisms/stats-panel/stats-panel';
 
 /** What the counters are counted from (FR-31): each list is the parsed content file. */
 export interface StatSources {

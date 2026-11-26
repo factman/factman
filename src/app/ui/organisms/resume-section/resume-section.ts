@@ -7,7 +7,8 @@ import {
 } from '@angular/core';
 
 import type { ResumeDownload } from '@shared';
-import { ResumeCard, SectionHeader } from '@ui/molecules';
+import { ResumeCard } from '@ui/molecules/resume-card/resume-card';
+import { SectionHeader } from '@ui/molecules/section-header/section-header';
 
 /**
  * The résumé block inside About (FR-43, the canvas's AboutSection `#resume`): a level-3 header and

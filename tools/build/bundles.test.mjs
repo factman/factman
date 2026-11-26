@@ -113,12 +113,12 @@ test('the terminal host and its commands are a lazy chunk, not in the initial bu
 // (the @ui barrels can't be split by route), which sets the floor; a page that grows past its
 // ceiling fails the build. Lower the ceilings when the chunking work lands.
 const JS_BUDGET_KB = {
-  'index.html': 240,
-  'services/index.html': 230,
-  'projects/index.html': 230,
-  'blog/index.html': 225,
-  'privacy/index.html': 215,
-  '404.html': 215,
+  'index.html': 155,
+  'services/index.html': 160,
+  'projects/index.html': 165,
+  'blog/index.html': 160,
+  'privacy/index.html': 150,
+  '404.html': 145,
 };
 const gzipKb = (files) =>
   [...files].reduce(

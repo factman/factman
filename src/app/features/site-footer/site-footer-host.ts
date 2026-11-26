@@ -7,7 +7,11 @@ import { contact } from '@data/contact';
 import { profile } from '@data/profile';
 import { resumeDownloads } from '@data/resume-downloads';
 import { ResumeLauncher } from '@shared';
-import { SiteFooter, type SiteFooterLink, type SiteFooterResume } from '@ui/organisms';
+import {
+  SiteFooter,
+  type SiteFooterLink,
+  type SiteFooterResume,
+} from '@ui/organisms/site-footer/site-footer';
 
 /** The networks the footer links to, in contact.json's order (as the hero). */
 const SOCIALS = new Set(['github', 'linkedin', 'x', 'medium']);

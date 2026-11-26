@@ -3,8 +3,8 @@ import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { ANALYTICS_TRACKER } from '@shared';
 
-import { IconRegistry } from '@ui/atoms';
-import { SERVICE_ICONS } from '@ui/molecules';
+import { IconRegistry } from '@ui/atoms/icon/icon-registry';
+import { SERVICE_ICONS } from '@ui/molecules/service-card/service-icons';
 
 import { type GridService, relatedServices, ServicesGrid } from './services-grid';
 

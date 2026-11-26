@@ -3,3 +3,9 @@
 .site-footer-placeholder {
   min-block-size: 1px;
 }
+
+// The header's space until it loads on a client-rendered page (prerendered pages have the header
+// already), so nothing below it moves when it arrives.
+.site-header-placeholder {
+  block-size: calc(var(--navbar-height) + 2 * var(--padding-sm));
+}

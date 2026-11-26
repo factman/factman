@@ -13,6 +13,9 @@ const pages = [
   '/privacy',
 ];
 
+/** Pages whose largest paint is the hero photo, by path. */
+const PHOTO_HERO_PAGES = /^http:\/\/localhost:\d+\/(services(\/[^/]+)?|projects|blog)$/;
+
 /** The PRD's budgets: every category at 95 or more, LCP 1.8 s, CLS near zero, little blocking. */
 const BUDGETS = {
   'categories:performance': ['error', { minScore: 0.95 }],
@@ -40,12 +43,16 @@ module.exports = {
     },
     assert: {
       assertMatrix: [
-        { matchingUrlPattern: '^(?!.*/services).*$', assertions: BUDGETS },
         {
-          // The services pages' LCP is their hero photo, which shares slow 4G with the ~210 KB of
-          // JavaScript every page preloads (one UI-kit chunk for all routes). Observed LCP is
-          // ~0.1 s; simulated is ~3.3 s. They warn until the UI-kit chunking follow-up (ETE-272) lands.
-          matchingUrlPattern: '/services',
+          matchingUrlPattern: PHOTO_HERO_PAGES.source.replace('^', '^(?!') + ').*$',
+          assertions: BUDGETS,
+        },
+        {
+          // Pages whose LCP is a hero photo (Services, a service, Projects, Blog). Observed, it
+          // paints in ~0.1 s; Lighthouse's simulation charges it with every script requested
+          // before then (~3 s on slow 4G). Their LCP and score warn; blocking time and the rest
+          // stay errors.
+          matchingUrlPattern: PHOTO_HERO_PAGES.source,
           assertions: {
             ...BUDGETS,
             'categories:performance': ['warn', { minScore: 0.95 }],

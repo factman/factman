@@ -3,7 +3,7 @@ import { applicationConfig, type Meta, type StoryObj } from '@storybook/angular-
 import { expect, userEvent } from 'storybook/test';
 
 import type { Project } from '@shared';
-import { iconArrowRight, iconGithub } from '@ui/atoms';
+import { iconArrowRight, iconGithub } from '@ui/atoms/icon/icons';
 
 import { ProjectGallery } from './project-gallery';
 

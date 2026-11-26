@@ -6,7 +6,11 @@ import {
   output,
 } from '@angular/core';
 
-import { type ConsentChoice, ConsentStatusCard, Table, type TableRow } from '@ui/molecules';
+import {
+  type ConsentChoice,
+  ConsentStatusCard,
+} from '@ui/molecules/consent-status-card/consent-status-card';
+import { Table, type TableRow } from '@ui/molecules/table/table';
 
 /** One cookie or storage key, as the policy lists it. */
 export interface StorageItem {

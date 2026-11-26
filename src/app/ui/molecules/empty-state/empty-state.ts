@@ -6,7 +6,9 @@ import {
   output,
 } from '@angular/core';
 
-import { Button, Icon, type IconDef } from '@ui/atoms';
+import { Button } from '@ui/atoms/button/button';
+import { Icon } from '@ui/atoms/icon/icon';
+import { type IconDef } from '@ui/atoms/icon/icon-def';
 
 /**
  * What shows when a list has nothing in it ("No projects match these filters"): an icon, a title,

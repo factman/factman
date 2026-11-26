@@ -9,18 +9,17 @@ import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
 import type { Project } from '@shared';
-import { TextInput, iconLightbulb, provideIcons } from '@ui/atoms';
-import {
-  Accordion,
-  COPIED_FOR,
-  CopyButton,
-  Dialog,
-  FormField,
-  ProjectCard,
-  ServiceCard,
-  StatCounter,
-  ThemeToggle,
-} from '@ui/molecules';
+import { provideIcons } from '@ui/atoms/icon/icon-registry';
+import { iconLightbulb } from '@ui/atoms/icon/icons';
+import { TextInput } from '@ui/atoms/text-input/text-input';
+import { Accordion } from '@ui/molecules/accordion/accordion';
+import { COPIED_FOR, CopyButton } from '@ui/molecules/copy-button/copy-button';
+import { Dialog } from '@ui/molecules/dialog/dialog';
+import { FormField } from '@ui/molecules/form-field/form-field';
+import { ProjectCard } from '@ui/molecules/project-card/project-card';
+import { ServiceCard } from '@ui/molecules/service-card/service-card';
+import { StatCounter } from '@ui/molecules/stat-counter/stat-counter';
+import { ThemeToggle } from '@ui/molecules/theme-toggle/theme-toggle';
 
 const router = [provideRouter([])];
 

@@ -1,6 +1,6 @@
 import type { Profile } from '@shared';
-import { iconBookOpen, iconGlobe, iconGraduationCap } from '@ui/atoms';
-import type { AboutFact } from '@ui/organisms';
+import { iconBookOpen, iconGlobe, iconGraduationCap } from '@ui/atoms/icon/icons';
+import type { AboutFact } from '@ui/organisms/about-section/about-section';
 
 /** What the tiles read from profile.json (plain arrays, so an empty list type-checks too). */
 interface AboutData {

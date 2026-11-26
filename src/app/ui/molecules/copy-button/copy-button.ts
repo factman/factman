@@ -10,7 +10,8 @@ import {
   signal,
 } from '@angular/core';
 
-import { Button, type ButtonSize, type ButtonVariant, iconCheck, iconCopy } from '@ui/atoms';
+import { Button, type ButtonSize, type ButtonVariant } from '@ui/atoms/button/button';
+import { iconCheck, iconCopy } from '@ui/atoms/icon/icons';
 
 import { copyText } from './clipboard';
 

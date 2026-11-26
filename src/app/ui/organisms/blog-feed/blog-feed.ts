@@ -10,8 +10,11 @@ import {
 } from '@angular/core';
 
 import { ANALYTICS_TRACKER, type BlogPost } from '@shared';
-import { Button, Chip, iconRefresh, Skeleton } from '@ui/atoms';
-import { BlogPostCard } from '@ui/molecules';
+import { Button } from '@ui/atoms/button/button';
+import { Chip } from '@ui/atoms/chip/chip';
+import { iconRefresh } from '@ui/atoms/icon/icons';
+import { Skeleton } from '@ui/atoms/skeleton/skeleton';
+import { BlogPostCard } from '@ui/molecules/blog-post-card/blog-post-card';
 
 /** Where the feed is: before the browser has fetched it, fetched, or failed. */
 export type FeedStatus = 'idle' | 'loading' | 'ready' | 'error';

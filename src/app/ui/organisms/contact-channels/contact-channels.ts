@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
 
 import type { Link } from '@shared';
-import { Icon, iconClock, iconGlobe, iconMail, iconPin, iconWhatsapp } from '@ui/atoms';
+import { Icon } from '@ui/atoms/icon/icon';
+import { iconClock, iconGlobe, iconMail, iconPin, iconWhatsapp } from '@ui/atoms/icon/icons';
 import {
   type Availability,
   AvailabilityBadge,
-  ContactMethod,
-  type FramedImage,
-  PhoneReveal,
-  PhotoFrame,
-  SocialLinks,
-} from '@ui/molecules';
+} from '@ui/molecules/availability-badge/availability-badge';
+import { ContactMethod } from '@ui/molecules/contact-method/contact-method';
+import { PhoneReveal } from '@ui/molecules/phone-reveal/phone-reveal';
+import { type FramedImage, PhotoFrame } from '@ui/molecules/photo-frame/photo-frame';
+import { SocialLinks } from '@ui/molecules/social-links/social-links';
 
 /** What the column shows, from contact.json and profile.json. */
 export interface ContactDetails {

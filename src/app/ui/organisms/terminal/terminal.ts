@@ -11,7 +11,8 @@ import {
 } from '@angular/core';
 
 import { runCommand, type TerminalCommand } from '@shared';
-import { Dialog, WindowFrame } from '@ui/molecules';
+import { Dialog } from '@ui/molecules/dialog/dialog';
+import { WindowFrame } from '@ui/molecules/window-frame/window-frame';
 
 /** One entry in the terminal's scrollback: a typed line or what it printed. */
 interface LogLine {

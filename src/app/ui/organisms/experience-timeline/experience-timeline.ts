@@ -7,8 +7,15 @@ import {
   signal,
 } from '@angular/core';
 
-import { Icon, iconArrowUpRight, iconChevronDown, iconChevronUp, SkillChip, Tag } from '@ui/atoms';
-import { CareerGlance, type GlanceRole, type GlanceStat } from '@ui/molecules';
+import { Icon } from '@ui/atoms/icon/icon';
+import { iconArrowUpRight, iconChevronDown, iconChevronUp } from '@ui/atoms/icon/icons';
+import { SkillChip } from '@ui/atoms/skill-chip/skill-chip';
+import { Tag } from '@ui/atoms/tag/tag';
+import {
+  CareerGlance,
+  type GlanceRole,
+  type GlanceStat,
+} from '@ui/molecules/career-glance/career-glance';
 
 /** One role, ready to show: the page formats the dates and picks the site's highlights. */
 export interface TimelineRole {

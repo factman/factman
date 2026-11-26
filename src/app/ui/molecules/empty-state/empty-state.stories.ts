@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/angular-vite';
 import { expect, fn, userEvent } from 'storybook/test';
 
-import { iconInbox, iconSearch } from '@ui/atoms';
+import { iconInbox, iconSearch } from '@ui/atoms/icon/icons';
 
 import { EmptyState } from './empty-state';
 

@@ -1,5 +1,5 @@
 import { importProvidersFrom } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { DeferBlockState, TestBed } from '@angular/core/testing';
 import { DOCUMENT } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
@@ -22,6 +22,10 @@ describe('routes (PRD §4 site map)', () => {
 
   const visit = async (url: string) => {
     const harness = await RouterTestingHarness.create(url);
+    // The home hero is deferred (prerendered, hydrated when idle, ETE-126): render it as the
+    // prerender does.
+    for (const block of await harness.fixture.getDeferBlocks())
+      await block.render(DeferBlockState.Complete);
     const el = harness.routeNativeElement as HTMLElement;
     return {
       h1: el.querySelector('h1')?.textContent?.trim(),

@@ -2,8 +2,8 @@ import { provideRouter } from '@angular/router';
 import { applicationConfig, type Meta, type StoryObj } from '@storybook/angular-vite';
 import { expect } from 'storybook/test';
 
-import { provideIcons } from '@ui/atoms';
-import { SERVICE_ICONS } from '@ui/molecules';
+import { provideIcons } from '@ui/atoms/icon/icon-registry';
+import { SERVICE_ICONS } from '@ui/molecules/service-card/service-icons';
 
 import { type GridService, ServicesGrid } from './services-grid';
 

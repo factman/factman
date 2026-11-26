@@ -15,7 +15,7 @@ import { SiteFooterHost } from '@features/site-footer';
 import { SiteHeaderHost } from '@features/site-header';
 import { TerminalHost } from '@features/terminal';
 import { TERMINAL_ENABLED, TerminalLauncher } from '@shared';
-import { MainLayout } from '@ui/templates';
+import { MainLayout } from '@ui/templates/main-layout/main-layout';
 import { filter, skip, take } from 'rxjs';
 
 @Component({

@@ -8,8 +8,9 @@ import {
 } from '@angular/core';
 
 import type { Client } from '@shared';
-import { IconButton, iconPause, iconPlay } from '@ui/atoms';
-import { ClientLogo } from '@ui/molecules';
+import { IconButton } from '@ui/atoms/icon-button/icon-button';
+import { iconPause, iconPlay } from '@ui/atoms/icon/icons';
+import { ClientLogo } from '@ui/molecules/client-logo/client-logo';
 
 /** What the strip needs of a client. */
 export type StripClient = Pick<Client, 'id' | 'name' | 'logo' | 'plate' | 'ratio' | 'website'>;

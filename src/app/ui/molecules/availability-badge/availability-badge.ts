@@ -6,7 +6,7 @@ import {
   input,
 } from '@angular/core';
 
-import { StatusDot } from '@ui/atoms';
+import { StatusDot } from '@ui/atoms/status-dot/status-dot';
 
 export type Availability = 'available' | 'busy';
 

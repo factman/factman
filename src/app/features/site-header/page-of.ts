@@ -1,4 +1,4 @@
-import type { SiteHeaderPage } from '@ui/organisms';
+import type { SiteHeaderPage } from '@ui/organisms/site-header/site-header';
 
 const SECTIONS: readonly SiteHeaderPage[] = ['services', 'projects', 'blog'];
 

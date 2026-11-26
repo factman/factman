@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 
 import { type ContactChannel, Track } from '@shared';
-import { Icon, type IconDef } from '@ui/atoms';
+import { Icon } from '@ui/atoms/icon/icon';
+import { type IconDef } from '@ui/atoms/icon/icon-def';
 
 import { CopyButton } from '../copy-button/copy-button';
 

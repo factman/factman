@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
 
-import { type IconDef, Logo, type LogoTheme } from '@ui/atoms';
-import { ContactMethod, type FramedImage, PhotoFrame } from '@ui/molecules';
+import { type IconDef } from '@ui/atoms/icon/icon-def';
+import { Logo, type LogoTheme } from '@ui/atoms/logo/logo';
+import { ContactMethod } from '@ui/molecules/contact-method/contact-method';
+import { type FramedImage, PhotoFrame } from '@ui/molecules/photo-frame/photo-frame';
 
 /** One tile under the story (the canvas's InfoTile): education, languages, publications. */
 export interface AboutFact {

@@ -9,17 +9,15 @@ import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
 import type { Project } from '@shared';
-import { iconBraces, iconServer } from '@ui/atoms';
+import { iconBraces, iconServer } from '@ui/atoms/icon/icons';
 import {
   ExperienceTimeline,
-  NO_FILTER,
-  ProjectGallery,
-  type ProjectFilter,
-  type StackGroup,
-  StatsPanel,
-  TechStack,
   type TimelineEntry,
-} from '@ui/organisms';
+} from '@ui/organisms/experience-timeline/experience-timeline';
+import { NO_FILTER, type ProjectFilter } from '@ui/organisms/project-gallery/project-filter';
+import { ProjectGallery } from '@ui/organisms/project-gallery/project-gallery';
+import { StatsPanel } from '@ui/organisms/stats-panel/stats-panel';
+import { type StackGroup, TechStack } from '@ui/organisms/tech-stack/tech-stack';
 
 const entries: TimelineEntry[] = [
   {

@@ -1,8 +1,9 @@
 import { contact } from '@data/contact';
 import { profile } from '@data/profile';
 import { type AnalyticsEvent, type BookingChannel, formatPhone } from '@shared';
-import { iconCalendar, iconMail, iconPhoneCall, iconWhatsapp } from '@ui/atoms';
-import type { BookingPerson, Channel } from '@ui/molecules';
+import { iconCalendar, iconMail, iconPhoneCall, iconWhatsapp } from '@ui/atoms/icon/icons';
+import type { BookingPerson } from '@ui/molecules/booking-card/booking-card';
+import type { Channel } from '@ui/molecules/channel-card/channel-card';
 
 /** service_enquiry for the Services page's general channels (no one service). */
 const enquiry = (channel: BookingChannel): AnalyticsEvent => ({

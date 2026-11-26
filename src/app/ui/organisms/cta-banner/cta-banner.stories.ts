@@ -2,7 +2,7 @@ import { provideRouter } from '@angular/router';
 import { applicationConfig, type Meta, type StoryObj } from '@storybook/angular-vite';
 import { expect } from 'storybook/test';
 
-import { iconCalendar, iconGithub, iconMail } from '@ui/atoms';
+import { iconCalendar, iconGithub, iconMail } from '@ui/atoms/icon/icons';
 
 import { CtaBanner } from './cta-banner';
 

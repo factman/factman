@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 
-import { iconCalendar, iconWhatsapp } from '@ui/atoms';
+import { iconCalendar, iconWhatsapp } from '@ui/atoms/icon/icons';
 
 import { ChannelCard } from './channel-card';
 

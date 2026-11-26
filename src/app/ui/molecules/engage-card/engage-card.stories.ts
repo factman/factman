@@ -2,7 +2,7 @@ import { provideRouter } from '@angular/router';
 import { type Meta, type StoryObj, applicationConfig } from '@storybook/angular-vite';
 import { expect, fn, userEvent } from 'storybook/test';
 
-import { iconActivity, iconFolder, iconGlobe } from '@ui/atoms';
+import { iconActivity, iconFolder, iconGlobe } from '@ui/atoms/icon/icons';
 
 import { EngageCard } from './engage-card';
 

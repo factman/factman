@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 
 import type { Project } from '@shared';
-import { Button, iconArrowRight, iconMail } from '@ui/atoms';
+import { Button } from '@ui/atoms/button/button';
+import { iconArrowRight, iconMail } from '@ui/atoms/icon/icons';
 
 import { List, type ListItem } from '../list/list';
 

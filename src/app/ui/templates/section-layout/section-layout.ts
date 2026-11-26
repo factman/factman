@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 
 import { Reveal, ScrollSpy } from '@shared';
-import { SectionHeader } from '@ui/molecules';
+import { SectionHeader } from '@ui/molecules/section-header/section-header';
 
 /**
  * One page section: an anchor (`sectionId`, e.g. `#services`) that the header's scroll-spy tracks

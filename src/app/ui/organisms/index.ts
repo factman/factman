@@ -1,4 +1,4 @@
-// Public API of the organisms level. Export every organism from here; import it only via `@ui/organisms`.
+// The organisms level's catalogue. Import each export from its own file (@ui/organisms/<folder>/<file>), not from here: lint forbids it (ETE-126).
 export { type AboutFact, AboutSection } from './about-section/about-section';
 export { ALL_TAGS, BlogFeed, type FeedStatus, postTags } from './blog-feed/blog-feed';
 export { BookingChannels } from './booking-channels/booking-channels';

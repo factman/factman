@@ -7,7 +7,9 @@ import {
   output,
 } from '@angular/core';
 
-import { Icon, fieldId, iconChevronDown } from '@ui/atoms';
+import { fieldId } from '@ui/atoms/form-control/value-control';
+import { Icon } from '@ui/atoms/icon/icon';
+import { iconChevronDown } from '@ui/atoms/icon/icons';
 
 export interface AccordionItem {
   id: string;

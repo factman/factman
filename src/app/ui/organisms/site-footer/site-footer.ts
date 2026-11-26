@@ -11,14 +11,17 @@ import {
 import { RouterLink } from '@angular/router';
 
 import { CLOCK, type Link, prefersReducedMotion } from '@shared';
-import { Button, Divider, Logo, iconArrowUp, iconTerminal } from '@ui/atoms';
+import { Button } from '@ui/atoms/button/button';
+import { Divider } from '@ui/atoms/divider/divider';
+import { iconArrowUp, iconTerminal } from '@ui/atoms/icon/icons';
+import { Logo } from '@ui/atoms/logo/logo';
 import {
   type Availability,
   AvailabilityBadge,
-  SocialLinks,
-  TerminalSignOff,
-  type Theme,
-} from '@ui/molecules';
+} from '@ui/molecules/availability-badge/availability-badge';
+import { SocialLinks } from '@ui/molecules/social-links/social-links';
+import { TerminalSignOff } from '@ui/molecules/terminal-sign-off/terminal-sign-off';
+import { type Theme } from '@ui/molecules/theme-toggle/theme-toggle';
 
 /** A link in the footer's Explore column: an app path such as `/services` or `/privacy`. */
 export interface SiteFooterLink {

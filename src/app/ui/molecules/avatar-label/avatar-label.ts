@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, input } from '@angular/core';
 
-import { Avatar, type AvatarSize } from '@ui/atoms';
+import { Avatar, type AvatarSize } from '@ui/atoms/avatar/avatar';
 
 /**
  * A person or company with a line about them: the avatar (photo or initials), the name and a

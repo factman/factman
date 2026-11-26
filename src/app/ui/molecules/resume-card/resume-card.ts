@@ -8,19 +8,19 @@ import {
 } from '@angular/core';
 
 import type { Resume } from '@shared';
+import { Button } from '@ui/atoms/button/button';
+import { Icon } from '@ui/atoms/icon/icon';
+import { type IconDef } from '@ui/atoms/icon/icon-def';
 import {
-  Button,
-  Icon,
-  type IconDef,
-  Image,
   iconCloud,
   iconDownload,
   iconEye,
   iconFileText,
   iconLayout,
   iconMobile,
-  Tag,
-} from '@ui/atoms';
+} from '@ui/atoms/icon/icons';
+import { Image } from '@ui/atoms/image/image';
+import { Tag } from '@ui/atoms/tag/tag';
 
 /** The icons resumes.json chooses from (`icon`); a page showing résumé cards registers them. */
 export const RESUME_ICONS: readonly IconDef[] = [iconLayout, iconMobile, iconCloud];

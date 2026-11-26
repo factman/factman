@@ -7,7 +7,7 @@ import { projects } from '@data/projects';
 import { resumes } from '@data/resumes';
 import { skills } from '@data/skills';
 import { ANALYTICS_TRACKER, CLOCK, TerminalLauncher } from '@shared';
-import { Terminal } from '@ui/organisms';
+import { Terminal } from '@ui/organisms/terminal/terminal';
 
 import { terminalCommands } from './terminal-commands';
 

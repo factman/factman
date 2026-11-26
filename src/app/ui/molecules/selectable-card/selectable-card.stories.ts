@@ -2,7 +2,7 @@ import { signal } from '@angular/core';
 import { type Meta, type StoryObj } from '@storybook/angular-vite';
 import { expect, userEvent } from 'storybook/test';
 
-import { iconClock, iconCode } from '@ui/atoms';
+import { iconClock, iconCode } from '@ui/atoms/icon/icons';
 
 import { SelectableCard } from './selectable-card';
 

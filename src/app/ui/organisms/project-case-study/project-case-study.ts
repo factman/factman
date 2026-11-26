@@ -8,16 +8,17 @@ import {
 } from '@angular/core';
 
 import { type Project, Track } from '@shared';
+import { Button } from '@ui/atoms/button/button';
 import {
-  Button,
   iconArrowUpRight,
   iconChevronLeft,
   iconChevronRight,
   iconCode,
-  Image,
-  SkillChip,
-} from '@ui/atoms';
-import { EngageCard, type ListItem } from '@ui/molecules';
+} from '@ui/atoms/icon/icons';
+import { Image } from '@ui/atoms/image/image';
+import { SkillChip } from '@ui/atoms/skill-chip/skill-chip';
+import { EngageCard } from '@ui/molecules/engage-card/engage-card';
+import { type ListItem } from '@ui/molecules/list/list';
 
 /** The next project in the list, for "Next project". */
 export interface NextProject {
