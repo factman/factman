@@ -27,7 +27,10 @@ describe('ResumeCard', () => {
     );
     expect(screen.getByRole('heading', { level: 3, name: resume.title })).toBeTruthy();
     expect(screen.getByText(resume.scope)).toBeTruthy();
-    expect(container.querySelector('.resume-card-page')).toBeTruthy();
+    // Without a portrait, the data's icon stands in.
+    expect(container.querySelector('.resume-card-icon')).toBeTruthy();
+    expect(screen.getByText('PDF · A4')).toBeTruthy();
+    expect(screen.getByText(resume.fileName)).toBeTruthy();
     await userEvent.click(screen.getByRole('button', { name: `Preview ${resume.title} résumé` }));
     await userEvent.click(
       screen.getByRole('button', { name: `Download ${resume.title} résumé (PDF)` }),
@@ -36,13 +39,27 @@ describe('ResumeCard', () => {
     expect(download).toHaveBeenCalledWith(resume);
   });
 
-  it('shows the thumbnail when there is one', async () => {
+  it('shows the portrait, and the pages, size and update date (the canvas card)', async () => {
     const { container } = await render(ResumeCard, {
-      inputs: { resume, thumbnail: '/assets/resumes/fullstack.webp' },
+      inputs: {
+        resume: {
+          ...resume,
+          photo: '/assets/profile/odunayo-resume-fullstack-360.webp',
+          pages: 2,
+          size: '186 KB',
+          updated: 'Nov 2026',
+        },
+      },
       providers: [provideIcons([iconLayout])],
     });
-    const img = container.querySelector('img') as HTMLImageElement;
-    expect(img.getAttribute('src')).toBe('/assets/resumes/fullstack.webp');
+    const img = container.querySelector('.resume-card-avatar img') as HTMLImageElement;
+    expect(img.getAttribute('src')).toBe('/assets/profile/odunayo-resume-fullstack-360.webp');
+    // Decorative: the title names the card.
     expect(img.getAttribute('alt')).toBe('');
+    expect(container.querySelector('.resume-card-icon')).toBeNull();
+    const meta = [...container.querySelectorAll('.resume-card-meta span')].map(
+      (s) => s.textContent,
+    );
+    expect(meta).toEqual(['2 pages', '186 KB', 'Updated Nov 2026']);
   });
 });

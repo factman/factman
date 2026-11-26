@@ -19,13 +19,17 @@ const meta: Meta<ResumeCard> = {
       scope: 'Frontend and backend development for product and engineering roles.',
       icon: 'layout',
       fileName: 'odunayo-mohammed-fullstack.pdf',
+      photo: '/assets/profile/odunayo-resume-fullstack-360.webp',
+      pages: 2,
+      size: '186 KB',
+      updated: 'Nov 2026',
     },
     preview: fn(),
     download: fn(),
   },
   render: (args) => ({
     props: args,
-    template: `<div style="max-width: 320px"><fm-resume-card [resume]="resume" [thumbnail]="thumbnail" (preview)="preview($event)" (download)="download($event)" /></div>`,
+    template: `<div style="max-width: 320px"><fm-resume-card [resume]="resume" (preview)="preview($event)" (download)="download($event)" /></div>`,
   }),
 };
 export default meta;
@@ -47,6 +51,10 @@ export const DevOps: Story = {
       scope: 'Docker, Kubernetes, AWS, GCP and Azure for platform and cloud roles.',
       icon: 'cloud',
       fileName: 'odunayo-mohammed-devops.pdf',
+      photo: '/assets/profile/odunayo-resume-devops-360.webp',
+      pages: 2,
+      size: '179 KB',
+      updated: 'Nov 2026',
     },
   },
 };

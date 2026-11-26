@@ -72,8 +72,9 @@ export class ServiceDetailPage {
   protected readonly all = inject(ServicesRepository).all();
   protected readonly person = bookingPerson();
   protected readonly arrow = iconArrowRight;
-  protected readonly photo = profile.aboutPhoto && {
-    ...portraitSources(profile.aboutPhoto),
+  /** The canvas's service detail hero portrait. */
+  protected readonly photo = profile.servicePhoto && {
+    ...portraitSources(profile.servicePhoto),
     sizes: '(min-width: 1024px) 420px, (min-width: 768px) 360px, 300px',
   };
   protected readonly schedulerOpen = signal(false);

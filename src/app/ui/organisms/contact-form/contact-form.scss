@@ -65,6 +65,42 @@
   color: var(--text-secondary);
 }
 
+// The canvas's .contact-sent: a small cutout portrait beside the thanks, fading out at its foot.
+.contact-form-sent {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--gap-lg);
+
+  // The Image atom's <picture> is the flex item.
+  picture {
+    flex: none;
+  }
+
+  .contact-form-thanks {
+    padding-bottom: var(--padding-sm);
+  }
+}
+
+.contact-form-sent-photo {
+  display: block;
+  flex: none;
+  width: 120px;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  object-position: center bottom;
+  mask-image: linear-gradient(
+    to bottom,
+    var(--neutral-1000) 0%,
+    var(--neutral-1000) 70%,
+    transparent 100%
+  );
+
+  @media (width < 390px) {
+    width: 88px;
+  }
+}
+
 .contact-form-thanks {
   display: flex;
   flex-direction: column;

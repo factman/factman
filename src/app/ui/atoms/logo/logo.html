@@ -11,7 +11,7 @@
       decoding="async"
     />
   </span>
-} @else if (artwork()) {
+} @else if (artwork() && type() === 'odunayo') {
   <img
     class="fm-logo fm-logo--art"
     [attr.src]="lockupSrc()"
@@ -25,10 +25,10 @@
 } @else {
   <span
     class="fm-logo fm-logo--lockup"
-    [class]="'fm-logo--' + theme()"
+    [class]="lockupClass()"
     [style.--fm-logo-size.px]="size()"
     role="img"
-    [attr.aria-label]="alt() ?? 'Odunayo'"
+    [attr.aria-label]="label()"
   >
     <img
       class="fm-logo__mark"
@@ -40,8 +40,13 @@
       alt=""
       decoding="async"
     />
-    <span class="fm-logo__words" aria-hidden="true"
-      ><span class="fm-logo__word">ODUNAYO</span></span
-    >
+    <span class="fm-logo__words" aria-hidden="true">
+      <!-- A space between the stacked words, so the text reads "ODUNAYO MOHAMMED" (it matches the
+           link's accessible name; the flex column keeps the space invisible). -->
+      @for (word of words(); track word) {
+        <span class="fm-logo__word">{{ word }}</span
+        >{{ $last ? '' : ' ' }}
+      }
+    </span>
   </span>
 }

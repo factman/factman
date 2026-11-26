@@ -7,10 +7,10 @@ import { ANALYTICS_TRACKER } from '@shared';
 
 const topics = ['General enquiry', 'DevOps', 'Mobile development'];
 
-async function renderForm() {
+async function renderForm(inputs: Record<string, unknown> = {}) {
   const composed = vi.fn();
   const result = await render(ContactForm, {
-    inputs: { email: 'factman60@gmail.com', topics },
+    inputs: { email: 'factman60@gmail.com', topics, ...inputs },
     on: { composed },
     providers: [provideRouter([])],
   });
@@ -62,6 +62,23 @@ describe('ContactForm', () => {
       '_blank',
     );
     expect(screen.getByRole('button', { name: /Copy message/ })).toBeTruthy();
+  });
+
+  it('shows the portrait beside "Message ready" when given one (the canvas contact section)', async () => {
+    await renderForm({
+      sentPhoto: {
+        src: '/assets/profile/odunayo-contact-sent.webp',
+        alt: 'Odunayo',
+        width: 720,
+        height: 900,
+      },
+    });
+    expect(screen.queryByRole('img', { name: 'Odunayo' })).toBeNull();
+    await fill();
+    await userEvent.click(screen.getByRole('button', { name: /Compose email/ }));
+    const img = screen.getByRole('img', { name: 'Odunayo' });
+    expect(img.getAttribute('src')).toBe('/assets/profile/odunayo-contact-sent.webp');
+    expect(img.classList).toContain('contact-form-sent-photo');
   });
 
   it('goes back to the filled-in form with "Edit message"', async () => {

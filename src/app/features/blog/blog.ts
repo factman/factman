@@ -1,6 +1,8 @@
 import { afterNextRender, ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { BlogRepository } from '@core/data';
+import { profile } from '@data/profile';
 import { site } from '@data/site';
+import { portraitSources } from '@shared';
 import { iconArrowUpRight, iconMedium, iconRss } from '@ui/atoms';
 import { BlogFeed, type HeroAction, PageHero } from '@ui/organisms';
 
@@ -20,6 +22,11 @@ import { BlogFeed, type HeroAction, PageHero } from '@ui/organisms';
 export class BlogPage {
   protected readonly blog = inject(BlogRepository);
   protected readonly crumbs = [{ label: 'Home', href: '/' }, { label: 'Blog' }];
+  /** The canvas's Blog hero portrait. */
+  protected readonly media = profile.blogPhoto && {
+    ...portraitSources(profile.blogPhoto),
+    sizes: '(min-width: 1024px) 420px, (min-width: 768px) 360px, 300px',
+  };
   protected readonly actions: HeroAction[] = [
     {
       label: 'Follow on Medium',

@@ -116,6 +116,12 @@
       "id": "fullstack",
       "slug": "fullstack",
       "title": "Fullstack Software Engineer",
+      "photo": {
+        "src": "profile/odunayo-resume-fullstack.webp",
+        "alt": "Odunayo Mohammed, Fullstack Software Engineer portrait",
+        "width": 720,
+        "height": 900
+      },
       "headline": "Fullstack Software Engineer · CTO",
       "scope": "Frontend and backend development for product and engineering roles.",
       "icon": "layout",
@@ -366,6 +372,12 @@
       "id": "mobile",
       "slug": "mobile",
       "title": "Mobile Developer",
+      "photo": {
+        "src": "profile/odunayo-resume-mobile.webp",
+        "alt": "Odunayo Mohammed, Mobile Developer portrait",
+        "width": 720,
+        "height": 900
+      },
       "headline": "Mobile Developer · React Native · Flutter · Ionic",
       "scope": "React Native, Flutter and Ionic apps for Android and iOS roles.",
       "icon": "mobile",
@@ -581,6 +593,12 @@
       "id": "devops",
       "slug": "devops",
       "title": "DevOps / Cloud Engineer",
+      "photo": {
+        "src": "profile/odunayo-resume-devops.webp",
+        "alt": "Odunayo Mohammed, DevOps / Cloud Engineer portrait",
+        "width": 720,
+        "height": 900
+      },
       "headline": "DevOps / Cloud Engineer",
       "scope": "Docker, Kubernetes, AWS, GCP and Azure for platform and cloud roles.",
       "icon": "cloud",

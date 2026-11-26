@@ -5,15 +5,16 @@ import { RESUMES } from './resume-downloads.testing';
 import { ResumeSection } from './resume-section';
 
 describe('ResumeSection', () => {
-  it('has a level-3 heading and a card per résumé with its first page as the thumbnail', async () => {
+  it('has a level-3 heading and a card per résumé with its portrait', async () => {
     const { container } = await render(ResumeSection, { inputs: { resumes: RESUMES } });
     expect(
       screen.getByRole('heading', { level: 3, name: 'Pick the résumé that fits the role' }),
     ).toBeTruthy();
     expect(container.querySelectorAll('fm-resume-card')).toHaveLength(3);
-    expect(container.querySelector('img')!.getAttribute('src')).toBe(
-      '/resumes/cv-fullstack-page-1.webp',
+    expect(container.querySelector('.resume-card-avatar img')!.getAttribute('src')).toBe(
+      '/assets/profile/odunayo-resume-fullstack-360.webp',
     );
+    expect(screen.getAllByText('2 pages')).toHaveLength(3);
   });
 
   it('asks to preview or download a résumé by its slug', async () => {

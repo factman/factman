@@ -1,8 +1,7 @@
 /**
  * `pnpm ds:portraits` (ETE-198): responsive exports of the profile photos for `srcset` (ETE-91).
- * Sources are the photos named in src/data/profile.json (`photo`, `aboutPhoto`, `contactPhoto`,
- * `notFoundPhoto`),
- * the approved canvas images. Each is exported at half, three-quarters and full width, as AVIF and
+ * Sources are the photos named in src/data/profile.json (PHOTO_KEYS) and each résumé's `photo` in
+ * src/data/resumes.json: the approved canvas images. Each is exported at half, three-quarters and full width, as AVIF and
  * WebP, next to the source: `odunayo-hero.webp` → `odunayo-hero-360.avif`, `odunayo-hero-360.webp`, …
  * Never enlarged: the full width is the source's own width.
  * `pnpm ds:portraits --check` fails when an export is missing or has the wrong size.
@@ -15,8 +14,21 @@ import sharp from 'sharp';
 import { readImageSize } from '../data/image-size';
 
 export const PROFILE_FILE = 'src/data/profile.json';
+export const RESUMES_FILE = 'src/data/resumes.json';
 export const ASSETS_DIR = 'src/assets';
-export const PHOTO_KEYS = ['photo', 'aboutPhoto', 'contactPhoto', 'notFoundPhoto'] as const;
+export const PHOTO_KEYS = [
+  'photo',
+  'aboutPhoto',
+  'contactPhoto',
+  'notFoundPhoto',
+  'servicesPhoto',
+  'servicePhoto',
+  'projectsPhoto',
+  'blogPhoto',
+  'ctaPhoto',
+  'contactSentPhoto',
+  'bookingPhoto',
+] as const;
 export const FORMATS = ['avif', 'webp'] as const;
 /** Fractions of the source width to export; 1 is the source width itself. */
 export const STEPS = [0.5, 0.75, 1] as const;
@@ -47,8 +59,16 @@ export function plannedExports(root: string): PortraitExport[] {
     string,
     unknown
   >;
-  return PHOTO_KEYS.flatMap((key) => {
-    const photo = profile[key] as Photo | undefined;
+  const resumesPath = join(root, RESUMES_FILE);
+  const resumes = existsSync(resumesPath)
+    ? ((JSON.parse(readFileSync(resumesPath, 'utf8')) as { resumes?: { photo?: Photo }[] })
+        .resumes ?? [])
+    : [];
+  const photos = [
+    ...PHOTO_KEYS.map((key) => profile[key] as Photo | undefined),
+    ...resumes.map((r) => r.photo),
+  ];
+  return photos.flatMap((photo) => {
     if (!photo) return [];
     const source = join(ASSETS_DIR, photo.src);
     const base = source.replace(/\.[a-z]+$/, '');

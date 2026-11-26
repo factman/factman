@@ -1,35 +1,45 @@
 <article class="resume-card">
-  <div class="resume-card-thumb">
-    @if (thumbnail(); as thumbnail) {
-      <fm-image [src]="thumbnail" alt="" [width]="240" [height]="340" />
+  <div class="resume-card-head">
+    @if (resume().photo; as photo) {
+      <span class="resume-card-avatar"
+        ><fm-image [src]="photo" alt="" [width]="720" [height]="900" sizes="56px"
+      /></span>
     } @else {
-      <span class="resume-card-page" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="resume-card-icon" aria-hidden="true"
+        ><fm-icon [icon]="resume().icon" [size]="20"
+      /></span>
     }
+    <fm-tag size="sm" variant="outline" [leadingIcon]="fileText">PDF · A4</fm-tag>
   </div>
-  <div class="resume-card-body">
-    <span class="resume-card-icon" aria-hidden="true"
-      ><fm-icon [icon]="resume().icon" [size]="20"
-    /></span>
+  <div class="resume-card-copy">
+    <span class="resume-card-file">{{ resume().fileName }}</span>
     <div role="heading" [attr.aria-level]="headingLevel()" class="resume-card-title">
       {{ resume().title }}
     </div>
     <p class="resume-card-scope">{{ resume().scope }}</p>
-    <div class="resume-card-actions">
-      <fm-button
-        variant="secondary"
-        size="sm"
-        [leadingIcon]="eye"
-        [ariaLabel]="'Preview ' + resume().title + ' résumé'"
-        (pressed)="preview.emit(resume())"
-        >Preview</fm-button
-      >
-      <fm-button
-        size="sm"
-        [leadingIcon]="downloadIcon"
-        [ariaLabel]="'Download ' + resume().title + ' résumé (PDF)'"
-        (pressed)="download.emit(resume())"
-        >Download</fm-button
-      >
-    </div>
+  </div>
+  @if (meta().length) {
+    <p class="resume-card-meta">
+      @for (item of meta(); track item) {
+        <span>{{ item }}</span>
+      }
+    </p>
+  }
+  <div class="resume-card-actions">
+    <fm-button
+      variant="secondary"
+      size="sm"
+      [leadingIcon]="eye"
+      [ariaLabel]="'Preview ' + resume().title + ' résumé'"
+      (pressed)="preview.emit(resume())"
+      >Preview</fm-button
+    >
+    <fm-button
+      size="sm"
+      [leadingIcon]="downloadIcon"
+      [ariaLabel]="'Download ' + resume().title + ' résumé (PDF)'"
+      (pressed)="download.emit(resume())"
+      >Download</fm-button
+    >
   </div>
 </article>

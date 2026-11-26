@@ -16,6 +16,20 @@ describe('Logo', () => {
     expect(logo.style.getPropertyValue('--fm-logo-size')).toBe('48px');
   });
 
+  it('renders the name lockup stacked, ODUNAYO over MOHAMMED (the header and footer)', async () => {
+    await render(Logo, { inputs: { type: 'name', size: 36, theme: 'dark' } });
+    const logo = screen.getByRole('img', { name: 'Odunayo Mohammed' });
+    expect(logo.classList).toContain('fm-logo--stacked');
+    expect(logo.classList).toContain('fm-logo--dark');
+    const words = [...logo.querySelectorAll('.fm-logo__word')].map((w) => w.textContent);
+    expect(words).toEqual(['ODUNAYO', 'MOHAMMED']);
+    // Read as two words, so a link naming "Odunayo Mohammed" contains the visible text.
+    expect(logo.textContent?.replace(/\s+/g, ' ').trim()).toBe('ODUNAYO MOHAMMED');
+    expect(logo.querySelector('img')?.getAttribute('src')).toBe(
+      '/assets/brand/ay-mark-dark-256.webp',
+    );
+  });
+
   it('renders the mark alone with its own alt text', async () => {
     await render(Logo, { inputs: { type: 'mark', size: 36 } });
     const mark = screen.getByRole('img', { name: 'Odunayo Mohammed' }) as HTMLImageElement;

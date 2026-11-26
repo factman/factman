@@ -51,7 +51,10 @@ export function bookingChannels(): Channel[] {
 /** Who you'll talk to, on a service's BookingCard. */
 export const bookingPerson = (): BookingPerson => ({
   name: profile.name,
-  photo: '/assets/profile/odunayo-hero-360.webp',
+  // The canvas's BookingCard avatar (profile.json bookingPhoto), at its smallest export.
+  photo: profile.bookingPhoto
+    ? `/assets/${profile.bookingPhoto.src.replace(/\.[a-z]+$/, '')}-360.webp`
+    : '/assets/profile/odunayo-hero-360.webp',
   // contact.json's time zone (Africa/Lagos) as people say it.
   meta: `${profile.headline} · ${contact.city}, WAT (UTC+1)`,
 });
