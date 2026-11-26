@@ -179,4 +179,4 @@ Breakpoint tokens: `--breakpoint-mobile` 390px (the design width for phones), `-
 - **Very small phones (< 390px):** stats in `CareerGlance` drop to two columns; nothing else changes.
 - **No horizontal scroll** at any width from 320px up; wide content (code, tables) scrolls inside its own panel.
 
-Playwright checks layouts at 390, 768 and 1440 (ETE-84 visual baselines, ETE-117 integration tests).
+Playwright checks layouts at 390, 768 and 1440 (ETE-117 integration tests).

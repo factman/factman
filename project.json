@@ -37,7 +37,9 @@
       "inputs": [
         "{projectRoot}/scripts/resume/**/*",
         "{projectRoot}/public/resumes/**/*",
-        { "env": "VERCEL_ENV" },
+        {
+          "env": "VERCEL_ENV"
+        },
         "production",
         {
           "dependentTasksOutputFiles": "**/*"
@@ -57,7 +59,9 @@
       "inputs": [
         "{projectRoot}/scripts/resume/**/*",
         "{projectRoot}/public/resumes/**/*",
-        { "env": "VERCEL_ENV" },
+        {
+          "env": "VERCEL_ENV"
+        },
         "production",
         {
           "dependentTasksOutputFiles": "**/*"
@@ -264,16 +268,6 @@
     },
     "ds:icons": {
       "command": "tsx scripts/design-system/build-icons.ts"
-    },
-    "vr": {
-      "command": "playwright test -c playwright.vr.config.ts",
-      "dependsOn": ["build-preview"],
-      "cache": false
-    },
-    "vr:update": {
-      "command": "playwright test -c playwright.vr.config.ts --update-snapshots",
-      "dependsOn": ["build-preview"],
-      "cache": false
     },
     "build:resumes": {
       "command": "tsx scripts/resume/build-resumes.ts"
