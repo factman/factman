@@ -1,0 +1,14 @@
+<fm-site-footer
+  [theme]="theme()"
+  [tagline]="tagline"
+  [nav]="nav"
+  [resumes]="resumes"
+  [email]="email"
+  [location]="location"
+  [socials]="socials"
+  [availability]="availability"
+  [availabilityLabel]="profile.availability.message"
+  [name]="name"
+  (openResume)="openResume($event)"
+  (cookies)="openConsent()"
+/>

@@ -6,7 +6,7 @@ Three checks keep the site fast. All run in CI.
 | ------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
 | Lighthouse CI       | `pnpm lhci` (`lighthouserc.cjs`), CI's E2E job on the production build | Any category is under 95; LCP is over 1.8 s; CLS is over 0.02; TBT is over 200 ms |
 | Per-page JavaScript | `tools/build/bundles.test.mjs` (`pnpm test:build`)                     | A page's entry script and modulepreloads, gzipped, pass its ceiling               |
-| Angular budgets     | `angular.json`                                                         | The initial bundle passes 450 kB (raw), or a component's styles pass 8 kB         |
+| Angular budgets     | `angular.json`                                                         | The initial bundle passes 850 kB (raw), or a component's styles pass 8 kB         |
 
 Lighthouse runs its mobile emulation (slow 4G, 4× CPU slowdown), the median of 3 runs, on `/`, `/services`, `/services/devops`, `/projects`, a project page, `/blog` and `/privacy`.
 
@@ -19,13 +19,13 @@ Lighthouse runs its mobile emulation (slow 4G, 4× CPU slowdown), the median of 
 | `/services/devops`                             | 92   | 100  | 96             | 100 | 3.3 s (warn) | 0   | 14 ms       |
 | `/projects`, project page, `/blog`, `/privacy` | 100  | 100  | 96             | 100 | 0.75 s       | 0   | under 30 ms |
 
-JavaScript per page, gzipped: 202 KB (`/privacy`) to 227 KB (`/`). Angular's initial bundle is 102 KB gzipped (366 kB raw).
+JavaScript per page, gzipped: 203 KB (`/privacy`) to 225 KB (`/`). Angular's initial bundle is 175 KB gzipped (769 kB raw): since the site header is on every page (ETE-273), the shared UI-kit chunk it imports is part of the initial bundle instead of being preloaded by each route, so the per-page totals barely moved. The per-page budgets (`bundles.test.mjs`) are the gate; the Angular budget only catches a jump.
 
 ## What was fixed
 
 - **Layout shift, 0.087 to 0.** The consent banner is docked at the bottom of the screen. When its message and buttons appeared after the typed command, it grew upwards, and that counted as a shift. They are now in the layout from the start, hidden and inert until the command is typed.
 - **LCP image discovery.** `fm-image` with `priority` now adds `<link rel="preload" as="image">` to the prerendered `<head>`. It uses the AVIF or WebP `imagesrcset` and `imagesizes`, so the browser starts the hero photo before the scripts.
-- **Résumé card thumbnails, 186 KB to 76 KB.** The card used the full print preview (1189 px wide). `build-resumes.ts` now also writes `-page-1-thumb.webp` at 680 px, twice the card's width, and the card uses that.
+- **Résumé cards no longer load a page image (186 KB each).** The card used the full print preview (1189 px wide). The design's card (ETE-274) shows a 56 px portrait instead, so the preview pages load only in the preview dialog.
 
 ## Tradeoffs and follow-ups
 

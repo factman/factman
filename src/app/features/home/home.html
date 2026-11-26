@@ -142,7 +142,7 @@
 >
   @defer (on viewport; hydrate on viewport) {
     <div class="home-contact">
-      <fm-contact-form [email]="contactEmail" [topics]="topics" />
+      <fm-contact-form [email]="contactEmail" [topics]="topics" [sentPhoto]="contactSentPhoto" />
       <fm-contact-channels [details]="contactDetails" [photo]="contactPhoto" />
     </div>
   } @placeholder {

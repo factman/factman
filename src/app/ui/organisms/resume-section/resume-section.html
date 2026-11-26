@@ -5,7 +5,6 @@
       <li>
         <fm-resume-card
           [resume]="resume"
-          [thumbnail]="thumbnail(resume.previews[0])"
           (preview)="preview.emit(resume.slug)"
           (download)="download.emit(resume.slug)"
         />

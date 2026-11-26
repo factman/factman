@@ -11,7 +11,7 @@ import { ResumeCard, SectionHeader } from '@ui/molecules';
 
 /**
  * The résumé block inside About (FR-43, the canvas's AboutSection `#resume`): a level-3 header and
- * one ResumeCard per résumé, with its first page as the thumbnail. Preview and Download emit the
+ * one ResumeCard per résumé (its portrait, file name, pages, size and update date). Preview and Download emit the
  * résumé's slug; the page opens the ResumePreviewModal or downloads the PDF. The page registers
  * RESUME_ICONS.
  * @level organism
@@ -37,9 +37,4 @@ export class ResumeSection {
   readonly preview = output<string>();
   /** The résumé to download (its slug). */
   readonly download = output<string>();
-
-  /** The card's thumbnail: the first page's small copy (`-page-1-thumb.webp`), built beside it. */
-  protected thumbnail(page?: string): string | undefined {
-    return page?.replace(/-page-1\.webp$/, '-page-1-thumb.webp');
-  }
 }

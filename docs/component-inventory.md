@@ -61,7 +61,7 @@ All atoms come from the Factman design system. Tokens only; per-component CSS fr
 | ProjectCard          | `ProjectCard`       | `fm-project-card`       | `project`, `href`, `headingLevel`                                                                                        | `engage` (private projects, FR-22)         | ETE-76         |
 | DS:ServiceCard       | `ServiceCard`       | `fm-service-card`       | `service`, `href` (makes it the ServiceTile), `current`, `headingLevel`, `deliverableCount`                              |                                            | ETE-76         |
 | DS:BlogPostCard      | `BlogPostCard`      | `fm-blog-post-card`     | `post`, `layout` (card, row), `headingLevel`                                                                             |                                            | ETE-76         |
-| ResumeCard           | `ResumeCard`        | `fm-resume-card`        | `resume`, `thumbnail`, `headingLevel`                                                                                    | `preview`, `download`                      | ETE-77         |
+| ResumeCard           | `ResumeCard`        | `fm-resume-card`        | `resume` (with `photo`, `pages`, `size`, `updated`), `headingLevel`                                                      | `preview`, `download`                      | ETE-77         |
 | ClientLogo           | `ClientLogo`        | `fm-client-logo`        | `client`, `showName`, `assetBase`                                                                                        |                                            | ETE-77         |
 | DS:Breadcrumbs       | `Breadcrumbs`       | `fm-breadcrumbs`        | `crumbs` (`{label, href?}`)                                                                                              |                                            | ETE-74         |
 | DS:Accordion         | `Accordion`         | `fm-accordion`          | `items` (`{id, title, content}`), `multiple`, `expanded`, `headingLevel`                                                 | `expandedChange`                           | ETE-74         |
@@ -151,6 +151,8 @@ Already scaffolded; each fills a template with data from `@core/data` and owns t
 | NotFound      | `NotFoundPage`      | `fm-not-found-page`      | `**`              | ETE-88          |
 | Consent       | `ConsentHost`       | `fm-consent-host`        | (app shell, lazy) | ETE-119 (built) |
 | Terminal      | `TerminalHost`      | `fm-terminal-host`       | (app shell, lazy) | ETE-111 (built) |
+| SiteHeader    | `SiteHeaderHost`    | `fm-site-header-host`    | (app shell)       | ETE-273 (built) |
+| SiteFooter    | `SiteFooterHost`    | `fm-site-footer-host`    | (app shell, lazy) | ETE-273 (built) |
 
 ## Not Angular components
 

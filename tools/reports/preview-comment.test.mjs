@@ -56,13 +56,13 @@ test('lists every job result and warns only when one did not pass', () => {
 
   const md = previewComment({
     ...info,
-    results: { ...allPassed, e2e: 'failure', vr: 'cancelled' },
+    results: { ...allPassed, e2e: 'failure', build: 'cancelled' },
   });
   assert.ok(md.includes('| E2E (Playwright) | ❌ Failed |'));
-  assert.ok(md.includes('| Visual regression | ⏹️ Cancelled |'));
+  assert.ok(md.includes('| Build (prerender) | ⏹️ Cancelled |'));
   assert.match(
     md,
-    /> Visual regression, E2E \(Playwright\) did not pass\. The preview still deployed/,
+    /> Build \(prerender\), E2E \(Playwright\) did not pass\. The preview still deployed/,
   );
   assert.equal(resultText(''), '❔ Unknown');
 });

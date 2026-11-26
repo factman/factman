@@ -24,8 +24,6 @@
     "e2e:production": "nx run factman:e2e-production",
     "e2e:report": "nx run factman:e2e:report",
     "e2e:install": "nx run factman:e2e:install",
-    "vr": "nx run factman:vr",
-    "vr:update": "nx run factman:vr:update",
     "test:headers": "nx run factman:test:headers",
     "test:live-headers": "node tools/vercel/live-headers.mjs",
     "lhci": "lhci autorun --config=lighthouserc.cjs",

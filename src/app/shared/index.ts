@@ -19,6 +19,7 @@ export * from './experience/counters';
 export * from './resume/resume-text';
 export * from './resume/resume-view-model';
 export * from './resume/resume-download';
+export * from './resume/resume-launcher';
 export * from './blog/medium-feed';
 export * from './github/contributions';
 export { countWord } from './text/count-word';

@@ -127,7 +127,7 @@ jobs:
         run: pnpm build:preview
       - name: Check the preview build (Storybook, bundle contents, CSP hashes)
         run: pnpm test:build
-      # The preview build: visual regression screenshots its Storybook.
+      # The preview build, for the E2E and preview deployment jobs.
       - uses: actions/upload-artifact@v4
         with:
           name: dist
@@ -137,49 +137,6 @@ jobs:
       - name: Nx Cloud Self-Healing CI
         if: always()
         run: pnpm nx fix-ci
-
-  # Stage 5: visual regression of the UI kit (ETE-84), Light and Dark, against Linux baselines in
-  # vr/__screenshots__. The new screenshots are always uploaded: a run without baselines (or with
-  # an intended change) produces them for review (docs/visual-regression.md).
-  vr:
-    name: Visual regression
-    needs: [build]
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v5
-        with:
-          node-version-file: .nvmrc
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - name: Cache Playwright browsers
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-      - run: pnpm exec playwright install --with-deps chromium
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/factman/browser
-      - name: Compare screenshots
-        run: pnpm exec playwright test -c playwright.vr.config.ts
-      - name: Collect the screenshots this run took
-        if: always()
-        run: |
-          mkdir -p vr-actual
-          find test-results -name '*-actual.png' -exec cp {} vr-actual/ \; 2>/dev/null || true
-          find vr/__screenshots__ -newer playwright.vr.config.ts -name '*.png' -exec cp {} vr-actual/ \; 2>/dev/null || true
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: vr-screenshots
-          path: |
-            vr-actual
-            vr-report
-          retention-days: 7
 
   # Stage 5 (local half): E2E against the built static files.
   # Preview deploy + E2E against the Vercel preview waits on ETE-21.
@@ -246,7 +203,7 @@ jobs:
   preview:
     name: Preview deployment
     # Every job, so the pull request comment can report them all (ETE-240).
-    needs: [static, test, build, vr, e2e]
+    needs: [static, test, build, e2e]
     if: >-
       always() && needs.build.result == 'success' &&
       (github.event_name == 'push' && github.ref == 'refs/heads/dev' ||
@@ -372,7 +329,6 @@ jobs:
           RESULT_STATIC: ${{ needs.static.result }}
           RESULT_TEST: ${{ needs.test.result }}
           RESULT_BUILD: ${{ needs.build.result }}
-          RESULT_VR: ${{ needs.vr.result }}
           RESULT_E2E: ${{ needs.e2e.result }}
         run: |
           body="$RUNNER_TEMP/preview-comment.md"

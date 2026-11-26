@@ -3,7 +3,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectsRepository } from '@core/data';
 import { contact } from '@data/contact';
-import type { Project } from '@shared';
+import { profile } from '@data/profile';
+import { portraitSources, type Project } from '@shared';
 import { iconArrowRight, iconGithub } from '@ui/atoms';
 import {
   CtaBanner,
@@ -42,6 +43,17 @@ export class ProjectsPage {
   });
 
   protected readonly crumbs = [{ label: 'Home', href: '/' }, { label: 'Projects' }];
+  /** The canvas's Projects hero: the desk photo, framed (16:9). */
+  protected readonly media = profile.projectsPhoto && {
+    ...portraitSources(profile.projectsPhoto),
+    framed: true,
+    sizes: '(min-width: 1024px) 560px, 100vw',
+  };
+  /** The CtaBanner's portrait. */
+  protected readonly ctaPhoto = profile.ctaPhoto && {
+    ...portraitSources(profile.ctaPhoto),
+    sizes: '(min-width: 1024px) 320px, 240px',
+  };
   protected readonly ctaActions: HeroAction[] = [
     { label: 'Book a service', href: '/services', trailingIcon: iconArrowRight },
     ...(GITHUB ? [{ label: 'GitHub', href: GITHUB, leadingIcon: iconGithub }] : []),

@@ -8,7 +8,7 @@
 //
 // CLI: `node tools/reports/preview-comment.mjs` prints the Markdown, from these environment values:
 // PREVIEW_URL, SHA, BRANCH, REPOSITORY, RUN_URL, RUN_NUMBER, RESULT_STATIC, RESULT_TEST,
-// RESULT_BUILD, RESULT_VR, RESULT_E2E, and coverage/coverage-summary.json when the tests wrote it.
+// RESULT_BUILD, RESULT_E2E, and coverage/coverage-summary.json when the tests wrote it.
 import { existsSync, readFileSync } from 'node:fs';
 
 /** The first line of the comment, hidden in GitHub's view; the job finds its comment by it. */
@@ -19,7 +19,6 @@ export const JOBS = [
   ['static', 'Lint and typecheck'],
   ['test', 'Unit and Storybook tests'],
   ['build', 'Build (prerender)'],
-  ['vr', 'Visual regression'],
   ['e2e', 'E2E (Playwright)'],
 ];
 
