@@ -25,6 +25,20 @@ for (const [path, h1, title] of pages) {
     await expect(page).toHaveTitle(title);
     await expect(page.getByRole('heading', { level: 1, name: h1 })).toBeVisible();
   });
+
+  // ETE-273: every page sits in the site frame, prerendered: header, the page, footer.
+  test(`${path} has the site header and footer`, async ({ request, page }) => {
+    const html = await (await request.get(path)).text();
+    expect(html.match(/<fm-site-header[\s>]/g)).toHaveLength(1);
+    expect(html.match(/<fm-site-footer[\s>]/g)).toHaveLength(1);
+
+    await page.goto(path);
+    await expect(page.getByRole('banner')).toHaveCount(1);
+    await expect(page.getByRole('main')).toHaveCount(1);
+    await expect(page.getByRole('contentinfo')).toHaveCount(1);
+    await expect(page.getByRole('banner').getByRole('link', { name: /home/ })).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Explore' })).toBeAttached();
+  });
 }
 
 test('every service in services.json has a prerendered page', async ({ request }) => {

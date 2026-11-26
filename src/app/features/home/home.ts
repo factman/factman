@@ -5,8 +5,10 @@ import {
   Component,
   DestroyRef,
   computed,
+  effect,
   inject,
   signal,
+  untracked,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -31,6 +33,7 @@ import {
   CLOCK,
   countWord,
   portraitSources,
+  ResumeLauncher,
   type ResumeSource,
   SharedModule,
   TERMINAL_ENABLED,
@@ -202,9 +205,20 @@ export class Home {
     inject(IconRegistry).register([...SERVICE_ICONS, ...RESUME_ICONS]);
     inject(StructuredData).set(homeStructuredData(site, profile, contact));
     const destroyRef = inject(DestroyRef);
+    // The header's and footer's résumé buttons (ResumeLauncher): once the page has rendered, and
+    // again whenever one is pressed while it is showing.
+    const rendered = signal(false);
+    effect(() => {
+      if (!rendered() || !this.launcher.request()) return;
+      const request = untracked(() => this.launcher.take());
+      if (request && this.resumes.some((r) => r.slug === request.slug)) {
+        untracked(() => this.openResume(request.slug, request.source));
+      }
+    });
     afterNextRender(() => {
       void this.blog.load();
       this.openResumeFromLink();
+      rendered.set(true);
       // section_view: each section once, the first time it is in view.
       const stop = watchSectionViews(
         this.document,
@@ -243,6 +257,7 @@ export class Home {
   protected readonly resumeVariant = signal(this.resumes[0]?.slug ?? '');
   private readonly document = inject(DOCUMENT);
   private readonly tracker = inject(ANALYTICS_TRACKER);
+  private readonly launcher = inject(ResumeLauncher);
 
   /** Preview a résumé: the hero's Résumé button (fullstack), a card's Preview, or CareerGlance's
    * "Get the résumé" (the one last shown, else the first). */

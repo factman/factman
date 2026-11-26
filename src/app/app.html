@@ -1,12 +1,17 @@
 <a class="skip-link" href="#main" (click)="skipToMain($event)">Skip to content</a>
-<main id="main" tabindex="-1">
-  <router-outlet />
-</main>
-<!-- FR-34: the cookie consent banner, loaded only when it opens. -->
-<fm-consent-host />
-@if (terminalEnabled) {
-  <!-- FR-36: the terminal's chunk (and the data it reads) loads the first time it opens. -->
-  @defer (when terminal.requested()) {
-    <fm-terminal-host />
+<!-- The page frame (MainLayout): header, the page, footer, then the fixed layers. -->
+<fm-main-layout>
+  <fm-site-header-host layoutHeader />
+  <main id="main" tabindex="-1">
+    <router-outlet />
+  </main>
+  <fm-site-footer-host layoutFooter />
+  <!-- FR-34: the cookie consent banner, loaded only when it opens. -->
+  <fm-consent-host layoutOverlays />
+  @if (terminalEnabled) {
+    <!-- FR-36: the terminal's chunk (and the data it reads) loads the first time it opens. -->
+    @defer (when terminal.requested()) {
+      <fm-terminal-host layoutOverlays />
+    }
   }
-}
+</fm-main-layout>

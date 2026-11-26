@@ -25,6 +25,21 @@ describe('App', () => {
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('main#main')).not.toBeNull();
   });
+
+  it('frames every page with the site header and footer (MainLayout)', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const el = fixture.nativeElement as HTMLElement;
+    const site = el.querySelector('fm-main-layout .site')!;
+    expect(site.querySelectorAll('fm-site-header')).toHaveLength(1);
+    expect(site.querySelectorAll('fm-site-footer')).toHaveLength(1);
+    // Header, then <main>, then footer, with one <main> on the page.
+    const order = [...site.querySelectorAll('fm-site-header, main, fm-site-footer')].map((n) =>
+      n.tagName.toLowerCase(),
+    );
+    expect(order).toEqual(['fm-site-header', 'main', 'fm-site-footer']);
+    expect(el.querySelectorAll('main')).toHaveLength(1);
+  });
 });
 
 describe('App focus management', () => {
