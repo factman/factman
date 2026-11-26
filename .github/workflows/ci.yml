@@ -187,7 +187,7 @@ jobs:
     name: E2E (Playwright)
     needs: [build]
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
@@ -211,6 +211,18 @@ jobs:
       - run: pnpm e2e
       - run: pnpm e2e:production
         if: success() || failure()
+      # PF (ETE-126): Lighthouse CI on the production build that e2e:production just used
+      # (lighthouserc.cjs; budgets in docs/performance.md), with Playwright's Chromium.
+      - name: Lighthouse CI (performance budgets)
+        run: |
+          export CHROME_PATH="$(node -e "import('@playwright/test').then((m) => console.log(m.chromium.executablePath()))")"
+          pnpm lhci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse
+          path: .lighthouseci/reports
+          if-no-files-found: ignore
       # One HTML report from both runs' blobs, deployed at /playwright on the preview (ETE-237).
       - name: Merge the Playwright reports
         if: always()

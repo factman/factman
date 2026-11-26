@@ -37,4 +37,9 @@ export class ResumeSection {
   readonly preview = output<string>();
   /** The résumé to download (its slug). */
   readonly download = output<string>();
+
+  /** The card's thumbnail: the first page's small copy (`-page-1-thumb.webp`), built beside it. */
+  protected thumbnail(page?: string): string | undefined {
+    return page?.replace(/-page-1\.webp$/, '-page-1-thumb.webp');
+  }
 }

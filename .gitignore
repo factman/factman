@@ -205,3 +205,4 @@ vr-report/
 vr-actual/
 /coverage-raw
 /blob-report
+.lighthouseci/

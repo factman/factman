@@ -125,6 +125,9 @@ export function keywordsFor(resume: Pick<ResumeNow, 'vm'>): string[] {
   return [...new Set([resume.vm.title, ...skills])].filter(Boolean).slice(0, 40);
 }
 
+/** The card thumbnail's width in pixels: about twice the widest the card shows it (~340px). */
+const THUMB_WIDTH = 680;
+
 async function previews(pdf: Uint8Array, base: string, outDir: string): Promise<string[]> {
   const files: string[] = [];
   let n = 0;
@@ -133,6 +136,15 @@ async function previews(pdf: Uint8Array, base: string, outDir: string): Promise<
     const name = `${base}-page-${n}.webp`;
     writeFileSync(join(outDir, name), await sharp(png).webp({ quality: 82 }).toBuffer());
     files.push(`${RESUMES_URL}/${name}`);
+    // The résumé card's thumbnail: the first page at twice the card's width, not the full print
+    // preview (ETE-126). The card finds it by name: resumeThumbnail() in the ResumeSection.
+    if (n === 1) {
+      const thumb = await sharp(png)
+        .resize({ width: THUMB_WIDTH })
+        .webp({ quality: 80 })
+        .toBuffer();
+      writeFileSync(join(outDir, `${base}-page-1-thumb.webp`), thumb);
+    }
   }
   return files;
 }

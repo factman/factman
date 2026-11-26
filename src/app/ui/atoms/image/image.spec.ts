@@ -1,3 +1,4 @@
+import { PLATFORM_ID } from '@angular/core';
 import { render, screen } from '@testing-library/angular';
 
 import { Image } from './image';
@@ -28,5 +29,45 @@ describe('Image', () => {
     const img = screen.getByRole('img', { name: 'Portrait' });
     expect(img.getAttribute('loading')).toBe('eager');
     expect(img.getAttribute('fetchpriority')).toBe('high');
+  });
+});
+
+describe('Image preload (ETE-126)', () => {
+  const preloads = () => [...document.head.querySelectorAll('link[rel="preload"][as="image"]')];
+  afterEach(() => preloads().forEach((l) => l.remove()));
+
+  const renderOn = (platform: string, priority: boolean) =>
+    render(Image, {
+      inputs: {
+        src: '/hero.webp',
+        alt: 'Hero',
+        width: 720,
+        height: 900,
+        priority,
+        sources: { avif: '/hero-360.avif 360w, /hero-720.avif 720w', webp: '/hero-720.webp 720w' },
+        sizes: '(min-width: 768px) 360px, 100vw',
+      },
+      providers: [{ provide: PLATFORM_ID, useValue: platform }],
+    });
+
+  it('preloads a priority image from the <head> when prerendering, in its best format', async () => {
+    await renderOn('server', true);
+    const [link] = preloads();
+    expect(link.getAttribute('href')).toBe('/hero.webp');
+    expect(link.getAttribute('type')).toBe('image/avif');
+    expect(link.getAttribute('imagesrcset')).toBe('/hero-360.avif 360w, /hero-720.avif 720w');
+    expect(link.getAttribute('imagesizes')).toBe('(min-width: 768px) 360px, 100vw');
+    expect(link.getAttribute('fetchpriority')).toBe('high');
+    expect(preloads()).toHaveLength(1);
+  });
+
+  it('adds nothing in the browser, or for an image without priority', async () => {
+    await renderOn('browser', true);
+    expect(preloads()).toHaveLength(0);
+  });
+
+  it('adds nothing for a lazy image', async () => {
+    await renderOn('server', false);
+    expect(preloads()).toHaveLength(0);
   });
 });

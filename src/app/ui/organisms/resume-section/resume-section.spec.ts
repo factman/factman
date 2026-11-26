@@ -5,14 +5,15 @@ import { RESUMES } from './resume-downloads.testing';
 import { ResumeSection } from './resume-section';
 
 describe('ResumeSection', () => {
-  it('has a level-3 heading and a card per résumé with its first page as the thumbnail', async () => {
+  it("has a level-3 heading and a card per résumé with its first page's thumbnail", async () => {
     const { container } = await render(ResumeSection, { inputs: { resumes: RESUMES } });
     expect(
       screen.getByRole('heading', { level: 3, name: 'Pick the résumé that fits the role' }),
     ).toBeTruthy();
     expect(container.querySelectorAll('fm-resume-card')).toHaveLength(3);
     expect(container.querySelector('img')!.getAttribute('src')).toBe(
-      '/resumes/cv-fullstack-page-1.webp',
+      // The small copy beside the print preview (ETE-126).
+      '/resumes/cv-fullstack-page-1-thumb.webp',
     );
   });
 
