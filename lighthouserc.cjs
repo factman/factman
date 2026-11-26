@@ -44,7 +44,7 @@ module.exports = {
         {
           // The services pages' LCP is their hero photo, which shares slow 4G with the ~210 KB of
           // JavaScript every page preloads (one UI-kit chunk for all routes). Observed LCP is
-          // ~0.1 s; simulated is ~3.3 s. They warn until the UI-kit chunking follow-up lands.
+          // ~0.1 s; simulated is ~3.3 s. They warn until the UI-kit chunking follow-up (ETE-272) lands.
           matchingUrlPattern: '/services',
           assertions: {
             ...BUDGETS,

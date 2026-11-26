@@ -29,7 +29,7 @@ JavaScript per page, gzipped: 202 KB (`/privacy`) to 227 KB (`/`). Angular's ini
 
 ## Tradeoffs and follow-ups
 
-- **One UI-kit chunk for every page.** Every route imports the `@ui/*` barrels, and esbuild can't drop the unused components. So every page downloads one chunk with all 27 organisms (about 90 KB gzipped), which sets the floor of the per-page budgets. Marking the folder side-effect free doesn't help, because the Angular build resolves the path aliases itself. The fix is deep imports per component, which changes the layer boundaries, so it is a separate follow-up.
+- **One UI-kit chunk for every page.** Every route imports the `@ui/*` barrels, and esbuild can't drop the unused components. So every page downloads one chunk with all 27 organisms (about 90 KB gzipped), which sets the floor of the per-page budgets. Marking the folder side-effect free doesn't help, because the Angular build resolves the path aliases itself. The fix is deep imports per component, which changes the layer boundaries, so it is a separate follow-up (ETE-272).
 - **The services pages' LCP warns rather than fails.** Their LCP is the hero photo, which shares slow 4G with that JavaScript: about 0.1 s measured, about 3.3 s simulated. They go back to errors once the chunking work lands.
 - **SEO skips `is-crawlable` until launch.** The site is `noindex` on purpose until then. ETE-235 removes the skip.
 - **Best practices is 96.** Locally, the Vercel Web Analytics script 404s, because it is served only on Vercel. It still passes.
@@ -37,6 +37,6 @@ JavaScript per page, gzipped: 202 KB (`/privacy`) to 227 KB (`/`). Angular's ini
   - client logos: PNGs up to 640 px wide, shown small;
   - the profile photos' `sizes`, which pick a larger file than they need.
 
-  Both are in the follow-up.
+  Both are in the follow-up, ETE-272.
 
 - **Accessibility: the services cards' "more →" in dark mode** has 4.26:1 contrast. It belongs to the WCAG audit (ETE-127), because the fix changes a molecule's visual-regression baselines.
