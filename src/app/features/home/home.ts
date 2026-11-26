@@ -200,6 +200,9 @@ export class Home {
     ...portraitSources(profile.contactPhoto),
     sizes: '(min-width: 1024px) 560px, 100vw',
   };
+  /** The portrait beside the contact form's "Message ready". */
+  protected readonly contactSentPhoto =
+    profile.contactSentPhoto && portraitSources(profile.contactSentPhoto);
 
   constructor() {
     inject(IconRegistry).register([...SERVICE_ICONS, ...RESUME_ICONS]);

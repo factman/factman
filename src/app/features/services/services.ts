@@ -63,8 +63,9 @@ export class ServicesPage {
         : []),
     { label: 'Browse services', href: '#catalogue', leadingIcon: iconGrid, variant: 'secondary' },
   ];
-  protected readonly photo = profile.aboutPhoto && {
-    ...portraitSources(profile.aboutPhoto),
+  /** The canvas's Services hero portrait (three-quarter view facing left). */
+  protected readonly photo = profile.servicesPhoto && {
+    ...portraitSources(profile.servicesPhoto),
     sizes: '(min-width: 1024px) 420px, (min-width: 768px) 360px, 300px',
   };
 

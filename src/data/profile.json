@@ -41,6 +41,48 @@
     "width": 720,
     "height": 900
   },
+  "servicesPhoto": {
+    "src": "profile/odunayo-services.webp",
+    "alt": "Odunayo Mohammed in a three-quarter view facing left, smiling, arms crossed",
+    "width": 720,
+    "height": 900
+  },
+  "servicePhoto": {
+    "src": "profile/odunayo-service.webp",
+    "alt": "Odunayo Mohammed in a navy shirt, arms crossed, smiling",
+    "width": 720,
+    "height": 900
+  },
+  "projectsPhoto": {
+    "src": "profile/odunayo-projects.webp",
+    "alt": "Odunayo Mohammed at his desk with a laptop, code on the monitor behind him",
+    "width": 900,
+    "height": 507
+  },
+  "blogPhoto": {
+    "src": "profile/odunayo-blog.webp",
+    "alt": "Odunayo Mohammed in a navy hoodie, holding a laptop",
+    "width": 720,
+    "height": 900
+  },
+  "ctaPhoto": {
+    "src": "profile/odunayo-cta.webp",
+    "alt": "Odunayo Mohammed in a blue tee, arms crossed, smiling",
+    "width": 720,
+    "height": 900
+  },
+  "contactSentPhoto": {
+    "src": "profile/odunayo-contact-sent.webp",
+    "alt": "Odunayo Mohammed smiling, in a charcoal quarter-zip",
+    "width": 720,
+    "height": 900
+  },
+  "bookingPhoto": {
+    "src": "profile/odunayo-booking.webp",
+    "alt": "Odunayo Mohammed",
+    "width": 720,
+    "height": 900
+  },
   "careerStart": "2013-01",
   "availability": {
     "status": "available",

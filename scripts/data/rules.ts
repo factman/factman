@@ -505,26 +505,52 @@ export function clientEntries(data: DataSet): Issue[] {
   return issues;
 }
 
-/** The profile's photos (hero, About, contact, not-found); each one is checked by DS-17. */
-export const PROFILE_PHOTOS = ['photo', 'aboutPhoto', 'contactPhoto', 'notFoundPhoto'] as const;
+/** The profile's photos (the canvas's portraits, page by page); each one is checked by DS-17. */
+export const PROFILE_PHOTOS = [
+  'photo',
+  'aboutPhoto',
+  'contactPhoto',
+  'notFoundPhoto',
+  'servicesPhoto',
+  'servicePhoto',
+  'projectsPhoto',
+  'blogPhoto',
+  'ctaPhoto',
+  'contactSentPhoto',
+  'bookingPhoto',
+] as const;
 
 /**
- * DS-17: every profile photo has alt text, its width and height match the image file, and its
- * responsive AVIF and WebP exports exist.
+ * DS-17: every profile photo, and every résumé's portrait, has alt text, its width and height
+ * match the image file, and its responsive AVIF and WebP exports exist.
  */
 export function profilePhoto(data: DataSet, ctx: RuleContext): Issue[] {
   const profile = data['profile'];
-  if (!isObject(profile)) return [];
-  return PROFILE_PHOTOS.flatMap((key) => {
-    const photo = profile[key];
-    return isObject(photo) ? checkPhoto(key, photo, ctx) : [];
-  });
+  const resumes = data['resumes'];
+  const fromProfile = isObject(profile)
+    ? PROFILE_PHOTOS.flatMap((key) => {
+        const photo = profile[key];
+        return isObject(photo) ? checkPhoto('profile', `/${key}`, photo, ctx) : [];
+      })
+    : [];
+  const list = isObject(resumes) && Array.isArray(resumes['resumes']) ? resumes['resumes'] : [];
+  const fromResumes = list.flatMap((r, i) =>
+    isObject(r) && isObject(r['photo'])
+      ? checkPhoto('resumes', `/resumes/${i}/photo`, r['photo'], ctx)
+      : [],
+  );
+  return [...fromProfile, ...fromResumes];
 }
 
-function checkPhoto(key: string, photo: JsonObject, ctx: RuleContext): Issue[] {
+function checkPhoto(
+  name: 'profile' | 'resumes',
+  at: string,
+  photo: JsonObject,
+  ctx: RuleContext,
+): Issue[] {
   const issues: Issue[] = [];
   const push = (field: string, message: string) =>
-    issues.push({ file: file('profile'), path: `/${key}/${field}`, message, rule: 'DS-17' });
+    issues.push({ file: file(name), path: `${at}/${field}`, message, rule: 'DS-17' });
   if (typeof photo['alt'] !== 'string' || !photo['alt'].trim())
     push('alt', 'the photo needs alt text');
   const src = str(photo['src']);

@@ -19,6 +19,7 @@ import { ANALYTICS_TRACKER, messageLengthBucket } from '@shared';
 import {
   Button,
   Checkbox,
+  Image,
   iconEdit,
   iconExternalLink,
   iconMail,
@@ -27,7 +28,7 @@ import {
   TextArea,
   TextInput,
 } from '@ui/atoms';
-import { Alert, CopyButton, FormField } from '@ui/molecules';
+import { Alert, CopyButton, type FramedImage, FormField } from '@ui/molecules';
 
 import {
   type ComposedMessage,
@@ -57,6 +58,7 @@ import {
     CopyButton,
     FormField,
     ReactiveFormsModule,
+    Image,
     Select,
     TextArea,
     TextInput,
@@ -76,6 +78,8 @@ export class ContactForm {
   readonly topics = input.required<readonly string[]>();
   /** A topic to start with, e.g. from a service page's "Get a quote". */
   readonly topic = input<string>();
+  /** The small cutout portrait beside "Message ready" (the canvas's contact section). */
+  readonly sentPhoto = input<FramedImage>();
 
   readonly composed = output<ComposedMessage>();
 

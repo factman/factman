@@ -28,6 +28,8 @@ export interface ResumeDownload {
   previews: readonly string[];
   /** "Nov 2026": when the profile was last updated. */
   updated: string;
+  /** The résumé's portrait (resumes.json `photo`), as the card's avatar. */
+  photo?: string;
 }
 
 const MONTH = new Intl.DateTimeFormat('en-GB', {
@@ -41,7 +43,10 @@ const MONTH = new Intl.DateTimeFormat('en-GB', {
  * (not printed yet) is left out rather than offered without a file.
  */
 export function resumeDownloads(
-  resumes: readonly Pick<Resume, 'id' | 'slug' | 'title' | 'scope' | 'icon' | 'fileName'>[],
+  resumes: readonly Pick<
+    Resume,
+    'id' | 'slug' | 'title' | 'scope' | 'icon' | 'fileName' | 'photo'
+  >[],
   manifest: readonly ResumeManifestFile[],
   updatedAt: string,
 ): ResumeDownload[] {
@@ -61,6 +66,8 @@ export function resumeDownloads(
         pages: m.pages,
         previews: m.previews,
         updated,
+        // The smallest export (pnpm ds:portraits): the avatar is 56px.
+        ...(r.photo && { photo: `/assets/${r.photo.src.replace(/\.[a-z]+$/, '')}-360.webp` }),
       },
     ];
   });

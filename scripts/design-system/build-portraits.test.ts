@@ -11,8 +11,15 @@ describe('ds:portraits (ETE-198)', () => {
 
   test('plans AVIF and WebP for each profile photo, keeping the aspect ratio', () => {
     const exports = plannedExports(process.cwd());
-    // 4 photos (hero, About, contact, not-found) × 3 widths × 2 formats.
-    assert.equal(exports.length, 24);
+    // 11 profile photos (the canvas's portraits, page by page) and 3 résumé portraits, each
+    // × 3 widths × 2 formats.
+    assert.equal(exports.length, 84);
+    assert.ok(exports.some((e) => e.path === 'src/assets/profile/odunayo-resume-mobile-360.webp'));
+    const projects = exports.find((e) => e.path === 'src/assets/profile/odunayo-projects-450.webp');
+    assert.deepEqual(projects && { width: projects.width, height: projects.height }, {
+      width: 450,
+      height: 254,
+    });
     const hero = exports.find((e) => e.path === 'src/assets/profile/odunayo-hero-360.avif');
     assert.deepEqual(hero && { width: hero.width, height: hero.height }, {
       width: 360,

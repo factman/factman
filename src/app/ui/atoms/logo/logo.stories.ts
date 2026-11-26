@@ -8,7 +8,7 @@ const meta: Meta<Logo> = {
   title: 'Atoms/Logo',
   component: Logo,
   argTypes: {
-    type: { control: 'inline-radio', options: ['mark', 'odunayo'] },
+    type: { control: 'inline-radio', options: ['mark', 'odunayo', 'name'] },
     theme: { control: 'inline-radio', options: ['light', 'dark'] },
     size: { control: { type: 'range', min: 16, max: 128, step: 4 } },
   },
@@ -28,6 +28,11 @@ export const Lockup: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('img', { name: 'Odunayo' })).toBeVisible();
   },
+};
+
+/** The site header and footer's logo (canvas SiteHeader, SiteFooter): ODUNAYO over MOHAMMED. */
+export const Name: Story = {
+  args: { type: 'name', size: 44 },
 };
 
 export const Mark: Story = {

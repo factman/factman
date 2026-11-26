@@ -1,10 +1,25 @@
 <div class="contact-form">
   @if (draft(); as d) {
     <div class="contact-form-ready" role="status" aria-live="polite">
-      <div class="contact-form-thanks">
-        <p class="contact-form-eyebrow">Message ready</p>
-        <p class="contact-form-title">Thanks, {{ firstName() }}. Talk soon!</p>
-        <p class="contact-form-text">I read every message myself and usually reply within a day.</p>
+      <div class="contact-form-sent">
+        @if (sentPhoto(); as p) {
+          <fm-image
+            [src]="p.src"
+            [alt]="p.alt"
+            [width]="p.width"
+            [height]="p.height"
+            [sources]="p.sources ?? {}"
+            sizes="120px"
+            imgClass="contact-form-sent-photo"
+          />
+        }
+        <div class="contact-form-thanks">
+          <p class="contact-form-eyebrow">Message ready</p>
+          <p class="contact-form-title">Thanks, {{ firstName() }}. Talk soon!</p>
+          <p class="contact-form-text">
+            I read every message myself and usually reply within a day.
+          </p>
+        </div>
       </div>
       <fm-alert tone="success" title="Your message is ready"
         >Your mail app should open with the message filled in. If it does not, use one of the

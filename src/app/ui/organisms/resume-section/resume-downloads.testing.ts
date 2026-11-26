@@ -12,4 +12,5 @@ export const RESUMES: ResumeDownload[] = ['fullstack', 'mobile', 'devops'].map((
   pages: 2,
   previews: [`/resumes/cv-${slug}-page-1.webp`, `/resumes/cv-${slug}-page-2.webp`],
   updated: 'Nov 2026',
+  photo: `/assets/profile/odunayo-resume-${slug}-360.webp`,
 }));

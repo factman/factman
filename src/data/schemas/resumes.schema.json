@@ -106,6 +106,10 @@
           "minLength": 1,
           "description": "Card title, footer and running header, e.g. Mobile Developer."
         },
+        "photo": {
+          "$ref": "#/$defs/portrait",
+          "description": "The résumé's portrait: the avatar on its ResumeCard (DS-17)."
+        },
         "headline": {
           "type": "string",
           "minLength": 1,
@@ -347,6 +351,32 @@
             }
           },
           "description": "Caps checked by data:validate (RS-02)."
+        }
+      }
+    },
+    "portrait": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["src", "alt", "width", "height"],
+      "properties": {
+        "src": {
+          "type": "string",
+          "pattern": "^profile/[a-z0-9-]+\\.(webp|jpe?g|png|avif)$",
+          "description": "Under src/assets (DS-17: it and its AVIF and WebP exports from pnpm ds:portraits must exist)."
+        },
+        "alt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Pixel width of the file (DS-17)."
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Pixel height of the file (DS-17)."
         }
       }
     }

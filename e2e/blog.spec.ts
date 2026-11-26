@@ -54,7 +54,8 @@ test('/blog lists the Medium articles with live Medium covers, under the product
     'https://medium.com/@sample/typed-apis-you-a-field-guide-0a1b2c3d4e5f',
   );
   await expect(page.getByRole('link', { name: 'Short note' })).toBeVisible();
-  await expect(page.locator('main img').first()).toHaveAttribute(
+  // The first article's cover (the hero's portrait comes before the list).
+  await expect(page.locator('.blog-all img').first()).toHaveAttribute(
     'src',
     'https://cdn-images-1.medium.com/max/1024/1*sample-cover.png',
   );
