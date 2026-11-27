@@ -1,7 +1,7 @@
 // Lighthouse CI (PF, ETE-126): the production build, served as Vercel serves it (static files),
 // measured on each page type with Lighthouse's mobile emulation (slow 4G, 4x CPU), median of 3.
-// Run locally: pnpm build && pnpm lhci (CHROME_PATH: Playwright's Chromium). CI runs it in the
-// production e2e job. Budgets: docs/performance.md.
+// Run locally: pnpm build && pnpm lhci (CHROME_PATH: Playwright's Chromium). Not run in CI: its
+// blocking time follows the runner's CPU speed (ETE-124). Budgets: docs/performance.md.
 const PORT = 4174;
 const pages = [
   '/',

@@ -168,18 +168,8 @@ jobs:
       - run: pnpm e2e
       - run: pnpm e2e:production
         if: success() || failure()
-      # PF (ETE-126): Lighthouse CI on the production build that e2e:production just used
-      # (lighthouserc.cjs; budgets in docs/performance.md), with Playwright's Chromium.
-      - name: Lighthouse CI (performance budgets)
-        run: |
-          export CHROME_PATH="$(node -e "import('@playwright/test').then((m) => console.log(m.chromium.executablePath()))")"
-          pnpm lhci
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: lighthouse
-          path: .lighthouseci/reports
-          if-no-files-found: ignore
+      # Lighthouse is not run in CI: its blocking-time figures follow the runner's CPU, which varies
+      # by ~50% between runs (ETE-124). Run it locally with `pnpm lhci` (docs/performance.md).
       # One HTML report from both runs' blobs, deployed at /playwright on the preview (ETE-237).
       - name: Merge the Playwright reports
         if: always()

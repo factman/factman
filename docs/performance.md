@@ -1,18 +1,18 @@
 # Performance budgets (PF, ETE-126)
 
-Three checks keep the site fast. All run in CI.
+Three checks keep the site fast. The bundle checks run in CI; Lighthouse runs locally.
 
-| Check               | Where                                                                  | Fails when                                                                        |
-| ------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| Lighthouse CI       | `pnpm lhci` (`lighthouserc.cjs`), CI's E2E job on the production build | Any category is under 95; LCP is over 1.8 s; CLS is over 0.02; TBT is over 200 ms |
-| Per-page JavaScript | `tools/build/bundles.test.mjs` (`pnpm test:build`)                     | A page's entry script and modulepreloads, gzipped, pass its ceiling               |
-| Angular budgets     | `angular.json`                                                         | The initial bundle passes 500 kB (raw), or a component's styles pass 8 kB         |
+| Check               | Where                                                       | Fails when                                                                        |
+| ------------------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Lighthouse          | `pnpm build && pnpm lhci` (`lighthouserc.cjs`), run locally | Any category is under 95; LCP is over 1.8 s; CLS is over 0.02; TBT is over 200 ms |
+| Per-page JavaScript | `tools/build/bundles.test.mjs` (`pnpm test:build`)          | A page's entry script and modulepreloads, gzipped, pass its ceiling               |
+| Angular budgets     | `angular.json`                                              | The initial bundle passes 500 kB (raw), or a component's styles pass 8 kB         |
 
 Lighthouse runs its mobile emulation (slow 4G, 4× CPU slowdown), the median of 3 runs, on `/`, `/services`, `/services/devops`, `/projects`, a project page, `/blog` and `/privacy`.
 
 ## Results
 
-CI's Lighthouse figures are in the `lighthouse` artifact of each run. The CI runner is about half as fast as a developer laptop (Lighthouse benchmark index ~2,000 against ~4,500), so measure locally with a higher CPU slowdown to match it (about 9×).
+Lighthouse was removed from CI (ETE-124): GitHub's runners vary by about 50% in CPU speed between runs (Lighthouse benchmark index ~2,400 to ~3,900), and blocking time followed the runner rather than the code, so the 200 ms budget passed or failed by chance. Run `pnpm lhci` locally before a change that adds JavaScript to a page. A developer laptop is faster than the slow 4G phone Lighthouse models (benchmark index ~4,500), so for a figure close to a slow runner's, raise the CPU slowdown to about 9×.
 
 JavaScript per page, gzipped: 131 KB (404) to 153 KB (`/projects`), down from 202 to 227 KB. Angular's initial bundle is 425 kB raw (119 KB gzipped): Angular itself and the router, with no UI kit.
 
