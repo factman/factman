@@ -39,3 +39,14 @@ Each journey (ETE-124) and the specs that cover it. `journeys.spec.ts` and
 Two checks wait on content: E2E-05's private project runs once `projects.json` has one, and
 E2E-14 requires JSON-LD only on the home and service pages until the SEO audit adds it to the
 rest (ETE-128).
+
+## Accessibility (WCAG 2.2 AA, ETE-127)
+
+`a11y.spec.ts` runs axe (WCAG 2.0, 2.1 and 2.2, A and AA, including 2.5.8 target size) on every
+page and the 404, in Light and Dark, at desktop (Chromium) and phone (Pixel 7) widths, and on
+each state that opens over a page: the résumé preview, the scheduler, the phone menu and the
+consent prompt with its custom choices. It also checks reflow: no page scrolls sideways at
+320 px (1.4.10; a 1280 px screen at 400% zoom). Components are checked one by one by Storybook's
+axe addon. Keyboard paths (E2E-09) and reduced motion (E2E-10) are in `journeys.spec.ts`,
+`routes.spec.ts` and `motion.spec.ts`.
+
