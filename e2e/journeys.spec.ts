@@ -121,12 +121,18 @@ test.describe('E2E-04: client', () => {
   test('services → a service → its email and WhatsApp links name the service', async ({ page }) => {
     const service = services.find((s) => s.slug === 'devops') ?? services[0];
     await open(page, '/services');
-    await page
+    const card = page
       .locator('main')
       .getByRole('link', { name: service.title, exact: true })
-      .first()
-      .click();
-    await expect(page).toHaveURL(new RegExp(`/services/${service.slug}$`));
+      .first();
+    // The services section hydrates as it scrolls into view, and WebKit drops a link click that
+    // lands as hydration starts (Chromium and Firefox replay it): click again until it navigates.
+    await card.scrollIntoViewIfNeeded();
+    await page.waitForLoadState('networkidle');
+    await expect(async () => {
+      if (!/\/services\/[^/]+$/.test(page.url())) await card.click();
+      await expect(page).toHaveURL(new RegExp(`/services/${service.slug}$`), { timeout: 2_000 });
+    }).toPass({ timeout: 15_000 });
     await expect(page.getByRole('heading', { level: 1, name: service.title })).toBeVisible();
 
     const email = page.locator('main').getByRole('link', { name: 'Email me' }).first();
