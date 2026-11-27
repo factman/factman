@@ -1,9 +1,11 @@
 <!-- Prerendered; hydrates once the browser is idle, in its own task (ETE-126). A click before
-     then is played back by event replay. -->
+     then is played back by event replay. Rendered in the browser (in-app navigation to Home,
+     Storybook), it shows at once: idle callbacks have no timeout and can wait indefinitely on a
+     busy page (ETE-124). -->
 <!-- Every viewport-hydrated block below has a real box at its root (.home-block, .home-strip,
      .home-contact): the organisms' hosts are display: contents, which the viewport trigger can't
      see, so they never hydrated (ETE-126). -->
-@defer (on idle; hydrate on idle) {
+@defer (on immediate; hydrate on idle) {
   <fm-profile-hero
     [profile]="profile"
     [photo]="photo"

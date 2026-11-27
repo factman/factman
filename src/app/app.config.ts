@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import {
   provideClientHydration,
+  REMOVE_STYLES_ON_COMPONENT_DESTROY,
   withEventReplay,
   withIncrementalHydration,
 } from '@angular/platform-browser';
@@ -37,6 +38,11 @@ export const appConfig: ApplicationConfig = {
     // Incremental hydration: the home page's below-the-fold sections are prerendered in full and
     // hydrate when they scroll into view (`@defer (hydrate on viewport)`, ETE-114).
     provideClientHydration(withEventReplay(), withIncrementalHydration()),
+    // Keep a component's styles once added. By default Angular removes them when its last live
+    // instance is destroyed, but a block still waiting to hydrate (the footer) has no live
+    // instances: leaving Home took the social-links and availability-badge styles the footer's
+    // prerendered markup still uses (ETE-124). The site's component CSS is small.
+    { provide: REMOVE_STYLES_ON_COMPONENT_DESTROY, useValue: false },
     // Site settings for the deployment chosen at build time (angular.json `define`).
     importProvidersFrom(CoreModule.forRoot({ environment: FM_SITE_ENV })),
   ],

@@ -43,6 +43,13 @@ async function open(page: Page, path: string) {
 
 const banner = (page: Page) => page.getByRole('dialog', { name: 'Cookie settings' });
 
+/**
+ * The footer has hydrated: it does as it scrolls into view, and its prerendered event markers
+ * (`jsaction`) go. A click that lands mid-hydration can be lost in Firefox and WebKit.
+ */
+const footerHydrated = (page: Page) =>
+  expect(page.locator('footer.site-footer [jsaction]')).toHaveCount(0, { timeout: 15_000 });
+
 async function storedChoices(page: Page) {
   const cookie = (await page.context().cookies()).find((c) => c.name === CONSENT_COOKIE);
   return cookie
@@ -61,7 +68,7 @@ test.describe('E2E-02: reject, then change it from the footer', () => {
 
     const settings = page.locator('footer').getByRole('button', { name: 'cookie settings' });
     await settings.scrollIntoViewIfNeeded();
-    await page.waitForLoadState('networkidle');
+    await footerHydrated(page);
     await settings.click();
     await expect(banner(page)).toBeVisible();
     await banner(page).getByRole('button', { name: 'Accept all' }).click();
@@ -239,7 +246,7 @@ test.describe('E2E-09: keyboard only', () => {
     await open(page, '/');
     const settings = page.locator('footer').getByRole('button', { name: 'cookie settings' });
     await settings.scrollIntoViewIfNeeded();
-    await page.waitForLoadState('networkidle');
+    await footerHydrated(page);
     await settings.focus();
     await page.keyboard.press('Enter');
     await expect(banner(page)).toBeVisible();
@@ -488,5 +495,27 @@ test.describe('E2E-17: link check', () => {
       }
     }
     expect(broken).toEqual([]);
+  });
+});
+
+test.describe('the footer after in-app navigation', () => {
+  test('keeps its styles and hydrates on Blog after leaving Home (ETE-124)', async ({ page }) => {
+    await open(page, '/');
+    const blog = page.locator('main a[href="/blog"]').first();
+    await blog.scrollIntoViewIfNeeded();
+    await page.waitForLoadState('networkidle');
+    // WebKit can drop a click that lands as a section starts hydrating: click until it navigates.
+    await expect(async () => {
+      if (!page.url().endsWith('/blog')) await blog.click();
+      await expect(page).toHaveURL(/\/blog$/, { timeout: 2_000 });
+    }).toPass({ timeout: 15_000 });
+
+    const footer = page.locator('footer.site-footer');
+    await footer.scrollIntoViewIfNeeded();
+    // Leaving Home must not take the styles of components the footer shares with it.
+    await expect(footer.locator('.social-links')).toHaveCSS('list-style-type', 'none');
+    await expect(footer.locator('.fm-status-dot')).not.toHaveCSS('width', '0px');
+    // And the footer hydrates as it scrolls into view: its prerendered event markers go.
+    await footerHydrated(page);
   });
 });
