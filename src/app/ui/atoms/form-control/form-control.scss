@@ -5,3 +5,15 @@
 .fm-field .field-control {
   transition: none;
 }
+
+// WCAG 1.4.11 (ETE-127): the design system's glass stroke made a field's outline nearly invisible
+// (about 1.2:1 in Light, 1.6:1 in Dark). These strokes are at least 3:1 against the surfaces a
+// field sits on: neutral-500 in Light (3.65:1 on the canvas), neutral-400 in Dark (5:1 on
+// neutral-800). Error, success and disabled keep their own strokes.
+:root[data-theme='light'] .fm-field:not(.is-error, .is-success, .is-disabled) .field-control {
+  border-color: var(--neutral-500);
+}
+
+:root[data-theme='dark'] .fm-field:not(.is-error, .is-success, .is-disabled) .field-control {
+  border-color: var(--neutral-400);
+}

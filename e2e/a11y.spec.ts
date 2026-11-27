@@ -123,3 +123,64 @@ test.describe('reflow (WCAG 1.4.10)', () => {
     expect(found).toEqual([]);
   });
 });
+
+test.describe('non-text contrast (WCAG 1.4.11)', () => {
+  for (const theme of THEMES) {
+    test(`${theme}: form field outlines are at least 3:1 against what is behind them`, async ({
+      page,
+    }) => {
+      await open(page, '/', theme);
+      await page.locator('#contact').scrollIntoViewIfNeeded();
+      await page.waitForLoadState('networkidle');
+      const ratios = await page.evaluate(() => {
+        interface Rgba {
+          r: number;
+          g: number;
+          b: number;
+          a: number;
+        }
+        const parse = (c: string): Rgba => {
+          const [r, g, b, a = 1] = (c.match(/[\d.]+/g) ?? []).map(Number);
+          return { r, g, b, a };
+        };
+        const over = (fg: Rgba, bg: Rgba): Rgba => ({
+          r: fg.r * fg.a + bg.r * (1 - fg.a),
+          g: fg.g * fg.a + bg.g * (1 - fg.a),
+          b: fg.b * fg.a + bg.b * (1 - fg.a),
+          a: 1,
+        });
+        const lum = ({ r, g, b }: Rgba) => {
+          const f = (v: number) =>
+            (v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+          return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+        };
+        const contrast = (x: Rgba, y: Rgba) => {
+          const [hi, lo] = [lum(x), lum(y)].sort((p, q) => q - p);
+          return (hi + 0.05) / (lo + 0.05);
+        };
+        // What is behind an element: its ancestors' fills over the page canvas.
+        const behind = (el: Element | null): Rgba => {
+          const layers: Rgba[] = [];
+          for (let e = el; e; e = e.parentElement) {
+            const c = parse(getComputedStyle(e).backgroundColor);
+            if (c.a > 0) layers.push(c);
+            if (c.a >= 1) break;
+          }
+          // The page canvas, under every layer.
+          let base = parse(getComputedStyle(document.body).backgroundColor);
+          if (base.a === 0)
+            base = parse(getComputedStyle(document.documentElement).backgroundColor);
+          for (const layer of layers.reverse()) base = over(layer, base);
+          return base;
+        };
+        return [...document.querySelectorAll('#contact .fm-field__control')].map((control) => {
+          const bg = behind(control.parentElement);
+          const stroke = over(parse(getComputedStyle(control).borderTopColor), bg);
+          return +contrast(stroke, bg).toFixed(2);
+        });
+      });
+      expect(ratios.length).toBeGreaterThan(0);
+      for (const ratio of ratios) expect(ratio).toBeGreaterThanOrEqual(3);
+    });
+  }
+});
