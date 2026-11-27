@@ -49,7 +49,7 @@ export class BookingCard {
   readonly price = input('Get a quote');
   readonly booking = input.required<Pick<Service['booking'], 'email' | 'whatsapp' | 'phone'>>();
   readonly person = input.required<BookingPerson>();
-  readonly briefHref = input('/contact');
+  readonly briefHref = input('/#contact');
 
   readonly channel = output<BookingChannel>();
 

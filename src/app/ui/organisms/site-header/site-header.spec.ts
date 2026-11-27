@@ -142,6 +142,18 @@ describe('SiteHeader', () => {
     expect(menuNav()).toBeNull();
   });
 
+  it('stays open when focus goes nowhere, as a Safari tap on a panel link does (ETE-124)', async () => {
+    await renderHeader();
+    await userEvent.click(menuButton());
+    const about = within(menuNav()!).getByRole('link', { name: 'About' });
+    expect(document.activeElement).toBe(about);
+    // Safari does not focus a tapped link: the focused item blurs with no relatedTarget first.
+    about.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: null }));
+    expect(menuNav()).toBeTruthy();
+    await userEvent.click(within(menuNav()!).getByRole('link', { name: 'Contact' }));
+    expect(menuNav()).toBeNull();
+  });
+
   it('closes the menu before asking for the résumé, with focus back on the menu button', async () => {
     const { resume } = await renderHeader();
     await userEvent.click(menuButton());

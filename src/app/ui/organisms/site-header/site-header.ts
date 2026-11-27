@@ -176,10 +176,15 @@ export class SiteHeader {
     this.closeMenu(true);
   }
 
-  /** Focus left the header (Tab past the panel's last item): close the panel where focus went. */
+  /**
+   * Focus moved out of the header (Tab past the panel's last item): close the panel. Focus that
+   * goes nowhere (no `relatedTarget`) is not leaving: Safari does not focus a tapped link, so a
+   * tap on a panel link blurs the focused item first, and closing then would remove the link
+   * before its click lands (ETE-124). A click outside closes it instead (`clickOutside`).
+   */
   private focusOut(event: FocusEvent, root: HTMLElement): void {
     const next = event.relatedTarget as Node | null;
-    if (next && root.contains(next)) return;
+    if (!next || root.contains(next)) return;
     this.closeMenu();
   }
 

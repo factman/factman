@@ -1,6 +1,9 @@
 // The canvas's .panel-card around the Stepper; it scrolls sideways on phones.
 
 .process-section {
+  // The containing block for the steps' absolutely positioned screen-reader text, so the panel's
+  // scroll clips it too; without it a phone's page scrolls sideways by the steps' width (ETE-124).
+  position: relative;
   box-sizing: border-box;
   padding: var(--padding-3xl);
   border: var(--border-width-sm) solid var(--glass-stroke);

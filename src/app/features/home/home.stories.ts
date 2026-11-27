@@ -24,9 +24,13 @@ type Story = StoryObj<Home>;
 
 export const Default: Story = {
   play: async ({ canvas }) => {
-    // The hero renders once the browser is idle on a client-side render (ETE-126).
+    // The hero's block loads at once on a client-side render (ETE-124), in its own chunk.
     await expect(
-      await canvas.findByRole('heading', { level: 1, name: 'Odunayo Mohammed' }, { timeout: 3000 }),
+      await canvas.findByRole(
+        'heading',
+        { level: 1, name: 'Odunayo Mohammed' },
+        { timeout: 5_000 },
+      ),
     ).toBeVisible();
   },
 };

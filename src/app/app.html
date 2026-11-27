@@ -17,7 +17,9 @@
        prerendered page has it already, so it only hydrates then (ETE-41, ETE-273). -->
   <ng-container ngProjectAs="[layoutFooter]">
     @defer (on viewport; hydrate on viewport) {
-      <fm-site-footer-host />
+      <!-- A real box: the host is display: contents, which the viewport trigger can't see, so
+           the footer never hydrated (ETE-124). -->
+      <div class="site-footer-block"><fm-site-footer-host /></div>
     } @placeholder {
       <div class="site-footer-placeholder" aria-hidden="true"></div>
     }
