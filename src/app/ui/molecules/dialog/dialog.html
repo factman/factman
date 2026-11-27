@@ -23,7 +23,17 @@
         </div>
         <fm-icon-button [icon]="close" label="Close" size="sm" (pressed)="closed.emit()" />
       </div>
-      <div class="fm-modal__body"><ng-content /></div>
+      <!-- While it scrolls, the body is a labelled stop in the tab order, so a keyboard can scroll
+           it (WCAG 2.1.1, axe scrollable-region-focusable: the scheduler on a phone, ETE-127). -->
+      <div
+        #body
+        class="fm-modal__body"
+        [attr.tabindex]="scrollable() ? 0 : null"
+        [attr.role]="scrollable() ? 'region' : null"
+        [attr.aria-labelledby]="scrollable() ? titleId : null"
+      >
+        <ng-content />
+      </div>
       <div class="fm-modal__foot dialog-foot"><ng-content select="[dialogFooter]" /></div>
     }
   </div>

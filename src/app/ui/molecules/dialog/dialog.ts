@@ -3,12 +3,14 @@ import {
   Component,
   DOCUMENT,
   ElementRef,
+  DestroyRef,
   ViewEncapsulation,
   afterNextRender,
   effect,
   inject,
   input,
   output,
+  signal,
   viewChild,
 } from '@angular/core';
 
@@ -53,7 +55,11 @@ export class Dialog {
   protected readonly close = iconClose;
   protected readonly titleId = fieldId('fm-dialog');
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
+  private readonly body = viewChild<ElementRef<HTMLElement>>('body');
+  /** The body overflows, so it scrolls: it then takes focus to be scrolled by keyboard. */
+  protected readonly scrollable = signal(false);
   private readonly doc = inject(DOCUMENT);
+  private readonly destroyRef = inject(DestroyRef);
   /** Only for browsers without `showModal()`, which don't restore focus themselves. */
   private opener: HTMLElement | null = null;
 
@@ -69,7 +75,20 @@ export class Dialog {
     afterNextRender(() => {
       const el: HTMLElement = this.dialog().nativeElement;
       if (!('closedBy' in el)) el.addEventListener('click', (e: MouseEvent) => this.backdrop(e));
+      this.watchOverflow();
     });
+  }
+
+  /** Tracks whether the body overflows, as it or its content changes size. */
+  private watchOverflow(): void {
+    const body = this.body()?.nativeElement;
+    const Observer = this.doc.defaultView?.ResizeObserver;
+    if (!body || !Observer) return;
+    const measure = () => this.scrollable.set(body.scrollHeight > body.clientHeight + 1);
+    const observer = new Observer(measure);
+    observer.observe(body);
+    for (const child of Array.from(body.children)) observer.observe(child);
+    this.destroyRef.onDestroy(() => observer.disconnect());
   }
 
   /** Escape: the browser would close it; let the parent decide instead. */

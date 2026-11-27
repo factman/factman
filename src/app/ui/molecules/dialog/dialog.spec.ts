@@ -59,4 +59,40 @@ describe('Dialog', () => {
     expect(screen.queryByRole('button', { name: 'Close' })).toBeNull();
     expect(dialog.querySelector('h2')).toBeNull();
   });
+  it('makes its body a named tab stop only while it scrolls (ETE-127)', async () => {
+    // jsdom has no layout: report a body taller than its box, and run observers at once.
+    let overflow = true;
+    const callbacks: (() => void)[] = [];
+    vi.stubGlobal(
+      'ResizeObserver',
+      class {
+        constructor(cb: () => void) {
+          callbacks.push(cb);
+          cb();
+        }
+        observe = vi.fn();
+        disconnect = vi.fn();
+      },
+    );
+    const height = vi
+      .spyOn(HTMLElement.prototype, 'scrollHeight', 'get')
+      .mockImplementation(() => (overflow ? 800 : 100));
+    const client = vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockReturnValue(400);
+    const { fixture } = await render(
+      `<fm-dialog [open]="true" label="Schedule a call"><p>Calendar</p></fm-dialog>`,
+      { imports: [Dialog] },
+    );
+    fixture.detectChanges();
+    const body = screen.getByRole('region', { name: 'Schedule a call' });
+    expect(body.getAttribute('tabindex')).toBe('0');
+
+    overflow = false;
+    callbacks.forEach((cb) => cb());
+    fixture.detectChanges();
+    expect(screen.queryByRole('region')).toBeNull();
+    expect(document.querySelector('.fm-modal__body')!.hasAttribute('tabindex')).toBe(false);
+    height.mockRestore();
+    client.mockRestore();
+    vi.unstubAllGlobals();
+  });
 });
